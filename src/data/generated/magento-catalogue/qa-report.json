@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-06-17T11:23:31.517Z",
+  "baseUrl": "http://localhost:3012",
+  "routeTotals": {
+    "categories": 891,
+    "products": 32591,
+    "checkedPages": 1391,
+    "checkedAssets": 3000
+  },
+  "failures": {
+    "brokenPages": [],
+    "oldDomainAnchors": [],
+    "brokenInternalLinks": [],
+    "brokenAssets": []
+  },
+  "counts": {
+    "brokenPages": 0,
+    "oldDomainAnchors": 0,
+    "brokenInternalLinks": 0,
+    "brokenAssets": 0
+  }
+}

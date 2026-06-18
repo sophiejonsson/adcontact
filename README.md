@@ -1,36 +1,167 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Adcontact — Industrial Components & Wire-Processing Solutions
 
-## Getting Started
+Modern B2B industrial website for Adcontact AB, built with Next.js App Router, TypeScript, and Tailwind CSS v4.
 
-First, run the development server:
+## Tech stack
+
+- **Framework:** Next.js 15+ (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Icons:** Lucide React
+- **Deployment:** Vercel (Node.js runtime)
+
+## Getting started
 
 ```bash
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.example .env.local
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment to Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Push this repository to GitHub
+2. Import the project in [Vercel](https://vercel.com/new)
+3. Set the environment variables from `.env.example`
+4. Deploy — Vercel auto-detects Next.js
 
-## Learn More
+**Build command:** `npm run build`  
+**Output directory:** `.next` (automatic)  
+**Node.js version:** 20.x or 22.x
 
-To learn more about Next.js, take a look at the following resources:
+## Project structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+  app/                          # Next.js App Router pages
+    page.tsx                    # Homepage
+    products/
+      page.tsx                  # Products overview
+      [category]/
+        page.tsx                # Category listing
+        [slug]/
+          page.tsx              # Product detail
+    production-equipment/
+      page.tsx                  # Equipment overview
+      [slug]/page.tsx           # Equipment category
+    brands/
+      page.tsx                  # Full linecard
+      [slug]/page.tsx           # Brand detail
+    resources/
+      page.tsx                  # Resources listing
+      [slug]/page.tsx           # Resource detail
+    about/page.tsx              # About page
+    contact/page.tsx            # Contact & RFQ page
+    api/
+      products/route.ts         # GET /api/products
+      search/route.ts           # GET /api/search
+      rfq/route.ts              # POST /api/rfq
+      brands/route.ts           # GET /api/brands
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+  components/
+    layout/
+      Header.tsx                # Sticky header with mega-menu
+      MegaMenu.tsx              # Dropdown mega-menu
+      Footer.tsx                # Dark footer
+      Breadcrumbs.tsx           # Page breadcrumbs
+    home/
+      HeroSearch.tsx            # Hero section with search
+      CategoryGrid.tsx          # Product category cards
+      TrustSection.tsx          # Proof/trust points
+      IndustriesSection.tsx     # Industries served
+      EquipmentSection.tsx      # Production equipment preview
+      BrandsSection.tsx         # Brand/linecard preview
+      ResourcesSection.tsx      # Technical resources preview
+      CTASection.tsx            # Final conversion block
+    ui/
+      ProductFinder.tsx         # Interactive product search
+      RFQForm.tsx               # Quote request form
 
-## Deploy on Vercel
+  data/                         # Mock data (replace with DB later)
+    categories.ts               # Product categories
+    products.ts                 # Product catalogue
+    brands.ts                   # Manufacturer brands
+    industries.ts               # Industry sectors
+    resources.ts                # Technical resources
+    equipment.ts                # Production equipment
+    navigation.ts               # Navigation structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  lib/
+    utils.ts                    # Utility functions (cn, slugify)
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Editing content
+
+### Products
+Edit `src/data/products.ts` to add, modify, or remove products. Each product has:
+- `id`, `name`, `slug`, `partNumber`
+- `category`, `categorySlug`, `brand`, `brandSlug`
+- `specs[]` — technical specifications
+- `tags[]` — searchable tags
+- `applications[]` — application areas
+- `standards[]` — compliance standards
+
+### Categories
+Edit `src/data/categories.ts` to add or modify product categories. The `slug` must match the URL path.
+
+### Brands
+Edit `src/data/brands.ts` to add brands to the linecard.
+
+### Navigation
+Edit `src/data/navigation.ts` to modify the mega-menu structure.
+
+## API routes
+
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/api/products` | GET | List/search products. Query: `q`, `category`, `brand`, `featured`, `page`, `limit` |
+| `/api/search` | GET | Full-text search across products, categories, brands. Query: `q` |
+| `/api/rfq` | POST | Submit quote request. Validates and logs the request |
+| `/api/brands` | GET | List brands. Query: `featured`, `category` |
+
+## Connecting a real backend
+
+### Email (RFQ form)
+In `src/app/api/rfq/route.ts`, replace the `console.log` placeholder with your email service:
+
+```typescript
+// Resend
+import { Resend } from "resend";
+const resend = new Resend(process.env.RESEND_API_KEY);
+await resend.emails.send({
+  from: "rfq@adcontact.se",
+  to: process.env.RFQ_EMAIL_RECIPIENT!,
+  subject: `New RFQ from ${body.company}`,
+  text: JSON.stringify(body, null, 2),
+});
+```
+
+### Product database
+Replace the imports from `src/data/*.ts` with API calls or ORM queries. The data shape maps directly to a PostgreSQL/Supabase schema.
+
+## Future extensions
+
+- Full-text product search with Algolia or Meilisearch
+- Real product catalogue from Supabase / PostgreSQL
+- Multi-language support (Swedish, Finnish, Norwegian)
+- Quote basket / RFQ cart with session storage
+- Customer portal with order history
+- Inventory availability via ERP API
+
+## Contact
+
+Adcontact AB · Ekbacksvägen 22 · SE-168 69 Bromma, Sweden  
++46 (0)8-445 36 00 · info@adcontact.se
+# Legacy webshop origin
+
+The original `/webshop/...` URL structure is preserved. Fully migrated pages are
+served locally; remaining legacy pages are fetched from `LEGACY_WEBSHOP_ORIGIN`,
+which defaults to `https://www.adcontact.se`. Before switching production DNS to
+this app, set that variable to the legacy site's alternate origin hostname.

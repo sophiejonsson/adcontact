@@ -1,0 +1,411 @@
+{
+  "stocko": [
+    {
+      "title": "Stocko Connectors, Connector Systems",
+      "href": "/webshop/components/sealed-connectors/stocko/connector-systems.html",
+      "children": [
+        {
+          "title": "PITCH 2.5 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-2-5mm.html"
+        },
+        {
+          "title": "PITCH 2.54 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-2-54-mm.html"
+        },
+        {
+          "title": "PITCH 3.5 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-3-5mm.html"
+        },
+        {
+          "title": "PITCH 4.2 MM Connector",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-4-2mm.html"
+        },
+        {
+          "title": "PITCH 5 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-5mm.html"
+        },
+        {
+          "title": "PITCH 5.08 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-5-08mm.html"
+        },
+        {
+          "title": "PITCH 5.08/7.62 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-5-08-7-62-mm.html"
+        },
+        {
+          "title": "PITCH 6.35 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-6-35-mm.html"
+        },
+        {
+          "title": "PITCH 6.5 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-6-5-mm.html"
+        },
+        {
+          "title": "PITCH 8 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-8-mm.html"
+        },
+        {
+          "title": "PITCH 11.4 MM",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pitch-11-4-mm.html"
+        },
+        {
+          "title": "PLUGS",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/plugs.html"
+        },
+        {
+          "title": "PIN STRIPS",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pin-strips.html"
+        },
+        {
+          "title": "PCCR",
+          "href": "/webshop/components/sealed-connectors/stocko/connector-systems/pccr.html"
+        }
+      ]
+    },
+    {
+      "title": "Crimp Contacts",
+      "href": "/webshop/components/sealed-connectors/stocko/crimp-contacts.html",
+      "children": [
+        {
+          "title": "Receptacles",
+          "href": "/webshop/components/sealed-connectors/stocko/crimp-contacts/receptacles.html"
+        },
+        {
+          "title": "Tabs",
+          "href": "/webshop/components/sealed-connectors/stocko/crimp-contacts/tabs.html"
+        },
+        {
+          "title": "Printed boards contacts",
+          "href": "/webshop/components/sealed-connectors/stocko/crimp-contacts/printed-boards-contacts.html"
+        },
+        {
+          "title": "Open barrel terminals",
+          "href": "/webshop/components/sealed-connectors/stocko/crimp-contacts/open-barrel-terminals.html"
+        },
+        {
+          "title": "Special connectors",
+          "href": "/webshop/components/sealed-connectors/stocko/crimp-contacts/special-connectors.html"
+        },
+        {
+          "title": "End splices",
+          "href": "/webshop/components/sealed-connectors/stocko/crimp-contacts/end-splices.html"
+        },
+        {
+          "title": "Sockets",
+          "href": "/webshop/components/sealed-connectors/stocko/crimp-contacts/sockets.html"
+        },
+        {
+          "title": "Circular pins",
+          "href": "/webshop/components/sealed-connectors/stocko/crimp-contacts/circular-pins.html"
+        }
+      ]
+    },
+    {
+      "title": "Housing",
+      "href": "/webshop/components/sealed-connectors/stocko/housing.html",
+      "children": [
+        {
+          "title": "Standard",
+          "href": "/webshop/components/sealed-connectors/stocko/housing/standard.html"
+        },
+        {
+          "title": "Self-locking 4.8 mm",
+          "href": "/webshop/components/sealed-connectors/stocko/housing/self-locking-4-8-mm.html"
+        },
+        {
+          "title": "6.3 mm",
+          "href": "/webshop/components/sealed-connectors/stocko/housing/6-3-mm.html"
+        },
+        {
+          "title": "Multi-way 6.3 mm",
+          "href": "/webshop/components/sealed-connectors/stocko/housing/multi-way-6-3-mm.html"
+        },
+        {
+          "title": "Multi-way self-locking 2.8 - 6.3 mm",
+          "href": "/webshop/components/sealed-connectors/stocko/housing/multi-way-self-locking-2-8-6-3-mm.html"
+        },
+        {
+          "title": "Multi-way self-locking 6.3 mm",
+          "href": "/webshop/components/sealed-connectors/stocko/housing/multi-way-self-locking-6-3-mm.html"
+        }
+      ]
+    },
+    {
+      "title": "Solderless Terminals",
+      "href": "/webshop/components/sealed-connectors/stocko/solderless-terminals.html",
+      "children": [
+        {
+          "title": "Solderless terminals",
+          "href": "/webshop/components/sealed-connectors/stocko/solderless-terminals/solderless-terminals.html"
+        },
+        {
+          "title": "Pin terminals",
+          "href": "/webshop/components/sealed-connectors/stocko/solderless-terminals/pin-terminals.html"
+        },
+        {
+          "title": "Parallel splices",
+          "href": "/webshop/components/sealed-connectors/stocko/solderless-terminals/parallel-splices.html"
+        },
+        {
+          "title": "Butt splices",
+          "href": "/webshop/components/sealed-connectors/stocko/solderless-terminals/butt-splices.html"
+        },
+        {
+          "title": "Receptacles",
+          "href": "/webshop/components/sealed-connectors/stocko/solderless-terminals/receptacles.html"
+        },
+        {
+          "title": "Tabs",
+          "href": "/webshop/components/sealed-connectors/stocko/solderless-terminals/tabs.html"
+        },
+        {
+          "title": "Sockets / Plugs",
+          "href": "/webshop/components/sealed-connectors/stocko/solderless-terminals/sockets-plugs.html"
+        }
+      ]
+    }
+  ],
+  "htp": [
+    {
+      "title": "M8 Circular Connectors",
+      "href": "/webshop/components/sealed-connectors/htp/m8-circular-connectors.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/M8.png"
+    },
+    {
+      "title": "M12 Circular Connectors",
+      "href": "/webshop/components/sealed-connectors/htp/m12-circular-connectors.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/M12.png"
+    },
+    {
+      "title": "EN 175301-803 (ex DIN 43650)",
+      "href": "/webshop/components/sealed-connectors/htp/en-175301-803-ex-din-43650.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/EN_175301.png"
+    },
+    {
+      "title": "Automotive connectors",
+      "href": "/webshop/components/sealed-connectors/htp/automotive-connectors.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/Automotive_connectors.png"
+    },
+    {
+      "title": "7/8\"",
+      "href": "/webshop/components/sealed-connectors/htp/7-8.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/7-8.png"
+    },
+    {
+      "title": "Industrial connectors",
+      "href": "/webshop/components/sealed-connectors/htp/industrial-connectors.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/Industrial_connectors.png"
+    },
+    {
+      "title": "Accessories",
+      "href": "/webshop/components/sealed-connectors/htp/accessories.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/Accessories.png"
+    },
+    {
+      "title": "M9 Circular Connectors",
+      "href": "/webshop/components/sealed-connectors/htp/m9-circular-connectors.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/M9.png"
+    },
+    {
+      "title": "M23 Circular Connectors",
+      "href": "/webshop/components/sealed-connectors/htp/m23-circular-connectors.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/M23.png"
+    },
+    {
+      "title": "Fuse Holder",
+      "href": "/webshop/components/sealed-connectors/htp/fuse-holder.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/Fuse_Holder.png"
+    },
+    {
+      "title": "Distribution boxes M8/M12",
+      "href": "/webshop/components/sealed-connectors/htp/distribution-boxes-m8-m12.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/Distribution_Boxes.png"
+    },
+    {
+      "title": "MIL-C5015 Style CONNECTORS",
+      "href": "/webshop/components/sealed-connectors/htp/mil-c5015-style-connectors.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/C5015.png"
+    },
+    {
+      "title": "En 175 000",
+      "href": "/webshop/components/sealed-connectors/htp/en-175-000.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/EN_175_000.png"
+    },
+    {
+      "title": "Magnetic sensor",
+      "href": "/webshop/components/sealed-connectors/htp/magnetic-sensor.html",
+      "image": "https://www.adcontact.se/media/wysiwyg/infortis/ultimo/category_images/HTP/Magnetic_Sensor.png"
+    }
+  ],
+  "cvilux": [
+    {
+      "title": "Application Tooling",
+      "href": "/webshop/components/sealed-connectors/cvilux/application-tooling.html",
+      "children": [
+        {
+          "title": "Desk Top Machine",
+          "href": "/webshop/components/sealed-connectors/cvilux/application-tooling/desk-top-machine.html"
+        },
+        {
+          "title": "Hand Tool",
+          "href": "/webshop/components/sealed-connectors/cvilux/application-tooling/hand-tool.html"
+        }
+      ]
+    },
+    {
+      "title": "Board to Board Connector",
+      "href": "/webshop/components/sealed-connectors/cvilux/board-to-board-connector.html",
+      "children": [
+        {
+          "title": "CB Series Header",
+          "href": "/webshop/components/sealed-connectors/cvilux/board-to-board-connector/cb-series-header.html"
+        },
+        {
+          "title": "CH Series Pin Header",
+          "href": "/webshop/components/sealed-connectors/cvilux/board-to-board-connector/ch-series-pin-header.html"
+        }
+      ]
+    },
+    {
+      "title": "FFC/FPC Connector",
+      "href": "/webshop/components/sealed-connectors/cvilux/ffc-fpc-connector.html",
+      "children": [
+        {
+          "title": "CF Series FFC/FPC Connector",
+          "href": "/webshop/components/sealed-connectors/cvilux/ffc-fpc-connector/cf-series-ffc-fpc-connector.html"
+        }
+      ]
+    },
+    {
+      "title": "I/O Connector",
+      "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector.html",
+      "children": [
+        {
+          "title": "CD Series D-SUB Connector",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/cd-series-d-sub-connector.html"
+        },
+        {
+          "title": "CE Series Miniature Circular DIN",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/ce-series-miniature-circular-din.html"
+        },
+        {
+          "title": "CJ Series Modular Plugs",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/cj-series-modular-plugs.html"
+        },
+        {
+          "title": "CJ Series Telephome Phone Jacks",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/cj-series-telephome-phone-jacks.html"
+        },
+        {
+          "title": "CR Series RF - Microwave - Coax Connectors",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/cr-series-rf-microwave-coax-connectors.html"
+        },
+        {
+          "title": "CU Series DVI Connector",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/cu-series-dvi-connector.html"
+        },
+        {
+          "title": "CU Series IEEE 1394 Connector",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/cu-series-ieee-1394-connector.html"
+        },
+        {
+          "title": "CU Series USB Connector",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/cu-series-usb-connector.html"
+        },
+        {
+          "title": "Combo Series Combo D-SUB",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/combo-series-combo-d-sub.html"
+        },
+        {
+          "title": "RJ45 Series with Transformer Connector",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/rj45-series-with-transformer-connector.html"
+        },
+        {
+          "title": "CU Series Mini Display Port Connect",
+          "href": "/webshop/components/sealed-connectors/cvilux/i-o-connector/cu-series-mini-display-port-connect.html"
+        }
+      ]
+    },
+    {
+      "title": "IC Socket",
+      "href": "/webshop/components/sealed-connectors/cvilux/ic-socket.html",
+      "children": [
+        {
+          "title": "CS Series Multiple Shunts",
+          "href": "/webshop/components/sealed-connectors/cvilux/ic-socket/cs-series-multiple-shunts.html"
+        },
+        {
+          "title": "CS Series Sockets",
+          "href": "/webshop/components/sealed-connectors/cvilux/ic-socket/cs-series-sockets.html"
+        }
+      ]
+    },
+    {
+      "title": "Power Connector",
+      "href": "/webshop/components/sealed-connectors/cvilux/power-connector.html",
+      "children": [
+        {
+          "title": "CP Series Board Mount Header",
+          "href": "/webshop/components/sealed-connectors/cvilux/power-connector/cp-series-board-mount-header.html"
+        },
+        {
+          "title": "Cvilux Connector - CP Series Crimping Housing",
+          "href": "/webshop/components/sealed-connectors/cvilux/power-connector/cp-series-crimping-housing.html"
+        },
+        {
+          "title": "CP Series Crimping Terminal",
+          "href": "/webshop/components/sealed-connectors/cvilux/power-connector/cp-series-crimping-terminal.html"
+        }
+      ]
+    },
+    {
+      "title": "Wire To Board Connector",
+      "href": "/webshop/components/sealed-connectors/cvilux/wire-to-board-connector.html",
+      "children": [
+        {
+          "title": "CA Series IDC Housing",
+          "href": "/webshop/components/sealed-connectors/cvilux/wire-to-board-connector/ca-series-idc-housing.html"
+        },
+        {
+          "title": "CI Series Board Mount Header",
+          "href": "/webshop/components/sealed-connectors/cvilux/wire-to-board-connector/ci-series-board-mount-header.html"
+        },
+        {
+          "title": "CI Series Crimping Housing",
+          "href": "/webshop/components/sealed-connectors/cvilux/wire-to-board-connector/ci-series-crimping-housing.html"
+        },
+        {
+          "title": "CI Series Crimping Terminal",
+          "href": "/webshop/components/sealed-connectors/cvilux/wire-to-board-connector/ci-series-crimping-terminal.html"
+        },
+        {
+          "title": "CI Series Wire Holder",
+          "href": "/webshop/components/sealed-connectors/cvilux/wire-to-board-connector/ci-series-wire-holder.html"
+        },
+        {
+          "title": "CT Series Board in Terminal",
+          "href": "/webshop/components/sealed-connectors/cvilux/wire-to-board-connector/ct-series-board-in-terminal.html"
+        },
+        {
+          "title": "CW Series Center Spacing Flat Cable",
+          "href": "/webshop/components/sealed-connectors/cvilux/wire-to-board-connector/cw-series-center-spacing-flat-cable.html"
+        }
+      ]
+    },
+    {
+      "title": "CCFL Connector",
+      "href": "/webshop/components/sealed-connectors/cvilux/ccfl-connector.html",
+      "children": []
+    },
+    {
+      "title": "LVDS Connector",
+      "href": "/webshop/components/sealed-connectors/cvilux/lvds-connector.html",
+      "children": [
+        {
+          "title": "CVS Series LVDS Connector",
+          "href": "/webshop/components/sealed-connectors/cvilux/lvds-connector/cvs-series-lvds-connector.html"
+        }
+      ]
+    }
+  ]
+}

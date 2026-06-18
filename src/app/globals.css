@@ -1,26 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-navy-950: #020b1a;
+  --color-navy-900: #0a1628;
+  --color-navy-800: #0f2042;
+  --color-navy-700: #1a2f5a;
+  --color-navy-600: #1e3a6e;
+  --color-steel-600: #1d4ed8;
+  --color-steel-500: #2563eb;
+  --color-steel-400: #3b82f6;
+  --color-steel-300: #60a5fa;
+  --color-amber-500: #f59e0b;
+  --color-amber-400: #fbbf24;
+  --color-graphite-700: #374151;
+  --color-graphite-600: #4b5563;
+  --color-graphite-500: #6b7280;
+  --color-graphite-400: #9ca3af;
+  --color-graphite-300: #d1d5db;
+  --color-graphite-200: #e5e7eb;
+  --color-graphite-100: #f3f4f6;
+  --color-graphite-50: #f9fafb;
+  --color-slate-50: #f8fafc;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: #ffffff;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01";
+  text-rendering: optimizeLegibility;
+}
+
+/* Display typography, premium tracking + balanced wrapping */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+h1 {
+  letter-spacing: -0.035em;
+}
+
+/* ── Premium surface system ─────────────────────────────────────────
+   Soft, layered, neutral shadows with a subtle hover lift. Replaces the
+   flat single-color hover shadows used across cards. */
+.surface-card {
+  background-color: #ffffff;
+  border: 1px solid #e8ecf1;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.05);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.surface-card:hover {
+  transform: translateY(-4px);
+  border-color: #bfdbfe;
+  box-shadow: 0 20px 36px -16px rgba(16, 24, 40, 0.18),
+    0 8px 16px -8px rgba(16, 24, 40, 0.08);
+}
+
+/* Dark-section variant (navy backgrounds) */
+.surface-card-dark {
+  border: 1px solid #1e3a6e;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.surface-card-dark:hover {
+  transform: translateY(-4px);
+  border-color: #2563eb;
+  box-shadow: 0 24px 48px -16px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(37, 99, 235, 0.25);
+}
+
+/* Primary CTA polish, depth + tactile press */
+.btn-elevate {
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08), 0 4px 12px -4px rgba(37, 99, 235, 0.25);
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.18s ease;
+}
+.btn-elevate:hover {
+  box-shadow: 0 2px 4px rgba(16, 24, 40, 0.1), 0 8px 20px -6px rgba(37, 99, 235, 0.35);
+}
+.btn-elevate:active {
+  transform: translateY(1px);
+}
+.btn-elevate-amber {
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.1), 0 4px 14px -4px rgba(245, 158, 11, 0.4);
+}
+
+/* Subtle one-shot entrance for hero content */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Mega-menu reveal: quick, subtle drop-in */
+@keyframes menuReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-menu-reveal {
+  animation: menuReveal 0.16s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surface-card,
+  .surface-card-dark,
+  .btn-elevate {
+    transition: none;
+  }
+  .surface-card:hover,
+  .surface-card-dark:hover {
+    transform: none;
+  }
+  .animate-fade-up,
+  .animate-menu-reveal {
+    animation: none;
+  }
+}
+
+/* Technical grid pattern */
+.tech-grid {
+  background-image:
+    linear-gradient(rgba(37, 99, 235, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.tech-dots {
+  background-image: radial-gradient(circle, rgba(37, 99, 235, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ── Layered light "canvas" surfaces ────────────────────────────────
+   Replaces flat white / #f8fafc slabs. Soft ambient accent glows over a
+   subtle cool gradient so light sections read as crafted, not stamped. */
+.bg-canvas {
+  background:
+    radial-gradient(820px 440px at 6% -10%, rgba(37, 99, 235, 0.07), transparent 60%),
+    radial-gradient(760px 520px at 104% 2%, rgba(96, 165, 250, 0.06), transparent 55%),
+    linear-gradient(180deg, #fbfcfe 0%, #f2f6fb 100%);
+}
+.bg-canvas-alt {
+  background:
+    radial-gradient(900px 500px at 92% -12%, rgba(37, 99, 235, 0.06), transparent 60%),
+    radial-gradient(700px 460px at 0% 110%, rgba(96, 165, 250, 0.05), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f6f9fc 100%);
+}
+
+/* Decorative texture overlays, apply to an absolutely positioned child */
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 60% at 50% 0%, #000 0%, transparent 80%);
+  mask-image: radial-gradient(ellipse 75% 60% at 50% 0%, #000 0%, transparent 80%);
+}
+.dot-overlay {
+  background-image: radial-gradient(rgba(37, 99, 235, 0.12) 1px, transparent 1.6px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 55% 65% at 82% 28%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(ellipse 55% 65% at 82% 28%, #000 0%, transparent 72%);
+}
+
+/* Crafted gradient icon tiles, depth instead of flat blue squares */
+.icon-tile {
+  background-image: linear-gradient(140deg, #eff6ff 0%, #d7e6ff 100%);
+  border: 1px solid rgba(37, 99, 235, 0.14);
+  color: #2563eb;
+  box-shadow: 0 10px 18px -10px rgba(37, 99, 235, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+.icon-tile-dark {
+  background-image: linear-gradient(140deg, rgba(59, 130, 246, 0.24) 0%, rgba(37, 99, 235, 0.05) 100%);
+  border: 1px solid rgba(96, 165, 250, 0.28);
+  color: #7cb0ff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Soft seam between a dark section and the light canvas below it */
+.seam-from-dark {
+  background: linear-gradient(180deg, #071425 0%, transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-background-video {
+    display: none;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 3px;
+}
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(37, 99, 235, 0.2);
+  color: #0a1628;
 }

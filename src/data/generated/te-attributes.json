@@ -1,0 +1,2855 @@
+{
+  "generatedAt": "2026-06-15T13:22:16.391Z",
+  "attributes": [
+    {
+      "name": "Series",
+      "options": [
+        {
+          "label": "AMPSEAL 16 Series",
+          "count": 199
+        },
+        {
+          "label": "AMPSEAL Series",
+          "count": 139
+        }
+      ]
+    },
+    {
+      "name": "No. of cavities",
+      "options": [
+        {
+          "label": "2",
+          "count": 22
+        },
+        {
+          "label": "3",
+          "count": 25
+        },
+        {
+          "label": "4",
+          "count": 31
+        },
+        {
+          "label": "6",
+          "count": 25
+        },
+        {
+          "label": "8",
+          "count": 42
+        },
+        {
+          "label": "12",
+          "count": 26
+        },
+        {
+          "label": "13, 7.5",
+          "count": 1
+        },
+        {
+          "label": "14",
+          "count": 37
+        },
+        {
+          "label": "16, 20",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "name": "Current Rating",
+      "options": [
+        {
+          "label": "Up to 13",
+          "count": 143
+        },
+        {
+          "label": "Up to 17",
+          "count": 61
+        },
+        {
+          "label": "Up to 17 gold, up to 8 tin",
+          "count": 15
+        },
+        {
+          "label": "Up to 8",
+          "count": 58
+        }
+      ]
+    },
+    {
+      "name": "Shape",
+      "options": [
+        {
+          "label": "Rectangular",
+          "count": 257
+        }
+      ]
+    },
+    {
+      "name": "Material",
+      "options": [
+        {
+          "label": "Gold",
+          "count": 9
+        },
+        {
+          "label": "Nickel",
+          "count": 7
+        },
+        {
+          "label": "Plastic",
+          "count": 305
+        },
+        {
+          "label": "Plastic,Metal",
+          "count": 1
+        },
+        {
+          "label": "Select Gold",
+          "count": 3
+        },
+        {
+          "label": "Select Tin",
+          "count": 3
+        },
+        {
+          "label": "Tin",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "name": "Connector Style",
+      "options": [
+        {
+          "label": "PCB Header",
+          "count": 115
+        },
+        {
+          "label": "Pin Contact Housing",
+          "count": 84
+        },
+        {
+          "label": "Receptacle Contact Housing",
+          "count": 74
+        }
+      ]
+    },
+    {
+      "name": "Color",
+      "options": [
+        {
+          "label": "Black",
+          "count": 203
+        },
+        {
+          "label": "Blue",
+          "count": 27
+        },
+        {
+          "label": "Brown",
+          "count": 2
+        },
+        {
+          "label": "Gray",
+          "count": 27
+        },
+        {
+          "label": "Natural",
+          "count": 38
+        },
+        {
+          "label": "Orange",
+          "count": 4
+        },
+        {
+          "label": "Red",
+          "count": 1
+        },
+        {
+          "label": "White",
+          "count": 1
+        },
+        {
+          "label": "Yellow",
+          "count": 2
+        }
+      ]
+    }
+  ],
+  "productCount": 338,
+  "products": {
+    "776539-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776539-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776539-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776539-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776538-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776538-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776538-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776538-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776537-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776537-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776537-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776536-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776536-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776536-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776536-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776535-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776535-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776535-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776535-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776534-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776534-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776534-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776534-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776533-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776533-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776533-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776533-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776532-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776532-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776532-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776532-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776531-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776531-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776524-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776524-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776524-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776524-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776523-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776523-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776523-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776523-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776522-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776522-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776522-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776522-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "1456820-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Natural"
+    },
+    "1717672-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717675-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717934-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717934-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717975-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1871412-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1871414-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1871414-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1871415-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1871415-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1871415-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "2138839-2": {
+      "Series": "AMPSEAL 16 Series",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Brown"
+    },
+    "2138846-2": {
+      "Series": "AMPSEAL 16 Series",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Brown"
+    },
+    "776531-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "1717672-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717672-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717673-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717674-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717674-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717674-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717675-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717675-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717676-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717676-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717676-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717677-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717677-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717677-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717934-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717934-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1717975-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1871412-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1871413-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "2138839-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "2138846-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776349-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Gold",
+      "Connector Style": "Pin Contact Housing"
+    },
+    "776349-3": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Nickel",
+      "Connector Style": "Pin Contact Housing"
+    },
+    "776427-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776427-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776427-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776427-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776428-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776428-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776428-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776428-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "2",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776429-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776429-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776429-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776429-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776430-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776430-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776430-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776430-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776433-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776433-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776433-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776434-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776434-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776434-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776437-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776437-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776437-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776437-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776438-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776438-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776438-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776438-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776487-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776487-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776487-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776487-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776488-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776488-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776488-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776488-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776494-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776494-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776494-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776494-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776495-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776495-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776495-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "776495-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Pin Contact Housing",
+      "Color": "Black"
+    },
+    "1924463-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Gold"
+    },
+    "1924463-3": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Nickel"
+    },
+    "1924464-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Gold"
+    },
+    "1924464-2": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Nickel"
+    },
+    "2098252-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Gold"
+    },
+    "2098252-3": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Nickel"
+    },
+    "2098253-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Gold"
+    },
+    "2098253-2": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Nickel"
+    },
+    "638078-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Gold",
+      "Connector Style": "Pin Contact Housing"
+    },
+    "638078-3": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Nickel",
+      "Connector Style": "Pin Contact Housing"
+    },
+    "638112-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Gold",
+      "Connector Style": "Pin Contact Housing"
+    },
+    "638112-3": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Nickel",
+      "Connector Style": "Pin Contact Housing"
+    },
+    "776491-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Select Gold",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "776491-2": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Select Tin",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "776492-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Select Gold",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "776492-2": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Select Tin",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "776493-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Select Gold",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "776493-2": {
+      "Series": "AMPSEAL 16 Series",
+      "Current Rating": "Up to 13",
+      "Material": "Select Tin",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "1-2035047-0": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "1-2035047-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "1-2035366-0": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "1-2035366-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "1-2035366-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "1-2098436-0": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "1-2098436-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "1-2098436-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "1924487-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "1924487-2": {
+      "Series": "AMPSEAL 16 Series",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035047-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "16, 20",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035047-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035047-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035047-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035047-5": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035047-6": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035047-7": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035047-8": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "12",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035047-9": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "8",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035048-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "16, 20",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035048-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035048-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035048-5": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "16, 20",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035048-6": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035048-7": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035366-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "16, 20",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035366-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035366-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "16, 20",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035366-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035366-7": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035366-8": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2035366-9": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2098436-1": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "16, 20",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2098436-2": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2098436-3": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "16, 20",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2098436-4": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "3",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2098436-7": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2098436-8": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "6",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2098436-9": {
+      "Series": "AMPSEAL 16 Series",
+      "No. of cavities": "4",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2138852-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Material": "Plastic",
+      "Color": "Red"
+    },
+    "2138852-2": {
+      "Series": "AMPSEAL 16 Series",
+      "Material": "Plastic",
+      "Color": "Yellow"
+    },
+    "2138852-3": {
+      "Series": "AMPSEAL 16 Series",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2138853-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "776363-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Material": "Plastic",
+      "Color": "Yellow"
+    },
+    "776364-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Material": "Plastic",
+      "Color": "White"
+    },
+    "776441-1": {
+      "Series": "AMPSEAL 16 Series",
+      "Material": "Plastic,Metal"
+    },
+    "2119118-1": {
+      "Series": "AMPSEAL 16 Series"
+    },
+    "2151239-1": {
+      "Series": "AMPSEAL 16 Series"
+    },
+    "2151239-2": {
+      "Series": "AMPSEAL 16 Series"
+    },
+    "2151617-1": {
+      "Series": "AMPSEAL 16 Series"
+    },
+    "2151617-2": {
+      "Series": "AMPSEAL 16 Series"
+    },
+    "91337-1": {
+      "Series": "AMPSEAL 16 Series"
+    },
+    "776262-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-770669-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-770669-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-770669-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-770669-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776087-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776087-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776087-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776087-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776163-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776163-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776163-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776163-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776163-6": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Orange"
+    },
+    "1-776180-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776180-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776180-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776180-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776180-6": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Orange"
+    },
+    "1-776200-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776200-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776200-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776200-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776228-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776228-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776228-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776228-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776230-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776230-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776230-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776230-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776231-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776231-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776231-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776231-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776231-6": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Orange"
+    },
+    "1-776261-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776261-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776261-4": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776261-5": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776262-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776262-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776262-4": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776262-5": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776266-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776266-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776266-4": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776266-5": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776267-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776267-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776267-4": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "1-776267-5": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "1-776275-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776275-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776276-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776276-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776279-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776279-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "1-776280-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "1-776280-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "770669-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "770669-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "770669-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "770669-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "770680-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "770680-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Natural"
+    },
+    "770680-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Gray"
+    },
+    "770680-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Blue"
+    },
+    "776087-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776087-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776087-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776087-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776163-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776163-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776163-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776163-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776164-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776164-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Natural"
+    },
+    "776164-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Gray"
+    },
+    "776164-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Blue"
+    },
+    "776164-6": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Orange"
+    },
+    "776180-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776180-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776180-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776180-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776200-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776200-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776200-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776200-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776228-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776228-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776228-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776228-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776230-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776230-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776230-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776230-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776231-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776231-2": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776231-4": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776231-5": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776261-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776261-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776261-4": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776261-5": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776262-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776262-4": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776262-5": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776266-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776266-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776266-4": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776266-5": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776267-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776267-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776267-4": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Gray"
+    },
+    "776267-5": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Blue"
+    },
+    "776273-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776273-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Natural"
+    },
+    "776273-4": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Gray"
+    },
+    "776273-5": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Blue"
+    },
+    "776275-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776275-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776276-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776276-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776279-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776279-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776280-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Black"
+    },
+    "776280-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 8",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "PCB Header",
+      "Color": "Natural"
+    },
+    "776286-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Black"
+    },
+    "776286-2": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "8",
+      "Current Rating": "Up to 17 gold, up to 8 tin",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Color": "Natural"
+    },
+    "770520-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Material": "Tin",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "770520-3": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Material": "Gold",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "770854-1": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 8",
+      "Material": "Tin",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "770854-3": {
+      "Series": "AMPSEAL Series",
+      "Current Rating": "Up to 17",
+      "Material": "Gold",
+      "Connector Style": "Receptacle Contact Housing"
+    },
+    "770678-1": {
+      "Series": "AMPSEAL Series",
+      "Material": "Plastic",
+      "Color": "Natural"
+    },
+    "776463-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "14",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "776464-1": {
+      "Series": "AMPSEAL Series",
+      "No. of cavities": "13, 7.5",
+      "Material": "Plastic",
+      "Color": "Black"
+    },
+    "2151376-1": {
+      "Series": "AMPSEAL Series"
+    },
+    "58529-1": {
+      "Series": "AMPSEAL Series"
+    }
+  }
+}

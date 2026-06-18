@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-06-16T20:42:10.174Z",
+  "source": {
+    "database": "adcgamhe_adcgamweb",
+    "mediaBasePath": "/media/catalog/product",
+    "fileBasePath": "/media/amfile/files"
+  },
+  "counts": {
+    "products": 22308,
+    "categories": 900,
+    "routes": 55795,
+    "downloadableFiles": 10919
+  }
+}

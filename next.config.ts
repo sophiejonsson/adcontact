@@ -1,7 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  skipTrailingSlashRedirect: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "www.adcontact.se",
+        pathname: "/media/**",
+      },
+      {
+        protocol: "https",
+        hostname: "adcgam.hemsida.eu",
+        pathname: "/media/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

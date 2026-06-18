@@ -1,0 +1,573 @@
+[
+  {
+    "name": "Mecal TT Press",
+    "slug": "tt-press",
+    "sourcePath": "/webshop/tt-press.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/tt-press.html",
+    "imageUrl": "/images/tt_web12.jpg",
+    "gallery": [
+      "/images/tt_web12.jpg"
+    ],
+    "shortDescription": "The TT Crimping Press is available either in semi-automatic (for bench-top use) configuration or in full automatic (integrated into a cut and strip machine) configuration. Very compact and light, its spheroidal cast iron, one-piece structure offers the highest rigidity for a very stable crimping height values.",
+    "descriptionHtml": "<h5><strong>Technical Specifications</strong></h5>\n<ul>\n<li><strong>ID</strong>: TT</li><li>\n</li><li><strong>Power</strong>: 0,55Kw (0,75HP) </li>\n<li><strong>Force</strong>: 1500Kg (3310lb)</li>\n<li><strong>Stroke</strong>: 40mm (1,57\") </li>\n<li><strong>Crimping Height</strong>: 135,8mm (5,34\")</li>\n<li><strong>Weight</strong>: 41Kg (95,6lb) </li>\n<li><strong>Dimension (mm)</strong>: W200xH580xD300 </li>\n<li><strong>Dimension (\")</strong>: (7,9\"x23\"x11,8\") </li>\n<li><strong>Configuration</strong>: Manuale / Automatic </li>\n<li><strong>Power Supply</strong>: to see versions</li>\n<li><strong>Voltage</strong>: to see versions</li>\n<li><strong>Surface Finishing</strong>: Light Grey RAL7038</li>\n</ul><br>\n\n<br><strong>Comes in version 230 VAC &amp; 380 VAC</strong>\n<br>The standard stroke is 40mm, but other different strokes are available upon request. <br>\nThe 135.8mm ± 0.02mm crimping height (measured from the applicator base plate tot the press T-coupling when at Bottom Dead Center) allows the TT to accept all the mini-style applicators fitted with the standard T-coupling.<br> \nUpon request, a crimping height continuous regulating system (“TAC TAC”) can be supplied. <br>\nA proprietary safety cover (standard issue on the semi-automatic configuration) grants the operator a perfect view of the crimping zone while enjoying complete protection from any hazard.<br>\nMecal’s own CFA crimp force analyser can be fitted as an option. The semi-automatic configuration (for bench top use) always includes safety cover, reel arm, foot switch according to the international safety standard and CE regulation. Produced under a quality Management System certified to ISO 9001 (TÜV).<br>",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "Crimping equipment Brands": "Mecal",
+      "Type of press": "Electromech"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": []
+  },
+  {
+    "name": "Mecal Evolution",
+    "slug": "evolution",
+    "sourcePath": "/webshop/evolution.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/evolution.html",
+    "imageUrl": "/images/evs00_web3.jpg",
+    "gallery": [
+      "/images/evs00_web3.jpg",
+      "/images/evf00_web2.jpg"
+    ],
+    "shortDescription": "Evolution : a brand new mini applicator line offering the same quality level and reliability over the time of all Mecal’s products. The Evolution has been competitively priced, thanks to the specific production technologies adopted that have reduced the production time and made this tool the undisputed reference for the world wide market, both for quality and price.",
+    "descriptionHtml": "<h5><strong>Technical Specifications</strong></h5>\n<ul>\n<li><strong>ID</strong>: EVS</li><li>\n</li><li><strong>Crimping height</strong>: 135,8mm (5,346</li>\n<li><strong>Stroke</strong>: 40/30mm (1,575/1,18\") </li>\n<li><strong>Terminal Pitch</strong>: &lt; 28 mm (&lt;1,10\")</li>\n<li><strong>Terminal Thickness</strong>: Max 0,6mm (max 0,023\") </li>\n<li><strong>Wire Section</strong>: Max 6mm² </li>\n<li><strong>Feeding System</strong>: Mechanical</li>\n<li><strong>Weight</strong>: 3 (6,6)) </li>\n<li><strong>Dimension (mm)</strong>: W144xH145,5xD190</li>\n<li><strong>Dimension (\")</strong>: W5,66\"xH5,73\"xD4,13\" </li>\n<li><strong>Option</strong>: Continuous regulating head / 0,01mm(0,00039\") resolution / 2,7mm(0,106\") range</li>\n</ul><br>\n\n\n\n<br>Mini applicator for linked terminals, with thickness &lt; 0.6mm, terminal pitch &lt; 27mm, wire section between 0 and 6mm². Mechanical « side-feed » feeding system (no pneumatic version available) for linked terminals on a reel to be unrolled left to right.\n<br>Can be supplied either with a continuous or a fourpad regulating head. It is supplied with a non-resettable 7-digit cycle counter, and with both cams either for terminal feeding on upstroke or downstroke.\n<br>Can be fitted to any crimping press having a crimping height (measured from the miniapplicator mounting plate to the press « T » coupling when at Bottom Dead Center) of 135.8mm ± 0.02, and can be used in both manual (for bench-top press) and automatic (for cut and strip machine) configuration.\n<br>It is supplied with a complete technical documentation containing all the information needed to safely use and correctly maintain the equipment.\n<br>Upon request, a capability study (including a picture of a sectioned crimped terminal) can be performed. <br>\n<br><f5><strong>Compared to the previous models, the Evolution family offers the following features</strong></f5>\n<ul>\n<li>The anvil can be replaced without removing the applicator from the press,  as the anvil is made in two parts – wire and insulation – it is possible to replace only the worn-out one</li>\n<li>The mini applicator base-plate is thicker, hence more rigid</li>\n<li>The mini applicator body allows the replacement of the crimpers without removing the ram from the applicator or the applicator from the press</li>\n<li>The pitch adjusting system as well as the centering of the terminal over the anvil are even more user friendly and clearly illustrated in the detailed technical documentation.</li>\n</ul><br>",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "Crimping equipment Brands": "Mecal",
+      "Type of press": "Electromech",
+      "Miniapplicator": "Mecal EVS"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": []
+  },
+  {
+    "name": "Stripping machine AI 01",
+    "slug": "skalmaskin-ai-01",
+    "sourcePath": "/webshop/skalmaskin-ai-01.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/skalmaskin-ai-01.html",
+    "imageUrl": "/images/ai_01-os_1fb4782275.png",
+    "gallery": [
+      "/images/ai_01-os_1fb4782275.png"
+    ],
+    "shortDescription": "The basic model AI 01 is a stripping machine driven by an electric motor. Exact stripping of different insulated wires up to an outer diameter of 5 mm is possible. Adjustments are very easy to handle. In addition a special funnel to infeed a thin wire is also delivered.",
+    "descriptionHtml": "<strong>Technical data AI 01:</strong><br>\nStripping range: 0,05 – 6 mm² (AWG 30 – 10)<br> \nStripping length L: 3 – 20 mm (0.12 – 0.79 in.)<br> \nPull-off length: 3 – 20 mm (0.12 – 0.79 in.)<br> \nInfeed length: 22 mm (0.87 in.) + L* <br> \nCycle time approx: 0,5 s<br> \nPower supply: 100 – 240/50 – 60/70, V/Hz/VA<br> \nDimensions (w x d x h): 190 x 295 x 190 mm (7.5 x 11.6 x 7.5 in.)<br>",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "Stripping machine Series": "AI",
+      "Stripping machine Brands": "Zoller & Fröhlich"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": [
+      {
+        "label": "Stripping Machine AI 01",
+        "type": "pdf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/163540/",
+        "size": "124.22 KB"
+      }
+    ]
+  },
+  {
+    "name": "Ulmer Universal cutting machine SM 15 2PLC",
+    "slug": "ulmer-universal-cutting-machine-sm-15-2plc",
+    "sourcePath": "/webshop/ulmer-universal-cutting-machine-sm-15-2plc.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/ulmer-universal-cutting-machine-sm-15-2plc.html",
+    "imageUrl": "/images/sm15_2plc_web.jpg",
+    "gallery": [
+      "/images/sm15_2plc_web.jpg",
+      "/images/sm15_2plc_detail_2_web.jpg"
+    ],
+    "shortDescription": "The extremely reliable and solid universal cutting machines of the SM 15-series has been designed to process a wide range of different materials.",
+    "descriptionHtml": "<p>The extremely reliable and solid universal cutting machines of the SM 15-series has been designed to process a wide range of different materials. \nBy use of the appropriate accessories, materials such as PVC hoses, textile tubes, rubber, cable, ribbon cables, wire, strands, ropes, felt materials, foils, textiles, leather, materials of the medical field and diverse other material can be processed. There are three types of cutting tools available, as there are:</p>\n<ul>\n<li><strong>Punching cut</strong>: For hoses, foamed rubber cords and sealing profiles</li>\n<li><strong>Shearing Cut</strong>: For cables, ribbon cables, strands, shrinkable tubes etc</li>\n<li><strong>Tube Cut</strong>: For diverse tube materials</li>\n</ul><br>\n\nOptionally, there’s a cutting head for the SM 15 2/PE for mitre cutting available.<br>\n<p>In order to process extremely wide materials or for multi-lane-cutting, the SM 30-series has been designed. With a maximum-throughput-width of 300 mm, the SM 30 offers an excellent cutting machine technology in the field of foils and multi-lane-cutting.</p>\n<br>The infeed side guides can be adjusted to the material width. The guides are available in different designs.<br>\n\n<br><h4><strong>Technical Data</strong></h4>\n\n<li><strong>Drive  motor</strong>: Servo</li>\n<li><strong>Speed</strong>: 1.0 m/sec</li>\n<li><strong>Length</strong>: 650 mm</li>\n<li><strong>Depth</strong>: 410 mm</li>\n<li><strong>Height</strong>: 570 mm</li>\n<li><strong>Control panel</strong>: Membrane keyboard</li>\n<li><strong>Display</strong>: Multilingual (selectable)</li>\n<li><strong>Operating hours and counter</strong>: Included</li>\n<li><strong>Stop at end of material</strong>: Included</li>\n<li><strong>Length setting</strong>: 0.1 mm steps</li>\n<li><strong>Max. Length input</strong>: 999,999 mm</li>\n<li><strong>Throughput height</strong>: Round material up to 28 mm in the centre of the machine</li>\n<li><strong>Throughput height across the entire machine width</strong>: 15 mm</li>\n<li><strong>Upper belt lift</strong>: Pneumatic</li>\n<li><strong>Compressed air supply</strong>: 6 bar / 87 psi</li>\n<li><strong>Power supply</strong>: 230 V / 50-60 Hz</li>\n<li><strong>Cutter stroke</strong>: Pneumatic</li>\n<li><strong>Air consumption (litre per cutter stroke)</strong>: 3.35</li>\n<li><strong>Weight</strong>: 65 kg</li>\n<br>\n\n\n<br><h5><strong>Video</strong></h5>",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "Cutting machine Brands": "Ulmer"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": []
+  },
+  {
+    "name": "Branson Ultraweld L20 Spot Welder",
+    "slug": "branson-ultraweld-l20-spot-welder",
+    "sourcePath": "/webshop/branson-ultraweld-l20-spot-welder.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/branson-ultraweld-l20-spot-welder.html",
+    "imageUrl": "/images/spot_welder.jpg",
+    "gallery": [
+      "/images/spot_welder.jpg",
+      "/images/spot_welder_1.jpg"
+    ],
+    "shortDescription": "The L20 Metal Welder is designed and built to assure you the highest degree of reliability and weld quality. It is used for a range of applications including wire termination, clock-spring assemblies, battery welding, aluminum welding, copper welding, and brass welding.",
+    "descriptionHtml": "<h3><strong>Specifications</strong></h3>\n<ul>\n<li><strong>Actuation</strong>: Pneumatic</li>\n<li><strong>Cooling System</strong>: Air</li>\n<li><strong>Data Interface</strong>: USB, Ethernet</li>\n<li><strong>Frequency</strong>: 20kHz</li>\n<li><strong>Input Power</strong>: 200-230V, 50/60 Hz</li>\n<li><strong>Output Power</strong>: 3300W, 4000W, 5500W</li>\n<li><strong>Overall Dimensions</strong>: H283mm x W260mm x L468mm</li>\n<li><strong>Pneumatics Type</strong>: 5.5 bar (80 psi) clean, dry air</li>\n<li><strong>Special Feature</strong>: Password protection</li>\n<li><strong>User Interface</strong>: Touchscreen, LCD</li>\n<li><strong>Weld Modes</strong>: Time, Energy</li>\n</ul><br>\n\n<h3><strong>Features</strong></h3>\n<ul>\n<li>A precision roller bearing slide to assure smooth operation and extreme accuracy</li>\n<li>A dynamic spring with preload adjustment to permit ramping of ultrasonic power for optimum welds</li>\n<li>Precise adjustments for accurate setting of both upper and lower positive stops. Conveniently located flow controls offering easy adjustment of head speed in both directions</li>\n<li>A polar mounted ultrasonic stack to facilitate linear and axial setup and efficient transmission of ultrasonic energy to the horn</li>\n<li>Titanium horns with low cost replaceable tips or solid tool steel horns for fast setup and minimum tooling cost</li>\n<li>Fixturing which is changed quickly and easily for various applications by means of a dovetail mounting</li>\n<li>Optional vortex cooling to allow high-speed operation without heat buildup</li>\n<li>Ultraweld® L20 - 20 kHz Welding System rugged and easily tooled for a wide range of nonferrous welding applications</li>\n</ul>",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "Miscellaneous Brands": "Branson",
+      "Miscellaneous Products": "Ultrasonic Welding"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": [
+      {
+        "label": "Ultraweld® L20 System",
+        "type": "pdf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/163607/",
+        "size": "593.88 KB"
+      }
+    ]
+  },
+  {
+    "name": "HDP24-24-18SE-L017",
+    "slug": "hdp24-24-18se-l017",
+    "sourcePath": "/webshop/hdp24-24-18se-l017.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/hdp24-24-18se-l017.html",
+    "imageUrl": "/images/no_photo_37.jpg",
+    "gallery": [
+      "/images/no_photo_37.jpg"
+    ],
+    "shortDescription": "HDP24-24-18SE-L017",
+    "descriptionHtml": "HDP24-24-18SE-L017",
+    "availability": "in-stock",
+    "availabilityNote": "In stock",
+    "price": "7.87",
+    "specs": {
+      "Series": "HDP20 Series",
+      "Brand": "Deutsch",
+      "No. of cavities": "18",
+      "Part Number": "HDP24-24-18SE-L017",
+      "Flange/In-line/PCB Mount": "Flange, In-line",
+      "Modification": "Ring Adapter",
+      "Shape": "Circular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle",
+      "Holds Pin/Socket": "Socket",
+      "Special Features": "Reverse",
+      "Insulation": "(#8).135-.220 [3.43-5.59], (#12).097-.158 [2.46-4.01], (#16).053-.120 [1.35-3.05]",
+      "Wire Size": "8, 10, 12, 14, 16, 18, 20",
+      "Shell Size": "24 shell",
+      "Color": "Black"
+    },
+    "contacts": [
+      {
+        "partNumber": "0462-201-16141",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/0/4/0462-201-16141_1.jpg",
+        "url": "/catalog/product/view/id/3758/s/0462-201-16141/category/3/"
+      },
+      {
+        "partNumber": "0462-201-1631",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/0/4/0462-201-1631.jpg",
+        "url": "/catalog/product/view/id/3759/s/0462-201-1631/category/3/"
+      },
+      {
+        "partNumber": "0462-203-08141",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/0/4/0462-203-08141_1.jpg",
+        "url": "/catalog/product/view/id/3763/s/0462-203-08141/category/3/"
+      },
+      {
+        "partNumber": "0462-203-12141",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/0/4/0462-203-12141_1.jpg",
+        "url": "/catalog/product/view/id/3764/s/0462-203-12141/category/3/"
+      }
+    ],
+    "matingConnectors": [
+      {
+        "partNumber": "HDP26-24-18PE-L017",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/n/o/no_photo_47.jpg",
+        "url": "/catalog/product/view/id/3475/s/hdp26-24-18pe-l017/category/3/"
+      }
+    ],
+    "requiredComponents": [],
+    "accessories": [
+      {
+        "partNumber": "2411-001-2405",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/2/4/2411-001-2405_3.jpg",
+        "url": "/catalog/product/view/id/4048/s/2411-001-2405/category/3/"
+      },
+      {
+        "partNumber": "2414-001-2486",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/2/4/2414-001-2486.jpg",
+        "url": "/catalog/product/view/id/4050/s/2414-001-2486/category/3/"
+      },
+      {
+        "partNumber": "2428-008-2405",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/2/4/2428-008-2405_1.jpg",
+        "url": "/catalog/product/view/id/4053/s/2428-008-2405/category/3/"
+      },
+      {
+        "partNumber": "2428-011-2405",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/2/4/2428-011-2405_1.jpg",
+        "url": "/catalog/product/view/id/4055/s/2428-011-2405/category/3/"
+      }
+    ],
+    "drawings": [
+      {
+        "label": "CAD Files 3D Model (STEP Version 99 ZIP)",
+        "type": "step",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/161571/",
+        "size": "817.81 KB"
+      },
+      {
+        "label": "Customer View Model (PDF)",
+        "type": "pdf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/161566/",
+        "size": "768.33 KB"
+      },
+      {
+        "label": "Product Drawing (PDF)",
+        "type": "pdf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/161567/",
+        "size": "209.63 KB"
+      },
+      {
+        "label": "Product Drawing (TIF)",
+        "type": "tif",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/161568/",
+        "size": "177.25 KB"
+      },
+      {
+        "label": "CAD Files 2D Drawing (DXF Version 99 ZIP)",
+        "type": "dxf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/161569/",
+        "size": "191.30 KB"
+      },
+      {
+        "label": "CAD Files 3D Model (IGES Version 99 ZIP)",
+        "type": "iges",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/161570/",
+        "size": "1.42 MB"
+      }
+    ]
+  },
+  {
+    "name": "776533-3",
+    "slug": "776533-3",
+    "sourcePath": "/webshop/776533-3.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/776533-3.html",
+    "imageUrl": "/images/776533-3.jpg",
+    "gallery": [
+      "/images/776533-3.jpg"
+    ],
+    "shortDescription": "776533-3",
+    "descriptionHtml": "776533-3",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "Series": "AMPSEAL 16 Series",
+      "Brand": "Deutsch, TE Connectivity",
+      "No. of cavities": "12",
+      "Part Number": "776533-3",
+      "Receptacle Contact Housing/Pin Contact Housing/PCB Header": "Receptacle Contact Housing",
+      "keyed": "Yes, C key",
+      "Current Rating": "Up to 13",
+      "Shape": "Rectangular",
+      "Material": "Plastic",
+      "Connector Style": "Receptacle Contact Housing",
+      "Special Features": "Reduced Dia. Seals",
+      "Insulation": ".051-.100 [1.30-2.54]",
+      "Wire Size": "14, 16, 18, 20",
+      "Required Wedgelock": "TPA Included",
+      "Holds Pin/Receptacle Contact": "Receptacle",
+      "Color": "Black",
+      "TPA Color": "Yellow"
+    },
+    "contacts": [
+      {
+        "partNumber": "1924464-1",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/n/o/no_photo_50.jpg",
+        "url": "/catalog/product/view/id/3806/s/1924464-1/category/3/"
+      },
+      {
+        "partNumber": "1924464-2",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/1/9/1924464-2.jpg",
+        "url": "/catalog/product/view/id/3807/s/1924464-2/category/3/"
+      },
+      {
+        "partNumber": "776492-1",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/7/7/776492-1.jpg",
+        "url": "/catalog/product/view/id/3824/s/776492-1/category/3/"
+      },
+      {
+        "partNumber": "776492-2",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/7/7/776492-2.jpg",
+        "url": "/catalog/product/view/id/3825/s/776492-2/category/3/"
+      }
+    ],
+    "matingConnectors": [
+      {
+        "partNumber": "776539-3",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/7/7/776539-3.jpg",
+        "url": "/catalog/product/view/id/3366/s/776539-3/category/3/"
+      }
+    ],
+    "requiredComponents": [],
+    "accessories": [
+      {
+        "partNumber": "776364-1",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/n/o/no_photo_71.jpg",
+        "url": "/catalog/product/view/id/4066/s/776364-1/category/3/"
+      },
+      {
+        "partNumber": "776441-1",
+        "imageUrl": "https://www.adcontact.se/media/catalog/product/cache/1/small_image/135x/9df78eab33525d08d6e5fb8d27136e95/7/7/776441-1.jpg",
+        "url": "/catalog/product/view/id/4067/s/776441-1/category/3/"
+      }
+    ],
+    "drawings": [
+      {
+        "label": "Product Drawing (PDF)",
+        "type": "pdf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/155416/",
+        "size": "360.08 KB"
+      },
+      {
+        "label": "CAD Files 2D Drawing (DXF Version 99 ZIP)",
+        "type": "dxf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/155417/",
+        "size": "140.48 KB"
+      },
+      {
+        "label": "CAD Files 3D Model (IGES Version 99 ZIP)",
+        "type": "iges",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/155418/",
+        "size": "895.20 KB"
+      },
+      {
+        "label": "CAD Files 3D Model (STEP Version 99 ZIP)",
+        "type": "step",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/155419/",
+        "size": "343.11 KB"
+      },
+      {
+        "label": "Customer View Model (PDF)",
+        "type": "pdf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/155415/",
+        "size": "793.67 KB"
+      }
+    ]
+  },
+  {
+    "name": "1062-12-0144",
+    "slug": "1062-12-0144",
+    "sourcePath": "/webshop/1062-12-0144.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/1062-12-0144.html",
+    "imageUrl": "/images/1062-12-0144.jpg",
+    "gallery": [
+      "/images/1062-12-0144.jpg"
+    ],
+    "shortDescription": "1062-12-0144",
+    "descriptionHtml": "1062-12-0144",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "Brand": "Deutsch",
+      "Series": "DTP Series, DRB Series, DRC Series, DTHD Series, HD10 Series, HD30 Series, HDP20 Series, Jiffy Splice",
+      "Wire Size": "12, 14",
+      "Current Rating": "25",
+      "Material": "Gold",
+      "Part Number": "1062-12-0144",
+      "Holds Pin/Socket": "Socket",
+      "Contact Size": "12",
+      "Special Features": "Reel",
+      "Insulation": ".113-.176 [2.87-4.47]"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": [
+      {
+        "label": "CAD Files 3D Model (STEP Version 99 ZIP)",
+        "type": "step",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/154073/",
+        "size": "178.14 KB"
+      },
+      {
+        "label": "Customer View Model (PDF)",
+        "type": "pdf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/154068/",
+        "size": "198.15 KB"
+      },
+      {
+        "label": "Product Drawing (PDF)",
+        "type": "pdf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/154069/",
+        "size": "86.86 KB"
+      },
+      {
+        "label": "Product Drawing (TIF)",
+        "type": "tif",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/154070/",
+        "size": "85.95 KB"
+      },
+      {
+        "label": "CAD Files 2D Drawing (DXF Version 99 ZIP)",
+        "type": "dxf",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/154071/",
+        "size": "52.35 KB"
+      },
+      {
+        "label": "CAD Files 3D Model (IGES Version 99 ZIP)",
+        "type": "iges",
+        "url": "https://www.adcontact.se/amfilerating/file/download/file_id/154072/",
+        "size": "322.76 KB"
+      }
+    ]
+  },
+  {
+    "name": "491116",
+    "slug": "491116",
+    "sourcePath": "/webshop/491116.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/491116.html",
+    "imageUrl": "/images/AEI_isoliert_114.jpg",
+    "gallery": [
+      "/images/AEI_isoliert_114.jpg"
+    ],
+    "shortDescription": "end-sleeves insulated",
+    "descriptionHtml": "end-sleeves insulated",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "Material": "copper",
+      "Plating": "pure tin-plated",
+      "RoHS Conform": "Y",
+      "AWG": "2",
+      "D1": "8.3",
+      "D2": "12.7",
+      "DIN": "46228/4",
+      "Farbcode": "#cd0039",
+      "Querschnitt": "35",
+      "S1": "0.2"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": []
+  },
+  {
+    "name": "J08T6B3 - terminal contacts with 6 position",
+    "slug": "j08t6b3-terminal-contacts-with-6-position",
+    "sourcePath": "/webshop/j08t6b3-terminal-contacts-with-6-position.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/j08t6b3-terminal-contacts-with-6-position.html",
+    "imageUrl": "/images/j08t6b3__2_.jpg",
+    "gallery": [
+      "/images/j08t6b3__2_.jpg"
+    ],
+    "shortDescription": "",
+    "descriptionHtml": "N/A",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "N° POLES": "3"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": []
+  },
+  {
+    "name": "FHN0-C0A5-C0A5 - Fuse Holder",
+    "slug": "fhn0-c0a5-c0a5-fuse-holder",
+    "sourcePath": "/webshop/fhn0-c0a5-c0a5-fuse-holder.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/fhn0-c0a5-c0a5-fuse-holder.html",
+    "imageUrl": "/images/portafusibili.jpg",
+    "gallery": [
+      "/images/portafusibili.jpg"
+    ],
+    "shortDescription": "- Any other cable lengths available.",
+    "descriptionHtml": "N/A",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "TIPO CAVO": "PVC",
+      "CABLE": "Yes"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": []
+  },
+  {
+    "name": "08MA3A1Z - M8 connectors, 90° with PVC moulded cable",
+    "slug": "08ma3a1z-m8-connectors-90-with-pvc-moulded-cable",
+    "sourcePath": "/webshop/08ma3a1z-m8-connectors-90-with-pvc-moulded-cable.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/08ma3a1z-m8-connectors-90-with-pvc-moulded-cable.html",
+    "imageUrl": "/images/08ma3c1z.jpg",
+    "gallery": [
+      "/images/08ma3c1z.jpg"
+    ],
+    "shortDescription": "- Any other cable lengths available. - Material of Cable Jacket: PVC or PUR.",
+    "descriptionHtml": "N/A",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "MALE / FEMALE": "Male",
+      "N° POLES": "3",
+      "DIN/M1/M8/M12/CAB": "M8",
+      "STRAIGHT / ANGLED": "Angled",
+      "TIPO CAVO": "PVC",
+      "CABLE": "Yes"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": []
+  },
+  {
+    "name": "38712c.60",
+    "slug": "38712c-60",
+    "sourcePath": "/webshop/38712c-60.html",
+    "sourceUrl": "https://www.adcontact.se/webshop/38712c-60.html",
+    "imageUrl": "/images/Rb01c2_f3_3.jpg",
+    "gallery": [
+      "/images/Rb01c2_f3_3.jpg"
+    ],
+    "shortDescription": "tabs",
+    "descriptionHtml": "tabs",
+    "availability": "lead-time",
+    "availabilityNote": "Estimated delivery time 2-3 weeks",
+    "price": "Quote",
+    "specs": {
+      "Material": "brass",
+      "Plating": "clean",
+      "RoHS Conform": "Y",
+      "B": "8.8",
+      "D": "2.7",
+      "S": "0.8"
+    },
+    "contacts": [],
+    "matingConnectors": [],
+    "requiredComponents": [],
+    "accessories": [],
+    "drawings": []
+  }
+]
