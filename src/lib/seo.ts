@@ -13,6 +13,9 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.adcont
   "",
 );
 
+export const IS_OFFICIAL_SITE =
+  new URL(SITE_URL).hostname.replace(/^www\./, "") === "adcontact.se";
+
 export function absoluteUrl(path = "/"): string {
   if (/^https?:\/\//i.test(path)) return path;
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;

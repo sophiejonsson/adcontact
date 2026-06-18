@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { SITE_URL } from "@/lib/seo";
+import { IS_OFFICIAL_SITE, SITE_URL } from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
       "Specialist industrial component and wire-processing partner for Nordic manufacturers.",
   },
   robots: {
-    index: true,
-    follow: true,
+    index: IS_OFFICIAL_SITE,
+    follow: IS_OFFICIAL_SITE,
   },
 };
 
