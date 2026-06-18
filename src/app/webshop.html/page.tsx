@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import CatalogueCategoryPage from "@/components/catalogue/CatalogueCategoryPage";
 import type { CatalogueSearchParams } from "@/lib/magentoCatalogue";
 import { getWebshopRootCategory } from "@/lib/magentoCatalogue";
+import { absoluteUrl } from "@/lib/seo";
 
 type Props = {
   searchParams: Promise<CatalogueSearchParams>;
@@ -12,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = "Webshop — Industrial Components & Wire-Processing Equipment";
   const description =
     "Browse Adcontact's full catalogue of connectors, contacts, heat shrink tubing, crimp terminals and wire-processing equipment. Request a quote with expert technical support and fast Nordic delivery.";
-  const url = "https://www.adcontact.se/webshop.html";
+  const url = absoluteUrl("/webshop.html");
 
   return {
     title,

@@ -8,6 +8,16 @@ import {
   type CatalogueProduct,
 } from "@/lib/magentoCatalogue";
 
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.adcontact.se").replace(
+  /\/+$/,
+  "",
+);
+
+export function absoluteUrl(path = "/"): string {
+  if (/^https?:\/\//i.test(path)) return path;
+  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
 // Adcontact's positioning, reused as a consistent closing value proposition.
 const TAGLINE =
   "Specialist Nordic distributor of industrial components and wire-processing equipment.";

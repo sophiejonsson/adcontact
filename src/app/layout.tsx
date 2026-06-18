@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { SITE_URL } from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -11,6 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Adcontact, Industrial Components & Wire-Processing Solutions",
     template: "%s | Adcontact",
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_SE",
-    url: "https://www.adcontact.se",
+    url: SITE_URL,
     siteName: "Adcontact",
     title: "Adcontact | Industrial Components & Wire-Processing Solutions",
     description:

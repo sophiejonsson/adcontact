@@ -10,6 +10,7 @@ import {
   type CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
 import {
+  absoluteUrl,
   categoryMetaDescription,
   categoryTitle,
   productMetaDescription,
@@ -26,7 +27,7 @@ function pathFromSegments(segments: string[]) {
 }
 
 function canonical(path: string) {
-  return `https://www.adcontact.se${path}`;
+  return absoluteUrl(path);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

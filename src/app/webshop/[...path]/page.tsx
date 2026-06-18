@@ -10,6 +10,7 @@ import {
   webshopPathFromSegments,
 } from "@/lib/magentoCatalogue";
 import {
+  absoluteUrl,
   categoryMetaDescription,
   categoryTitle,
   productMetaDescription,
@@ -22,7 +23,7 @@ type Props = {
 };
 
 function canonical(path: string) {
-  return `https://www.adcontact.se${path}`;
+  return absoluteUrl(path);
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
