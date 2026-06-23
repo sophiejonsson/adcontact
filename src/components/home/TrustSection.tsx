@@ -150,11 +150,9 @@ export default function TrustSection() {
             </div>
 
             <div className="flex-1 overflow-hidden rounded-[28px] border border-white/10 bg-[#0b1c33] p-5 sm:p-6">
-              <div className="mb-6 flex items-center gap-3">
-                <span className="icon-tile-dark flex h-9 w-9 items-center justify-center rounded-xl">
-                  <Globe2 size={17} />
-                </span>
-                <p className="text-sm font-semibold text-white">
+              <div className="mb-6 flex items-center gap-2.5">
+                <Globe2 size={15} className="text-[#60a5fa]" strokeWidth={2} />
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#60a5fa]">
                   What this means for your team
                 </p>
               </div>
@@ -185,10 +183,10 @@ export default function TrustSection() {
                 })}
               </div>
 
-              <div className="mt-4 flex flex-wrap items-center gap-4 border-t border-white/10 pt-6">
+              <div className="mt-4 flex flex-col items-center gap-3 border-t border-white/10 pt-6 text-center sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 sm:text-left">
                 <Link
                   href="/about#quality"
-                  className="group inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0a1628] transition-colors hover:bg-[#eff6ff]"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0a1628] transition-colors hover:bg-[#eff6ff]"
                 >
                   Our quality approach
                   <ArrowUpRight

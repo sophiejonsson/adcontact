@@ -20,17 +20,36 @@ import {
   deutschSeriesByName,
 } from "@/data/deutschSeries";
 
-// The current manufacturer behind a brand-named category (e.g. the
-// "Deutsch" catalogue is now manufactured by TE Connectivity), matched by
-// the last segment of the catalogue route against the brand slug.
+// A URL-style slug derived from a brand's display name, so a route segment
+// like "te-connectivity" resolves to the brand whose stored slug is "deutsch"
+// (TE Connectivity manufactures the DEUTSCH catalogue).
+function brandNameSlug(brand: (typeof brands)[number]) {
+  return brand.name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+// The current manufacturer behind a brand-named category (e.g. the "Deutsch"
+// catalogue is now manufactured by TE Connectivity). Every page beneath a
+// brand category should carry that brand's logo, so we walk the route from the
+// deepest segment outward and return the closest brand ancestor — matching a
+// segment against either the brand slug or its name-derived slug.
 function brandForCategory(category: CatalogueCategory) {
-  const segment = category.route
-    ?.split("/")
-    .filter(Boolean)
-    .pop()
-    ?.replace(/\.html$/, "");
-  if (!segment) return undefined;
-  return brands.find((brand) => brand.slug === segment && brand.logo);
+  const segments =
+    category.route
+      ?.split("/")
+      .filter(Boolean)
+      .map((segment) => segment.replace(/\.html$/, "")) ?? [];
+
+  for (let i = segments.length - 1; i >= 0; i--) {
+    const segment = segments[i];
+    const brand = brands.find(
+      (b) => b.logo && (b.slug === segment || brandNameSlug(b) === segment),
+    );
+    if (brand) return brand;
+  }
+  return undefined;
 }
 
 // Product "Series" values (DT, DTM, HDP20 …) with counts, sorted by size.

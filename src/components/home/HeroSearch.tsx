@@ -31,7 +31,7 @@ export default function HeroSearch() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#0a1628] min-h-[420px] lg:min-h-[520px] flex items-center">
+    <section className="relative overflow-hidden bg-[#0a1628] min-h-[500px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] flex items-center">
       {/* Background video */}
       <video
         className="hero-background-video absolute inset-0 h-full w-full object-cover object-center"
@@ -54,14 +54,14 @@ export default function HeroSearch() {
       <div className="absolute inset-0 tech-grid opacity-40" />
 
       {/* Blue glow accents */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#2563eb] opacity-[0.06] rounded-full blur-3xl translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[#1d4ed8] opacity-[0.06] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-[#2563eb] opacity-[0.06] rounded-full blur-3xl translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] bg-[#1d4ed8] opacity-[0.06] rounded-full blur-3xl pointer-events-none" />
 
       {/* Content */}
-      <div className="relative max-w-[1440px] mx-auto px-6 py-14 lg:py-20 w-full">
+      <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-16 lg:py-20 w-full">
         <div className="max-w-3xl animate-fade-up">
           {/* Headline */}
-          <h1 className="text-[36px] lg:text-[50px] font-extrabold text-white leading-[1.05] tracking-[-0.035em] mb-5">
+          <h1 className="text-[34px] sm:text-[40px] md:text-[44px] lg:text-[50px] font-extrabold text-white leading-[1.08] tracking-[-0.03em] mb-4 sm:mb-5">
             Source the right component.{" "}
             <span className="bg-gradient-to-r from-[#60a5fa] to-[#3b82f6] bg-clip-text text-transparent">
               Build the right process.
@@ -69,43 +69,44 @@ export default function HeroSearch() {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-[#a3b2c7] text-base lg:text-lg leading-relaxed mb-7 max-w-2xl">
+          <p className="text-[#a3b2c7] text-[15px] sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-7 max-w-2xl">
             Industrial components, connection systems and wire-processing equipment, backed by
             technical support from people who understand the complete production chain.
           </p>
 
-          {/* Search */}
-          <form onSubmit={handleSearch} action="/products" method="GET" className="relative mb-6">
-            <div className="flex items-center bg-white rounded-2xl shadow-[0_8px_50px_rgba(0,0,0,0.35)] overflow-hidden border border-white/10 transition-shadow duration-200 focus-within:ring-2 focus-within:ring-[#2563eb]/60 focus-within:shadow-[0_8px_60px_rgba(37,99,235,0.35)]">
-              <div className="flex items-center gap-3 flex-1 px-5 py-4">
-                <Search size={20} className="text-[#9ca3af] flex-shrink-0" />
+          {/* Search — single-row inset pill at all sizes; button collapses to an icon on mobile */}
+          <form onSubmit={handleSearch} action="/products" method="GET" className="relative mb-5 sm:mb-6">
+            <div className="flex items-center bg-white rounded-2xl shadow-[0_8px_50px_rgba(0,0,0,0.35)] border border-white/10 transition-shadow duration-200 focus-within:ring-2 focus-within:ring-[#2563eb]/60 focus-within:shadow-[0_8px_60px_rgba(37,99,235,0.35)]">
+              <div className="flex items-center gap-2.5 sm:gap-3 flex-1 min-w-0 pl-4 sm:pl-5">
+                <Search size={18} className="text-[#9ca3af] flex-shrink-0" />
                 <input
                   type="text"
                   name="q"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search by product, brand, part number, application…"
-                  className="flex-1 text-[#111827] text-base placeholder:text-[#9ca3af] bg-transparent outline-none"
+                  placeholder="Search product, brand or part number…"
+                  className="flex-1 min-w-0 py-3.5 sm:py-4 text-[#111827] text-[15px] sm:text-base placeholder:text-[#9ca3af] bg-transparent outline-none"
                 />
               </div>
               <button
                 type="submit"
-                className="flex items-center gap-2 px-6 py-4 m-1.5 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold text-sm transition-colors flex-shrink-0"
+                aria-label="Search"
+                className="m-1.5 flex flex-shrink-0 items-center justify-center gap-2 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold text-sm transition-colors h-11 w-11 sm:h-auto sm:w-auto sm:px-6 sm:py-3"
               >
-                Search
-                <ArrowRight size={15} />
+                <span className="hidden sm:inline">Search</span>
+                <ArrowRight size={18} className="sm:size-[15px]" />
               </button>
             </div>
           </form>
 
-          {/* Quick links */}
-          <div className="flex items-center gap-1.5 overflow-x-auto whitespace-nowrap pb-1">
-            <span className="flex-shrink-0 text-xs text-[#64748b]">Quick search:</span>
+          {/* Quick links — compact wrapped cluster, fits two lines on mobile */}
+          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5 sm:gap-2">
+            <span className="text-[11px] sm:text-xs font-medium text-[#64748b]">Quick search:</span>
             {quickLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex-shrink-0 px-2.5 py-1.5 bg-[#0f2042]/80 hover:bg-[#1a2f5a] text-[#93c5fd] text-xs font-medium rounded-full border border-[#1e3a6e] hover:border-[#2563eb] transition-all duration-200 hover:-translate-y-0.5"
+                className="px-2.5 py-1 sm:px-3 sm:py-1.5 bg-[#0f2042]/80 hover:bg-[#1a2f5a] text-[#93c5fd] text-[11px] sm:text-xs font-medium rounded-full border border-[#1e3a6e] hover:border-[#2563eb] transition-all duration-200 hover:-translate-y-0.5"
               >
                 {link.label}
               </Link>
