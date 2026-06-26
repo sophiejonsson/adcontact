@@ -15,8 +15,8 @@ const proofPoints = [
     label: "Specialist industrial experience",
   },
   {
-    value: "5 markets",
-    label: "Sweden, Finland, Norway, Denmark and Estonia",
+    value: "Global",
+    label: "Customers supplied worldwide",
   },
   {
     value: "One partner",
