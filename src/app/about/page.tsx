@@ -24,9 +24,9 @@ const offices = [
 const milestones = [
   { year: "1985", label: "Founded in Stockholm as specialist component distributor" },
   { year: "1998", label: "Added wire-processing equipment to product portfolio" },
-  { year: "2005", label: "Expanded to Finland and Norway markets" },
+  { year: "2005", label: "Expanded product portfolio and customer base across Northern Europe" },
   { year: "2012", label: "ISO 9001 quality management system certified" },
-  { year: "2018", label: "Added Denmark and Estonia to Nordic coverage" },
+  { year: "2018", label: "Extended sales reach; supply now covering customers globally" },
   { year: "2024", label: "ISO 9001:2015 recertification" },
 ];
 
@@ -91,7 +91,7 @@ export default function AboutPage() {
             <div className="space-y-4">
               {[
                 { icon: Shield, label: "ISO 9001:2015", sub: "Certified quality management" },
-                { icon: Globe2, label: "5 Nordic markets", sub: "Sweden, Finland, Norway, Denmark, Estonia" },
+                { icon: Globe2, label: "Global coverage", sub: "Customers supplied worldwide" },
                 { icon: Users, label: "Technical sales team", sub: "Application support, not just logistics" },
                 { icon: Award, label: "40+ years", sub: "Specialist component distribution since 1985" },
               ].map((item) => {
@@ -155,7 +155,7 @@ export default function AboutPage() {
                 <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-widest mb-3">Quality management</p>
                 <h2 className="text-2xl font-bold text-white mb-4">ISO 9001:2015 Certified</h2>
                 <p className="text-[#94a3b8] text-sm leading-relaxed">
-                  Our quality management system is certified to ISO 9001:2015 by an accredited certification body. The scope covers procurement, inventory management, distribution, and technical support of industrial components and production equipment across the Nordic region.
+                  Our quality management system is certified to ISO 9001:2015 by an accredited certification body. The scope covers procurement, inventory management, distribution, and technical support of industrial components and production equipment.
                 </p>
               </div>
               <div className="space-y-3">
@@ -250,7 +250,7 @@ export default function AboutPage() {
               <div>
                 <h3 className="text-sm font-semibold text-[#0a1628] mb-2">Get in touch</h3>
                 <p className="text-xs text-[#6b7280] leading-relaxed">
-                  Our technical sales team covers all five Nordic markets. Reach us by phone, email, or through our contact form.
+                  We supply customers worldwide. Reach us by phone, email, or through our contact form.
                 </p>
               </div>
               <Link
