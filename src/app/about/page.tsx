@@ -12,12 +12,24 @@ export const metadata: Metadata = {
 
 const offices = [
   {
-    country: "Sweden (HQ)",
+    country: "Estonia — Headquarters",
+    company: "Gammeter OÜ",
+    address: "Keki tn 6/1",
+    city: "76606 Keila, Estonia",
+    phone: "+372 671 22 51",
+    phoneHref: "tel:+3726712251",
+    email: "info@gammeter.ee",
+    topics: ["Admin", "Finance", "Company enquiries"],
+  },
+  {
+    country: "Sweden — Sales Office",
     company: "Adcontact AB",
     address: "Ekbacksvägen 22",
-    city: "SE-168 69 Bromma",
+    city: "SE-168 69 Bromma, Sweden",
     phone: "+46 (0)8-445 36 00",
+    phoneHref: "tel:+46084453600",
     email: "info@adcontact.se",
+    topics: ["Sales", "Quotes", "Technical support"],
   },
 ];
 
@@ -235,12 +247,19 @@ export default function AboutPage() {
                 <p className="text-xs text-[#374151] mb-0.5">{office.company}</p>
                 <p className="text-xs text-[#6b7280]">{office.address}</p>
                 <p className="text-xs text-[#6b7280] mb-3">{office.city}</p>
-                <a href={`tel:${office.phone.replace(/\s/g, "")}`} className="text-xs text-[#2563eb] hover:underline block mb-0.5">
+                <a href={office.phoneHref} className="text-xs text-[#2563eb] hover:underline block mb-0.5">
                   {office.phone}
                 </a>
-                <a href={`mailto:${office.email}`} className="text-xs text-[#2563eb] hover:underline block">
+                <a href={`mailto:${office.email}`} className="text-xs text-[#2563eb] hover:underline block mb-3">
                   {office.email}
                 </a>
+                <div className="flex flex-wrap gap-1">
+                  {office.topics.map((topic) => (
+                    <span key={topic} className="text-[10px] px-2 py-0.5 rounded-full border border-[#bfdbfe] bg-[#eff6ff] text-[#2563eb]">
+                      {topic}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
 
