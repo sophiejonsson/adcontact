@@ -10,7 +10,6 @@ const offices = [
     phoneHref: "tel:+3726712251",
     email: "info@gammeter.ee",
     topics: ["Admin", "Finance", "Company enquiries"],
-    topicsNote: "Reach out here for administrative and company-level questions.",
   },
   {
     label: "Sweden — Sales Office",
@@ -20,7 +19,6 @@ const offices = [
     phoneHref: "tel:+46084453600",
     email: "info@adcontact.se",
     topics: ["Sales", "Quotes", "Technical support"],
-    topicsNote: "Contact us here for product enquiries, pricing and application support.",
   },
 ];
 
