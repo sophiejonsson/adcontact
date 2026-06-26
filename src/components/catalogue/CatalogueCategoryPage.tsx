@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Boxes, Package, Search } from "lucide-react";
+import { ArrowRight, Boxes, Package } from "lucide-react";
 import CatalogueProductBrowser from "@/components/catalogue/CatalogueProductBrowser";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import {
@@ -477,43 +477,28 @@ export default function CatalogueCategoryPage({
             crumbs={breadcrumbCrumbs}
           />
 
-          <div className="mt-5 grid gap-6 lg:grid-cols-[1fr_320px] lg:items-end">
-            <div>
-              {brand?.logo && (
-                <span className="mb-4 inline-flex items-center gap-2.5 rounded-lg bg-white px-3.5 py-2 shadow-sm">
-                  <Image
-                    src={brand.logo}
-                    alt={brand.name}
-                    width={132}
-                    height={28}
-                    unoptimized
-                    className="h-6 w-auto object-contain"
-                  />
-                </span>
-              )}
-              <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">
-                {title}
-              </h1>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-[#94a3b8]">
-                {description ?? categoryIntro(category)}
-              </p>
-              <p className="mt-4 text-sm font-semibold text-blue-200">
-                {children.length.toLocaleString()} categories · {productCount.toLocaleString()} catalogue items
-              </p>
-            </div>
-
-            <form action={category.route ?? "/webshop.html"} method="GET" role="search" className="relative">
-              <Search
-                size={17}
-                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#94a3b8]"
-              />
-              <input
-                name="q"
-                aria-label="Search catalogue"
-                placeholder="Search part number..."
-                className="h-12 w-full rounded-xl border border-white/15 bg-white/10 pl-11 pr-4 text-sm text-white outline-none placeholder:text-[#94a3b8] focus:border-[#60a5fa] focus:bg-white/15"
-              />
-            </form>
+          <div className="mt-5">
+            {brand?.logo && (
+              <span className="mb-4 inline-flex items-center gap-2.5 rounded-lg bg-white px-3.5 py-2 shadow-sm">
+                <Image
+                  src={brand.logo}
+                  alt={brand.name}
+                  width={132}
+                  height={28}
+                  unoptimized
+                  className="h-6 w-auto object-contain"
+                />
+              </span>
+            )}
+            <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">
+              {title}
+            </h1>
+            <p className="mt-4 max-w-3xl text-base leading-7 text-[#94a3b8]">
+              {description ?? categoryIntro(category)}
+            </p>
+            <p className="mt-4 text-sm font-semibold text-blue-200">
+              {children.length.toLocaleString()} categories · {productCount.toLocaleString()} catalogue items
+            </p>
           </div>
         </div>
       </section>
