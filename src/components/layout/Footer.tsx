@@ -54,13 +54,13 @@ export default function Footer() {
               Request a quote
               <ArrowRight size={14} />
             </Link>
-            <a
-              href="tel:+46084453600"
+            <Link
+              href="/contact"
               className="flex items-center gap-2 px-5 py-2.5 bg-[#1a2f5a] hover:bg-[#1e3a6e] text-white text-sm font-medium rounded-md transition-colors"
             >
               <Phone size={14} />
               Call us
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2">
                 <Phone size={12} className="text-[#2563eb]" />
-                <a href="tel:+46084453600" className="hover:text-white transition-colors">+46 (0)8-445 36 00</a>
+                <a href="/contact" className="hover:text-white transition-colors">+46 (0)8-445 36 00</a>
               </div>
               <div className="flex items-center gap-2">
                 <Mail size={12} className="text-[#2563eb]" />

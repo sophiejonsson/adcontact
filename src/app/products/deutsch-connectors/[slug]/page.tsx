@@ -281,7 +281,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                 <ArrowRight size={15} />
               </Link>
               <a
-                href="tel:+46084453600"
+                href="/contact"
                 className="flex items-center justify-center gap-2 px-6 py-3.5 bg-white hover:bg-[#f8fafc] border border-[#e5e7eb] text-[#374151] font-medium rounded-lg transition-colors"
               >
                 <Phone size={14} />

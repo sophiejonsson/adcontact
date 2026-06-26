@@ -222,7 +222,7 @@ export default async function StorefrontProductPage({
                 <ArrowRight size={15} />
               </Link>
               <a
-                href="tel:+46084453600"
+                href="/contact"
                 className="flex items-center justify-center gap-2 rounded-lg border border-[#e5e7eb] bg-white px-6 py-3.5 font-medium text-[#374151]"
               >
                 <Phone size={14} />
