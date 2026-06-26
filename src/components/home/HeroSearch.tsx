@@ -17,6 +17,7 @@ const trustBadges = [
   "Specialist supplier since 1985",
   "ISO 9001:2015 certified",
   "Global coverage",
+  "High availability on stock",
 ];
 
 export default function HeroSearch() {
