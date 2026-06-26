@@ -31,7 +31,7 @@ export default function HeroSearch() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#0a1628] min-h-[500px] sm:min-h-[520px] md:min-h-[540px] lg:min-h-[400px] flex items-center">
+    <section className="relative overflow-hidden bg-[#0a1628] min-h-[500px] sm:min-h-[520px] md:min-h-[540px] lg:min-h-[560px] flex items-center">
       {/* Background video */}
       <video
         className="hero-background-video absolute inset-0 h-full w-full object-cover object-center"
