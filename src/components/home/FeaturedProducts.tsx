@@ -32,6 +32,8 @@ export default function FeaturedProducts() {
           </div>
           <Link
             href="/webshop.html"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex w-full sm:w-fit items-center justify-center sm:justify-start gap-2 rounded-lg sm:rounded-full border border-[#dbe3ee] bg-white px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-[#0a1628] transition-all hover:border-[#2563eb] hover:text-[#2563eb] hover:shadow-sm min-h-[44px] sm:min-h-auto mt-3 lg:mt-0"
           >
             View all featured products
@@ -45,6 +47,8 @@ export default function FeaturedProducts() {
         <div className="grid gap-5 lg:grid-cols-[1.05fr_1fr]">
           <Link
             href={leadProduct.href}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative flex min-h-[320px] sm:min-h-[360px] md:min-h-[400px] lg:min-h-[440px] overflow-hidden rounded-[20px] sm:rounded-[28px] bg-[#0a1628] p-4 sm:p-6 md:p-8"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_30%,rgba(37,99,235,0.24),transparent_42%)]" />
@@ -85,6 +89,8 @@ export default function FeaturedProducts() {
               <Link
                 key={product.href}
                 href={product.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex min-h-[180px] sm:min-h-[220px] md:min-h-0 flex-col overflow-hidden rounded-[16px] sm:rounded-[24px] border border-[#e5eaf0] bg-[#f8fafc] p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#bfdbfe] hover:bg-white hover:shadow-[0_18px_45px_-20px_rgba(15,23,42,0.28)]"
               >
                 <div className="relative min-h-[100px] sm:min-h-0 flex-1">

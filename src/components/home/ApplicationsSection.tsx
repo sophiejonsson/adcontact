@@ -66,6 +66,8 @@ export default function ApplicationsSection() {
                 <Link
                   key={path.title}
                   href={path.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex flex-1 items-start gap-3 sm:gap-5 rounded-[16px] sm:rounded-2xl border border-white/10 bg-white/[0.04] p-4 sm:p-6 md:p-7 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#2563eb]/50 hover:bg-white/[0.07]"
                 >
                   <span className="icon-tile-dark flex h-10 w-10 sm:h-12 sm:w-12 flex-none items-center justify-center rounded-lg sm:rounded-xl">

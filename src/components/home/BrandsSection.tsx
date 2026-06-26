@@ -47,6 +47,8 @@ export default function BrandsSection() {
             </p>
             <Link
               href="/brands"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#2563eb]"
             >
               View the complete linecard

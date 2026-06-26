@@ -106,6 +106,8 @@ export default function HeroSearch() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="px-2.5 py-1 sm:px-3 sm:py-1.5 bg-[#0f2042]/80 hover:bg-[#1a2f5a] text-[#93c5fd] text-[11px] sm:text-xs font-medium rounded-full border border-[#1e3a6e] hover:border-[#2563eb] transition-all duration-200 hover:-translate-y-0.5"
                 >
                   {link.label}
