@@ -100,14 +100,9 @@ export const deutschSeries: DeutschSeriesInfo[] = [
     name: "Jiffy Splice",
     features: ["Contact sizes 4 (100 A), 12 (25 A) & 16 (13 A)", "6–20 AWG", "1-cavity arrangement"],
   },
-  {
-    name: "AMPSEAL Series",
-    blurb: "High-reliability sealed connectors for demanding power and signal applications.",
-  },
-  {
-    name: "AMPSEAL 16 Series",
-    blurb: "Compact 16-series sealed connectors for signal and low-current applications.",
-  },
+  // AMPSEAL and AMPSEAL 16 are TE Connectivity series, not part of the DEUTSCH
+  // series family, so they are intentionally excluded here and filtered out of
+  // the "Browse by series" facets in CatalogueCategoryPage.
 ];
 
 export const deutschSeriesByName = new Map(

@@ -52,6 +52,10 @@ function brandForCategory(category: CatalogueCategory) {
   return undefined;
 }
 
+// AMPSEAL and AMPSEAL 16 are TE Connectivity series, not part of the DEUTSCH
+// series family, so they are excluded from the "Browse by series" facets.
+const EXCLUDED_SERIES = /^ampseal\b/i;
+
 // Product "Series" values (DT, DTM, HDP20 …) with counts, sorted by size.
 function getSeriesFacets(category: CatalogueCategory | undefined) {
   if (!category) return [] as Array<{ label: string; count: number }>;
@@ -63,6 +67,7 @@ function getSeriesFacets(category: CatalogueCategory | undefined) {
     const raw = product.attributes?.["Series"];
     if (!raw) continue;
     for (const value of raw.split(",").map((s) => s.trim()).filter(Boolean)) {
+      if (EXCLUDED_SERIES.test(value)) continue;
       counts.set(value, (counts.get(value) ?? 0) + 1);
     }
   }
