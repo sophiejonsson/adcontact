@@ -15,7 +15,7 @@ const proofPoints = [
     label: "Specialist industrial experience",
   },
   {
-    value: "Global",
+    value: "Global coverage",
     label: "Customers supplied worldwide",
   },
   {
