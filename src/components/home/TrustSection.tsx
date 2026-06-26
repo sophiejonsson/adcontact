@@ -19,8 +19,8 @@ const proofPoints = [
     label: "Customers supplied worldwide",
   },
   {
-    value: "One partner",
-    label: "Components, tooling and production equipment",
+    value: '"One stop shop"',
+    label: "One partner for components, tooling and production equipment",
   },
 ];
 
