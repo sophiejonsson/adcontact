@@ -99,7 +99,7 @@ export default function Footer() {
             </div>
             <div className="flex gap-2 mt-5">
               <a
-                href="https://www.linkedin.com"
+                href="https://www.linkedin.com/company/adcontact-gammeter/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 bg-[#1a2f5a] hover:bg-[#2563eb] rounded-md flex items-center justify-center transition-colors text-xs font-bold text-[#60a5fa]"
