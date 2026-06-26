@@ -157,3 +157,4 @@ export default async function BrandPage({ params }: Props) {
     </div>
   );
 }
+ 
