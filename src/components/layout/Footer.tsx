@@ -19,12 +19,12 @@ const footerLinks = {
     { label: "Ultrasonic Welding", href: "/webshop/production-equipment/ultrasonic-welding.html" },
   ],
   Brands: [
-    { label: "Deutsch", href: "/webshop/components/sealed-connectors/deutsch.html" },
-    { label: "TE Connectivity", href: "/webshop/components/sealed-connectors/te-connectivity.html" },
-    { label: "Stocko", href: "/brands/stocko" },
-    { label: "DSG-Canusa", href: "/brands/dsg-canusa" },
-    { label: "Mecal", href: "/brands/mecal" },
-    { label: "Zoller & Fröhlich", href: "/brands/zoller-frohlich" },
+    { label: "Deutsch", href: "/brands" },
+    { label: "TE Connectivity", href: "/brands" },
+    { label: "Stocko", href: "/brands" },
+    { label: "DSG-Canusa", href: "/brands" },
+    { label: "Mecal", href: "/brands" },
+    { label: "Zoller & Fröhlich", href: "/brands" },
     { label: "View all brands →", href: "/brands" },
   ],
   Company: [
