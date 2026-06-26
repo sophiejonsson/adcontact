@@ -22,12 +22,11 @@ const offices = [
 ];
 
 const milestones = [
-  { year: "1985", label: "Founded in Stockholm as specialist component distributor" },
-  { year: "1998", label: "Added wire-processing equipment to product portfolio" },
-  { year: "2005", label: "Expanded product portfolio and customer base across Northern Europe" },
-  { year: "2012", label: "ISO 9001 quality management system certified" },
-  { year: "2018", label: "Extended sales reach; supply now covering customers globally" },
-  { year: "2024", label: "ISO 9001:2015 recertification" },
+  { year: "1985", label: "Founded in Stockholm as a specialist distributor of industrial components" },
+  { year: "1989", label: "Added wire-processing systems to the product portfolio" },
+  { year: "1999", label: "ISO 9001 quality management system certified" },
+  { year: "2009", label: "Acquired Gammeter OY, expanding operations into Finland and Estonia" },
+  { year: "2017", label: "Established distribution centre in Estonia, which became the group headquarters" },
 ];
 
 const capabilities = [
