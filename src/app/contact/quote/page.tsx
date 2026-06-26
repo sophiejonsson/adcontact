@@ -82,7 +82,7 @@ export default async function QuotePage({
             <div className="bg-white border border-[#e2e8f0] rounded-xl p-5">
               <h3 className="text-sm font-semibold text-[#0a1628] mb-2">Global coverage</h3>
               <p className="text-xs text-[#6b7280] leading-relaxed">
-                We supply customers worldwide. Wherever you are based, reach out and we will find the right solution for your needs.
+                We supply customers worldwide. Wherever you are based, get in touch and we will find the right solution for your needs.
               </p>
             </div>
           </div>
