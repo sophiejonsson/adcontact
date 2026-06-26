@@ -135,7 +135,7 @@ export default function StockoPage() {
           { label: "Stock", value: "Nordic, Bromma" },
           { label: "Support", value: "Technical sales" },
         ]}
-        primaryCta={{ label: "Request a quote", href: "/contact" }}
+        primaryCta={{ label: "Request a quote", href: "/contact/quote" }}
         secondaryCta={{ label: "Browse families", href: "#catalogue" }}
       />
 

@@ -653,7 +653,7 @@ export default function DeutschConnectorsPage() {
 
               <div className="flex flex-wrap gap-3">
                 <Link
-                  href="/contact"
+                  href="/contact/quote"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-[#f59e0b] hover:bg-[#d97706] text-[#0a1628] font-semibold text-sm rounded-lg transition-colors"
                 >
                   Request a quote
@@ -1075,7 +1075,7 @@ export default function DeutschConnectorsPage() {
             </div>
             <div className="flex flex-col gap-3 flex-shrink-0">
               <Link
-                href="/contact"
+                href="/contact/quote"
                 className="flex items-center gap-2 px-7 py-3.5 bg-[#f59e0b] hover:bg-[#d97706] text-[#0a1628] font-semibold rounded-lg transition-colors"
               >
                 Request a quote

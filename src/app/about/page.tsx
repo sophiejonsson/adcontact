@@ -254,7 +254,7 @@ export default function AboutPage() {
                 </p>
               </div>
               <Link
-                href="/contact"
+                href="/contact/quote"
                 className="mt-4 flex items-center gap-2 text-sm font-semibold text-[#2563eb] hover:text-[#1d4ed8] transition-colors"
               >
                 Contact us <ArrowRight size={13} />

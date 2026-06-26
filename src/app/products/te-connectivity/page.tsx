@@ -138,7 +138,7 @@ export default function TeConnectivityPage() {
           { label: "Stock", value: "Nordic, Bromma" },
           { label: "Support", value: "Technical sales" },
         ]}
-        primaryCta={{ label: "Request a quote", href: "/contact" }}
+        primaryCta={{ label: "Request a quote", href: "/contact/quote" }}
         secondaryCta={{ label: `Browse all ${TOTAL.toLocaleString()} products`, href: "#catalogue" }}
       />
 

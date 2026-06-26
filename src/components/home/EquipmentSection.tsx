@@ -119,7 +119,7 @@ export default function EquipmentSection() {
             </p>
           </div>
           <Link
-            href="/contact?subject=production-equipment"
+            href="/contact/quote?subject=production-equipment"
             className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold rounded-md transition-colors"
           >
             Talk to a specialist

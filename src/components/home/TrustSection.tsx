@@ -197,7 +197,7 @@ export default function TrustSection() {
                   />
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/contact/quote"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm font-semibold text-[#93c5fd] transition-colors hover:text-white"

@@ -107,7 +107,7 @@ export function BrandCTA({
         </div>
         <div className="flex flex-shrink-0 flex-col gap-3">
           <Link
-            href="/contact"
+            href="/contact/quote"
             className="flex items-center gap-2 rounded-lg bg-[#f59e0b] px-7 py-3.5 font-semibold text-[#0a1628] transition-colors hover:bg-[#d97706]"
           >
             Request a quote

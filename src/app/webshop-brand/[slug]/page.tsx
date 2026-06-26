@@ -80,7 +80,7 @@ export default async function WebshopBrandPage({ params }: Props) {
                   Browse catalogue <ArrowRight size={16} />
                 </a>
                 <Link
-                  href="/contact"
+                  href="/contact/quote"
                   className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-5 py-3 text-sm font-bold text-white hover:bg-white/10"
                 >
                   <Mail size={16} /> Ask a product specialist
@@ -193,7 +193,7 @@ export default async function WebshopBrandPage({ params }: Props) {
               <p className="mt-2 text-sm text-slate-300">Send us your requirements, drawing, or existing part number.</p>
             </div>
             <Link
-              href="/contact"
+              href="/contact/quote"
               className="btn-elevate inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-[#0a1628] hover:bg-blue-50"
             >
               Contact Adcontact <ArrowRight size={15} />

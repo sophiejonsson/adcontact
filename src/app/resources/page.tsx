@@ -118,7 +118,7 @@ export default function ResourcesPage() {
             We can provide datasheets, application notes, CAD data, 3D models, and compliance documents for all products we supply. Contact us with the part number or brand.
           </p>
           <Link
-            href="/contact"
+            href="/contact/quote"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold rounded-md transition-colors"
           >
             Request documentation

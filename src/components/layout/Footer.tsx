@@ -144,7 +144,7 @@ export default function Footer() {
             <span>·</span>
             <Link href="/about#quality" className="hover:text-[#64748b] transition-colors">Quality Policy</Link>
             <span>·</span>
-            <Link href="/contact?subject=privacy" className="hover:text-[#64748b] transition-colors">Privacy</Link>
+            <Link href="/contact" className="hover:text-[#64748b] transition-colors">Privacy</Link>
           </div>
         </div>
       </div>

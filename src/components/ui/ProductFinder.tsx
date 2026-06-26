@@ -209,7 +209,7 @@ export default function ProductFinder() {
                 No results found for &quot;{query}&quot;
               </p>
               <Link
-                href="/contact"
+                href="/contact/quote"
                 className="inline-flex items-center gap-2 px-4 py-2 bg-[#2563eb] text-white text-sm font-medium rounded-md hover:bg-[#1d4ed8] transition-colors"
               >
                 <ShoppingCart size={14} />

@@ -89,7 +89,7 @@ export default async function ResourceDetailPage({ params }: Props) {
                   Contact our technical team to receive the full guide, checklist, or documentation. We can provide application-specific versions and formats suited to your procurement or engineering requirements.
                 </p>
                 <Link
-                  href="/contact"
+                  href="/contact/quote"
                   className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-medium rounded-md transition-colors"
                 >
                   Request full document
@@ -136,7 +136,7 @@ export default async function ResourceDetailPage({ params }: Props) {
                 Our technical team can advise on component selection, application fit, and compliance for your specific production or design requirements.
               </p>
               <Link
-                href="/contact"
+                href="/contact/quote"
                 className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold rounded-lg transition-colors mb-3"
               >
                 Talk to a specialist

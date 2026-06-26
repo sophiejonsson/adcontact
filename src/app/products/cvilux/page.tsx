@@ -133,7 +133,7 @@ export default function CviluxPage() {
           { label: "Tooling", value: "Desk-top & hand" },
           { label: "Support", value: "Technical sales" },
         ]}
-        primaryCta={{ label: "Request a quote", href: "/contact" }}
+        primaryCta={{ label: "Request a quote", href: "/contact/quote" }}
         secondaryCta={{ label: "Browse families", href: "#overview" }}
       />
 
