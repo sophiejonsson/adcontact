@@ -80,7 +80,7 @@ export default async function QuotePage({
             </div>
 
             <div className="bg-white border border-[#e2e8f0] rounded-xl p-5">
-              <h3 className="text-sm font-semibold text-[#0a1628] mb-3">Nordic coverage</h3>
+              <h3 className="text-sm font-semibold text-[#0a1628] mb-3">Global coverage</h3>
               {["Sweden", "Finland", "Norway", "Denmark", "Estonia"].map((country) => (
                 <div
                   key={country}
