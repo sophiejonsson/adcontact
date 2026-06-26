@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronRight, ArrowRight, Phone } from "lucide-react";
+import { ChevronRight, ArrowRight, Phone, ArrowUpRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export type Crumb = { label: string; href?: string };
@@ -22,6 +22,7 @@ type BrandHeroProps = {
   stats: HeroStat[];
   primaryCta: HeroCta;
   secondaryCta: HeroCta;
+  shopUrl?: string;
 };
 
 export default function BrandHero({
@@ -37,6 +38,7 @@ export default function BrandHero({
   stats,
   primaryCta,
   secondaryCta,
+  shopUrl,
 }: BrandHeroProps) {
   return (
     <div className="relative overflow-hidden bg-[#0a1628] text-white">
@@ -148,6 +150,23 @@ export default function BrandHero({
                 Technical support
               </a>
             </div>
+
+            {shopUrl && (
+              <div className="mt-5 flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3.5">
+                <span className="text-sm text-[#94a3b8]">
+                  Can&apos;t find what you&apos;re looking for? Browse the full range directly with the manufacturer.
+                </span>
+                <a
+                  href={shopUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-sm font-semibold text-[#fbbf24] hover:text-[#f59e0b] transition-colors"
+                >
+                  Go to partner shop
+                  <ArrowUpRight size={14} />
+                </a>
+              </div>
+            )}
           </div>
 
           {/* Right, stats grid */}

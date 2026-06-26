@@ -137,6 +137,7 @@ export default function StockoPage() {
         ]}
         primaryCta={{ label: "Request a quote", href: "/contact/quote" }}
         secondaryCta={{ label: "Browse families", href: "#catalogue" }}
+        shopUrl="https://www.stocko-contact.com/en/products.html"
       />
 
       <BrandJumpNav

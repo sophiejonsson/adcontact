@@ -135,6 +135,7 @@ export default function CviluxPage() {
         ]}
         primaryCta={{ label: "Request a quote", href: "/contact/quote" }}
         secondaryCta={{ label: "Browse families", href: "#overview" }}
+        shopUrl="https://www.cvilux.com/products"
       />
 
       <BrandJumpNav
