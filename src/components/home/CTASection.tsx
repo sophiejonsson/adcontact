@@ -44,50 +44,50 @@ export default function CTASection() {
               {offices.map((office) => (
                 <div
                   key={office.label}
-                  className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.05] p-4 sm:p-5 gap-4"
+                  className="flex flex-col rounded-2xl border border-white/20 bg-white/[0.08] p-5 sm:p-6 gap-5"
                 >
                   {/* Header */}
                   <div>
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <MapPin size={11} className="text-[#2563eb] flex-shrink-0" />
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#60a5fa]">
+                    <div className="flex items-center gap-1.5 mb-2.5">
+                      <MapPin size={12} className="text-[#60a5fa] flex-shrink-0" />
+                      <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#60a5fa]">
                         {office.label}
                       </span>
                     </div>
-                    <p className="text-sm font-bold text-white">{office.company}</p>
-                    <p className="mt-0.5 text-[11px] leading-5 text-[#64748b]">
+                    <p className="text-base font-bold text-white">{office.company}</p>
+                    <p className="mt-1 text-sm leading-6 text-[#94a3b8]">
                       {office.address[0]}<br />{office.address[1]}
                     </p>
                   </div>
 
                   {/* Contact */}
-                  <div className="flex flex-col gap-1.5 border-t border-white/[0.07] pt-3.5">
+                  <div className="flex flex-col gap-2.5 border-t border-white/15 pt-4">
                     <a
                       href={office.phoneHref}
-                      className="flex items-center gap-2 text-xs text-[#94a3b8] hover:text-white transition-colors"
+                      className="flex items-center gap-2.5 text-sm text-[#cbd5e1] hover:text-white transition-colors"
                     >
-                      <Phone size={11} className="text-[#2563eb] flex-shrink-0" />
+                      <Phone size={13} className="text-[#60a5fa] flex-shrink-0" />
                       {office.phone}
                     </a>
                     <a
                       href={`mailto:${office.email}`}
-                      className="flex items-center gap-2 text-xs text-[#94a3b8] hover:text-white transition-colors"
+                      className="flex items-center gap-2.5 text-sm text-[#cbd5e1] hover:text-white transition-colors"
                     >
-                      <Mail size={11} className="text-[#2563eb] flex-shrink-0" />
+                      <Mail size={13} className="text-[#60a5fa] flex-shrink-0" />
                       {office.email}
                     </a>
                   </div>
 
                   {/* Topics */}
-                  <div className="border-t border-white/[0.07] pt-3.5">
-                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#475569]">
+                  <div className="border-t border-white/15 pt-4">
+                    <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#64748b]">
                       Contact here for
                     </p>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-wrap gap-2">
                       {office.topics.map((t) => (
                         <span
                           key={t}
-                          className="rounded-full border border-[#1e3a6e] bg-[#0f2042]/70 px-2.5 py-0.5 text-[11px] font-medium text-[#93c5fd]"
+                          className="rounded-full border border-[#2563eb]/50 bg-[#1e3a6e]/60 px-3 py-1 text-xs font-medium text-[#93c5fd]"
                         >
                           {t}
                         </span>
