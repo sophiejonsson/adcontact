@@ -18,6 +18,10 @@ import {
   DEUTSCH_SERIES_CATEGORY_ROUTE,
   DEUTSCH_SERIES_INTRO,
   deutschSeriesByName,
+  TE_CONNECTIVITY_SERIES_CATEGORY_ROUTE,
+  TE_CONNECTIVITY_SERIES_INTRO,
+  teConnectivitySeriesByName,
+  type DeutschSeriesInfo,
 } from "@/data/deutschSeries";
 
 // A URL-style slug derived from a brand's display name, so a route segment
@@ -53,11 +57,12 @@ function brandForCategory(category: CatalogueCategory) {
 }
 
 // AMPSEAL and AMPSEAL 16 are TE Connectivity series, not part of the DEUTSCH
-// series family, so they are excluded from the "Browse by series" facets.
-const EXCLUDED_SERIES = /^ampseal\b/i;
+// series family — excluded from the DEUTSCH facets, surfaced on the TE page.
+const AMPSEAL_SERIES = /^ampseal\b/i;
 
 // Product "Series" values (DT, DTM, HDP20 …) with counts, sorted by size.
-function getSeriesFacets(category: CatalogueCategory | undefined) {
+// `exclude` drops matching series (e.g. AMPSEAL from the DEUTSCH hub).
+function getSeriesFacets(category: CatalogueCategory | undefined, exclude?: RegExp) {
   if (!category) return [] as Array<{ label: string; count: number }>;
   const products = getCategoryProducts(category, undefined, {
     includeDescendantsWhenEmpty: true,
@@ -67,13 +72,54 @@ function getSeriesFacets(category: CatalogueCategory | undefined) {
     const raw = product.attributes?.["Series"];
     if (!raw) continue;
     for (const value of raw.split(",").map((s) => s.trim()).filter(Boolean)) {
-      if (EXCLUDED_SERIES.test(value)) continue;
+      if (exclude && exclude.test(value)) continue;
       counts.set(value, (counts.get(value) ?? 0) + 1);
     }
   }
   return [...counts.entries()]
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
     .map(([label, count]) => ({ label, count }));
+}
+
+// "Browse by series" configuration for the brand hubs whose products carry a
+// "Series" attribute. Each hub defines where its series live and how to
+// present them.
+type SeriesPageConfig = {
+  target: CatalogueCategory | undefined;
+  intro: string;
+  seriesByName: Map<string, DeutschSeriesInfo>;
+  exclude?: RegExp;
+  fallbackBlurb: string;
+};
+
+function getSeriesPageConfig(
+  category: CatalogueCategory,
+  children: CatalogueCategory[],
+): SeriesPageConfig | undefined {
+  // DEUTSCH: series live in the largest child (Connectors). AMPSEAL is excluded
+  // because those are TE Connectivity series.
+  if (category.route === DEUTSCH_SERIES_CATEGORY_ROUTE) {
+    const target = [...children].sort(
+      (a, b) => getCategoryProductCount(b) - getCategoryProductCount(a),
+    )[0];
+    return {
+      target,
+      intro: DEUTSCH_SERIES_INTRO,
+      seriesByName: deutschSeriesByName,
+      exclude: AMPSEAL_SERIES,
+      fallbackBlurb: "DEUTSCH sealed connector series.",
+    };
+  }
+  // TE Connectivity: products (the AMPSEAL family) live directly in this category.
+  if (category.route === TE_CONNECTIVITY_SERIES_CATEGORY_ROUTE) {
+    return {
+      target: category,
+      intro: TE_CONNECTIVITY_SERIES_INTRO,
+      seriesByName: teConnectivitySeriesByName,
+      fallbackBlurb: "TE Connectivity sealed connector series.",
+    };
+  }
+  return undefined;
 }
 
 type VisualLink = {
@@ -295,9 +341,15 @@ function ImageShowcase({ images, title }: { images: string[]; title: string }) {
 function SeriesSection({
   facets,
   targetRoute,
+  intro,
+  seriesByName,
+  fallbackBlurb,
 }: {
   facets: Array<{ label: string; count: number }>;
   targetRoute: string;
+  intro: string;
+  seriesByName: Map<string, DeutschSeriesInfo>;
+  fallbackBlurb: string;
 }) {
   return (
     <section className="mb-14">
@@ -313,11 +365,11 @@ function SeriesSection({
         </span>
       </div>
       <p className="mb-6 max-w-3xl text-sm leading-6 text-[#64748b]">
-        {DEUTSCH_SERIES_INTRO}
+        {intro}
       </p>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {facets.map(({ label, count }) => {
-          const info = deutschSeriesByName.get(label);
+          const info = seriesByName.get(label);
           return (
             <Link
               key={label}
@@ -347,7 +399,7 @@ function SeriesSection({
                 </ul>
               ) : (
                 <p className="mt-3 flex-1 text-xs leading-snug text-[#64748b]">
-                  {info?.blurb ?? "DEUTSCH sealed connector series."}
+                  {info?.blurb ?? fallbackBlurb}
                 </p>
               )}
 
@@ -393,17 +445,14 @@ export default function CatalogueCategoryPage({
   // Current manufacturer logo for brand-named categories (e.g. Deutsch → TE).
   const brand = brandForCategory(category);
 
-  // "Browse by series" — only on the DEUTSCH connectors hub. Series are derived
-  // from products and link to the catalogue view that lists them (its largest
-  // child, i.e. Connectors).
-  const isDeutschSeriesPage = category.route === DEUTSCH_SERIES_CATEGORY_ROUTE;
-  const seriesTarget = isDeutschSeriesPage
-    ? [...children].sort(
-        (a, b) => getCategoryProductCount(b) - getCategoryProductCount(a),
-      )[0]
-    : undefined;
-  const seriesFacets = isDeutschSeriesPage ? getSeriesFacets(seriesTarget) : [];
-  const showSeries = seriesFacets.length > 1 && Boolean(seriesTarget?.route);
+  // "Browse by series" — on brand hubs (DEUTSCH, TE Connectivity) whose products
+  // carry a "Series" attribute. Series are derived from products and link to the
+  // catalogue view that lists them.
+  const seriesPage = getSeriesPageConfig(category, children);
+  const seriesFacets = seriesPage
+    ? getSeriesFacets(seriesPage.target, seriesPage.exclude)
+    : [];
+  const showSeries = seriesFacets.length > 1 && Boolean(seriesPage?.target?.route);
   const breadcrumbCrumbs =
     category.id === 3
       ? [{ label: title }]
@@ -488,8 +537,14 @@ export default function CatalogueCategoryPage({
           </section>
         )}
 
-        {showSeries && seriesTarget?.route && (
-          <SeriesSection facets={seriesFacets} targetRoute={seriesTarget.route} />
+        {showSeries && seriesPage?.target?.route && (
+          <SeriesSection
+            facets={seriesFacets}
+            targetRoute={seriesPage.target.route}
+            intro={seriesPage.intro}
+            seriesByName={seriesPage.seriesByName}
+            fallbackBlurb={seriesPage.fallbackBlurb}
+          />
         )}
 
         {/* Decorative series banner images are replaced by the clickable

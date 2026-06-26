@@ -102,9 +102,36 @@ export const deutschSeries: DeutschSeriesInfo[] = [
   },
   // AMPSEAL and AMPSEAL 16 are TE Connectivity series, not part of the DEUTSCH
   // series family, so they are intentionally excluded here and filtered out of
-  // the "Browse by series" facets in CatalogueCategoryPage.
+  // the "Browse by series" facets in CatalogueCategoryPage. They are presented
+  // on the dedicated TE Connectivity page instead (see below).
 ];
 
 export const deutschSeriesByName = new Map(
   deutschSeries.map((series) => [series.name, series]),
+);
+
+// ── TE Connectivity (AMPSEAL family) ────────────────────────────────────────
+// AMPSEAL connectors are TE Connectivity's own sealed series. They power the
+// "Browse by series" section on the dedicated TE Connectivity catalogue page.
+export const TE_CONNECTIVITY_SERIES_CATEGORY_ROUTE =
+  "/webshop/components/sealed-connectors/te-connectivity.html";
+
+export const TE_CONNECTIVITY_SERIES_INTRO =
+  "TE Connectivity AMPSEAL sealed connectors provide high-reliability sealing for power and signal connections in demanding automotive and industrial environments.";
+
+export const teConnectivitySeries: DeutschSeriesInfo[] = [
+  {
+    name: "AMPSEAL Series",
+    blurb:
+      "High-reliability sealed connectors for demanding power and signal applications.",
+  },
+  {
+    name: "AMPSEAL 16 Series",
+    blurb:
+      "Compact 16-series sealed connectors for signal and low-current applications.",
+  },
+];
+
+export const teConnectivitySeriesByName = new Map(
+  teConnectivitySeries.map((series) => [series.name, series]),
 );
