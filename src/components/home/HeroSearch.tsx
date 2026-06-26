@@ -31,7 +31,7 @@ export default function HeroSearch() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#0a1628] min-h-[500px] sm:min-h-[520px] md:min-h-[600px] lg:min-h-[680px] flex items-center">
+    <section className="relative overflow-hidden bg-[#0a1628] min-h-[500px] sm:min-h-[520px] md:min-h-[540px] lg:min-h-[560px] flex items-center">
       {/* Background video */}
       <video
         className="hero-background-video absolute inset-0 h-full w-full object-cover object-center"
@@ -74,43 +74,44 @@ export default function HeroSearch() {
             technical support from people who understand the complete production chain.
           </p>
 
-          {/* Search — single-row inset pill at all sizes; button collapses to an icon on mobile */}
-          <form onSubmit={handleSearch} action="/products" method="GET" className="relative mb-5 sm:mb-6">
-            <div className="flex items-center bg-white rounded-2xl shadow-[0_8px_50px_rgba(0,0,0,0.35)] border border-white/10 transition-shadow duration-200 focus-within:ring-2 focus-within:ring-[#2563eb]/60 focus-within:shadow-[0_8px_60px_rgba(37,99,235,0.35)]">
-              <div className="flex items-center gap-2.5 sm:gap-3 flex-1 min-w-0 pl-4 sm:pl-5">
-                <Search size={18} className="text-[#9ca3af] flex-shrink-0" />
-                <input
-                  type="text"
-                  name="q"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search product, brand or part number…"
-                  className="flex-1 min-w-0 py-3.5 sm:py-4 text-[#111827] text-[15px] sm:text-base placeholder:text-[#9ca3af] bg-transparent outline-none"
-                />
+          {/* Search + quick links — mobile only; desktop nav already has a search bar */}
+          <div className="lg:hidden">
+            <form onSubmit={handleSearch} action="/products" method="GET" className="relative mb-5 sm:mb-6">
+              <div className="flex items-center bg-white rounded-2xl shadow-[0_8px_50px_rgba(0,0,0,0.35)] border border-white/10 transition-shadow duration-200 focus-within:ring-2 focus-within:ring-[#2563eb]/60 focus-within:shadow-[0_8px_60px_rgba(37,99,235,0.35)]">
+                <div className="flex items-center gap-2.5 sm:gap-3 flex-1 min-w-0 pl-4 sm:pl-5">
+                  <Search size={18} className="text-[#9ca3af] flex-shrink-0" />
+                  <input
+                    type="text"
+                    name="q"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search product, brand or part number…"
+                    className="flex-1 min-w-0 py-3.5 sm:py-4 text-[#111827] text-[15px] sm:text-base placeholder:text-[#9ca3af] bg-transparent outline-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  aria-label="Search"
+                  className="m-1.5 flex flex-shrink-0 items-center justify-center gap-2 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold text-sm transition-colors h-11 w-11 sm:h-auto sm:w-auto sm:px-6 sm:py-3"
+                >
+                  <span className="hidden sm:inline">Search</span>
+                  <ArrowRight size={18} className="sm:size-[15px]" />
+                </button>
               </div>
-              <button
-                type="submit"
-                aria-label="Search"
-                className="m-1.5 flex flex-shrink-0 items-center justify-center gap-2 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold text-sm transition-colors h-11 w-11 sm:h-auto sm:w-auto sm:px-6 sm:py-3"
-              >
-                <span className="hidden sm:inline">Search</span>
-                <ArrowRight size={18} className="sm:size-[15px]" />
-              </button>
-            </div>
-          </form>
+            </form>
 
-          {/* Quick links — compact wrapped cluster, fits two lines on mobile */}
-          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5 sm:gap-2">
-            <span className="text-[11px] sm:text-xs font-medium text-[#64748b]">Quick search:</span>
-            {quickLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-2.5 py-1 sm:px-3 sm:py-1.5 bg-[#0f2042]/80 hover:bg-[#1a2f5a] text-[#93c5fd] text-[11px] sm:text-xs font-medium rounded-full border border-[#1e3a6e] hover:border-[#2563eb] transition-all duration-200 hover:-translate-y-0.5"
-              >
-                {link.label}
-              </Link>
-            ))}
+            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5 sm:gap-2">
+              <span className="text-[11px] sm:text-xs font-medium text-[#64748b]">Quick search:</span>
+              {quickLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="px-2.5 py-1 sm:px-3 sm:py-1.5 bg-[#0f2042]/80 hover:bg-[#1a2f5a] text-[#93c5fd] text-[11px] sm:text-xs font-medium rounded-full border border-[#1e3a6e] hover:border-[#2563eb] transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
 
