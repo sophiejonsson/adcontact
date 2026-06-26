@@ -119,7 +119,7 @@ export default function HeroSearch() {
         </div>
 
         {/* Compact proof points */}
-        <div className="hidden xl:flex absolute right-6 top-1/2 -translate-y-1/2 flex-col gap-3">
+        <div className="hidden lg:flex absolute right-6 top-1/2 -translate-y-1/2 flex-col gap-3">
           {trustBadges.map((badge, i) => (
             <div
               key={badge}
