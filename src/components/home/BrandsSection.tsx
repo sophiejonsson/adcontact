@@ -1,16 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { brands } from "@/data/brands";
+import { brands, type Brand } from "@/data/brands";
+
+// Highlighted manufacturers, in display order (3 tiles per row on desktop):
+//   Row 1: Stocko, CviLux, TE Connectivity
+//   Row 2: Mecal, Zoller + Fröhlich, Hongshang
+// "TE" is stored under the `deutsch` slug (its logo is the TE Connectivity mark).
+const HIGHLIGHT_SLUGS = [
+  "stocko",
+  "cvilux",
+  "deutsch",
+  "mecal",
+  "zoller-frohlich",
+  "hongshang",
+];
 
 export default function BrandsSection() {
-  // Guarantee a complete 6-tile grid: featured logos first, then fill from
-  // any remaining brand that has a logo (avoids empty cells).
+  // Guarantee a complete 6-tile grid: the highlighted brands first (in order),
+  // then fill with remaining logos (featured first) to avoid empty cells.
   const withLogo = brands.filter((brand) => brand.logo);
-  const featured = [
+  const lead = HIGHLIGHT_SLUGS.map((slug) =>
+    withLogo.find((brand) => brand.slug === slug),
+  ).filter((brand): brand is Brand => brand !== undefined);
+  const fill = [
     ...withLogo.filter((brand) => brand.featured),
     ...withLogo.filter((brand) => !brand.featured),
-  ].slice(0, 6);
+  ].filter((brand) => !HIGHLIGHT_SLUGS.includes(brand.slug));
+  const featured = [...lead, ...fill].slice(0, 6);
 
   return (
     <section className="relative overflow-hidden bg-canvas py-10 lg:py-14">
