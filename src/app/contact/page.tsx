@@ -1,126 +1,151 @@
 import type { Metadata } from "next";
-import { Phone, Mail, MapPin, Clock, MessageSquare } from "lucide-react";
-import RFQForm from "@/components/ui/RFQForm";
+import Link from "next/link";
+import { Phone, Mail, MapPin, ArrowRight, Clock } from "lucide-react";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Contact & Quote Request",
+  title: "Contact | Adcontact",
   description:
-    "Request a quote for industrial components or wire-processing equipment. Contact Adcontact's technical sales team in Sweden, Finland, Norway, Denmark, or Estonia.",
+    "Contact Adcontact. Headquarters in Keila, Estonia (Gammeter OÜ) and sales office in Bromma, Sweden (Adcontact AB). Covering the full Nordic region.",
 };
 
-export default async function ContactPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ subject?: string; product?: string; tab?: string }>;
-}) {
-  const params = await searchParams;
+const offices = [
+  {
+    label: "Estonia — Headquarters",
+    company: "Gammeter OÜ",
+    address: ["Keki tn 6/1", "76606 Keila", "Estonia"],
+    phone: "+372 671 22 51",
+    phoneHref: "tel:+3726712251",
+    email: "info@gammeter.ee",
+    topics: ["Admin", "Finance", "Company enquiries"],
+  },
+  {
+    label: "Sweden — Sales Office",
+    company: "Adcontact AB",
+    address: ["Ekbacksvägen 22", "SE-168 69 Bromma", "Sweden"],
+    phone: "+46 (0)8-445 36 00",
+    phoneHref: "tel:+46084453600",
+    email: "info@adcontact.se",
+    topics: ["Sales", "Quotes", "Technical support"],
+  },
+];
 
+export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
       <div className="bg-[#f8fafc] border-b border-[#e2e8f0]">
         <div className="max-w-[1440px] mx-auto px-6 py-8">
           <Breadcrumbs crumbs={[{ label: "Contact" }]} />
-          <h1 className="text-3xl font-bold text-[#0a1628] mt-4 mb-2">
-            Contact & quote request
-          </h1>
+          <h1 className="text-3xl font-bold text-[#0a1628] mt-4 mb-2">Contact us</h1>
           <p className="text-[#6b7280] text-sm max-w-xl">
-            Need help finding the right component or planning a production equipment setup? Our technical sales team covers the full Nordic region.
+            Reach us by phone or email — or submit a quote request and we will get back to you
+            within one business day.
           </p>
         </div>
       </div>
 
       <div className="max-w-[1440px] mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          {/* Form */}
-          <div className="lg:col-span-2">
-            <div className="bg-white border border-[#e2e8f0] rounded-2xl p-8">
-              <div className="flex items-center gap-3 mb-6 pb-5 border-b border-[#f3f4f6]">
-                <div className="w-10 h-10 bg-[#eff6ff] rounded-lg flex items-center justify-center">
-                  <MessageSquare size={18} className="text-[#2563eb]" />
-                </div>
-                <div>
-                  <h2 className="text-lg font-semibold text-[#0a1628]">Send a request</h2>
-                  <p className="text-xs text-[#6b7280]">
-                    Standard RFQs answered within 1 business day
-                  </p>
+
+        {/* Office cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+          {offices.map((office) => (
+            <div
+              key={office.label}
+              className="rounded-2xl border border-[#e2e8f0] bg-white p-7 shadow-sm"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <MapPin size={14} className="text-[#2563eb] flex-shrink-0" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#2563eb]">
+                  {office.label}
+                </span>
+              </div>
+
+              <p className="text-xl font-bold text-[#0a1628] mb-1">{office.company}</p>
+              <address className="not-italic text-sm leading-6 text-[#6b7280] mb-6">
+                {office.address.map((line) => (
+                  <span key={line} className="block">{line}</span>
+                ))}
+              </address>
+
+              <div className="space-y-3 border-t border-[#f3f4f6] pt-5 mb-6">
+                <a
+                  href={office.phoneHref}
+                  className="flex items-center gap-3 text-sm text-[#374151] hover:text-[#2563eb] transition-colors"
+                >
+                  <Phone size={14} className="text-[#2563eb] flex-shrink-0" />
+                  {office.phone}
+                </a>
+                <a
+                  href={`mailto:${office.email}`}
+                  className="flex items-center gap-3 text-sm text-[#374151] hover:text-[#2563eb] transition-colors"
+                >
+                  <Mail size={14} className="text-[#2563eb] flex-shrink-0" />
+                  {office.email}
+                </a>
+              </div>
+
+              <div className="border-t border-[#f3f4f6] pt-5">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#94a3b8] mb-2.5">
+                  Contact here for
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {office.topics.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full border border-[#dbe3ee] bg-[#f1f5f9] px-3 py-1 text-xs font-medium text-[#475569]"
+                    >
+                      {t}
+                    </span>
+                  ))}
                 </div>
               </div>
-              <RFQForm subject={params.subject} />
             </div>
+          ))}
+        </div>
+
+        {/* Business hours + quote CTA */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] p-7">
+            <div className="flex items-center gap-2 mb-4">
+              <Clock size={14} className="text-[#2563eb]" />
+              <h2 className="text-sm font-semibold text-[#0a1628]">Business hours</h2>
+            </div>
+            <div className="space-y-2 text-sm text-[#374151] mb-4">
+              <div className="flex justify-between">
+                <span className="text-[#6b7280]">Monday – Friday</span>
+                <span className="font-medium">08:00 – 17:00 CET</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#6b7280]">Saturday – Sunday</span>
+                <span className="font-medium text-[#9ca3af]">Closed</span>
+              </div>
+            </div>
+            <p className="text-xs text-[#9ca3af]">
+              Enquiries submitted outside business hours are processed the following business day.
+            </p>
           </div>
 
-          {/* Sidebar contact info */}
-          <div className="lg:col-span-1 space-y-4">
-            {/* HQ */}
-            <div className="bg-white border border-[#e2e8f0] rounded-xl p-6">
-              <h3 className="text-sm font-semibold text-[#0a1628] mb-4">Sweden (Head Office)</h3>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <MapPin size={15} className="text-[#2563eb] mt-0.5 flex-shrink-0" />
-                  <div className="text-xs text-[#374151] leading-relaxed">
-                    Adcontact AB<br />
-                    Ekbacksvägen 22<br />
-                    SE-168 69 Bromma<br />
-                    Sweden
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Phone size={15} className="text-[#2563eb] flex-shrink-0" />
-                  <a href="tel:+46084453600" className="text-xs text-[#374151] hover:text-[#2563eb] transition-colors">
-                    +46 (0)8-445 36 00
-                  </a>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Mail size={15} className="text-[#2563eb] flex-shrink-0" />
-                  <a href="mailto:info@adcontact.se" className="text-xs text-[#374151] hover:text-[#2563eb] transition-colors">
-                    info@adcontact.se
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Hours */}
-            <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-xl p-5">
-              <div className="flex items-center gap-2 mb-3">
-                <Clock size={14} className="text-[#2563eb]" />
-                <h3 className="text-sm font-semibold text-[#0a1628]">Business hours</h3>
-              </div>
-              <div className="space-y-1.5 text-xs text-[#374151]">
-                <div className="flex justify-between">
-                  <span className="text-[#6b7280]">Monday – Friday</span>
-                  <span className="font-medium">08:00 – 17:00 CET</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#6b7280]">Saturday – Sunday</span>
-                  <span className="font-medium text-[#9ca3af]">Closed</span>
-                </div>
-              </div>
-              <p className="text-[10px] text-[#9ca3af] mt-3">
-                RFQs submitted outside business hours are processed the following business day.
+          <div className="rounded-2xl bg-[#0a1628] p-7 flex flex-col justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#60a5fa] mb-3">
+                Need a price or availability check?
+              </p>
+              <h2 className="text-xl font-bold text-white mb-2 leading-snug">
+                Submit a quote request
+              </h2>
+              <p className="text-sm text-[#94a3b8] leading-relaxed">
+                Fill in your part number, quantity and any application notes. Standard RFQs
+                answered within 1 business day.
               </p>
             </div>
-
-            {/* Coverage */}
-            <div className="bg-white border border-[#e2e8f0] rounded-xl p-5">
-              <h3 className="text-sm font-semibold text-[#0a1628] mb-3">Nordic coverage</h3>
-              {["Sweden", "Finland", "Norway", "Denmark", "Estonia"].map((country) => (
-                <div key={country} className="flex items-center gap-2 py-1.5 border-b border-[#f3f4f6] last:border-0">
-                  <span className="w-1.5 h-1.5 bg-[#2563eb] rounded-full" />
-                  <span className="text-xs text-[#374151]">{country}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Response time */}
-            <div className="bg-[#0a1628] border border-[#1e3a6e] rounded-xl p-5 text-center">
-              <div className="text-2xl font-bold text-white mb-1">1 day</div>
-              <div className="text-xs text-[#94a3b8]">standard RFQ response time</div>
-              <div className="text-[10px] text-[#475569] mt-2">
-                Complex or custom enquiries may take 2–3 business days
-              </div>
-            </div>
+            <Link
+              href="/contact/quote"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#2563eb] hover:bg-[#1d4ed8] px-5 py-3 text-sm font-semibold text-white transition-colors self-start"
+            >
+              Request a quote
+              <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </div>

@@ -48,7 +48,7 @@ export default function Footer() {
           </div>
           <div className="flex gap-3 flex-shrink-0">
             <Link
-              href="/contact"
+              href="/contact/quote"
               className="btn-elevate btn-elevate-amber flex items-center gap-2 px-5 py-2.5 bg-[#f59e0b] hover:bg-[#d97706] text-[#0a1628] text-sm font-semibold rounded-lg"
             >
               Request a Quote
