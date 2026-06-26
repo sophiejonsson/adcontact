@@ -104,8 +104,8 @@ function ProductCard({ product }: { product: DeutschProduct }) {
           </div>
         </div>
 
-        <span className="mt-auto flex items-center justify-center gap-1.5 w-full py-2 bg-[#f1f5f9] group-hover:bg-[#2563eb] text-[#374151] group-hover:text-white text-xs font-semibold rounded-lg transition-colors">
-          {isRich ? "View details" : "Request quote"}
+        <span className="mt-auto flex items-center justify-center gap-1.5 w-full py-2 bg-[#f1f5f9] group-hover:bg-[#f59e0b] text-[#374151] group-hover:text-[#0a1628] text-xs font-semibold rounded-lg transition-colors">
+          {isRich ? "View details" : "Request a quote"}
           <ArrowRight size={11} />
         </span>
       </div>

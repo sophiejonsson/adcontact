@@ -141,7 +141,7 @@ export default function ContactPage() {
             </div>
             <Link
               href="/contact/quote"
-              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#2563eb] hover:bg-[#1d4ed8] px-5 py-3 text-sm font-semibold text-white transition-colors self-start"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-[#f59e0b] hover:bg-[#d97706] px-5 py-3 text-sm font-semibold text-[#0a1628] transition-colors self-start"
             >
               Request a quote
               <ArrowRight size={14} />

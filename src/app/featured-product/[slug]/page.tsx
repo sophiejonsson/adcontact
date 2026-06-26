@@ -235,7 +235,7 @@ export default async function FeaturedProductPage({
                 <div className="mt-5 grid gap-3 sm:grid-cols-[1fr_auto_auto]">
                   <Link
                     href={`/contact?pn=${encodeURIComponent(product.name)}&ref=featured-product`}
-                    className="btn-elevate inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563eb] px-5 py-3.5 text-sm font-semibold text-white hover:bg-[#1d4ed8]"
+                    className="btn-elevate btn-elevate-amber inline-flex items-center justify-center gap-2 rounded-xl bg-[#f59e0b] px-5 py-3.5 text-sm font-semibold text-[#0a1628] hover:bg-[#d97706]"
                   >
                     Request a quote
                     <ArrowRight size={15} />

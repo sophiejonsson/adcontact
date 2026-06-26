@@ -51,7 +51,7 @@ export default function Footer() {
               href="/contact/quote"
               className="btn-elevate btn-elevate-amber flex items-center gap-2 px-5 py-2.5 bg-[#f59e0b] hover:bg-[#d97706] text-[#0a1628] text-sm font-semibold rounded-lg"
             >
-              Request a Quote
+              Request a quote
               <ArrowRight size={14} />
             </Link>
             <a

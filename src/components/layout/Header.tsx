@@ -155,7 +155,7 @@ export default function Header() {
                 className="btn-elevate btn-elevate-amber hidden items-center gap-2 rounded-lg bg-[#f59e0b] px-5 py-3 text-sm font-bold text-[#0a1628] shadow-sm transition-colors hover:bg-[#d97706] sm:flex"
               >
                 <FileText size={15} />
-                Request Quote
+                Request a quote
               </Link>
               <button
                 className="rounded-md p-2 text-[#374151] transition-colors hover:bg-[#f3f4f6] hover:text-[#0a1628] lg:hidden"
@@ -252,7 +252,7 @@ export default function Header() {
                   onClick={() => setMobileOpen(false)}
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#f59e0b] px-4 py-3 text-sm font-semibold text-[#0a1628]"
                 >
-                  Request a Quote
+                  Request a quote
                 </Link>
                 <div className="mt-3 flex items-center justify-center gap-4 text-xs text-[#64748b]">
                   <a href="tel:+46084453600" className="flex items-center gap-1.5">
