@@ -150,7 +150,7 @@ export default function Header() {
             {/* Request Quote — pinned to the right edge */}
             <div className="ml-auto flex flex-shrink-0 items-center gap-2 lg:ml-0">
               <Link
-                href="/contact"
+                href="/contact/quote"
                 onClick={closeAll}
                 className="btn-elevate btn-elevate-amber hidden items-center gap-2 rounded-lg bg-[#f59e0b] px-5 py-3 text-sm font-bold text-[#0a1628] shadow-sm transition-colors hover:bg-[#d97706] sm:flex"
               >
@@ -248,7 +248,7 @@ export default function Header() {
 
               <div className="border-t border-[#e8ecf2] pt-3 mt-3">
                 <Link
-                  href="/contact"
+                  href="/contact/quote"
                   onClick={() => setMobileOpen(false)}
                   className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#f59e0b] px-4 py-3 text-sm font-semibold text-[#0a1628]"
                 >
