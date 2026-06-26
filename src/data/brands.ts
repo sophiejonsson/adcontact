@@ -9,6 +9,7 @@ export type Brand = {
   logo?: string;
   logoWidth?: number;
   website: string;
+  shopUrl?: string;
   featured: boolean;
 };
 
@@ -25,6 +26,7 @@ export const brands: Brand[] = [
     categories: ["connectors", "contacts-terminals"],
     linecardSection: "components",
     website: "https://www.stocko-contact.com/",
+    shopUrl: "https://www.stocko-contact.com/en/products.html",
     featured: true,
   },
   {
@@ -51,6 +53,7 @@ export const brands: Brand[] = [
     categories: ["pcb-contacts", "contacts-terminals"],
     linecardSection: "components",
     website: "https://www.vogt.ch/",
+    shopUrl: "https://www.vogt.ch/en/shop",
     featured: false,
   },
   {
@@ -64,6 +67,7 @@ export const brands: Brand[] = [
     categories: ["connectors"],
     linecardSection: "components",
     website: "https://www.cvilux.com/",
+    shopUrl: "https://www.cvilux.com/products",
     featured: false,
   },
   {
@@ -228,6 +232,7 @@ export const brands: Brand[] = [
     categories: ["production-equipment"],
     linecardSection: "equipment",
     website: "https://www.zofre.de/",
+    shopUrl: "https://www.zofre.de/en/products",
     featured: true,
   },
   {

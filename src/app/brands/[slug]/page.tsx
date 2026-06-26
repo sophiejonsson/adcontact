@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ArrowRight, ExternalLink, ArrowUpRight } from "lucide-react";
 import { getBrandBySlug, brands } from "@/data/brands";
 import { getProductsByBrand } from "@/data/products";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -69,6 +69,23 @@ export default async function BrandPage({ params }: Props) {
               </a>
             )}
           </div>
+
+          {brand.shopUrl && (
+            <div className="mt-5 flex items-center gap-3 rounded-xl border border-[#fde68a] bg-[#fffbeb] px-5 py-3.5">
+              <span className="text-sm text-[#92400e]">
+                Can&apos;t find what you&apos;re looking for? Browse the full range directly with {brand.name}.
+              </span>
+              <a
+                href={brand.shopUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-auto flex-shrink-0 flex items-center gap-1.5 text-sm font-semibold text-[#b45309] hover:text-[#92400e] transition-colors"
+              >
+                Browse {brand.name} products
+                <ArrowUpRight size={14} />
+              </a>
+            </div>
+          )}
         </div>
       </div>
 
