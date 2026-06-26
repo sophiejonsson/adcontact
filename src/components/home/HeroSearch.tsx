@@ -31,7 +31,7 @@ export default function HeroSearch() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#0a1628] min-h-[500px] sm:min-h-[520px] md:min-h-[540px] lg:min-h-[560px] flex items-center">
+    <section className="relative overflow-hidden bg-[#0a1628] min-h-[500px] sm:min-h-[520px] md:min-h-[540px] lg:min-h-[400px] flex items-center">
       {/* Background video */}
       <video
         className="hero-background-video absolute inset-0 h-full w-full object-cover object-center"
@@ -58,7 +58,7 @@ export default function HeroSearch() {
       <div className="absolute bottom-0 left-1/4 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] bg-[#1d4ed8] opacity-[0.06] rounded-full blur-3xl pointer-events-none" />
 
       {/* Content */}
-      <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-16 lg:py-20 w-full">
+      <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-16 lg:py-10 w-full">
         <div className="max-w-3xl animate-fade-up">
           {/* Headline */}
           <h1 className="text-[34px] sm:text-[40px] md:text-[44px] lg:text-[50px] font-extrabold text-white leading-[1.08] tracking-[-0.03em] mb-4 sm:mb-5">
