@@ -74,112 +74,76 @@ function splitRefs(value: string | undefined): string[] {
   return [...new Set(value.split(",").map((s) => s.trim()).filter(Boolean))];
 }
 
-// Card for a related part — resolves to Deutsch page or Magento webshop URL.
-function PartCard({ partNumber, magentoProduct }: { partNumber: string; magentoProduct: CatalogueProduct | undefined }) {
-  const deutsch = deutschProducts.find(
-    (p) => p.partNumber.toUpperCase() === partNumber.toUpperCase(),
-  );
-
-  const href = deutsch
-    ? `/products/deutsch-connectors/${deutsch.partNumber.toLowerCase()}`
-    : magentoProduct
-      ? catalogueProductLegacyRoute(magentoProduct)
-      : null;
-
-  const imageUrl = deutsch?.imageUrl ?? magentoProduct?.thumbnail ?? magentoProduct?.image;
-
+// Horizontal card — small 72 px thumbnail on the left, part number + name on the right.
+function RelatedCard({ partNumber, name, imageUrl, href }: {
+  partNumber: string;
+  name?: string;
+  imageUrl?: string | null;
+  href: string | null;
+}) {
   const inner = (
-    <>
-      <div className="relative aspect-square w-full bg-white">
+    <div className="grid min-w-0 grid-cols-[72px_1fr] overflow-hidden rounded-lg border border-[#e5e7eb] bg-white transition-colors group-hover:border-[#93c5fd]">
+      <div className="relative min-h-[72px] bg-[#f8fafc]">
         {imageUrl ? (
           <Image
             src={imageUrl}
             alt={partNumber}
             fill
-            className="object-contain p-3 transition-transform duration-300 group-hover:scale-110"
-            sizes="(max-width: 640px) 45vw, 160px"
             unoptimized
+            sizes="72px"
+            className="object-contain p-2"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[#f8fafc]">
-            <Package size={28} className="text-[#cbd5e1]" />
+          <div className="flex h-full items-center justify-center">
+            <Package size={18} className="text-[#cbd5e1]" />
           </div>
         )}
       </div>
-      <div className="border-t border-[#f1f5f9] px-3 py-2.5 text-center">
-        <span className="font-mono text-xs font-semibold text-[#0a1628] transition-colors group-hover:text-[#2563eb]">
+      <div className="min-w-0 p-3">
+        <div className="truncate font-mono text-sm font-bold text-[#0a1628] group-hover:text-[#2563eb]">
           {partNumber}
-        </span>
+        </div>
+        {name && name !== partNumber && (
+          <div className="mt-1 truncate text-xs text-[#64748b]">{name}</div>
+        )}
       </div>
-    </>
+    </div>
   );
 
   if (href) {
-    return (
-      <Link
-        href={href}
-        className="group flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white transition-all duration-200 hover:-translate-y-1 hover:border-[#bfdbfe] hover:shadow-[0_16px_30px_-16px_rgba(15,23,42,0.22)]"
-      >
-        {inner}
-      </Link>
-    );
+    return <Link href={href} className="group block">{inner}</Link>;
   }
-
-  return (
-    <div className="flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white">
-      {inner}
-    </div>
-  );
+  return <div>{inner}</div>;
 }
 
-// Card for rich-detail related products (contacts, accessories from detail data).
-function RelatedCard({ item }: { item: RelatedProduct }) {
+// Resolves a part number to a RelatedCard — checks deutschProducts first, then Magento.
+function PartCard({ partNumber, magentoProduct }: {
+  partNumber: string;
+  magentoProduct: CatalogueProduct | undefined;
+}) {
+  const deutsch = deutschProducts.find(
+    (p) => p.partNumber.toUpperCase() === partNumber.toUpperCase(),
+  );
+  const href = deutsch
+    ? `/products/deutsch-connectors/${deutsch.partNumber.toLowerCase()}`
+    : magentoProduct ? catalogueProductLegacyRoute(magentoProduct) : null;
+  const imageUrl = deutsch?.imageUrl ?? magentoProduct?.thumbnail ?? magentoProduct?.image;
+  const name = magentoProduct?.name;
+
+  return <RelatedCard partNumber={partNumber} name={name} imageUrl={imageUrl} href={href} />;
+}
+
+// Wraps a rich-detail RelatedProduct (from deutschProductDetails).
+function DetailRelatedCard({ item }: { item: RelatedProduct }) {
   const deutsch = deutschProducts.find(
     (p) => p.partNumber.toLowerCase() === item.partNumber.toLowerCase(),
   );
   const href = deutsch
     ? `/products/deutsch-connectors/${deutsch.partNumber.toLowerCase()}`
     : item.url ?? null;
-
   const imageUrl = item.imageUrl ?? deutsch?.imageUrl;
 
-  const inner = (
-    <>
-      <div className="relative aspect-square w-full bg-white">
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={`Deutsch ${item.partNumber}`}
-            fill
-            className="object-contain p-3 transition-transform duration-300 group-hover:scale-110"
-            sizes="(max-width: 640px) 45vw, 160px"
-            unoptimized
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[#f8fafc]">
-            <Package size={28} className="text-[#cbd5e1]" />
-          </div>
-        )}
-      </div>
-      <div className="border-t border-[#f1f5f9] px-3 py-2.5 text-center">
-        <span className="font-mono text-xs font-semibold text-[#0a1628] transition-colors group-hover:text-[#2563eb]">
-          {item.partNumber}
-        </span>
-      </div>
-    </>
-  );
-
-  if (href) {
-    return (
-      <Link
-        href={href}
-        className="group flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white transition-all duration-200 hover:-translate-y-1 hover:border-[#bfdbfe] hover:shadow-[0_16px_30px_-16px_rgba(15,23,42,0.22)]"
-      >
-        {inner}
-      </Link>
-    );
-  }
-  return <div className="flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white">{inner}</div>;
+  return <RelatedCard partNumber={item.partNumber} imageUrl={imageUrl} href={href} />;
 }
 
 function catalogueFileType(file: CatalogueFile): string {
@@ -463,18 +427,18 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
         {/* ── Compatible contacts ───────────────────────────────────────── */}
         {hasDetailContacts && (
-          <section className="mb-12">
-            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Compatible contacts</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {detail.contacts.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
+          <section>
+            <h2 className="text-base font-bold text-[#0a1628] mb-3">Compatible contacts</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {detail.contacts.map((c) => <DetailRelatedCard key={c.partNumber} item={c} />)}
             </div>
           </section>
         )}
 
         {!hasDetailContacts && magentoContactRefs.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Compatible contacts</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <section>
+            <h2 className="text-base font-bold text-[#0a1628] mb-3">Compatible contacts</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
               {magentoContactRefs.map((pn) => (
                 <PartCard key={pn} partNumber={pn} magentoProduct={resolveRef(pn)} />
               ))}
@@ -484,18 +448,18 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
         {/* ── Mating connectors ─────────────────────────────────────────── */}
         {hasDetailMating && (
-          <section className="mb-12">
-            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Mating connectors</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {detail.matingConnectors.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
+          <section>
+            <h2 className="text-base font-bold text-[#0a1628] mb-3">Mating connectors</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {detail.matingConnectors.map((c) => <DetailRelatedCard key={c.partNumber} item={c} />)}
             </div>
           </section>
         )}
 
         {!hasDetailMating && magentoMatingRefs.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Mating connectors</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <section>
+            <h2 className="text-base font-bold text-[#0a1628] mb-3">Mating connectors</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
               {magentoMatingRefs.map((pn) => (
                 <PartCard key={pn} partNumber={pn} magentoProduct={resolveRef(pn)} />
               ))}
@@ -505,20 +469,20 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
         {/* ── Required components ───────────────────────────────────────── */}
         {hasDetailRequired && (
-          <section className="mb-12">
-            <h2 className="text-lg font-bold text-[#0a1628] mb-1">Required components</h2>
-            <p className="text-xs text-[#64748b] mb-4">Must be ordered together with the housing.</p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {detail.requiredComponents.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
+          <section>
+            <h2 className="text-base font-bold text-[#0a1628] mb-1">Required components</h2>
+            <p className="text-xs text-[#64748b] mb-3">Must be ordered together with the housing.</p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {detail.requiredComponents.map((c) => <DetailRelatedCard key={c.partNumber} item={c} />)}
             </div>
           </section>
         )}
 
         {!hasDetailRequired && magentoRequiredRefs.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-lg font-bold text-[#0a1628] mb-1">Required components</h2>
-            <p className="text-xs text-[#64748b] mb-4">Must be ordered together with the housing.</p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <section>
+            <h2 className="text-base font-bold text-[#0a1628] mb-1">Required components</h2>
+            <p className="text-xs text-[#64748b] mb-3">Must be ordered together with the housing.</p>
+            <div className="grid gap-3 sm:grid-cols-2">
               {magentoRequiredRefs.map((pn) => (
                 <PartCard key={pn} partNumber={pn} magentoProduct={resolveRef(pn)} />
               ))}
@@ -528,18 +492,18 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
         {/* ── Accessories ───────────────────────────────────────────────── */}
         {hasDetailAccessories && (
-          <section className="mb-12">
-            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Accessories</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {detail.accessories.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
+          <section>
+            <h2 className="text-base font-bold text-[#0a1628] mb-3">Accessories</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {detail.accessories.map((c) => <DetailRelatedCard key={c.partNumber} item={c} />)}
             </div>
           </section>
         )}
 
         {!hasDetailAccessories && magentoAccessoryRefs.length > 0 && (
-          <section className="mb-12">
-            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Accessories</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <section>
+            <h2 className="text-base font-bold text-[#0a1628] mb-3">Accessories</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
               {magentoAccessoryRefs.map((pn) => (
                 <PartCard key={pn} partNumber={pn} magentoProduct={resolveRef(pn)} />
               ))}
