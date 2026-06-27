@@ -5,18 +5,17 @@ import type { CatalogueCategory } from "@/lib/magentoCatalogue";
 
 const ZOFRE = "https://www.zofre.de";
 const FILES = `${ZOFRE}/fileadmin/files/medienverzeichnis/produkte/aeh`;
-const PROC  = `${ZOFRE}/fileadmin/_processed_`;
 
 const CATEGORIES = [
   {
     title: "Insulated ferrules",
     href: `${ZOFRE}/en/ferrules/insulatedferrules`,
-    image: `${PROC}/1/7/csm_AEH_Einzelbeutel_AWG14_blau-2020_b1bed0e770.jpg`,
+    image: `${FILES}/isolierte_aderendh%C3%BClsen/zoller-froehlich-aderendhuelsen-bandware-blau.jpg`,
   },
   {
     title: "Insulated twin ferrules",
     href: `${ZOFRE}/en/ferrules/insulated-twin-ferrules`,
-    image: `${PROC}/2/c/csm_AEH_Zwilling_Einzelbeutel_AWG_18_grau-2020_83c05443a3.jpg`,
+    image: `${FILES}/isolierte_zwillings_aderendh%C3%BClsen/zoller-froehlich-zwillings-aderendhuelse-als-einzelbeutel-grau.jpg`,
   },
   {
     title: "Ferrules for multi-standard conductors",
@@ -46,7 +45,7 @@ const CATEGORIES = [
   {
     title: "Terminals",
     href: `${ZOFRE}/en/ferrules/terminals`,
-    image: `${FILES}/kabelschuhe/zoller-froehlich-ringkabelschuhe.jpg`,
+    image: `${FILES}/kabelschuhe/zoller-froehlich-flachstecker.jpg`,
   },
 ];
 
