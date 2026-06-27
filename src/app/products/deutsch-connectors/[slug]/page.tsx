@@ -417,7 +417,13 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   {magentoSpecs.map(([key, value], i) => (
                     <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-[#f8fafc]"}>
                       <td className="px-5 py-3 font-medium text-[#64748b] w-56 text-xs uppercase tracking-wide">{key}</td>
-                      <td className="px-5 py-3 font-semibold text-[#0a1628]">{value}</td>
+                      <td className="px-5 py-3 font-semibold text-[#0a1628] [&_a]:text-[#2563eb] [&_a]:underline [&_a:hover]:text-[#1d4ed8]">
+                        {/<[a-z]/i.test(value) ? (
+                          <span dangerouslySetInnerHTML={{ __html: value }} />
+                        ) : (
+                          value
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
