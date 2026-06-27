@@ -212,7 +212,7 @@ export const brands: Brand[] = [
     id: "mecal",
     name: "Mecal",
     slug: "mecal",
-    logo: "/images/partners/mecal.png",
+    logo: "/images/partners/mecal.jpg",
     description:
       "Mecal designs and manufactures automatic wire-processing and crimping machines. Their semi-automatic and fully automatic systems are used for high-volume wire harness production, with integrated quality monitoring, applicator change systems, and pull-force testing options.",
     shortDescription: "Automatic wire-processing and crimping machines for high-volume harness production.",
