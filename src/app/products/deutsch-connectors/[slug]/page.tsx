@@ -342,7 +342,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             <div className="flex items-center gap-2 mb-6 p-3 bg-[#f0fdf4] border border-[#dcfce7] rounded-lg w-fit">
               <Clock size={14} className="text-emerald-600" />
               <span className="text-sm font-semibold text-emerald-700">
-                In stock — ask for current lead time when ordering
+                Generally high availability — ask for current lead time
               </span>
             </div>
 

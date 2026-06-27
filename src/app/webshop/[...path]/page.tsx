@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, permanentRedirect } from "next/navigation";
 import CatalogueCategoryPage from "@/components/catalogue/CatalogueCategoryPage";
 import CatalogueProductPage from "@/components/catalogue/CatalogueProductPage";
+import ZFerrulesPage from "@/components/catalogue/ZFerrulesPage";
 import {
   getCatalogueCategory,
   getCatalogueProduct,
@@ -100,5 +101,11 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
 
   const category = getCatalogueCategory(route.id);
   if (!category) notFound();
+
+  // Z+F Wire Ferrules hub — dedicated visual layout with partner link
+  if (category.id === 1711) {
+    return <ZFerrulesPage category={category} />;
+  }
+
   return <CatalogueCategoryPage category={category} searchParams={await searchParams} />;
 }

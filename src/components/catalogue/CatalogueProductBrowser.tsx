@@ -252,7 +252,7 @@ function ProductCard({
         <p className="mt-1 font-mono text-[10px] font-semibold text-[#94a3b8]">
           {productDisplaySku(product)}
         </p>
-        <p className="mt-2 text-[11px] leading-snug text-[#64748b]">In stock · ask for current lead time</p>
+        <p className="mt-2 text-[11px] leading-snug text-[#64748b]">High availability · lead time on request</p>
       </div>
 
       {/* Quote CTA */}
