@@ -1,12 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ChevronRight, ArrowRight, Download, Phone, Mail, Clock, Package } from "lucide-react";
+import { ChevronRight, ArrowRight, Download, Phone, Mail, Clock, Package, FileText, FileImage, Archive } from "lucide-react";
 import type { Metadata } from "next";
 import { getProductDetail, type RelatedProduct, type DrawingFile } from "@/data/deutschProductDetails";
-import { deutschProducts, getDeutschWebshopUrl } from "@/data/deutschConnectors";
+import { deutschProducts } from "@/data/deutschConnectors";
+import {
+  findCatalogueProductByReference,
+  getProductAttributeEntries,
+  catalogueProductLegacyRoute,
+  type CatalogueProduct,
+  type CatalogueFile,
+} from "@/lib/magentoCatalogue";
 
-// Generate pages for ALL products in the catalogue
 export function generateStaticParams() {
   return deutschProducts.map((p) => ({ slug: p.partNumber.toLowerCase() }));
 }
@@ -35,9 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: detail
       ? `${catalogueProduct.partNumber}: ${detail.specs["Series"] ?? "Deutsch"} sealed connector, ${detail.specs["No. of cavities"] ?? ""} way, contact size ${detail.specs["Contact Size"] ?? ""}. Request a quote from Adcontact Sweden.`
       : `${catalogueProduct.partNumber}: ${SERIES_LABELS[catalogueProduct.series] ?? catalogueProduct.series} sealed connector${catalogueProduct.ways ? `, ${catalogueProduct.ways}-way` : ""}. Request a quote from Adcontact Sweden.`,
-    alternates: {
-      canonical: `/products/deutsch-connectors/${slug}`,
-    },
+    alternates: { canonical: `/products/deutsch-connectors/${slug}` },
   };
 }
 
@@ -64,35 +68,86 @@ const SERIES_COLORS: Record<string, string> = {
   AT: "bg-green-50 text-green-700 border-green-200",
 };
 
-function localStorefrontUrl(url: string | undefined, partNumber: string): string {
-  if (!url) return `/webshop/${partNumber.toLowerCase()}.html`;
-
-  try {
-    const parsed = new URL(url);
-    return `${parsed.pathname}${parsed.search}`;
-  } catch {
-    return url;
-  }
+function splitRefs(value: string | undefined): string[] {
+  if (!value) return [];
+  return [...new Set(value.split(",").map((s) => s.trim()).filter(Boolean))];
 }
 
-function RelatedCard({ item }: { item: RelatedProduct }) {
-  const catalogueProduct = deutschProducts.find(
-    (product) => product.partNumber.toLowerCase() === item.partNumber.toLowerCase(),
+// Card for a related part — resolves to Deutsch page or Magento webshop URL.
+function PartCard({ partNumber, magentoProduct }: { partNumber: string; magentoProduct: CatalogueProduct | undefined }) {
+  const deutsch = deutschProducts.find(
+    (p) => p.partNumber.toUpperCase() === partNumber.toUpperCase(),
   );
-  const href = catalogueProduct
-    ? getDeutschWebshopUrl(catalogueProduct)
-    : localStorefrontUrl(item.url, item.partNumber);
+
+  const href = deutsch
+    ? `/products/deutsch-connectors/${deutsch.partNumber.toLowerCase()}`
+    : magentoProduct
+      ? catalogueProductLegacyRoute(magentoProduct)
+      : null;
+
+  const imageUrl = deutsch?.imageUrl ?? magentoProduct?.thumbnail ?? magentoProduct?.image;
+
+  const inner = (
+    <>
+      <div className="relative aspect-square w-full bg-white">
+        {imageUrl ? (
+          <Image
+            src={imageUrl}
+            alt={partNumber}
+            fill
+            className="object-contain p-3 transition-transform duration-300 group-hover:scale-110"
+            sizes="(max-width: 640px) 45vw, 160px"
+            unoptimized
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center bg-[#f8fafc]">
+            <Package size={28} className="text-[#cbd5e1]" />
+          </div>
+        )}
+      </div>
+      <div className="border-t border-[#f1f5f9] px-3 py-2.5 text-center">
+        <span className="font-mono text-xs font-semibold text-[#0a1628] transition-colors group-hover:text-[#2563eb]">
+          {partNumber}
+        </span>
+      </div>
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className="group flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white transition-all duration-200 hover:-translate-y-1 hover:border-[#bfdbfe] hover:shadow-[0_16px_30px_-16px_rgba(15,23,42,0.22)]"
+      >
+        {inner}
+      </Link>
+    );
+  }
 
   return (
-    <Link
-      href={href}
-      className="group flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white transition-all duration-200 hover:-translate-y-1 hover:border-[#bfdbfe] hover:shadow-[0_16px_30px_-16px_rgba(15,23,42,0.22)]"
-    >
-      {/* Media, edge-to-edge on white so the product photo blends in with no inner frame */}
+    <div className="flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white">
+      {inner}
+    </div>
+  );
+}
+
+// Card for rich-detail related products (contacts, accessories from detail data).
+function RelatedCard({ item }: { item: RelatedProduct }) {
+  const deutsch = deutschProducts.find(
+    (p) => p.partNumber.toLowerCase() === item.partNumber.toLowerCase(),
+  );
+  const href = deutsch
+    ? `/products/deutsch-connectors/${deutsch.partNumber.toLowerCase()}`
+    : item.url ?? null;
+
+  const imageUrl = item.imageUrl ?? deutsch?.imageUrl;
+
+  const inner = (
+    <>
       <div className="relative aspect-square w-full bg-white">
-        {item.imageUrl ? (
+        {imageUrl ? (
           <Image
-            src={item.imageUrl}
+            src={imageUrl}
             alt={`Deutsch ${item.partNumber}`}
             fill
             className="object-contain p-3 transition-transform duration-300 group-hover:scale-110"
@@ -105,13 +160,54 @@ function RelatedCard({ item }: { item: RelatedProduct }) {
           </div>
         )}
       </div>
-      {/* Label */}
       <div className="border-t border-[#f1f5f9] px-3 py-2.5 text-center">
         <span className="font-mono text-xs font-semibold text-[#0a1628] transition-colors group-hover:text-[#2563eb]">
           {item.partNumber}
         </span>
       </div>
-    </Link>
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className="group flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white transition-all duration-200 hover:-translate-y-1 hover:border-[#bfdbfe] hover:shadow-[0_16px_30px_-16px_rgba(15,23,42,0.22)]"
+      >
+        {inner}
+      </Link>
+    );
+  }
+  return <div className="flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white">{inner}</div>;
+}
+
+function catalogueFileType(file: CatalogueFile): string {
+  const s = `${file.name ?? ""} ${file.filename ?? ""} ${file.path ?? ""}`.toLowerCase();
+  if (s.includes(".pdf") || s.includes("pdf")) return "pdf";
+  if (s.includes(".tif") || s.includes(".tiff")) return "tif";
+  if (s.includes(".dxf")) return "dxf";
+  if (s.includes(".step") || s.includes(".stp")) return "step";
+  if (s.includes(".iges") || s.includes(".igs")) return "iges";
+  return "zip";
+}
+
+function CatalogueFileRow({ file }: { file: CatalogueFile }) {
+  const type = catalogueFileType(file);
+  const colorClass = FILE_TYPE_COLORS[type] ?? FILE_TYPE_COLORS.zip;
+  const href = file.legacyDownloadPath || file.link || file.path || "#";
+  return (
+    <a
+      href={href}
+      className="flex items-center justify-between gap-4 py-3 px-4 bg-white border border-[#e5e7eb] hover:border-[#2563eb] rounded-lg transition-all group"
+    >
+      <div className="flex items-center gap-3">
+        <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded border ${colorClass}`}>{type}</span>
+        <span className="text-sm text-[#374151] group-hover:text-[#0a1628] transition-colors">
+          {file.name ?? "Download"}
+        </span>
+      </div>
+      <Download size={14} className="text-[#9ca3af] group-hover:text-[#2563eb] transition-colors" />
+    </a>
   );
 }
 
@@ -147,8 +243,58 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const seriesLabel = SERIES_LABELS[catalogueProduct.series] ?? catalogueProduct.series;
   const seriesColor = SERIES_COLORS[catalogueProduct.series] ?? "bg-slate-50 text-slate-700 border-slate-200";
 
-  // Use large image from detail if available, else CDN thumbnail
-  const mainImage = detail?.largImageUrl ?? catalogueProduct.imageUrl;
+  // Pull Magento catalogue data for every product — provides specs, contacts, accessories, files.
+  const magentoProduct = findCatalogueProductByReference(partNumber);
+  const magentoSpecs = magentoProduct ? getProductAttributeEntries(magentoProduct) : [];
+
+  // Relationship part number lists from Magento attributes.
+  const magentoContactRefs = [
+    ...splitRefs(magentoProduct?.attributes["Pin Connectors"]),
+    ...splitRefs(magentoProduct?.attributes["Socket Connectors"]),
+    ...splitRefs(magentoProduct?.attributes["Tab Connectors"]),
+    ...splitRefs(magentoProduct?.attributes["Stamped/Formed Contacts"]),
+    ...splitRefs(magentoProduct?.attributes["Solid Contacts"]),
+  ];
+  const magentoMatingRefs = splitRefs(magentoProduct?.attributes["Mating Connectors"]);
+  const magentoRequiredRefs = [
+    ...splitRefs(magentoProduct?.attributes["Required Components"]),
+    ...splitRefs(magentoProduct?.attributes["Required Wedgelock"]),
+  ];
+  const magentoAccessoryRefs = splitRefs(magentoProduct?.attributes["Accessories"]);
+
+  // Resolve each related part number to its Magento product (for images/links in PartCard).
+  const resolveRef = (pn: string) => findCatalogueProductByReference(pn);
+
+  // Image priority: rich detail > deutsch CDN > magento image.
+  const mainImage = detail?.largImageUrl ?? catalogueProduct.imageUrl ?? magentoProduct?.image ?? magentoProduct?.thumbnail;
+
+  // Quick spec grid entries.
+  const quickSpecs = detail
+    ? [
+        { label: "Cavities", value: detail.specs["No. of cavities"] },
+        { label: "Contact size", value: detail.specs["Contact Size"] },
+        { label: "Current rating", value: detail.specs["Current Rating"] },
+        { label: "Wire size (AWG)", value: detail.specs["Wire Size (AWG)"] ?? detail.specs["Wire Size"] },
+        { label: "Color", value: detail.specs["Color"] },
+        { label: "Required wedgelock", value: detail.specs["Required Wedgelock"] },
+      ].filter((s) => s.value)
+    : [
+        { label: "Cavities", value: magentoProduct?.attributes["No. of cavities"] ?? (catalogueProduct.ways !== null ? String(catalogueProduct.ways) : undefined) },
+        { label: "Contact size", value: magentoProduct?.attributes["Contact Size"] },
+        { label: "Series", value: seriesLabel },
+        { label: "Type", value: catalogueProduct.type ?? undefined },
+        { label: "Current rating", value: magentoProduct?.attributes["Current Rating"] },
+        { label: "Wire size", value: magentoProduct?.attributes["Wire Size (AWG)"] ?? magentoProduct?.attributes["Wire Size"] },
+        { label: "Color", value: magentoProduct?.attributes["Color"] },
+      ].filter((s) => s.value);
+
+  // Determine what spec table and relationship sections to show.
+  const hasDetailSpecs = detail && Object.keys(detail.specs).length > 0;
+  const hasMagentoSpecs = magentoSpecs.length > 0;
+  const hasDetailContacts = detail && detail.contacts.length > 0;
+  const hasDetailMating = detail && detail.matingConnectors.length > 0;
+  const hasDetailRequired = detail && detail.requiredComponents.length > 0;
+  const hasDetailAccessories = detail && detail.accessories.length > 0;
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
@@ -222,7 +368,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               {seriesLabel}
               {catalogueProduct.ways !== null ? ` · ${catalogueProduct.ways}-way` : ""}
               {catalogueProduct.type ? ` · ${catalogueProduct.type}` : ""}
-              {detail?.specs["Contact Size"] ? ` · Size ${detail.specs["Contact Size"]} contacts` : ""}
+              {(detail?.specs["Contact Size"] ?? magentoProduct?.attributes["Contact Size"]) &&
+                ` · Size ${detail?.specs["Contact Size"] ?? magentoProduct?.attributes["Contact Size"]} contacts`}
             </p>
 
             {/* Availability */}
@@ -231,45 +378,19 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
               <span className={`text-sm font-semibold ${catalogueProduct.availability === "quote" ? "text-emerald-700" : "text-amber-700"}`}>
                 {catalogueProduct.availability === "quote" ? "Available for quote" : "Lead time"}
               </span>
-              {detail?.availabilityNote && (
-                <span className="text-xs text-[#64748b]">{detail.availabilityNote}</span>
-              )}
             </div>
 
-            {/* Quick specs, from detail if available, else from catalogue data */}
-            <div className="grid grid-cols-2 gap-3 mb-8">
-              {detail ? (
-                [
-                  { label: "Cavities", value: detail.specs["No. of cavities"] },
-                  { label: "Contact size", value: detail.specs["Contact Size"] },
-                  { label: "Current rating", value: detail.specs["Current Rating"] },
-                  { label: "Wire size (AWG)", value: detail.specs["Wire Size (AWG)"] ?? detail.specs["Wire Size"] },
-                  { label: "Color", value: detail.specs["Color"] },
-                  { label: "Required wedgelock", value: detail.specs["Required Wedgelock"] },
-                ]
-                  .filter((s) => s.value)
-                  .map((s) => (
-                    <div key={s.label} className="bg-white border border-[#e5e7eb] rounded-lg p-3">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#9ca3af] mb-0.5">{s.label}</div>
-                      <div className="text-sm font-semibold text-[#0a1628]">{s.value}</div>
-                    </div>
-                  ))
-              ) : (
-                [
-                  catalogueProduct.ways !== null && { label: "Cavities", value: String(catalogueProduct.ways) },
-                  catalogueProduct.type && { label: "Type", value: catalogueProduct.type },
-                  { label: "Series", value: seriesLabel },
-                  { label: "Brand", value: "Deutsch" },
-                ]
-                  .filter(Boolean)
-                  .map((s) => s && (
-                    <div key={s.label} className="bg-white border border-[#e5e7eb] rounded-lg p-3">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#9ca3af] mb-0.5">{s.label}</div>
-                      <div className="text-sm font-semibold text-[#0a1628]">{s.value}</div>
-                    </div>
-                  ))
-              )}
-            </div>
+            {/* Quick specs grid */}
+            {quickSpecs.length > 0 && (
+              <div className="grid grid-cols-2 gap-3 mb-8">
+                {quickSpecs.map((s) => (
+                  <div key={s.label} className="bg-white border border-[#e5e7eb] rounded-lg p-3">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-[#9ca3af] mb-0.5">{s.label}</div>
+                    <div className="text-sm font-semibold text-[#0a1628]">{s.value}</div>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3">
@@ -298,8 +419,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </div>
         </div>
 
-        {/* ── Full spec table (only if rich data exists) ─────────────────── */}
-        {detail && (
+        {/* ── Technical specifications ──────────────────────────────────── */}
+        {hasDetailSpecs && (
           <section className="mb-12">
             <h2 className="text-lg font-bold text-[#0a1628] mb-4">Technical specifications</h2>
             <div className="bg-white border border-[#e5e7eb] rounded-xl overflow-hidden">
@@ -317,66 +438,129 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </section>
         )}
 
-        {/* ── Related products (only if rich data) ──────────────────────── */}
-        {detail && (
-          <>
-            <div className="grid lg:grid-cols-2 gap-10 mb-12">
-              {detail.contacts.length > 0 && (
-                <section>
-                  <h2 className="text-lg font-bold text-[#0a1628] mb-4">Compatible contacts</h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {detail.contacts.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
-                  </div>
-                </section>
-              )}
-              {detail.matingConnectors.length > 0 && (
-                <section>
-                  <h2 className="text-lg font-bold text-[#0a1628] mb-4">Mating connectors</h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {detail.matingConnectors.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
-                  </div>
-                </section>
-              )}
+        {!hasDetailSpecs && hasMagentoSpecs && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Technical specifications</h2>
+            <div className="bg-white border border-[#e5e7eb] rounded-xl overflow-hidden">
+              <table className="w-full text-sm">
+                <tbody className="divide-y divide-[#f1f5f9]">
+                  {magentoSpecs.map(([key, value], i) => (
+                    <tr key={key} className={i % 2 === 0 ? "bg-white" : "bg-[#f8fafc]"}>
+                      <td className="px-5 py-3 font-medium text-[#64748b] w-56 text-xs uppercase tracking-wide">{key}</td>
+                      <td className="px-5 py-3 font-semibold text-[#0a1628]">{value}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-
-            <div className="grid lg:grid-cols-2 gap-10 mb-12">
-              {detail.requiredComponents.length > 0 && (
-                <section>
-                  <h2 className="text-lg font-bold text-[#0a1628] mb-1">Required components</h2>
-                  <p className="text-xs text-[#64748b] mb-4">Must be ordered together with the housing.</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {detail.requiredComponents.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
-                  </div>
-                </section>
-              )}
-              {detail.accessories.length > 0 && (
-                <section>
-                  <h2 className="text-lg font-bold text-[#0a1628] mb-4">Accessories</h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {detail.accessories.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
-                  </div>
-                </section>
-              )}
-            </div>
-
-            {detail.drawings.length > 0 && (
-              <section className="mb-12">
-                <h2 className="text-lg font-bold text-[#0a1628] mb-4">Drawings & CAD files</h2>
-                <div className="space-y-2">
-                  {detail.drawings.map((file) => <DownloadRow key={file.url} file={file} />)}
-                </div>
-              </section>
-            )}
-          </>
+          </section>
         )}
 
-        {/* ── No rich data, info note ──────────────────────────────────── */}
-        {!detail && (
-          <div className="mb-12 bg-[#eff6ff] border border-[#bfdbfe] rounded-xl p-5">
-            <p className="text-sm text-[#1d4ed8]">
-              Full technical specifications, compatible contacts, mating connectors, and CAD drawings are available on request. Contact our Bromma office for the complete datasheet.
-            </p>
-          </div>
+        {/* ── Compatible contacts ───────────────────────────────────────── */}
+        {hasDetailContacts && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Compatible contacts</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {detail.contacts.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
+            </div>
+          </section>
+        )}
+
+        {!hasDetailContacts && magentoContactRefs.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Compatible contacts</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {magentoContactRefs.map((pn) => (
+                <PartCard key={pn} partNumber={pn} magentoProduct={resolveRef(pn)} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Mating connectors ─────────────────────────────────────────── */}
+        {hasDetailMating && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Mating connectors</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {detail.matingConnectors.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
+            </div>
+          </section>
+        )}
+
+        {!hasDetailMating && magentoMatingRefs.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Mating connectors</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {magentoMatingRefs.map((pn) => (
+                <PartCard key={pn} partNumber={pn} magentoProduct={resolveRef(pn)} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Required components ───────────────────────────────────────── */}
+        {hasDetailRequired && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-1">Required components</h2>
+            <p className="text-xs text-[#64748b] mb-4">Must be ordered together with the housing.</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {detail.requiredComponents.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
+            </div>
+          </section>
+        )}
+
+        {!hasDetailRequired && magentoRequiredRefs.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-1">Required components</h2>
+            <p className="text-xs text-[#64748b] mb-4">Must be ordered together with the housing.</p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {magentoRequiredRefs.map((pn) => (
+                <PartCard key={pn} partNumber={pn} magentoProduct={resolveRef(pn)} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Accessories ───────────────────────────────────────────────── */}
+        {hasDetailAccessories && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Accessories</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {detail.accessories.map((c) => <RelatedCard key={c.partNumber} item={c} />)}
+            </div>
+          </section>
+        )}
+
+        {!hasDetailAccessories && magentoAccessoryRefs.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Accessories</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {magentoAccessoryRefs.map((pn) => (
+                <PartCard key={pn} partNumber={pn} magentoProduct={resolveRef(pn)} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ── Drawings & CAD files ──────────────────────────────────────── */}
+        {detail && detail.drawings.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Drawings & CAD files</h2>
+            <div className="space-y-2">
+              {detail.drawings.map((file) => <DownloadRow key={file.url} file={file} />)}
+            </div>
+          </section>
+        )}
+
+        {(!detail || detail.drawings.length === 0) && magentoProduct && magentoProduct.files.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold text-[#0a1628] mb-4">Drawings & CAD files</h2>
+            <div className="space-y-2">
+              {magentoProduct.files.map((file, i) => (
+                <CatalogueFileRow key={`${file.id}-${i}`} file={file} />
+              ))}
+            </div>
+          </section>
         )}
 
         {/* ── CTA ──────────────────────────────────────────────────────── */}
