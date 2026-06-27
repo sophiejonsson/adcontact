@@ -6,6 +6,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import BrandHero from "@/components/brand/BrandHero";
 import {
@@ -59,10 +60,13 @@ const features = [
   },
 ];
 
+const BASE = "https://www.adcontact.se";
+
 const productRanges = [
   {
     title: "Stripping Machines",
     count: 6,
+    image: `${BASE}/media/catalog/product/a/i/ai_02-os_01_5956d51d60.png`,
     description:
       "Bench-top and inline stripping machines for coaxial, multi-layer, and standard round conductors. Precise strip depth and length control, suitable for manual and automated lines.",
     href: "/webshop/production-equipment/stripping-machines/zoller-frohlich.html",
@@ -71,6 +75,7 @@ const productRanges = [
   {
     title: "Crimping Presses",
     count: 27,
+    image: `${BASE}/media/catalog/product/e/c/ecm_04.png`,
     description:
       "Eccentric, toggle, and servo-driven crimp presses with interchangeable applicator systems. Suitable for a full range of terminal types, from micro to power applications.",
     href: "/webshop/production-equipment/crimping-equipment/zoller-frohlich.html",
@@ -149,6 +154,7 @@ export default function ZollerFrohlichPage() {
         primaryCta={{ label: "Request a quote", href: "/contact/quote" }}
         secondaryCta={{ label: "Browse all 33 products", href: "#range" }}
         shopUrl="https://www.zofre.de/en/"
+        heroImage={`${BASE}/media/catalog/product/a/i/ai_01-os_1fb4782275.png`}
       />
 
       <BrandJumpNav
@@ -174,18 +180,30 @@ export default function ZollerFrohlichPage() {
               <Link
                 key={range.href}
                 href={range.href}
-                className="group flex flex-col rounded-2xl border border-[#e5e7eb] bg-white p-6 transition-shadow hover:border-[#93c5fd] hover:shadow-md"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white transition-shadow hover:border-[#93c5fd] hover:shadow-md"
               >
-                <div className="mb-1 flex items-center gap-2">
-                  <span className="text-lg font-bold text-[#0a1628]">{range.title}</span>
-                  <span className="rounded-full bg-[#eff6ff] px-2 py-0.5 text-xs font-semibold text-[#2563eb]">
-                    {range.count} products
+                <div className="relative h-52 w-full bg-[#f8fafc]">
+                  <Image
+                    src={range.image}
+                    alt={range.title}
+                    fill
+                    unoptimized
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="mb-1 flex items-center gap-2">
+                    <span className="text-lg font-bold text-[#0a1628]">{range.title}</span>
+                    <span className="rounded-full bg-[#eff6ff] px-2 py-0.5 text-xs font-semibold text-[#2563eb]">
+                      {range.count} products
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-[#64748b]">{range.description}</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#2563eb] group-hover:text-[#1d4ed8]">
+                    {range.label} <ArrowRight size={14} />
                   </span>
                 </div>
-                <p className="mt-2 text-sm leading-relaxed text-[#64748b]">{range.description}</p>
-                <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#2563eb] group-hover:text-[#1d4ed8]">
-                  {range.label} <ArrowRight size={14} />
-                </span>
               </Link>
             ))}
           </div>

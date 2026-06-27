@@ -23,6 +23,8 @@ type BrandHeroProps = {
   primaryCta: HeroCta;
   secondaryCta: HeroCta;
   shopUrl?: string;
+  /** Optional product/brand image shown in the right panel above the stats. */
+  heroImage?: string;
 };
 
 export default function BrandHero({
@@ -39,6 +41,7 @@ export default function BrandHero({
   primaryCta,
   secondaryCta,
   shopUrl,
+  heroImage,
 }: BrandHeroProps) {
   return (
     <div className="relative overflow-hidden bg-[#0a1628] text-white">
@@ -169,19 +172,33 @@ export default function BrandHero({
             )}
           </div>
 
-          {/* Right, stats grid */}
-          <div className="grid min-w-[300px] grid-cols-2 gap-3 lg:flex-shrink-0">
-            {stats.map((item) => (
-              <div
-                key={item.label}
-                className="rounded-lg border border-[#1e3a6e] bg-[#0f2042] p-4"
-              >
-                <div className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-[#475569]">
-                  {item.label}
-                </div>
-                <div className="text-sm font-semibold text-[#e2e8f0]">{item.value}</div>
+          {/* Right: hero image (optional) + stats grid */}
+          <div className="flex min-w-[300px] flex-col gap-4 lg:flex-shrink-0">
+            {heroImage && (
+              <div className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]" style={{ aspectRatio: "4/3" }}>
+                <Image
+                  src={heroImage}
+                  alt={title}
+                  fill
+                  unoptimized
+                  sizes="420px"
+                  className="object-contain p-4"
+                />
               </div>
-            ))}
+            )}
+            <div className="grid grid-cols-2 gap-3">
+              {stats.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-lg border border-[#1e3a6e] bg-[#0f2042] p-4"
+                >
+                  <div className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-[#475569]">
+                    {item.label}
+                  </div>
+                  <div className="text-sm font-semibold text-[#e2e8f0]">{item.value}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
