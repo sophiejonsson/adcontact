@@ -149,24 +149,38 @@ type DescriptionContent = {
   standaloneImages: string[];
 };
 
+function magentoMediaSrc(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (path.startsWith("/")) return `https://www.adcontact.se${path}`;
+  return path;
+}
+
 function CategoryCard({ category }: { category: CatalogueCategory }) {
   const children = getCategoryChildren(category).slice(0, 6);
   const productCount = getCategoryProductCount(category);
+
+  // Prefer an actual product photo over category-level logo/placeholder images.
+  const representativeProduct = getCategoryProducts(category, undefined, {
+    includeDescendantsWhenEmpty: true,
+  }).find((p) => p.thumbnail || p.image);
+  const cardImage =
+    magentoMediaSrc(representativeProduct?.thumbnail ?? representativeProduct?.image) ??
+    magentoMediaSrc(category.image);
 
   return (
     <article className="group grid min-w-0 overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)] sm:grid-cols-[132px_1fr]">
       <Link
         href={category.route ?? "#"}
-        className="relative flex min-h-32 items-center justify-center bg-[#eef4fb]"
+        className="relative flex min-h-32 items-center justify-center bg-[#f8fafc]"
       >
-        {category.image ? (
+        {cardImage ? (
           <Image
-            src={category.image}
+            src={cardImage}
             alt={category.name ?? "Category"}
             fill
             unoptimized
             sizes="132px"
-            className="object-contain p-5 transition-transform group-hover:scale-105"
+            className="object-contain p-4 transition-transform group-hover:scale-105"
           />
         ) : (
           <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-[#d8dee7] bg-white text-[#2563eb] shadow-sm">
@@ -479,6 +493,11 @@ export default function CatalogueCategoryPage({
   const visualCategoryByHref = new Map(displayChildren.map((child) => [child.route, child]));
   const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks;
 
+  // The first standalone image (e.g. from a Magento category description) is
+  // promoted to the hero right column so it fills the empty blue space.
+  const heroImageSrc = content.standaloneImages[0] ?? null;
+  const remainingImages = heroImageSrc ? content.standaloneImages.slice(1) : content.standaloneImages;
+
   // Current manufacturer logo for brand-named categories (e.g. Deutsch → TE).
   const brand = brandForCategory(category);
 
@@ -514,50 +533,72 @@ export default function CatalogueCategoryPage({
             crumbs={breadcrumbCrumbs}
           />
 
-          <div className="mt-5">
-            {brand?.logo && (
-              <span className="mb-4 inline-flex items-center gap-2.5 rounded-lg bg-white px-3.5 py-2 shadow-sm">
-                <Image
-                  src={brand.logo}
-                  alt={brand.name}
-                  width={132}
-                  height={28}
-                  unoptimized
-                  className="h-6 w-auto object-contain"
-                />
-              </span>
-            )}
-            <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">
-              {title}
-            </h1>
-            <p className="mt-4 max-w-3xl text-base leading-7 text-[#94a3b8]">
-              {description ?? (
-                // Only use the brand description when the brand's product type
-                // matches the category tree (e.g. equipment brands describe
-                // themselves on equipment pages, not on connector pages).
-                brand?.linecardSection === "equipment" && !category.route?.includes("/production-equipment")
-                  ? null
-                  : brand?.description
-              ) ?? categoryIntro(category)}
-            </p>
-            <p className="mt-4 text-sm font-semibold text-blue-200">
-              {displayChildren.length.toLocaleString()} categories · {productCount.toLocaleString()} catalogue items
-            </p>
-
-            {brand?.shopUrl && (
-              <div className="mt-5 inline-flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3">
-                <span className="text-sm text-[#94a3b8]">
-                  Can&apos;t find what you&apos;re looking for? Browse the full range directly with {brand.name}.
+          <div className="mt-5 flex flex-col gap-8 lg:flex-row lg:items-start">
+            {/* Left: title, description, stats, CTA */}
+            <div className="flex-1">
+              {brand?.logo && (
+                <span className="mb-4 inline-flex items-center gap-2.5 rounded-lg bg-white px-3.5 py-2 shadow-sm">
+                  <Image
+                    src={brand.logo}
+                    alt={brand.name}
+                    width={132}
+                    height={28}
+                    unoptimized
+                    className="h-6 w-auto object-contain"
+                  />
                 </span>
-                <a
-                  href={brand.shopUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm font-semibold text-[#fbbf24] hover:text-[#f59e0b] transition-colors"
+              )}
+              <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">
+                {title}
+              </h1>
+              <p className="mt-4 max-w-3xl text-base leading-7 text-[#94a3b8]">
+                {description ?? (
+                  // Only use the brand description when the brand's product type
+                  // matches the category tree (e.g. equipment brands describe
+                  // themselves on equipment pages, not on connector pages).
+                  brand?.linecardSection === "equipment" && !category.route?.includes("/production-equipment")
+                    ? null
+                    : brand?.description
+                ) ?? categoryIntro(category)}
+              </p>
+              <p className="mt-4 text-sm font-semibold text-blue-200">
+                {displayChildren.length.toLocaleString()} categories · {productCount.toLocaleString()} catalogue items
+              </p>
+
+              {brand?.shopUrl && (
+                <div className="mt-5 inline-flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3">
+                  <span className="text-sm text-[#94a3b8]">
+                    Can&apos;t find what you&apos;re looking for? Browse the full range directly with {brand.name}.
+                  </span>
+                  <a
+                    href={brand.shopUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-sm font-semibold text-[#fbbf24] hover:text-[#f59e0b] transition-colors"
+                  >
+                    Go to partner shop
+                    <ArrowUpRight size={14} />
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {/* Right: hero image promoted from category description */}
+            {heroImageSrc && (
+              <div className="w-full lg:w-80 lg:flex-shrink-0 xl:w-96">
+                <div
+                  className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]"
+                  style={{ aspectRatio: "4/3" }}
                 >
-                  Go to partner shop
-                  <ArrowUpRight size={14} />
-                </a>
+                  <Image
+                    src={heroImageSrc}
+                    alt={title}
+                    fill
+                    unoptimized
+                    sizes="(max-width: 1024px) 100vw, 420px"
+                    className="object-contain p-4"
+                  />
+                </div>
               </div>
             )}
           </div>
@@ -595,8 +636,8 @@ export default function CatalogueCategoryPage({
 
         {/* Decorative series banner images are replaced by the clickable
             "Browse by series" section above when series data exists. */}
-        {content.standaloneImages.length > 0 && !showSeries && (
-          <ImageShowcase images={content.standaloneImages} title={title} />
+        {remainingImages.length > 0 && !showSeries && (
+          <ImageShowcase images={remainingImages} title={title} />
         )}
 
         {showVisualLinks && (
