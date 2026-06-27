@@ -201,20 +201,25 @@ function productHref(product: CatalogueProduct, categoryRoute: string | null) {
 function ProductCard({
   product,
   categoryRoute,
+  deutschImageMap,
 }: {
   product: CatalogueProduct;
   categoryRoute: string | null;
+  deutschImageMap?: Record<string, string>;
 }) {
   const leadTime =
     product.attributes.Availability ??
     (product.brand === "Deutsch" ? "Estimated delivery time 5-6 weeks" : null);
 
+  const imageUrl =
+    product.thumbnail ?? product.image ?? deutschImageMap?.[String(product.id)];
+
   return (
     <Link href={productHref(product, categoryRoute)} className="group flex min-w-0 flex-col bg-white">
       <div className="relative aspect-square border border-[#e5e7eb] bg-white transition-colors group-hover:border-[#93c5fd]">
-        {product.thumbnail ?? product.image ? (
+        {imageUrl ? (
           <Image
-            src={product.thumbnail ?? product.image ?? ""}
+            src={imageUrl}
             alt={product.name}
             fill
             unoptimized
@@ -246,6 +251,7 @@ export default function CatalogueProductBrowser({
   isWebshopRoot,
   sectionLabel,
   sectionTitle,
+  deutschImageMap,
 }: {
   products: CatalogueProduct[];
   route: string | null;
@@ -253,6 +259,7 @@ export default function CatalogueProductBrowser({
   isWebshopRoot: boolean;
   sectionLabel: string;
   sectionTitle: string;
+  deutschImageMap?: Record<string, string>;
 }) {
   const initialPageSize = positiveInt(searchParams.per_page, DEFAULT_PAGE_SIZE);
   const [query, setQuery] = useState(firstParamValue(searchParams.q) ?? "");
@@ -443,7 +450,7 @@ export default function CatalogueProductBrowser({
         {pageProducts.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-5 gap-y-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {pageProducts.map((product) => (
-              <ProductCard key={product.id} product={product} categoryRoute={route} />
+              <ProductCard key={product.id} product={product} categoryRoute={route} deutschImageMap={deutschImageMap} />
             ))}
           </div>
         ) : (

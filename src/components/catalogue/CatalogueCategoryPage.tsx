@@ -14,6 +14,7 @@ import {
 import { normalizeLegacyHtml } from "@/lib/legacyHtml";
 import { categoryIntro } from "@/lib/seo";
 import { brands } from "@/data/brands";
+import { deutschProducts } from "@/data/deutschConnectors";
 import {
   DEUTSCH_SERIES_CATEGORY_ROUTE,
   DEUTSCH_SERIES_INTRO,
@@ -23,6 +24,20 @@ import {
   teConnectivitySeriesByName,
   type DeutschSeriesInfo,
 } from "@/data/deutschSeries";
+
+// Build a map of Magento product id → Deutsch CDN imageUrl for products that
+// have no Magento image, so the category listing can show the correct thumbnail.
+import type { CatalogueProduct } from "@/lib/magentoCatalogue";
+function buildDeutschImageMap(products: CatalogueProduct[]): Record<string, string> {
+  const map: Record<string, string> = {};
+  for (const product of products) {
+    if (product.thumbnail || product.image) continue;
+    const sku = (product.sku ?? product.name ?? "").toUpperCase();
+    const deutsch = deutschProducts.find((d) => d.partNumber.toUpperCase() === sku);
+    if (deutsch?.imageUrl) map[String(product.id)] = deutsch.imageUrl;
+  }
+  return map;
+}
 
 // A URL-style slug derived from a brand's display name, so a route segment
 // like "te-connectivity" resolves to the brand whose stored slug is "deutsch"
@@ -622,6 +637,7 @@ export default function CatalogueCategoryPage({
             isWebshopRoot={isWebshopRoot}
             sectionLabel={productSectionLabel}
             sectionTitle={productSectionTitle}
+            deutschImageMap={buildDeutschImageMap(productPool)}
           />
         )}
 
