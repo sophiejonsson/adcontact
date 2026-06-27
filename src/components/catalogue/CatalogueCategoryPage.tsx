@@ -254,7 +254,10 @@ function descriptionContent(description: string | null): DescriptionContent {
   while ((match = linkPattern.exec(normalized))) {
     const [, , href, innerHtml] = match;
     const title = stripTags(innerHtml);
-    const image = firstImageSrc(innerHtml);
+    const rawImage = firstImageSrc(innerHtml);
+    // Magento media paths are relative — prefix with the legacy origin so
+    // next/image doesn't try to serve them from the Vercel domain.
+    const image = rawImage?.startsWith("/") ? `https://www.adcontact.se${rawImage}` : rawImage ?? null;
     if (!href || !title) continue;
     linkedBlocks.push(match[0]);
     visualLinks.push({ href, title, image });
@@ -265,7 +268,10 @@ function descriptionContent(description: string | null): DescriptionContent {
     normalized,
   );
   const standaloneImages = [...htmlWithoutLinks.matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)]
-    .map((imageMatch) => imageMatch[2])
+    .map((imageMatch) => {
+      const src = imageMatch[2];
+      return src?.startsWith("/") ? `https://www.adcontact.se${src}` : src;
+    })
     .filter(Boolean);
 
   const textWithoutLinksOrImages = stripTags(htmlWithoutLinks.replace(/<img\b[^>]*>/gi, ""));
@@ -525,7 +531,14 @@ export default function CatalogueCategoryPage({
               {title}
             </h1>
             <p className="mt-4 max-w-3xl text-base leading-7 text-[#94a3b8]">
-              {description ?? brand?.description ?? categoryIntro(category)}
+              {description ?? (
+                // Only use the brand description when the brand's product type
+                // matches the category tree (e.g. equipment brands describe
+                // themselves on equipment pages, not on connector pages).
+                brand?.linecardSection === "equipment" && !category.route?.includes("/production-equipment")
+                  ? null
+                  : brand?.description
+              ) ?? categoryIntro(category)}
             </p>
             <p className="mt-4 text-sm font-semibold text-blue-200">
               {displayChildren.length.toLocaleString()} categories · {productCount.toLocaleString()} catalogue items
