@@ -183,28 +183,6 @@ export default function TrustSection() {
                 })}
               </div>
 
-              <div className="mt-4 flex flex-col items-center gap-3 border-t border-white/10 pt-6 text-center sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 sm:text-left">
-                <Link
-                  href="/about#quality"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#0a1628] transition-colors hover:bg-[#eff6ff]"
-                >
-                  Our quality approach
-                  <ArrowUpRight
-                    size={14}
-                    className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                  />
-                </Link>
-                <Link
-                  href="/contact/quote"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-semibold text-[#93c5fd] transition-colors hover:text-white"
-                >
-                  Talk to a specialist
-                </Link>
-              </div>
             </div>
           </div>
         </div>
