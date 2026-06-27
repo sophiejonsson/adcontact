@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       ? `${catalogueProduct.partNumber}: ${detail.specs["Series"] ?? "Deutsch"} sealed connector, ${detail.specs["No. of cavities"] ?? ""} way, contact size ${detail.specs["Contact Size"] ?? ""}. Request a quote from Adcontact Sweden.`
       : `${catalogueProduct.partNumber}: ${SERIES_LABELS[catalogueProduct.series] ?? catalogueProduct.series} sealed connector${catalogueProduct.ways ? `, ${catalogueProduct.ways}-way` : ""}. Request a quote from Adcontact Sweden.`,
     alternates: {
-      canonical: getDeutschWebshopUrl(catalogueProduct),
+      canonical: `/products/deutsch-connectors/${slug}`,
     },
   };
 }
