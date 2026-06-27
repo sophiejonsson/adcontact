@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Archive, Download, FileImage, FileText, Mail, Package, Phone } from "lucide-react";
+import { ArrowRight, Archive, Clock, Download, FileImage, FileText, Mail, Package, Phone } from "lucide-react";
 import QuoteForm from "@/components/QuoteForm";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { normalizeLegacyHtml, stripLegacyHtml } from "@/lib/legacyHtml";
@@ -213,6 +213,16 @@ export default function CatalogueProductPage({
                 {stripLegacyHtml(product.shortDescription)}
               </p>
             )}
+
+            {/* Lead time */}
+            <div className="mt-5 flex w-fit items-center gap-2 rounded-lg border border-[#e5e7eb] bg-white p-3">
+              <Clock size={14} className="text-amber-500" />
+              <span className="text-sm font-semibold text-amber-700">
+                {product.attributes.Availability === "on request"
+                  ? "Available on request"
+                  : "Lead time — contact us for pricing"}
+              </span>
+            </div>
 
             {highlights.length > 0 && (
               <div className="mt-8 grid grid-cols-2 gap-3">

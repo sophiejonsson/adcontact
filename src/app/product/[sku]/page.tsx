@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ChevronRight, Package, Phone, Mail, Download, ArrowRight } from "lucide-react";
+import { ChevronRight, Clock, Package, Phone, Mail, Download, ArrowRight } from "lucide-react";
 import {
   getUnifiedProduct,
   getRelatedProducts,
@@ -162,6 +162,14 @@ export default async function ProductPage({ params }: Props) {
                 ))}
               </div>
             )}
+
+            {/* Lead time */}
+            <div className="mb-6 flex w-fit items-center gap-2 rounded-lg border border-[#e5e7eb] bg-white p-3">
+              <Clock size={14} className="text-amber-500" />
+              <span className="text-sm font-semibold text-amber-700">
+                Lead time — contact us for current delivery
+              </span>
+            </div>
 
             <div className="flex flex-col gap-3 sm:flex-row">
               <a
