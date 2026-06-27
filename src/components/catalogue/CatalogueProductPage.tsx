@@ -279,8 +279,12 @@ export default function CatalogueProductPage({
                           <td className="w-56 px-5 py-3 text-xs font-medium uppercase tracking-wide text-[#64748b]">
                             {label}
                           </td>
-                          <td className="px-5 py-3 font-semibold text-[#0a1628]">
-                            {value}
+                          <td className="px-5 py-3 font-semibold text-[#0a1628] [&_a]:text-[#2563eb] [&_a]:underline [&_a:hover]:text-[#1d4ed8]">
+                            {/<[a-z]/i.test(value) ? (
+                              <span dangerouslySetInnerHTML={{ __html: value }} />
+                            ) : (
+                              value
+                            )}
                           </td>
                         </tr>
                       ))}
