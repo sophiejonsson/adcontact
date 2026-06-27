@@ -87,7 +87,7 @@ export default function ZFerrulesPage({ category: _ }: { category: CatalogueCate
             </p>
             <div className="mt-5 inline-flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3">
               <span className="text-sm text-[#94a3b8]">
-                Can&apos;t find what you&apos;re looking for? Browse the full range at Zoller &amp; Fröhlich.
+                Browse the full range at Zoller &amp; Fröhlich — then contact us and we&apos;ll help you source what you need.
               </span>
               <a
                 href="https://www.zofre.de/en/ferrules"
