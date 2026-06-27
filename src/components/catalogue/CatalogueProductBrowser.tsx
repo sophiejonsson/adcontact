@@ -208,18 +208,50 @@ function ProductCard({
   product,
   categoryRoute,
   deutschImageMap,
+  compact = false,
 }: {
   product: CatalogueProduct;
   categoryRoute: string | null;
   deutschImageMap?: Record<string, string>;
+  compact?: boolean;
 }) {
-  const leadTime =
-    product.attributes.Availability ??
-    (product.brand === "Deutsch" ? "Estimated delivery time 5-6 weeks" : null);
-
   const imageUrl =
     magentoImageSrc(product.thumbnail ?? product.image) ??
     deutschImageMap?.[String(product.id)];
+
+  if (compact) {
+    return (
+      <Link
+        href={productHref(product, categoryRoute)}
+        className="group flex min-w-0 flex-col overflow-hidden rounded-lg border border-[#e5e7eb] bg-white transition-all duration-200 hover:border-[#93c5fd] hover:shadow-[0_6px_20px_-8px_rgba(15,23,42,0.18)]"
+      >
+        <div className="relative aspect-square bg-[#f8fafc]">
+          {imageUrl ? (
+            <Image
+              src={imageUrl}
+              alt={product.name}
+              fill
+              unoptimized
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px"
+              className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.05]"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center">
+              <Package size={22} className="text-[#d1d5db]" />
+            </div>
+          )}
+        </div>
+        <div className="border-t border-[#f1f5f9] px-2.5 py-2">
+          <h3 className="line-clamp-2 text-[11px] font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
+            {product.name}
+          </h3>
+          <p className="mt-0.5 font-mono text-[9px] font-semibold text-[#94a3b8]">
+            {productDisplaySku(product)}
+          </p>
+        </div>
+      </Link>
+    );
+  }
 
   return (
     <Link
@@ -410,7 +442,7 @@ export default function CatalogueProductBrowser({
       )}
 
       <div>
-        <div className="mb-5 rounded-lg border border-[#d8dee7] bg-white p-4">
+        <div className={`mb-5 rounded-lg border border-[#d8dee7] bg-white p-4${isWebshopRoot ? " hidden" : ""}`}>
           <label className="sr-only" htmlFor="instant-catalogue-search">
             Search within this catalogue page
           </label>
@@ -473,9 +505,12 @@ export default function CatalogueProductBrowser({
         </div>
 
         {pageProducts.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className={isWebshopRoot
+            ? "grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+            : "grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+          }>
             {pageProducts.map((product) => (
-              <ProductCard key={product.id} product={product} categoryRoute={route} deutschImageMap={deutschImageMap} />
+              <ProductCard key={product.id} product={product} categoryRoute={route} deutschImageMap={deutschImageMap} compact={isWebshopRoot} />
             ))}
           </div>
         ) : (
