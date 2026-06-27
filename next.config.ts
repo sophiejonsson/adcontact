@@ -27,6 +27,11 @@ const nextConfig: NextConfig = {
         hostname: "adcgam.hemsida.eu",
         pathname: "/media/**",
       },
+      {
+        protocol: "https",
+        hostname: "www.zofre.de",
+        pathname: "/fileadmin/**",
+      },
     ],
   },
 };

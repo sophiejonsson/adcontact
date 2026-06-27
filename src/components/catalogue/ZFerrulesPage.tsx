@@ -7,17 +7,15 @@ import {
   type CatalogueCategory,
 } from "@/lib/magentoCatalogue";
 
-const BASE = "https://www.adcontact.se";
-const WYSIWYG = `${BASE}/media/wysiwyg/infortis/ultimo/category_images/Zoller`;
+const ZOFRE = "https://www.zofre.de/fileadmin/files/medienverzeichnis/produkte/aeh";
 
-// Curated wysiwyg images for each top-level ferrule group — these are
-// proper product photos from the original Magento category descriptions.
+// Product images sourced from zofre.de, mapped to our catalogue categories.
 const GROUP_IMAGE: Record<string, string> = {
-  "Single Bag": `${WYSIWYG}/Single_bag.png`,
-  "Multiple bag": `${WYSIWYG}/Multiple_bag.png`,
-  "Wire ferrules on reel": `${WYSIWYG}/Ferrules_on_reel.png`,
-  "Belt-strips": `${WYSIWYG}/Belt-strips.png`,
-  "Uninsulated ferrules": `${WYSIWYG}/Uninsulated_ferrules.png`,
+  "Single Bag":             `${ZOFRE}/isolierte_aderendh%C3%BClsen/zoller-froehlich-aderendhuelsen-bandware-blau.jpg`,
+  "Multiple bag":           `${ZOFRE}/isolierte_zwillings_aderendh%C3%BClsen/zoller-froehlich-zwillings-aderendhuelse-als-einzelbeutel-grau.jpg`,
+  "Wire ferrules on reel":  `${ZOFRE}/isolierte_aderendh%C3%BClsen_auf_rollen/zoller-froehlich-aderendhuelsen-auf-rolle.jpg`,
+  "Belt-strips":            `${ZOFRE}/isolierte_aderendh%C3%BClsen_als_gurtstreifen/zoller-froehlich-aderendhuelsen-als-grutware-blau.jpg`,
+  "Uninsulated ferrules":   `${ZOFRE}/unisolierte_aderendh%C3%BClsen/zoller-froehlich-unisolierte-aderendhuelsen-in-einzelbeutel-menue.jpg`,
 };
 
 export default function ZFerrulesPage({ category }: { category: CatalogueCategory }) {
