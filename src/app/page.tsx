@@ -3,7 +3,6 @@ import HeroSearch from "@/components/home/HeroSearch";
 import BrandsCarousel from "@/components/home/BrandsCarousel";
 import ApplicationsSection from "@/components/home/ApplicationsSection";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
-import TrustSection from "@/components/home/TrustSection";
 import BrandsSection from "@/components/home/BrandsSection";
 import CTASection from "@/components/home/CTASection";
 
@@ -20,7 +19,6 @@ export default function HomePage() {
       <BrandsCarousel />
       <ApplicationsSection />
       <FeaturedProducts />
-      <TrustSection />
       <BrandsSection />
       <CTASection />
     </>

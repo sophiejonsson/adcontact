@@ -129,6 +129,7 @@ export const megaMenuSections: MegaMenuSection[] = [
 
 export const topNavItems: NavItem[] = [
   { label: "Trusted Partners", href: "/brands" },
+  { label: "Quality Management", href: "/quality" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
