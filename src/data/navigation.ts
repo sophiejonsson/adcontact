@@ -132,5 +132,16 @@ export const topNavItems: NavItem[] = [
   { label: "Quality Management", href: "/quality" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
+  {
+    label: "Policies",
+    href: "/policies",
+    children: [
+      { label: "Privacy Policy", href: "/policies/privacy" },
+      { label: "Shipping Policy", href: "/policies/shipping" },
+      { label: "Return & Refund Policy", href: "/policies/returns" },
+      { label: "Cookie Policy", href: "/policies/cookies" },
+      { label: "General Terms of Delivery", href: "/policies/terms" },
+    ],
+  },
 ];
  

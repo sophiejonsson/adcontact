@@ -128,16 +128,41 @@ export default function Header() {
               {/* Divider between catalogue and corporate links */}
               <span className="mx-2 h-5 w-px bg-[#e2e8f0]" aria-hidden="true" />
 
-              {topNavItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setActiveMenu(null)}
-                  className="flex h-full items-center px-3 text-sm font-medium whitespace-nowrap text-[#475569] transition-colors hover:text-[#0a1628]"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {topNavItems.map((item) =>
+                item.children ? (
+                  <div key={item.href} className="relative flex h-full items-center group">
+                    <button
+                      className="flex h-full items-center gap-1 px-3 text-sm font-medium whitespace-nowrap text-[#475569] transition-colors hover:text-[#0a1628]"
+                    >
+                      {item.label}
+                      <ChevronDown size={12} className="text-[#9ca3af] transition-transform duration-200 group-hover:rotate-180" />
+                    </button>
+                    <div className="absolute right-0 top-full z-50 hidden group-hover:block pt-1">
+                      <div className="min-w-[220px] rounded-xl border border-[#e8ecf2] bg-white shadow-lg py-1">
+                        {item.children.map((child) => (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            onClick={closeAll}
+                            className="block px-4 py-2.5 text-sm text-[#374151] hover:bg-[#f3f4f6] hover:text-[#0a1628] transition-colors"
+                          >
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setActiveMenu(null)}
+                    className="flex h-full items-center px-3 text-sm font-medium whitespace-nowrap text-[#475569] transition-colors hover:text-[#0a1628]"
+                  >
+                    {item.label}
+                  </Link>
+                )
+              )}
             </nav>
 
             {/* Search — fills the remaining space */}
@@ -235,16 +260,36 @@ export default function Header() {
                 </div>
               ))}
 
-              {topNavItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-[#374151] transition-colors hover:bg-[#f3f4f6] hover:text-[#0a1628]"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {topNavItems.map((item) =>
+                item.children ? (
+                  <div key={item.href}>
+                    <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[#9ca3af]">
+                      {item.label}
+                    </p>
+                    <div className="ml-3 border-l border-[#e8ecf2] pl-3 space-y-0.5">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="block rounded-md px-2 py-2 text-sm text-[#374151] transition-colors hover:bg-[#f3f4f6] hover:text-[#0a1628]"
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center rounded-lg px-3 py-2.5 text-sm font-medium text-[#374151] transition-colors hover:bg-[#f3f4f6] hover:text-[#0a1628]"
+                  >
+                    {item.label}
+                  </Link>
+                )
+              )}
 
               <div className="border-t border-[#e8ecf2] pt-3 mt-3">
                 <Link
