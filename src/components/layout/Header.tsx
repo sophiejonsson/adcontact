@@ -73,27 +73,59 @@ export default function Header() {
 
       {/* Main header */}
       <header
-        className="sticky top-0 z-50 border-b border-[#e8ecf2] bg-white shadow-[0_1px_0_0_#e8ecf2]"
+        className="sticky top-0 z-50 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.06)]"
         onMouseLeave={scheduleClose}
       >
-        <div className="mx-auto max-w-[1440px] px-6">
-          {/* Single line: logo · menu · search · Request Quote */}
-          <div className="flex h-16 items-center gap-4 lg:gap-6">
-            {/* Logo */}
-            <Link href="/" onClick={closeAll} className="flex-shrink-0">
-              <Image
-                src="/images/logotopmenu.png"
-                alt="Adcontact"
-                width={148}
-                height={48}
-                className="h-[44px] w-auto object-contain"
-                priority
-                unoptimized
-              />
-            </Link>
+        {/* Row 1: Logo + Search + CTA */}
+        <div className="border-b border-[#edf2f7]">
+          <div className="mx-auto max-w-[1440px] px-6">
+            <div className="flex h-[72px] items-center gap-5">
+              {/* Logo */}
+              <Link href="/" onClick={closeAll} className="flex-shrink-0">
+                <Image
+                  src="/images/logotopmenu.png"
+                  alt="Adcontact"
+                  width={148}
+                  height={48}
+                  className="h-[42px] w-auto object-contain"
+                  priority
+                  unoptimized
+                />
+              </Link>
 
-            {/* Menu */}
-            <nav className="hidden h-full items-center lg:flex">
+              {/* Search — fills remaining space, hidden on mobile */}
+              <SearchAutocomplete
+                className="hidden flex-1 min-w-0 md:block"
+                onNavigate={closeAll}
+                prominent
+              />
+
+              {/* Right: CTA + mobile toggle */}
+              <div className="ml-auto flex flex-shrink-0 items-center gap-3 lg:ml-0">
+                <Link
+                  href="/contact/quote"
+                  onClick={closeAll}
+                  className="hidden items-center gap-2 rounded-xl bg-[#f59e0b] px-5 py-2.5 text-sm font-bold text-[#0a1628] shadow-sm transition-all hover:bg-[#d97706] hover:shadow-md sm:flex"
+                >
+                  <FileText size={15} />
+                  Request a quote
+                </Link>
+                <button
+                  className="rounded-md p-2 text-[#374151] transition-colors hover:bg-[#f3f4f6] hover:text-[#0a1628] lg:hidden"
+                  onClick={() => setMobileOpen((o) => !o)}
+                  aria-label="Toggle menu"
+                >
+                  {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Row 2: Navigation (desktop only) */}
+        <div className="hidden lg:block">
+          <div className="mx-auto max-w-[1440px] px-6">
+            <nav className="flex h-11 items-center">
               {megaMenuSections.map((section) => (
                 <div
                   key={section.id}
@@ -104,7 +136,7 @@ export default function Header() {
                     href={section.href}
                     onClick={() => setActiveMenu(null)}
                     className={cn(
-                      "flex h-full items-center gap-1 px-3 text-sm font-medium whitespace-nowrap transition-colors first:pl-0",
+                      "flex h-full items-center gap-1 px-3 text-[13px] font-medium whitespace-nowrap transition-colors first:pl-0",
                       activeMenu === section.id
                         ? "text-[#2563eb]"
                         : "text-[#374151] hover:text-[#0a1628]"
@@ -112,7 +144,7 @@ export default function Header() {
                   >
                     {section.label}
                     <ChevronDown
-                      size={13}
+                      size={12}
                       className={cn(
                         "transition-transform duration-200 text-[#9ca3af]",
                         activeMenu === section.id ? "rotate-180 text-[#2563eb]" : ""
@@ -126,16 +158,16 @@ export default function Header() {
               ))}
 
               {/* Divider between catalogue and corporate links */}
-              <span className="mx-2 h-5 w-px bg-[#e2e8f0]" aria-hidden="true" />
+              <span className="mx-2 h-4 w-px bg-[#e2e8f0]" aria-hidden="true" />
 
               {topNavItems.map((item) =>
                 item.children ? (
                   <div key={item.href} className="relative flex h-full items-center group">
                     <button
-                      className="flex h-full items-center gap-1 px-3 text-sm font-medium whitespace-nowrap text-[#475569] transition-colors hover:text-[#0a1628]"
+                      className="flex h-full items-center gap-1 px-3 text-[13px] font-medium whitespace-nowrap text-[#475569] transition-colors hover:text-[#0a1628]"
                     >
                       {item.label}
-                      <ChevronDown size={12} className="text-[#9ca3af] transition-transform duration-200 group-hover:rotate-180" />
+                      <ChevronDown size={11} className="text-[#9ca3af] transition-transform duration-200 group-hover:rotate-180" />
                     </button>
                     <div className="absolute right-0 top-full z-50 hidden group-hover:block pt-1">
                       <div className="min-w-[220px] rounded-xl border border-[#e8ecf2] bg-white shadow-lg py-1">
@@ -157,44 +189,17 @@ export default function Header() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setActiveMenu(null)}
-                    className="flex h-full items-center px-3 text-sm font-medium whitespace-nowrap text-[#475569] transition-colors hover:text-[#0a1628]"
+                    className="flex h-full items-center px-3 text-[13px] font-medium whitespace-nowrap text-[#475569] transition-colors hover:text-[#0a1628]"
                   >
                     {item.label}
                   </Link>
                 )
               )}
             </nav>
-
-            {/* Search — fills the remaining space */}
-            <SearchAutocomplete
-              className="hidden flex-1 min-w-0 md:block"
-              onNavigate={closeAll}
-              prominent
-            />
-
-            {/* Request Quote — pinned to the right edge */}
-            <div className="ml-auto flex flex-shrink-0 items-center gap-2 lg:ml-0">
-              <Link
-                href="/contact/quote"
-                onClick={closeAll}
-                className="btn-elevate btn-elevate-amber hidden items-center gap-2 rounded-lg bg-[#f59e0b] px-5 py-3 text-sm font-bold text-[#0a1628] shadow-sm transition-colors hover:bg-[#d97706] sm:flex"
-              >
-                <FileText size={15} />
-                Request a quote
-              </Link>
-              <button
-                className="rounded-md p-2 text-[#374151] transition-colors hover:bg-[#f3f4f6] hover:text-[#0a1628] lg:hidden"
-                onClick={() => setMobileOpen((o) => !o)}
-                aria-label="Toggle menu"
-              >
-                {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
-            </div>
           </div>
         </div>
 
-        {/* Mega menu — rendered directly so its absolute panel is a real hit-target.
-            onMouseEnter cancels the pending close; onMouseLeave re-arms it. */}
+        {/* Mega menu — absolute panel, appears below Row 2 */}
         {activeMenu && (
           <MegaMenu
             section={megaMenuSections.find((s) => s.id === activeMenu)!}

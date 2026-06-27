@@ -141,13 +141,13 @@ export default function SearchAutocomplete({
         <div className="relative flex items-center">
           {loading ? (
             <Loader2
-              size={prominent ? 18 : 15}
-              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 animate-spin text-[#2563eb]"
+              size={prominent ? 20 : 15}
+              className={`pointer-events-none absolute top-1/2 -translate-y-1/2 animate-spin text-[#2563eb] ${prominent ? "left-5" : "left-4"}`}
             />
           ) : (
             <Search
-              size={prominent ? 18 : 15}
-              className={`pointer-events-none absolute top-1/2 -translate-y-1/2 text-[#94a3b8] transition-colors ${prominent ? "left-4" : "left-3.5"}`}
+              size={prominent ? 20 : 15}
+              className={`pointer-events-none absolute top-1/2 -translate-y-1/2 transition-colors ${prominent ? "left-5 text-[#6b7a8d]" : "left-3.5 text-[#94a3b8]"}`}
             />
           )}
           <input
@@ -172,7 +172,7 @@ export default function SearchAutocomplete({
             spellCheck={false}
             className={
               prominent
-                ? "h-12 w-full rounded-xl border border-[#d8dee7] bg-[#f8fafc] pl-12 pr-[92px] text-[15px] text-[#111827] shadow-[inset_0_1px_2px_rgba(16,24,40,0.04)] placeholder:text-[#9ca3af] transition-all duration-150 focus:border-[#2563eb] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2563eb]/15"
+                ? "h-14 w-full rounded-2xl border border-[#dde3ed] bg-white pl-14 pr-36 text-base text-[#111827] shadow-[0_2px_8px_rgba(0,0,0,0.06)] placeholder:text-[#9faab6] transition-all duration-200 focus:border-[#2563eb] focus:outline-none focus:shadow-[0_4px_20px_rgba(37,99,235,0.13)]"
                 : "h-9 w-full rounded-lg border border-[#e2e8f0] bg-[#f8fafc] pl-9 pr-[72px] text-sm text-[#111827] placeholder:text-[#9ca3af] transition-all duration-150 focus:border-[#2563eb] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2563eb]/15"
             }
           />
@@ -180,7 +180,7 @@ export default function SearchAutocomplete({
             type="submit"
             className={
               prominent
-                ? "absolute right-1.5 top-1/2 -translate-y-1/2 h-9 rounded-lg bg-[#2563eb] px-4 text-sm font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
+                ? "absolute right-2 top-1/2 -translate-y-1/2 h-10 rounded-xl bg-[#2563eb] px-5 text-sm font-bold text-white shadow-sm transition-all hover:bg-[#1d4ed8] hover:shadow-md"
                 : "absolute right-1 top-1/2 -translate-y-1/2 h-7 rounded-md bg-[#2563eb] px-3 text-xs font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
             }
           >
