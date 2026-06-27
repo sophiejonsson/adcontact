@@ -159,11 +159,16 @@ function CategoryCard({ category }: { category: CatalogueCategory }) {
   const children = getCategoryChildren(category).slice(0, 6);
   const productCount = getCategoryProductCount(category);
 
-  // Prefer an actual product photo over category-level logo/placeholder images.
-  const representativeProduct = getCategoryProducts(category, undefined, {
-    includeDescendantsWhenEmpty: true,
-  }).find((p) => p.thumbnail || p.image);
+  // Brand categories get their curated partner logo; all others get a
+  // representative product photo, falling back to the Magento category image.
+  const brand = brandForCategory(category);
+  const representativeProduct = brand
+    ? undefined
+    : getCategoryProducts(category, undefined, {
+        includeDescendantsWhenEmpty: true,
+      }).find((p) => p.thumbnail || p.image);
   const cardImage =
+    brand?.logo ??
     magentoMediaSrc(representativeProduct?.thumbnail ?? representativeProduct?.image) ??
     magentoMediaSrc(category.image);
 
@@ -171,7 +176,7 @@ function CategoryCard({ category }: { category: CatalogueCategory }) {
     <article className="group grid min-w-0 overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)] sm:grid-cols-[132px_1fr]">
       <Link
         href={category.route ?? "#"}
-        className="relative flex min-h-32 items-center justify-center bg-[#f8fafc]"
+        className={`relative flex min-h-32 items-center justify-center ${brand ? "bg-white" : "bg-[#f8fafc]"}`}
       >
         {cardImage ? (
           <Image
@@ -180,7 +185,7 @@ function CategoryCard({ category }: { category: CatalogueCategory }) {
             fill
             unoptimized
             sizes="132px"
-            className="object-contain p-4 transition-transform group-hover:scale-105"
+            className={`object-contain transition-transform group-hover:scale-105 ${brand ? "p-6" : "p-4"}`}
           />
         ) : (
           <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-[#d8dee7] bg-white text-[#2563eb] shadow-sm">
