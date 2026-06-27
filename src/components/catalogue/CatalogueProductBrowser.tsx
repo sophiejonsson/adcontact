@@ -252,9 +252,7 @@ function ProductCard({
         <p className="mt-1 font-mono text-[10px] font-semibold text-[#94a3b8]">
           {productDisplaySku(product)}
         </p>
-        {leadTime && (
-          <p className="mt-2 text-[11px] leading-snug text-[#64748b]">{leadTime}</p>
-        )}
+        <p className="mt-2 text-[11px] leading-snug text-[#64748b]">In stock · ask for current lead time</p>
       </div>
 
       {/* Quote CTA */}

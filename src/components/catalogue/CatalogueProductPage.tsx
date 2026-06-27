@@ -216,12 +216,10 @@ export default function CatalogueProductPage({
             )}
 
             {/* Lead time */}
-            <div className="mt-5 flex w-fit items-center gap-2 rounded-lg border border-[#e5e7eb] bg-white p-3">
-              <Clock size={14} className="text-amber-500" />
-              <span className="text-sm font-semibold text-amber-700">
-                {product.attributes.Availability === "on request"
-                  ? "Available on request"
-                  : "Lead time — contact us for pricing"}
+            <div className="mt-5 flex w-fit items-center gap-2 rounded-lg border border-[#dcfce7] bg-[#f0fdf4] p-3">
+              <Clock size={14} className="text-emerald-600" />
+              <span className="text-sm font-semibold text-emerald-700">
+                In stock — ask for current lead time when ordering
               </span>
             </div>
 

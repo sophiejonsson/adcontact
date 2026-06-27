@@ -339,10 +339,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             </p>
 
             {/* Availability */}
-            <div className="flex items-center gap-2 mb-6 p-3 bg-white border border-[#e5e7eb] rounded-lg w-fit">
-              <Clock size={14} className={catalogueProduct.availability === "quote" ? "text-emerald-600" : "text-amber-500"} />
-              <span className={`text-sm font-semibold ${catalogueProduct.availability === "quote" ? "text-emerald-700" : "text-amber-700"}`}>
-                {catalogueProduct.availability === "quote" ? "Available for quote" : "Lead time"}
+            <div className="flex items-center gap-2 mb-6 p-3 bg-[#f0fdf4] border border-[#dcfce7] rounded-lg w-fit">
+              <Clock size={14} className="text-emerald-600" />
+              <span className="text-sm font-semibold text-emerald-700">
+                In stock — ask for current lead time when ordering
               </span>
             </div>
 
