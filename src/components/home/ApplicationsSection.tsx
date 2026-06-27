@@ -6,6 +6,7 @@ import {
   CircuitBoard,
   Cpu,
   Factory,
+  Flame,
   Refrigerator,
   Settings2,
 } from "lucide-react";
@@ -37,6 +38,7 @@ const industries = [
   { icon: Cpu, name: "Electronics Manufacturing" },
   { icon: Cable, name: "Wire Harness Processing" },
   { icon: Factory, name: "Industrial Automation" },
+  { icon: Flame, name: "Heating Industry" },
 ];
 
 export default function ApplicationsSection() {

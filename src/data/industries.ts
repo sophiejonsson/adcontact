@@ -104,6 +104,29 @@ export const industries: Industry[] = [
     keyProducts: ["Cutting machines", "Stripping machines", "Crimp presses", "Ultrasonic welders", "Test systems"],
   },
   {
+    id: "heating",
+    name: "Heating Industry",
+    slug: "heating",
+    shortDescription:
+      "Reliable connectors, terminals, and heat-resistant wiring components for boilers, heat pumps, and district heating systems.",
+    description:
+      "Heating systems demand components that perform in high-temperature, high-humidity environments with long service intervals. Adcontact supplies connectors, ferrules, heat-resistant heat shrink, and wiring accessories for boiler manufacturers, heat pump producers, and district heating system integrators.",
+    challenges: [
+      "Sustained high operating temperatures",
+      "Moisture and condensation resistance",
+      "Long service life with minimal maintenance access",
+      "RoHS and safety certifications",
+    ],
+    solutions: [
+      "Stocko crimp contacts and connector housings rated for elevated temperatures",
+      "HongShang dual-wall and PVDF heat-resistant heat shrink",
+      "Ulmer wire ferrules for control board termination",
+      "TE Connectivity sealed connectors for outdoor heat pump units",
+    ],
+    icon: "Flame",
+    keyProducts: ["Heat-resistant heat shrink", "Crimp contacts", "Wire ferrules", "Sealed connectors"],
+  },
+  {
     id: "industrial-automation",
     name: "Industrial Automation",
     slug: "industrial-automation",
