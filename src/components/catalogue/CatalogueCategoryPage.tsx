@@ -453,9 +453,25 @@ export default function CatalogueCategoryPage({
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
   const productSectionTitle = isWebshopRoot ? "Featured product selection" : "Catalogue items";
   const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0);
-  const visualCategoryByHref = new Map(children.map((child) => [child.route, child]));
   const showVisualLinks = content.visualLinks.length > 0;
-  const showGenericCategoryCards = children.length > 0 && !showVisualLinks;
+
+  // When the category has exactly one child that carries no direct products but
+  // itself has sub-categories, flatten one level so those sub-categories appear
+  // as first-class cards instead of requiring an extra click.
+  const singleEmptyChild =
+    !showVisualLinks &&
+    children.length === 1 &&
+    getCategoryProductCount(children[0]) === 0 &&
+    getCategoryChildren(children[0]).length > 0
+      ? children[0]
+      : undefined;
+  const displayChildren = singleEmptyChild
+    ? getCategoryChildren(singleEmptyChild)
+    : children;
+  const flattenedGroupLabel = singleEmptyChild?.name ?? null;
+
+  const visualCategoryByHref = new Map(displayChildren.map((child) => [child.route, child]));
+  const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks;
 
   // Current manufacturer logo for brand-named categories (e.g. Deutsch → TE).
   const brand = brandForCategory(category);
@@ -512,7 +528,7 @@ export default function CatalogueCategoryPage({
               {description ?? brand?.description ?? categoryIntro(category)}
             </p>
             <p className="mt-4 text-sm font-semibold text-blue-200">
-              {children.length.toLocaleString()} categories · {productCount.toLocaleString()} catalogue items
+              {displayChildren.length.toLocaleString()} categories · {productCount.toLocaleString()} catalogue items
             </p>
 
             {brand?.shopUrl && (
@@ -602,18 +618,22 @@ export default function CatalogueCategoryPage({
             <div className="mb-6 flex items-end justify-between gap-4">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
-                  Categories
+                  {flattenedGroupLabel ?? "Categories"}
                 </p>
                 <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">
-                  {isWebshopRoot ? "Browse catalogue areas" : "Browse subcategories"}
+                  {flattenedGroupLabel
+                    ? `Browse ${flattenedGroupLabel}`
+                    : isWebshopRoot
+                      ? "Browse catalogue areas"
+                      : "Browse subcategories"}
                 </h2>
               </div>
               <span className="text-sm font-medium text-[#64748b]">
-                {children.length.toLocaleString()} categories
+                {displayChildren.length.toLocaleString()} categories
               </span>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
-              {children.map((child) => (
+              {displayChildren.map((child) => (
                 <CategoryCard key={child.id} category={child} />
               ))}
             </div>

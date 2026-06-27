@@ -59,9 +59,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  // Redirect pages don't need metadata — the destination generates its own.
-  if (route.id === 1711) return {};
-
   const category = getCatalogueCategory(route.id);
   if (!category) return {};
   const title = categoryTitle(category);
@@ -99,11 +96,6 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
     }
 
     return <CatalogueProductPage product={product} />;
-  }
-
-  // Zoller+Fröhlich sealed-connectors category is an empty Magento shell — redirect to brand hub.
-  if (route.id === 1711) {
-    permanentRedirect("/products/zoller-frohlich");
   }
 
   const category = getCatalogueCategory(route.id);
