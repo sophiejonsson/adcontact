@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Search, X } from "lucide-react";
+import { Search, X, ArrowRight, Package } from "lucide-react";
 import { useMemo, useState } from "react";
 import type {
   CatalogueProduct,
@@ -222,8 +222,12 @@ function ProductCard({
     deutschImageMap?.[String(product.id)];
 
   return (
-    <Link href={productHref(product, categoryRoute)} className="group flex min-w-0 flex-col bg-white">
-      <div className="relative aspect-square border border-[#e5e7eb] bg-white transition-colors group-hover:border-[#93c5fd]">
+    <Link
+      href={productHref(product, categoryRoute)}
+      className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white transition-all duration-200 hover:border-[#93c5fd] hover:shadow-[0_8px_28px_-10px_rgba(15,23,42,0.18)]"
+    >
+      {/* Image */}
+      <div className="relative aspect-square bg-[#f8fafc]">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -231,21 +235,37 @@ function ProductCard({
             fill
             unoptimized
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
-            className="object-contain p-4"
+            className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.04]"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-[#cbd5e1]">No image</div>
+          <div className="flex h-full items-center justify-center">
+            <Package size={28} className="text-[#d1d5db]" />
+          </div>
         )}
       </div>
-      <div className="flex flex-1 flex-col pt-3">
+
+      {/* Info */}
+      <div className="flex flex-1 flex-col px-3 pt-3">
         <h3 className="line-clamp-2 text-sm font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
           {product.name}
         </h3>
-        <div className="mt-1 font-mono text-[11px] font-semibold text-[#64748b]">
+        <p className="mt-1 font-mono text-[10px] font-semibold text-[#94a3b8]">
           {productDisplaySku(product)}
-        </div>
-        {leadTime && <p className="mt-3 text-xs leading-snug text-[#64748b]">{leadTime}</p>}
-        <span className="mt-3 text-sm font-bold text-[#0a1628]">Quote</span>
+        </p>
+        {leadTime && (
+          <p className="mt-2 text-[11px] leading-snug text-[#64748b]">{leadTime}</p>
+        )}
+      </div>
+
+      {/* Quote CTA */}
+      <div className="mx-3 mb-3 mt-3 flex items-center justify-between rounded-lg bg-[#f1f5f9] px-3 py-2 transition-colors group-hover:bg-[#eff6ff]">
+        <span className="text-xs font-semibold text-[#374151] group-hover:text-[#2563eb]">
+          Get quote
+        </span>
+        <ArrowRight
+          size={12}
+          className="text-[#94a3b8] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[#2563eb]"
+        />
       </div>
     </Link>
   );
@@ -455,7 +475,7 @@ export default function CatalogueProductBrowser({
         </div>
 
         {pageProducts.length > 0 ? (
-          <div className="grid grid-cols-2 gap-x-5 gap-y-8 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {pageProducts.map((product) => (
               <ProductCard key={product.id} product={product} categoryRoute={route} deutschImageMap={deutschImageMap} />
             ))}
