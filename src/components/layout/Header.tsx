@@ -48,9 +48,9 @@ export default function Header() {
           <div className="flex items-center gap-5 text-xs text-[#64748b]">
             <span>ISO 9001:2015 Certified</span>
             <span className="text-[#1e3a6e]">·</span>
-            <span>Nordic specialist distributor since 1985</span>
+            <span>Specialist distributor since 1985</span>
             <span className="text-[#1e3a6e]">·</span>
-            <span>Sweden · Finland · Norway · Denmark · Estonia</span>
+            <span>Global Coverage</span>
           </div>
           <div className="flex items-center gap-4 text-xs text-[#64748b]">
             <a
