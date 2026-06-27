@@ -157,36 +157,6 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Quality section */}
-        <div id="quality" className="mb-16 scroll-mt-20">
-          <div className="bg-[#0a1628] rounded-2xl p-10 relative overflow-hidden">
-            <div className="absolute inset-0 tech-grid opacity-20 rounded-2xl" />
-            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div>
-                <p className="text-xs font-semibold text-[#60a5fa] uppercase tracking-widest mb-3">Quality management</p>
-                <h2 className="text-2xl font-bold text-white mb-4">ISO 9001:2015 Certified</h2>
-                <p className="text-[#94a3b8] text-sm leading-relaxed">
-                  Our quality management system is certified to ISO 9001:2015 by an accredited certification body. The scope covers procurement, inventory management, distribution, and technical support of industrial components and production equipment.
-                </p>
-              </div>
-              <div className="space-y-3">
-                {[
-                  "Documented quality processes for procurement and distribution",
-                  "Traceability of products from manufacturer to customer",
-                  "Customer complaint and NCR management process",
-                  "Supplier qualification and audit programme",
-                  "Annual management review and continuous improvement",
-                ].map((point) => (
-                  <div key={point} className="flex items-start gap-2.5 text-sm text-[#94a3b8]">
-                    <span className="text-[#2563eb] mt-0.5 flex-shrink-0">✓</span>
-                    {point}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* Timeline */}
         <div className="mb-16">
           <h2 className="text-xl font-bold text-[#0a1628] mb-6">Company history</h2>
