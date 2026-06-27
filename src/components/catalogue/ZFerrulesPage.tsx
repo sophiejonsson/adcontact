@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import type { CatalogueCategory } from "@/lib/magentoCatalogue";
 
-const ZOFRE = "https://www.zofre.de";
+const ZOFRE = "https://www.zofre.de" as const;
 const FILES = `${ZOFRE}/fileadmin/files/medienverzeichnis/produkte/aeh`;
 
 const CATEGORIES = [
