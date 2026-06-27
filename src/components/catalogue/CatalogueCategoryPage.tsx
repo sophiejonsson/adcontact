@@ -155,13 +155,31 @@ function magentoMediaSrc(path: string | null | undefined): string | null {
   return path;
 }
 
+// Only match a brand when the category's own last segment is the brand slug —
+// not when the brand is merely an ancestor. This prevents subcategory cards
+// within a brand page (e.g. Stocko › Micro connectors) from showing the brand
+// logo instead of actual product photos.
+function isBrandOwnCategory(category: CatalogueCategory) {
+  const route = category.route;
+  if (!route) return undefined;
+  const lastSegment = route
+    .split("/")
+    .filter(Boolean)
+    .pop()
+    ?.replace(/\.html$/, "") ?? "";
+  return brands.find(
+    (b) => b.logo && (b.slug === lastSegment || brandNameSlug(b) === lastSegment),
+  );
+}
+
 function CategoryCard({ category }: { category: CatalogueCategory }) {
   const children = getCategoryChildren(category).slice(0, 6);
   const productCount = getCategoryProductCount(category);
 
-  // Brand categories get their curated partner logo; all others get a
-  // representative product photo, falling back to the Magento category image.
-  const brand = brandForCategory(category);
+  // Use a curated partner logo only when the card is the brand category itself
+  // (e.g. the "Stocko" card on Sealed Connectors). Subcategory cards within a
+  // brand page always use product photos so the grid stays visually informative.
+  const brand = isBrandOwnCategory(category);
   const representativeProduct = brand
     ? undefined
     : getCategoryProducts(category, undefined, {
