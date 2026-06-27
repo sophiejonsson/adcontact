@@ -14,15 +14,17 @@ export const metadata: Metadata = {
 
 function PartnerCard({ brand }: { brand: Brand }) {
   return (
-    <div className="surface-card group flex flex-col rounded-2xl p-6">
+    <a
+      href={brand.website}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Visit ${brand.name} website`}
+      className="surface-card group flex flex-col rounded-2xl p-6 transition-all hover:border-[#2563eb] hover:shadow-md"
+    >
       {/* Logo */}
       <div className="h-16 flex items-center mb-4">
         {brand.logo ? (
-          <a
-            href={brand.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Visit ${brand.name} website`}
+          <div
             className="relative h-14"
             style={{ width: brand.logoWidth ? `${brand.logoWidth}px` : "100%" }}
           >
@@ -33,34 +35,25 @@ function PartnerCard({ brand }: { brand: Brand }) {
               sizes="(min-width: 1280px) 280px, (min-width: 1024px) 30vw, (min-width: 640px) 45vw, 90vw"
               className="object-contain object-left"
             />
-          </a>
+          </div>
         ) : (
           <span className="text-base font-bold text-[#0a1628]">{brand.name}</span>
         )}
       </div>
 
       {/* Name + description */}
-      <a
-        href={brand.website}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mb-1.5 text-sm font-semibold text-[#0a1628] transition-colors group-hover:text-[#2563eb]"
-      >
+      <span className="mb-1.5 text-sm font-semibold text-[#0a1628] transition-colors group-hover:text-[#2563eb]">
         {brand.name}
-      </a>
+      </span>
       <p className="text-xs text-[#6b7280] leading-relaxed flex-1">
         {brand.shortDescription}
       </p>
 
-      {/* Arrow */}
-      <Link
-        href={`/brands/${brand.slug}`}
-        className="mt-4 flex items-center gap-1 text-xs font-medium text-[#9ca3af] transition-colors group-hover:text-[#2563eb]"
-      >
-        View partner profile
+      <div className="mt-4 flex items-center gap-1 text-xs font-medium text-[#9ca3af] transition-colors group-hover:text-[#2563eb]">
+        Visit website
         <ArrowRight size={12} />
-      </Link>
-    </div>
+      </div>
+    </a>
   );
 }
 

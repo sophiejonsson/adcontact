@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Archive, Clock, Download, FileImage, FileText, Mail, Package, Phone } from "lucide-react";
 import QuoteForm from "@/components/QuoteForm";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { brands } from "@/data/brands";
 import { normalizeLegacyHtml, stripLegacyHtml } from "@/lib/legacyHtml";
 import {
   catalogueProductLegacyRoute,
@@ -349,6 +350,38 @@ export default function CatalogueProductPage({
             </div>
           </aside>
         </div>
+
+        {/* ── About the manufacturer ────────────────────────────────────── */}
+        {(() => {
+          const brandName = product.brand ?? product.manufacturer ?? "";
+          const lower = brandName.toLowerCase();
+          const matched = brands.find((b) =>
+            lower.includes(b.id) || lower.includes(b.name.toLowerCase().split(" ")[0]),
+          );
+          if (!matched) return null;
+          return (
+            <section className="mt-10 rounded-xl border border-[#e5e7eb] bg-white p-6">
+              <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-[#9ca3af]">About the manufacturer</p>
+              <a
+                href={matched.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-2 block text-sm font-bold text-[#0a1628] hover:text-[#2563eb] transition-colors"
+              >
+                {matched.name}
+              </a>
+              <p className="text-sm leading-relaxed text-[#64748b]">{matched.description}</p>
+              <a
+                href={matched.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#2563eb] hover:text-[#1d4ed8] transition-colors"
+              >
+                Visit {matched.name} website <ArrowRight size={12} />
+              </a>
+            </section>
+          );
+        })()}
 
       </main>
     </div>

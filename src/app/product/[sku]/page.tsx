@@ -10,6 +10,21 @@ import {
 } from "@/data/productLookup";
 import { getProductDetail, type RelatedProduct } from "@/data/deutschProductDetails";
 import QuoteForm from "@/components/QuoteForm";
+import { brands } from "@/data/brands";
+
+const BRAND_TO_SLUG: Record<string, string> = {
+  deutsch: "deutsch",
+  "te connectivity": "deutsch",
+  stocko: "stocko",
+  htp: "htp",
+  cvilux: "cvilux",
+  vogt: "vogt",
+};
+
+function findBrand(name: string) {
+  const slug = BRAND_TO_SLUG[name.toLowerCase()];
+  return slug ? brands.find((b) => b.id === slug) : null;
+}
 
 type Props = { params: Promise<{ sku: string }> };
 
@@ -274,6 +289,34 @@ export default async function ProductPage({ params }: Props) {
             </div>
           </section>
         )}
+
+        {/* ── About the manufacturer ────────────────────────────────────── */}
+        {(() => {
+          const brand = findBrand(product.brand);
+          if (!brand) return null;
+          return (
+            <section className="mt-14 rounded-xl border border-[#e5e7eb] bg-white p-6">
+              <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-[#9ca3af]">About the manufacturer</p>
+              <a
+                href={brand.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-2 block text-sm font-bold text-[#0a1628] hover:text-[#2563eb] transition-colors"
+              >
+                {brand.name}
+              </a>
+              <p className="text-sm leading-relaxed text-[#64748b]">{brand.description}</p>
+              <a
+                href={brand.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#2563eb] hover:text-[#1d4ed8] transition-colors"
+              >
+                Visit {brand.name} website <ArrowRight size={12} />
+              </a>
+            </section>
+          );
+        })()}
       </div>
     </div>
   );

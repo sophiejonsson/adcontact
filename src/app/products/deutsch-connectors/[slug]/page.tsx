@@ -5,6 +5,7 @@ import { ChevronRight, ArrowRight, Download, Phone, Mail, Clock, Package } from 
 import type { Metadata } from "next";
 import { getProductDetail, type RelatedProduct, type DrawingFile } from "@/data/deutschProductDetails";
 import { deutschProducts } from "@/data/deutschConnectors";
+import { brands } from "@/data/brands";
 import {
   findCatalogueProductByReference,
   getProductAttributeEntries,
@@ -531,6 +532,34 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             </div>
           </section>
         )}
+
+        {/* ── About TE Connectivity / Deutsch ───────────────────────────── */}
+        {(() => {
+          const brand = brands.find((b) => b.id === "deutsch");
+          if (!brand) return null;
+          return (
+            <section className="rounded-xl border border-[#e5e7eb] bg-white p-6">
+              <p className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-[#9ca3af]">About the manufacturer</p>
+              <a
+                href={brand.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-2 block text-sm font-bold text-[#0a1628] hover:text-[#2563eb] transition-colors"
+              >
+                {brand.name}
+              </a>
+              <p className="text-sm leading-relaxed text-[#64748b]">{brand.description}</p>
+              <a
+                href={brand.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-[#2563eb] hover:text-[#1d4ed8] transition-colors"
+              >
+                Visit {brand.name} website <ArrowRight size={12} />
+              </a>
+            </section>
+          );
+        })()}
 
         {/* ── Back to catalogue ─────────────────────────────────────────── */}
         <div>
