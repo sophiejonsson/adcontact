@@ -26,7 +26,7 @@ export const brands: Brand[] = [
     categories: ["connectors", "contacts-terminals"],
     linecardSection: "components",
     website: "https://www.stocko-contact.com/",
-    shopUrl: "https://www.stocko-contact.com/en/products.html",
+    shopUrl: "https://www.stocko-contact.com/en/index.php",
     featured: true,
   },
   {
