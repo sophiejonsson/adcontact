@@ -8,6 +8,7 @@ import type {
   CatalogueProduct,
   CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
+import { brands } from "@/data/brands";
 
 const DEFAULT_PAGE_SIZE = 25;
 const PAGE_SIZE_OPTIONS = [25, 50, 100];
@@ -204,6 +205,11 @@ function productHref(product: CatalogueProduct, categoryRoute: string | null) {
   return product.route ?? product.routes[0] ?? "#";
 }
 
+function brandLogoForProduct(product: CatalogueProduct): string | undefined {
+  const name = (product.brand ?? product.manufacturer ?? "").toLowerCase();
+  return brands.find((b) => b.logo && b.name.toLowerCase() === name)?.logo ?? undefined;
+}
+
 function ProductCard({
   product,
   categoryRoute,
@@ -215,9 +221,12 @@ function ProductCard({
   deutschImageMap?: Record<string, string>;
   compact?: boolean;
 }) {
-  const imageUrl =
+  const realImageUrl =
     magentoImageSrc(product.thumbnail ?? product.image) ??
-    deutschImageMap?.[String(product.id)];
+    deutschImageMap?.[String(product.id)] ??
+    null;
+  const hasRealImage = Boolean(realImageUrl);
+  const imageUrl = realImageUrl ?? brandLogoForProduct(product) ?? null;
 
   if (compact) {
     return (
@@ -233,7 +242,7 @@ function ProductCard({
               fill
               unoptimized
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px"
-              className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.05]"
+              className={`object-contain transition-transform duration-300 group-hover:scale-[1.05] ${hasRealImage ? "p-3" : "p-6 opacity-30"}`}
             />
           ) : (
             <div className="flex h-full items-center justify-center">
@@ -267,7 +276,7 @@ function ProductCard({
             fill
             unoptimized
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
-            className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.04]"
+            className={`object-contain transition-transform duration-300 group-hover:scale-[1.04] ${hasRealImage ? "p-4" : "p-8 opacity-25"}`}
           />
         ) : (
           <div className="flex h-full items-center justify-center">
