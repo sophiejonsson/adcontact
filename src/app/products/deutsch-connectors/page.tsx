@@ -674,6 +674,21 @@ export default function DeutschConnectorsPage() {
                   Technical support
                 </a>
               </div>
+
+              <div className="mt-5 flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3.5">
+                <span className="text-sm text-[#94a3b8]">
+                  Can&apos;t find what you&apos;re looking for? Browse the full Deutsch range directly with the manufacturer.
+                </span>
+                <a
+                  href="https://www.te.com/en/products/brands/deutsch.html?tab=pgp-story"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-sm font-semibold text-[#fbbf24] hover:text-[#f59e0b] transition-colors"
+                >
+                  Go to TE Connectivity / Deutsch
+                  <ArrowRight size={14} />
+                </a>
+              </div>
             </div>
 
             {/* Right, at-a-glance stats */}

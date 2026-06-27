@@ -232,7 +232,7 @@ export const brands: Brand[] = [
     categories: ["production-equipment"],
     linecardSection: "equipment",
     website: "https://www.zofre.de/",
-    shopUrl: "https://www.zofre.de/en/products",
+    shopUrl: "https://www.zofre.de/en/",
     featured: true,
   },
   {
