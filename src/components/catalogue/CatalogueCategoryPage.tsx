@@ -509,7 +509,7 @@ export default function CatalogueCategoryPage({
               {title}
             </h1>
             <p className="mt-4 max-w-3xl text-base leading-7 text-[#94a3b8]">
-              {description ?? categoryIntro(category)}
+              {description ?? brand?.description ?? categoryIntro(category)}
             </p>
             <p className="mt-4 text-sm font-semibold text-blue-200">
               {children.length.toLocaleString()} categories · {productCount.toLocaleString()} catalogue items
