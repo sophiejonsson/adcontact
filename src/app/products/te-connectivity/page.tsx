@@ -140,6 +140,7 @@ export default function TeConnectivityPage() {
         ]}
         primaryCta={{ label: "Request a quote", href: "/contact/quote" }}
         secondaryCta={{ label: `Browse all ${TOTAL.toLocaleString()} products`, href: "#catalogue" }}
+        shopUrl="https://www.te.com/en/products/brands.html"
       />
 
       <BrandJumpNav
