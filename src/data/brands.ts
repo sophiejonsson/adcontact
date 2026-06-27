@@ -67,7 +67,7 @@ export const brands: Brand[] = [
     categories: ["connectors"],
     linecardSection: "components",
     website: "https://www.cvilux.com/",
-    shopUrl: "https://www.cvilux.com/products",
+    shopUrl: "https://www.cvilux.com/product",
     featured: false,
   },
   {
