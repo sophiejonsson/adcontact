@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ChevronRight, ArrowRight, Download, Phone, Mail, Clock, Package, FileText, FileImage, Archive } from "lucide-react";
+import { ChevronRight, ArrowRight, Download, Phone, Mail, Clock, Package } from "lucide-react";
 import type { Metadata } from "next";
 import { getProductDetail, type RelatedProduct, type DrawingFile } from "@/data/deutschProductDetails";
 import { deutschProducts } from "@/data/deutschConnectors";
@@ -12,6 +12,7 @@ import {
   type CatalogueProduct,
   type CatalogueFile,
 } from "@/lib/magentoCatalogue";
+import QuoteForm from "@/components/QuoteForm";
 
 export function generateStaticParams() {
   return deutschProducts.map((p) => ({ slug: p.partNumber.toLowerCase() }));
@@ -394,15 +395,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href={`/contact?pn=${encodeURIComponent(partNumber)}&ref=product-detail`}
+              <a
+                href="#quote"
                 className="flex items-center justify-center gap-2 px-6 py-3.5 bg-[#f59e0b] hover:bg-[#d97706] text-[#0a1628] font-semibold rounded-lg transition-colors"
               >
                 Request a quote
                 <ArrowRight size={15} />
-              </Link>
+              </a>
               <a
-                href="/contact"
+                href="tel:+46084453600"
                 className="flex items-center justify-center gap-2 px-6 py-3.5 bg-white hover:bg-[#f8fafc] border border-[#e5e7eb] text-[#374151] font-medium rounded-lg transition-colors"
               >
                 <Phone size={14} />
@@ -418,6 +419,10 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
             </div>
           </div>
         </div>
+
+        {/* ── Content + sticky quote sidebar ────────────────────────────── */}
+        <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
+        <div className="space-y-10">
 
         {/* ── Technical specifications ──────────────────────────────────── */}
         {hasDetailSpecs && (
@@ -563,32 +568,29 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           </section>
         )}
 
-        {/* ── CTA ──────────────────────────────────────────────────────── */}
-        <section className="bg-[#0a1628] rounded-2xl p-8 text-white relative overflow-hidden">
-          <div className="absolute inset-0 tech-grid opacity-20" />
-          <div className="relative flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between">
-            <div>
-              <h2 className="text-xl font-bold mb-1">Ready to order {partNumber}?</h2>
-              <p className="text-[#94a3b8] text-sm">
-                Our Bromma team can advise on contact selection, tooling, and compatible accessories.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
-              <Link
-                href={`/contact?pn=${encodeURIComponent(partNumber)}&ref=product-cta`}
-                className="flex items-center gap-2 px-6 py-3 bg-[#f59e0b] hover:bg-[#d97706] text-[#0a1628] font-semibold rounded-lg transition-colors whitespace-nowrap"
-              >
-                Request a quote <ArrowRight size={14} />
-              </Link>
-              <Link
-                href="/webshop/components/sealed-connectors/deutsch/connectors.html#catalogue"
-                className="flex items-center gap-2 px-6 py-3 bg-[#1a2f5a] hover:bg-[#1e3a6e] text-white font-medium rounded-lg transition-colors border border-[#1e3a6e] whitespace-nowrap"
-              >
-                ← Back to catalogue
-              </Link>
-            </div>
+        {/* ── Back to catalogue ─────────────────────────────────────────── */}
+        <div>
+          <Link
+            href="/webshop/components/sealed-connectors/deutsch/connectors.html"
+            className="inline-flex items-center gap-2 text-sm font-medium text-[#2563eb] hover:text-[#1d4ed8] transition-colors"
+          >
+            ← Back to Deutsch connector catalogue
+          </Link>
+        </div>
+
+        </div>{/* end content column */}
+
+        {/* ── Sticky quote form sidebar ─────────────────────────────────── */}
+        <aside id="quote" className="scroll-mt-24">
+          <div className="lg:sticky lg:top-[140px]">
+            <QuoteForm
+              defaultPartNumber={partNumber}
+              title={`Request a quote for ${partNumber}`}
+            />
           </div>
-        </section>
+        </aside>
+
+        </div>{/* end grid */}
       </div>
     </div>
   );
