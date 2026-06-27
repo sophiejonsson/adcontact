@@ -31,16 +31,31 @@ export const brands: Brand[] = [
   },
   {
     id: "deutsch",
-    name: "TE Connectivity",
+    name: "DEUTSCH",
     slug: "deutsch",
     logo: "/images/partners/te-connectivity.svg",
     description:
-      "For more than 80 years, TE has partnered with engineers worldwide to develop connectivity and sensing solutions that make a connected world possible. Their unmatched product portfolio — including the DEUTSCH connector family for sealed, harsh-environment applications — enables companies of any size to turn ideas into technologies that transform how the world connects, works, and lives.",
+      "DEUTSCH is TE Connectivity's family of sealed connectors — the global benchmark for harsh-environment electrical connections. The DT, DTM, DTP, and AT series are specified in agriculture, construction, military, marine, and heavy automotive applications where vibration, moisture, and contamination resistance are critical.",
     shortDescription: "DEUTSCH sealed connectors for harsh-environment and off-highway applications.",
     categories: ["connectors"],
     linecardSection: "components",
-    website: "https://www.te.com/",
+    website: "https://www.te.com/en/products/brands/deutsch.html",
+    shopUrl: "https://www.te.com/en/products/brands/deutsch.html?tab=pgp-story",
     featured: true,
+  },
+  {
+    id: "te-connectivity",
+    name: "TE Connectivity",
+    slug: "te-connectivity",
+    logo: "/images/partners/te-connectivity.svg",
+    description:
+      "For more than 80 years, TE has partnered with engineers worldwide to develop connectivity and sensing solutions that make a connected world possible. Their unmatched product portfolio — including the AMPSEAL sealed connector family — enables companies of any size to turn ideas into technologies that transform how the world connects, works, and lives.",
+    shortDescription: "TE Connectivity sealed connectors including AMPSEAL for harsh-environment applications.",
+    categories: ["connectors"],
+    linecardSection: "components",
+    website: "https://www.te.com/",
+    shopUrl: "https://www.te.com/en/home.html",
+    featured: false,
   },
   {
     id: "vogt",
@@ -109,6 +124,7 @@ export const brands: Brand[] = [
     categories: ["connectors"],
     linecardSection: "components",
     website: "https://www.webhtp.eu/",
+    shopUrl: "https://www.webhtp.eu/ProductCategory/GridPage?_gl=1*j9e6gj*_up*MQ..*_ga*MjA3MzE3OTIzNS4xNzgyNTgwMTU3*_ga_89PXX2558Z*czE3ODI1ODAxNTUkbzEkZzAkdDE3ODI1ODAxNTUkajYwJGwwJGgw",
     featured: true,
   },
   {
