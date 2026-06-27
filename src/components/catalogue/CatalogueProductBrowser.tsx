@@ -188,6 +188,12 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
     .slice(0, 7);
 }
 
+function magentoImageSrc(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (path.startsWith("/")) return `https://www.adcontact.se${path}`;
+  return path;
+}
+
 function productHref(product: CatalogueProduct, categoryRoute: string | null) {
   if (categoryRoute) {
     const basePath = categoryRoute.replace(/\.html$/, "/");
@@ -212,7 +218,8 @@ function ProductCard({
     (product.brand === "Deutsch" ? "Estimated delivery time 5-6 weeks" : null);
 
   const imageUrl =
-    product.thumbnail ?? product.image ?? deutschImageMap?.[String(product.id)];
+    magentoImageSrc(product.thumbnail ?? product.image) ??
+    deutschImageMap?.[String(product.id)];
 
   return (
     <Link href={productHref(product, categoryRoute)} className="group flex min-w-0 flex-col bg-white">

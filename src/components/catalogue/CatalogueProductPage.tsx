@@ -27,6 +27,12 @@ const RELATIONSHIP_ATTRIBUTES = new Set(
   LINKED_ATTRIBUTE_GROUPS.flatMap((group) => group.attributes),
 );
 
+function magentoImageSrc(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (path.startsWith("/")) return `https://www.adcontact.se${path}`;
+  return path;
+}
+
 function splitPartReferences(value: string) {
   return [...new Set(value
     .split(",")
@@ -51,9 +57,9 @@ function ProductReferenceCard({ reference }: { reference: string }) {
       className="group grid min-w-0 grid-cols-[72px_1fr] overflow-hidden rounded-lg border border-[#e5e7eb] bg-white transition-colors hover:border-[#93c5fd]"
     >
       <div className="relative min-h-20 bg-[#f8fafc]">
-        {linkedProduct.thumbnail ?? linkedProduct.image ? (
+        {magentoImageSrc(linkedProduct.thumbnail ?? linkedProduct.image) ? (
           <Image
-            src={linkedProduct.thumbnail ?? linkedProduct.image ?? ""}
+            src={magentoImageSrc(linkedProduct.thumbnail ?? linkedProduct.image)!}
             alt={linkedProduct.name}
             fill
             unoptimized
@@ -125,7 +131,7 @@ export default function CatalogueProductPage({
   const additionalInfo = attributes.filter(([label]) => !RELATIONSHIP_ATTRIBUTES.has(label));
   const highlights = attributes.slice(0, 6);
   const breadcrumbs = getProductBreadcrumbs(product);
-  const primaryImage = product.image ?? product.gallery[0] ?? product.thumbnail;
+  const primaryImage = magentoImageSrc(product.image ?? product.gallery[0] ?? product.thumbnail);
   const title = titleForProduct(product);
   const showSkuEyebrow = sku !== title && sku !== product.name;
   const description =
