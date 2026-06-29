@@ -175,12 +175,14 @@ async function buildPublicImageIndex() {
 }
 
 // The server stores product images under lowercase single-char subdirectories
-// (e.g. catalog/product/d/t/DT04.jpg). Magento catalogue dumps sometimes have
-// uppercase dirs (D/T/) or all-lowercase filenames. Generate both variants to try.
+// (e.g. catalog/product/d/t/DT04.jpg). Magento catalogue dumps have uppercase
+// dirs (D/T/). Lowercase both chars so d/t/filename resolves correctly.
 function withLowercaseDirs(relativePath: string): string | null {
-  const match = relativePath.match(/^(catalog\/product\/)([A-Z])(\/.+)$/);
-  if (!match) return null;
-  return `${match[1]}${match[2].toLowerCase()}${match[3]}`;
+  const lowered = relativePath.replace(
+    /^(catalog\/product\/)([A-Za-z])\/([A-Za-z])\//,
+    (_, prefix, d1, d2) => `${prefix}${d1.toLowerCase()}/${d2.toLowerCase()}/`,
+  );
+  return lowered !== relativePath ? lowered : null;
 }
 
 function withUppercaseFirstDir(relativePath: string): string | null {
