@@ -177,11 +177,25 @@ function CatalogueFileRow({ file }: { file: CatalogueFile }) {
   );
 }
 
+function proxyDownloadUrl(url: string): string {
+  // Rewrite absolute adcontact.se amfilerating URLs to go through our local
+  // proxy, which bypasses the Magento auth redirect and fetches the file directly.
+  try {
+    const u = new URL(url);
+    const match = u.pathname.match(/^\/amfilerating\/file\/download\/file_id\/(\d+)\/?$/);
+    if (match) return `/amfilerating/file/download/file_id/${match[1]}/`;
+  } catch {
+    // not a valid URL — return as-is
+  }
+  return url;
+}
+
 function DownloadRow({ file }: { file: DrawingFile }) {
   const colorClass = FILE_TYPE_COLORS[file.type] ?? FILE_TYPE_COLORS.zip;
+  const href = proxyDownloadUrl(file.url);
   return (
     <a
-      href={file.url}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="flex items-center justify-between gap-4 py-3 px-4 bg-white border border-[#e5e7eb] hover:border-[#2563eb] rounded-lg transition-all group"

@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import amfileLookup from "@/data/generated/amfile-lookup.json";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -28,7 +29,14 @@ async function proxyDownload(request: NextRequest, { params }: Context) {
     });
   }
 
-  const source = new URL(`/amfilerating/file/download/file_id/${fileId}/`, origin);
+  // Use the direct file path from our local Magento data — the amfilerating
+  // download handler on the origin server requires Magento session auth and
+  // redirects to the homepage without it.
+  const directPath = (amfileLookup as Record<string, string>)[fileId];
+  const source = directPath
+    ? new URL(directPath, origin)
+    : new URL(`/amfilerating/file/download/file_id/${fileId}/`, origin);
+
   source.search = request.nextUrl.search;
 
   const upstream = await fetch(source, {
@@ -37,7 +45,20 @@ async function proxyDownload(request: NextRequest, { params }: Context) {
       "User-Agent": "Adcontact catalogue download proxy",
     },
     cache: "no-store",
+    redirect: "manual",
   });
+
+  // If the origin redirects (e.g. to the homepage due to missing auth),
+  // treat it as not found.
+  if (upstream.status >= 300 && upstream.status < 400) {
+    return new Response("Download file was not found.", {
+      status: 404,
+      headers: {
+        "content-type": "text/plain; charset=utf-8",
+        "x-adcontact-download-source": source.toString(),
+      },
+    });
+  }
 
   if (!upstream.ok) {
     return new Response("Download file was not found.", {
@@ -65,6 +86,12 @@ async function proxyDownload(request: NextRequest, { params }: Context) {
     if (value) headers.set(name, value);
   }
   headers.set("x-adcontact-download-source", source.toString());
+
+  // Ensure PDF files get a useful Content-Disposition if the origin didn't set one.
+  if (!headers.get("content-disposition") && directPath?.endsWith(".pdf")) {
+    const filename = directPath.split("/").pop() ?? `file-${fileId}.pdf`;
+    headers.set("content-disposition", `attachment; filename="${filename}"`);
+  }
 
   return new Response(upstream.body, {
     status: upstream.status,
