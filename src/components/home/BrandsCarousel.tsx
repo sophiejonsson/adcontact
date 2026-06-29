@@ -57,7 +57,7 @@ export default function BrandsCarousel() {
                 alt={brand.name}
                 fill
                 sizes="150px"
-                className="object-contain opacity-40 brightness-0 invert transition duration-200 hover:opacity-100"
+                className="object-contain opacity-70 brightness-0 invert transition duration-200 hover:opacity-100"
                 unoptimized
               />
             </a>
