@@ -38,12 +38,13 @@ function ProductCard({ product }: { product: DeutschProduct }) {
   const seriesLabel = attrs["Series"] ?? product.series;
   const cavities = attrs["No. of cavities"];
   const style = attrs["Connector Style"];
+  const [imgError, setImgError] = useState(false);
 
   return (
     <Link href={detailHref} className="group bg-white border border-[#e5e7eb] rounded-xl overflow-hidden hover:border-[#2563eb] hover:shadow-[0_4px_16px_rgba(37,99,235,0.12)] transition-all duration-200 flex flex-col">
       {/* Product image */}
       <div className="relative h-40 bg-[#f8fafc] overflow-hidden flex-shrink-0">
-        {product.imageUrl ? (
+        {product.imageUrl && !imgError ? (
           <Image
             src={product.imageUrl}
             alt={product.partNumber}
@@ -51,10 +52,18 @@ function ProductCard({ product }: { product: DeutschProduct }) {
             className="object-contain p-3 group-hover:scale-105 transition-transform duration-300"
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             unoptimized
+            onError={() => setImgError(true)}
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-[#d1d5db] text-xs font-mono">No image</span>
+          <div className="absolute inset-0 flex items-center justify-center p-6">
+            <Image
+              src="/images/partners/te-connectivity.svg"
+              alt="DEUTSCH"
+              fill
+              className="object-contain p-4 opacity-20"
+              sizes="200px"
+              unoptimized
+            />
           </div>
         )}
         {/* Availability dot */}
