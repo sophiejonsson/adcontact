@@ -31,7 +31,6 @@ import type { CatalogueProduct } from "@/lib/magentoCatalogue";
 function buildDeutschImageMap(products: CatalogueProduct[]): Record<string, string> {
   const map: Record<string, string> = {};
   for (const product of products) {
-    if (product.thumbnail || product.image) continue;
     const sku = (product.sku ?? product.name ?? "").toUpperCase();
     const deutsch = deutschProducts.find((d) => d.partNumber.toUpperCase() === sku);
     if (deutsch?.imageUrl) map[String(product.id)] = deutsch.imageUrl;

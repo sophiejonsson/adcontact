@@ -225,8 +225,8 @@ function ProductCard({
   compact?: boolean;
 }) {
   const realImageUrl =
-    magentoImageSrc(product.thumbnail ?? product.image) ??
     deutschImageMap?.[String(product.id)] ??
+    magentoImageSrc(product.thumbnail ?? product.image) ??
     null;
   const hasRealImage = Boolean(realImageUrl);
   const imageUrl = realImageUrl ?? brandLogoForProduct(product) ?? null;
