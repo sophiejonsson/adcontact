@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import HeroSearch from "@/components/home/HeroSearch";
-import ProductConveyor from "@/components/home/ProductConveyor";
 import BrandsCarousel from "@/components/home/BrandsCarousel";
 import ApplicationsSection from "@/components/home/ApplicationsSection";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
@@ -17,7 +16,6 @@ export default function HomePage() {
   return (
     <>
       <HeroSearch />
-      <ProductConveyor />
       <BrandsCarousel />
       <ApplicationsSection />
       <FeaturedProducts />

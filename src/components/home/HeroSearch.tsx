@@ -3,7 +3,32 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, ArrowRight, CheckCircle } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { featuredProducts } from "@/data/featuredProducts";
+
+const conveyorTrack = [...featuredProducts, ...featuredProducts];
+
+const conveyorCss = `
+@keyframes adc-hero-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.adc-hero-track {
+  animation: adc-hero-marquee 55s linear infinite;
+  will-change: transform;
+}
+.adc-hero-viewport:hover .adc-hero-track {
+  animation-play-state: paused;
+}
+.adc-hero-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .adc-hero-track { animation: none; }
+}
+`;
 
 const quickLinks = [
   { label: "Deutsch connectors", href: "/webshop/components/sealed-connectors/deutsch/connectors.html" },
@@ -32,7 +57,8 @@ export default function HeroSearch() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#0a1628] min-h-[500px] sm:min-h-[520px] md:min-h-[540px] lg:min-h-[560px] flex items-center">
+    <section className="relative overflow-hidden bg-[#0a1628] min-h-[500px] sm:min-h-[520px] md:min-h-[540px] lg:min-h-[560px] flex flex-col">
+      <style dangerouslySetInnerHTML={{ __html: conveyorCss }} />
       {/* Background video */}
       <video
         className="hero-background-video absolute inset-0 h-full w-full object-cover object-center"
@@ -59,7 +85,7 @@ export default function HeroSearch() {
       <div className="absolute bottom-0 left-1/4 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] bg-[#1d4ed8] opacity-[0.06] rounded-full blur-3xl pointer-events-none" />
 
       {/* Content */}
-      <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-16 lg:py-10 w-full">
+      <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-16 lg:py-10 w-full flex-1 flex items-center">
         <div className="max-w-3xl animate-fade-up">
           {/* Headline */}
           <h1 className="text-[34px] sm:text-[40px] md:text-[44px] lg:text-[50px] font-extrabold text-white leading-[1.08] tracking-[-0.03em] mb-4 sm:mb-5">
@@ -133,8 +159,41 @@ export default function HeroSearch() {
         </div>
       </div>
 
-      {/* Bottom edge */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#1e3a6e] to-transparent" />
+      {/* Product conveyor — bottom of hero */}
+      <div className="relative w-full border-t border-white/10 bg-[#060f1e]/60 backdrop-blur-sm py-3">
+        <p className="mb-2 text-center text-[9px] font-semibold uppercase tracking-[0.18em] text-[#475569]">
+          Featured products
+        </p>
+        <div className="adc-hero-viewport adc-hero-mask overflow-hidden">
+          <div className="adc-hero-track flex w-max items-center gap-3 px-4">
+            {conveyorTrack.map((product, i) => (
+              <Link
+                key={`${product.href}-${i}`}
+                href={product.href}
+                aria-hidden={i >= featuredProducts.length}
+                tabIndex={i >= featuredProducts.length ? -1 : undefined}
+                className="group flex w-28 sm:w-32 flex-none flex-col overflow-hidden rounded-lg border border-white/10 bg-white/5 transition-all duration-200 hover:border-[#2563eb]/50 hover:bg-white/10"
+              >
+                <div className="relative h-16 sm:h-20 w-full">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.05]"
+                    sizes="128px"
+                    unoptimized
+                  />
+                </div>
+                <div className="px-2 pb-2">
+                  <p className="line-clamp-1 text-[10px] font-medium leading-tight text-[#94a3b8] group-hover:text-white">
+                    {product.name}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
