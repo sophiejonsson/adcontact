@@ -16,23 +16,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "www.adcontact.se",
-        pathname: "/media/**",
-      },
-      {
-        protocol: "https",
-        hostname: "adcgam.hemsida.eu",
-        pathname: "/media/**",
-      },
-      {
-        protocol: "https",
-        hostname: "www.zofre.de",
-        pathname: "/fileadmin/**",
-      },
-    ],
+    unoptimized: true,
   },
 };
 
