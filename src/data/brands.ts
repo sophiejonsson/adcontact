@@ -33,7 +33,7 @@ export const brands: Brand[] = [
     id: "deutsch",
     name: "DEUTSCH",
     slug: "deutsch",
-    logo: "/images/partners/te-connectivity.svg",
+    logo: "/images/Deutsch.png",
     description:
       "DEUTSCH is TE Connectivity's family of sealed connectors — the global benchmark for harsh-environment electrical connections. The DT, DTM, DTP, and AT series are specified in agriculture, construction, military, marine, and heavy automotive applications where vibration, moisture, and contamination resistance are critical.",
     shortDescription: "DEUTSCH sealed connectors for harsh-environment and off-highway applications.",
@@ -131,7 +131,7 @@ export const brands: Brand[] = [
     id: "jst",
     name: "JST",
     slug: "jst",
-    logo: "/images/partners/jst.png",
+    logo: "/images/partners/jst.gif",
     description:
       "JST is a Japanese manufacturer of precision wire-to-board and wire-to-wire connectors. Their miniature and micro-miniature connector series are the standard for PCB interconnects in consumer electronics, automotive infotainment, and industrial instruments.",
     shortDescription: "Precision wire-to-board and miniature wire-to-wire connectors for electronics and automotive.",
