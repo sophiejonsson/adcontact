@@ -30,7 +30,7 @@ const RELATIONSHIP_ATTRIBUTES = new Set(
 
 function magentoImageSrc(path: string | null | undefined): string | null {
   if (!path) return null;
-  if (path.startsWith("/")) return `https://www.adcontact.se${path}`;
+  if (path.startsWith("/")) return path;
   return path;
 }
 

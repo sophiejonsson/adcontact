@@ -191,7 +191,10 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
 
 function magentoImageSrc(path: string | null | undefined): string | null {
   if (!path) return null;
-  if (path.startsWith("/")) return `https://www.adcontact.se${path}`;
+  // Serve via our /media proxy (handles uppercase/lowercase dir variants and
+  // fetches from ORDERLAND_MEDIA_ORIGIN) rather than hardcoding adcontact.se,
+  // which 404s on uppercase subdirectories like /D/T/.
+  if (path.startsWith("/")) return path;
   return path;
 }
 
