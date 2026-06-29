@@ -49,17 +49,21 @@ export default function BrandsCarousel() {
               aria-label={`Visit ${brand.name} website`}
               aria-hidden={i >= logoBrands.length}
               tabIndex={i >= logoBrands.length ? -1 : undefined}
-              className="relative h-6 sm:h-7 md:h-8 lg:h-9 flex-none"
-              style={{ width: brand.logoWidth ? `${Math.round(brand.logoWidth * 0.85)}px` : "110px" }}
+              className="flex flex-none items-center justify-center rounded-md bg-white/90 px-3 py-1.5 opacity-75 transition duration-200 hover:opacity-100"
+              style={{ width: brand.logoWidth ? `${Math.round(brand.logoWidth * 0.85) + 24}px` : "128px" }}
             >
-              <Image
-                src={brand.logo!}
-                alt={brand.name}
-                fill
-                sizes="150px"
-                className="object-contain opacity-70 brightness-0 invert transition duration-200 hover:opacity-100"
-                unoptimized
-              />
+              <div
+                className="relative h-6 sm:h-7 md:h-8 w-full"
+              >
+                <Image
+                  src={brand.logo!}
+                  alt={brand.name}
+                  fill
+                  sizes="160px"
+                  className="object-contain"
+                  unoptimized
+                />
+              </div>
             </a>
           ))}
         </div>
