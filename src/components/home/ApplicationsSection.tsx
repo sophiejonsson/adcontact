@@ -132,7 +132,7 @@ export default function ApplicationsSection() {
           <p className="mb-4 sm:mb-5 text-center text-[10px] sm:text-xs font-semibold uppercase tracking-[0.16em] sm:tracking-[0.2em] text-[#64748b]">
             Trusted across industries
           </p>
-          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-8 sm:gap-y-5 sm:grid-cols-3 lg:grid-cols-5 px-2 sm:px-0">
+          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-3 gap-y-6 sm:gap-x-8 sm:gap-y-5 sm:grid-cols-3 lg:grid-cols-6 px-2 sm:px-0">
             {industries.map((ind, i) => {
               const Icon = ind.icon;
               const isLonelyLast =
