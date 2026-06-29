@@ -29,11 +29,11 @@ export default function BrandsCarousel() {
   const track = [...logoBrands, ...logoBrands];
 
   return (
-    <section className="border-b border-[#eef2f7] bg-white py-4 sm:py-5 md:py-6">
+    <section className="border-b border-white/10 bg-[#0a1628] py-4 sm:py-5 md:py-6">
       <style dangerouslySetInnerHTML={{ __html: marqueeCss }} />
 
       <div className="mx-auto mb-3 sm:mb-4 max-w-[1440px] px-4 sm:px-6">
-        <p className="text-center text-[10px] sm:text-xs font-semibold uppercase tracking-[0.14em] sm:tracking-[0.16em] text-[#94a3b8]">
+        <p className="text-center text-[10px] sm:text-xs font-semibold uppercase tracking-[0.14em] sm:tracking-[0.16em] text-[#475569]">
           Trusted manufacturer partners
         </p>
       </div>
@@ -57,7 +57,7 @@ export default function BrandsCarousel() {
                 alt={brand.name}
                 fill
                 sizes="150px"
-                className="object-contain opacity-60 grayscale transition duration-200 hover:opacity-100 hover:grayscale-0"
+                className="object-contain opacity-40 brightness-0 invert transition duration-200 hover:opacity-100"
                 unoptimized
               />
             </a>
