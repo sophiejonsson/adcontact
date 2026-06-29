@@ -174,11 +174,16 @@ async function buildPublicImageIndex() {
   return index;
 }
 
-// Magento stores some image paths with a lowercase first directory character
-// (e.g. catalog/product/h/-/filename.jpg) but the server files use uppercase
-// (catalog/product/H/-/filename.jpg). Try both before giving up.
+// The server stores product images under lowercase single-char subdirectories
+// (e.g. catalog/product/d/t/DT04.jpg). Magento catalogue dumps sometimes have
+// uppercase dirs (D/T/) or all-lowercase filenames. Generate both variants to try.
+function withLowercaseDirs(relativePath: string): string | null {
+  const match = relativePath.match(/^(catalog\/product\/)([A-Z])(\/.+)$/);
+  if (!match) return null;
+  return `${match[1]}${match[2].toLowerCase()}${match[3]}`;
+}
+
 function withUppercaseFirstDir(relativePath: string): string | null {
-  // Matches: catalog/product/<d1>/<d2>/filename
   const match = relativePath.match(/^(catalog\/product\/)([a-z])(\/.+)$/);
   if (!match) return null;
   return `${match[1]}${match[2].toUpperCase()}${match[3]}`;
@@ -204,15 +209,18 @@ async function proxyOrderlandMedia(request: NextRequest, relativePath: string) {
   }
 
   const fallbackOrigin = process.env.ORDERLAND_MEDIA_FALLBACK_ORIGIN ?? null;
+  const lowercased = withLowercaseDirs(relativePath);
   const uppercased = withUppercaseFirstDir(relativePath);
   const qs = request.nextUrl.search;
 
-  // Try every candidate in order: primary origin (as-is), primary (uppercase dir),
-  // fallback origin (as-is), fallback (uppercase dir).
+  // Try path variants in order: as-is, lowercase dirs (server stores d/t/ not D/T/),
+  // uppercase first dir, then same set on fallback origin.
   const candidates: [string, string][] = [
     [relativePath, origin],
+    ...(lowercased ? [[lowercased, origin] as [string, string]] : []),
     ...(uppercased ? [[uppercased, origin] as [string, string]] : []),
     ...(fallbackOrigin ? [[relativePath, fallbackOrigin] as [string, string]] : []),
+    ...(fallbackOrigin && lowercased ? [[lowercased, fallbackOrigin] as [string, string]] : []),
     ...(fallbackOrigin && uppercased ? [[uppercased, fallbackOrigin] as [string, string]] : []),
   ];
 
