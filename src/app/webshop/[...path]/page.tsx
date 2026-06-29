@@ -40,8 +40,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!product) return {};
 
     // Redirect pages don't need metadata — the destination generates its own.
-    const sku = (product.sku ?? product.name ?? "").toUpperCase();
-    const isDeutsch = deutschProducts.some((d) => d.partNumber.toUpperCase() === sku);
+    const sku = (product.sku ?? "").toUpperCase();
+    const name = (product.name ?? "").toUpperCase();
+    const isDeutsch = deutschProducts.some(
+      (d) => d.partNumber.toUpperCase() === sku || d.partNumber.toUpperCase() === name,
+    );
     if (isDeutsch) return {};
 
     const title = productTitle(product);
@@ -88,9 +91,12 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
     if (!product) notFound();
 
     // Deutsch connector products have a richer dedicated page — redirect there.
-    const sku = (product.sku ?? product.name ?? "").toUpperCase();
+    // Match by SKU first; fall back to product name (some Magento entries use a
+    // numeric TE part number as the SKU rather than the Deutsch part number).
+    const sku = (product.sku ?? "").toUpperCase();
+    const name = (product.name ?? "").toUpperCase();
     const deutschMatch = deutschProducts.find(
-      (d) => d.partNumber.toUpperCase() === sku,
+      (d) => d.partNumber.toUpperCase() === sku || d.partNumber.toUpperCase() === name,
     );
     if (deutschMatch) {
       permanentRedirect(`/products/deutsch-connectors/${deutschMatch.partNumber.toLowerCase()}`);
