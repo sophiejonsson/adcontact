@@ -334,7 +334,7 @@ export const brands: Brand[] = [
   },
 ];
 
-export function getBrandBySlug(slug: string): Brand | undefined {
+export function getBrandBySlug(slug: string): Brand | undefined { // v2
   return brands.find((b) => b.slug === slug);
 }
 
