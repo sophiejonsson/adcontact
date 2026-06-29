@@ -160,8 +160,8 @@ export default function HeroSearch() {
       </div>
 
       {/* Product conveyor — bottom of hero */}
-      <div className="relative w-full border-t border-white/10 bg-[#060f1e]/60 backdrop-blur-sm py-3">
-        <p className="mb-2 text-center text-[9px] font-semibold uppercase tracking-[0.18em] text-[#475569]">
+      <div className="relative w-full border-t border-[#e5eaf0] bg-white py-3">
+        <p className="mb-2 text-center text-[9px] font-semibold uppercase tracking-[0.18em] text-[#94a3b8]">
           Featured products
         </p>
         <div className="adc-hero-viewport adc-hero-mask overflow-hidden">
@@ -172,7 +172,7 @@ export default function HeroSearch() {
                 href={product.href}
                 aria-hidden={i >= featuredProducts.length}
                 tabIndex={i >= featuredProducts.length ? -1 : undefined}
-                className="group flex w-28 sm:w-32 flex-none flex-col overflow-hidden rounded-lg border border-white/10 bg-white/5 transition-all duration-200 hover:border-[#2563eb]/50 hover:bg-white/10"
+                className="group flex w-28 sm:w-32 flex-none flex-col overflow-hidden rounded-lg border border-[#e5eaf0] bg-[#f8fafc] transition-all duration-200 hover:border-[#2563eb]/40 hover:bg-white hover:shadow-sm"
               >
                 <div className="relative h-16 sm:h-20 w-full">
                   <Image
@@ -185,7 +185,7 @@ export default function HeroSearch() {
                   />
                 </div>
                 <div className="px-2 pb-2">
-                  <p className="line-clamp-1 text-[10px] font-medium leading-tight text-[#94a3b8] group-hover:text-white">
+                  <p className="line-clamp-1 text-[10px] font-medium leading-tight text-[#64748b] group-hover:text-[#2563eb]">
                     {product.name}
                   </p>
                 </div>
