@@ -61,7 +61,7 @@ export default function HeroSearch() {
       <style dangerouslySetInnerHTML={{ __html: conveyorCss }} />
       {/* Background video */}
       <video
-        className="hero-background-video absolute inset-0 h-full w-full object-cover object-center"
+        className="hero-background-video absolute inset-0 h-full w-full object-cover object-center hidden md:block"
         autoPlay
         loop
         muted
