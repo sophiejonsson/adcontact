@@ -494,7 +494,7 @@ export default function CatalogueCategoryPage({
   const productCount = getCategoryProductCount(category);
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
   const productSectionTitle = isWebshopRoot ? "Featured product selection" : "Catalogue items";
-  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0);
+  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || category.productIds.length > 0);
   const showVisualLinks = content.visualLinks.length > 0;
 
   // When the category has exactly one child that carries no direct products but
