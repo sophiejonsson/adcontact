@@ -9,6 +9,7 @@ import {
   getCategoryProductCount,
   getCategoryProducts,
   getCategoryAllProducts,
+  getCatalogueCategory,
   type CatalogueCategory,
   type CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
@@ -528,11 +529,48 @@ export default function CatalogueCategoryPage({
       : [];
   const isDescendantHub = descendantPool.length > 0 && descendantPool.length <= 500;
 
+  // "Leaf of flat hub": a leaf sub-category (e.g. a brand page) whose parent is a
+  // flat hub. The leaf's own products all share the same attribute value, so the
+  // product browser shows no useful filters. Fix: use the parent's full product pool
+  // so filter facets (brand, type, …) are available, and pre-apply this leaf's
+  // distinguishing attribute value as the default filter.
+  const parentCategory = !isWebshopRoot && !isFlatHub && !isDescendantHub && children.length === 0 && category.productIds.length > 0
+    ? getCatalogueCategory(category.parentId)
+    : undefined;
+  const parentHubChildren = parentCategory ? getCategoryChildren(parentCategory) : [];
+  const parentIsFlatHub = Boolean(
+    parentCategory &&
+    parentCategory.productIds.length > 0 &&
+    parentHubChildren.length > 1,
+  );
+  const isLeafOfFlatHub = Boolean(parentIsFlatHub);
+
+  const leafParentPool = isLeafOfFlatHub ? getCategoryAllProducts(parentCategory!) : [];
+
+  // Find the attribute key/value that singles out this leaf's products within the
+  // parent pool (e.g. "Crimping equipment Brands" = "Zoller & Fröhlich").
+  const leafPreFilter: Record<string, string> = {};
+  if (isLeafOfFlatHub && leafParentPool.length > 0) {
+    const ownProducts = getCategoryProducts(category, undefined);
+    outer: for (const [attr, value] of Object.entries(ownProducts[0]?.attributes ?? {})) {
+      if (!value || value.length > 80) continue;
+      if (!ownProducts.every((p) => p.attributes[attr] === value)) continue;
+      const parentValues = new Set(leafParentPool.map((p) => p.attributes[attr]).filter(Boolean));
+      if (parentValues.size > 1) {
+        const param = `f_${attr.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "")}`;
+        leafPreFilter[param] = value;
+        break outer;
+      }
+    }
+  }
+
   const productPool = isFlatHub
     ? getCategoryAllProducts(category)
     : isDescendantHub
       ? descendantPool
-      : getCategoryProducts(category, undefined);
+      : isLeafOfFlatHub
+        ? leafParentPool
+        : getCategoryProducts(category, undefined);
 
   const content = descriptionContent(category.description);
   const breadcrumbs = getCategoryBreadcrumbs(category.id);
@@ -552,7 +590,7 @@ export default function CatalogueCategoryPage({
     getCategoryChildren(children[0]).length === 0 &&
     getCategoryProductCount(children[0]) > 0;
 
-  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub);
+  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub || isLeafOfFlatHub);
   // Suppress visual link cards on descendant hubs — the product browser with brand
   // filters replaces them, just like isFlatHub pages show no category cards.
   const showVisualLinks = content.visualLinks.length > 0 && !isDescendantHub;
@@ -802,8 +840,8 @@ export default function CatalogueCategoryPage({
         {showProductBrowser && (
           <CatalogueProductBrowser
             products={productPool}
-            route={category.route}
-            searchParams={searchParams}
+            route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
+            searchParams={isLeafOfFlatHub ? { ...leafPreFilter, ...searchParams } : searchParams}
             isWebshopRoot={isWebshopRoot}
             sectionLabel={productSectionLabel}
             sectionTitle={productSectionTitle}
