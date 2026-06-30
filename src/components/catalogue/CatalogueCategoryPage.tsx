@@ -291,9 +291,14 @@ function descriptionContent(description: string | null): DescriptionContent {
     const [, , href, innerHtml] = match;
     const title = stripTags(innerHtml);
     const rawImage = firstImageSrc(innerHtml);
-    // Magento media paths are relative — prefix with the legacy origin so
-    // next/image doesn't try to serve them from the Vercel domain.
-    const image = rawImage?.startsWith("/") ? `https://www.adcontact.se${rawImage}` : rawImage ?? null;
+    // Magento template strings like {{media url="..."}} are not real URLs — treat as null.
+    // Regular relative paths are prefixed with the legacy origin.
+    const image =
+      !rawImage || rawImage.startsWith("{{")
+        ? null
+        : rawImage.startsWith("/")
+          ? `https://www.adcontact.se${rawImage}`
+          : rawImage;
     if (!href || !title) continue;
     linkedBlocks.push(match[0]);
     visualLinks.push({ href, title, image });
@@ -329,21 +334,23 @@ function CategoryVisualLinkCard({
 }) {
   const productCount = category ? getCategoryProductCount(category) : null;
   const childCount = category ? getCategoryChildren(category).length : 0;
+  const brand = category ? isBrandOwnCategory(category) : undefined;
+  const imageSrc = item.image ?? brand?.logo ?? null;
 
   return (
     <Link
       href={item.href}
       className="group grid min-h-[210px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
     >
-      <div className="relative flex min-h-32 items-center justify-center border-b border-[#eef2f7] bg-[#f8fafc]">
-        {item.image ? (
+      <div className={`relative flex min-h-32 items-center justify-center border-b border-[#eef2f7] ${brand ? "bg-white" : "bg-[#f8fafc]"}`}>
+        {imageSrc ? (
           <Image
-            src={item.image}
+            src={imageSrc}
             alt={item.title}
             fill
             unoptimized
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 280px"
-            className="object-contain p-6 transition-transform group-hover:scale-105"
+            className={`object-contain transition-transform group-hover:scale-105 ${brand ? "p-6" : "p-4"}`}
           />
         ) : (
           <Boxes size={34} strokeWidth={1.6} className="text-[#2563eb]" />
