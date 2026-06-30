@@ -632,6 +632,22 @@ export default function CatalogueCategoryPage({
   // Flat hubs, descendant hubs, and single-leaf passthroughs show the product browser directly.
   const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks && !isFlatHub && !isDescendantHub && !isSingleLeafPassthrough;
 
+  const heroStatText = (() => {
+    const itemsPart = `${productCount.toLocaleString()} catalogue items`;
+    if (showSeries) {
+      return `${seriesFacets.length} series · ${itemsPart}`;
+    }
+    if (showVisualLinks) {
+      const label = isWebshopRoot ? "categories" : "subcategories";
+      return `${content.visualLinks.length.toLocaleString()} ${label} · ${itemsPart}`;
+    }
+    if (showGenericCategoryCards) {
+      const label = isWebshopRoot ? "categories" : "subcategories";
+      return `${displayChildren.length.toLocaleString()} ${label} · ${itemsPart}`;
+    }
+    return itemsPart;
+  })();
+
   // Video embeds and standalone images are promoted to the hero right column.
   // Video takes precedence over an image when both are present.
   const { videoEmbedSrc } = content;
@@ -695,7 +711,7 @@ export default function CatalogueCategoryPage({
                 ) ?? categoryIntro(category)}
               </p>
               <p className="mt-4 text-sm font-semibold text-blue-200">
-                {displayChildren.length.toLocaleString()} categories · {productCount.toLocaleString()} catalogue items
+                {heroStatText}
               </p>
 
               {brand?.shopUrl && (
