@@ -147,6 +147,7 @@ type DescriptionContent = {
   html: string | null;
   visualLinks: VisualLink[];
   standaloneImages: string[];
+  videoEmbedSrc: string | null;
 };
 
 function magentoMediaSrc(path: string | null | undefined): string | null {
@@ -278,17 +279,29 @@ function firstImageSrc(value: string) {
 }
 
 function descriptionContent(description: string | null): DescriptionContent {
-  if (!description) return { html: null, visualLinks: [], standaloneImages: [] };
+  if (!description) return { html: null, visualLinks: [], standaloneImages: [], videoEmbedSrc: null };
 
   const normalized = normalizeLegacyHtml(description).trim();
-  if (!normalized) return { html: null, visualLinks: [], standaloneImages: [] };
+  if (!normalized) return { html: null, visualLinks: [], standaloneImages: [], videoEmbedSrc: null };
+
+  // Extract the first iframe embed (e.g. YouTube) and remove it from the HTML so
+  // it doesn't render in the content area — it will be shown in the header instead.
+  const iframeMatch = normalized.match(/<iframe\b[^>]*\bsrc=(["'])(https?:\/\/[^"']+)\1[^>]*>(?:[\s\S]*?<\/iframe>)?/i);
+  const videoEmbedSrc = iframeMatch?.[2] ?? null;
+  const withoutIframe = videoEmbedSrc
+    ? normalized
+        .replace(iframeMatch![0], "")
+        // Drop a "Video" heading that was only there to label the iframe
+        .replace(/<h[1-6][^>]*>\s*(?:<[^>]+>)*\s*Video\s*(?:<\/[^>]+>)*\s*<\/h[1-6]>/gi, "")
+        .trim()
+    : normalized;
 
   const visualLinks: VisualLink[] = [];
   const linkedBlocks: string[] = [];
   const linkPattern = /<a\b[^>]*\bhref=(["'])(.*?)\1[^>]*>([\s\S]*?)<\/a>/gi;
   let match: RegExpExecArray | null;
 
-  while ((match = linkPattern.exec(normalized))) {
+  while ((match = linkPattern.exec(withoutIframe))) {
     const [, , href, innerHtml] = match;
     const title = stripTags(innerHtml);
     const rawImage = firstImageSrc(innerHtml);
@@ -308,7 +321,7 @@ function descriptionContent(description: string | null): DescriptionContent {
 
   const htmlWithoutLinks = linkedBlocks.reduce(
     (html, block) => html.replace(block, ""),
-    normalized,
+    withoutIframe,
   );
   const standaloneImages = [...htmlWithoutLinks.matchAll(/<img\b[^>]*\bsrc=(["'])(.*?)\1/gi)]
     .map((imageMatch) => {
@@ -321,9 +334,10 @@ function descriptionContent(description: string | null): DescriptionContent {
   const shouldRenderHtml = visualLinks.length === 0 && standaloneImages.length === 0 && textWithoutLinksOrImages;
 
   return {
-    html: shouldRenderHtml ? normalized : null,
+    html: shouldRenderHtml ? withoutIframe : null,
     visualLinks,
     standaloneImages: [...new Set(standaloneImages)],
+    videoEmbedSrc,
   };
 }
 
@@ -547,9 +561,10 @@ export default function CatalogueCategoryPage({
   // Flat hubs and single-leaf passthroughs show the product browser directly.
   const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks && !isFlatHub && !isSingleLeafPassthrough;
 
-  // The first standalone image (e.g. from a Magento category description) is
-  // promoted to the hero right column so it fills the empty blue space.
-  const heroImageSrc = content.standaloneImages[0] ?? null;
+  // Video embeds and standalone images are promoted to the hero right column.
+  // Video takes precedence over an image when both are present.
+  const { videoEmbedSrc } = content;
+  const heroImageSrc = !videoEmbedSrc ? (content.standaloneImages[0] ?? null) : null;
   const remainingImages = heroImageSrc ? content.standaloneImages.slice(1) : content.standaloneImages;
 
   // Current manufacturer logo for brand-named categories (e.g. Deutsch → TE).
@@ -637,21 +652,31 @@ export default function CatalogueCategoryPage({
               )}
             </div>
 
-            {/* Right: hero image promoted from category description */}
-            {heroImageSrc && (
-              <div className="w-full lg:w-80 lg:flex-shrink-0 xl:w-96">
+            {/* Right: video or image promoted from category description */}
+            {(videoEmbedSrc || heroImageSrc) && (
+              <div className="w-full lg:w-[420px] lg:flex-shrink-0 xl:w-[480px]">
                 <div
                   className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]"
-                  style={{ aspectRatio: "4/3" }}
+                  style={{ aspectRatio: videoEmbedSrc ? "16/9" : "4/3" }}
                 >
-                  <Image
-                    src={heroImageSrc}
-                    alt={title}
-                    fill
-                    unoptimized
-                    sizes="(max-width: 1024px) 100vw, 420px"
-                    className="object-contain p-4"
-                  />
+                  {videoEmbedSrc ? (
+                    <iframe
+                      src={videoEmbedSrc}
+                      title={title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute inset-0 h-full w-full"
+                    />
+                  ) : (
+                    <Image
+                      src={heroImageSrc!}
+                      alt={title}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 1024px) 100vw, 480px"
+                      className="object-contain p-4"
+                    />
+                  )}
                 </div>
               </div>
             )}
