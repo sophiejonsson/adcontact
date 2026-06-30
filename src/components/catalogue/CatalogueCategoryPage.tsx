@@ -564,13 +564,29 @@ export default function CatalogueCategoryPage({
     }
   }
 
-  const productPool = isFlatHub
+  const rawProductPool = isFlatHub
     ? getCategoryAllProducts(category)
     : isDescendantHub
       ? descendantPool
       : isLeafOfFlatHub
         ? leafParentPool
         : getCategoryProducts(category, undefined);
+
+  const seriesPage = getSeriesPageConfig(category, children);
+  const seriesFacets = seriesPage
+    ? getSeriesFacets(seriesPage.target, seriesPage.exclude)
+    : [];
+  const showSeries = seriesFacets.length > 1 && Boolean(seriesPage?.target?.route);
+
+  // When the series config excludes a subset (e.g. AMPSEAL from Deutsch), drop
+  // those products from the pool so they don't appear in the grid or filters.
+  const productPool = seriesPage?.exclude
+    ? rawProductPool.filter((p) => {
+        const series = p.attributes?.["Series"];
+        if (!series) return true;
+        return !series.split(",").map((s) => s.trim()).some((s) => seriesPage.exclude!.test(s));
+      })
+    : rawProductPool;
 
   const content = descriptionContent(category.description);
   const breadcrumbs = getCategoryBreadcrumbs(category.id);
@@ -626,13 +642,6 @@ export default function CatalogueCategoryPage({
   const brand = brandForCategory(category);
 
   // "Browse by series" — on brand hubs (DEUTSCH, TE Connectivity) whose products
-  // carry a "Series" attribute. Series are derived from products and link to the
-  // catalogue view that lists them.
-  const seriesPage = getSeriesPageConfig(category, children);
-  const seriesFacets = seriesPage
-    ? getSeriesFacets(seriesPage.target, seriesPage.exclude)
-    : [];
-  const showSeries = seriesFacets.length > 1 && Boolean(seriesPage?.target?.route);
   const breadcrumbCrumbs =
     category.id === 3
       ? [{ label: title }]
