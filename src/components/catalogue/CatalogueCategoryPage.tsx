@@ -512,7 +512,17 @@ export default function CatalogueCategoryPage({
   const productCount = getCategoryProductCount(category);
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
   const productSectionTitle = isWebshopRoot ? "Featured product selection" : "Catalogue items";
-  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub);
+  // Single transparent pass-through: the only child is a leaf with products and
+  // no sub-categories. Clicking it would just show a flat product list anyway,
+  // so skip the intermediary card and surface the products directly.
+  const isSingleLeafPassthrough =
+    !isWebshopRoot &&
+    !isFlatHub &&
+    children.length === 1 &&
+    getCategoryChildren(children[0]).length === 0 &&
+    getCategoryProductCount(children[0]) > 0;
+
+  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough);
   const showVisualLinks = content.visualLinks.length > 0;
 
   // When the category has exactly one child that carries no direct products but
@@ -521,6 +531,7 @@ export default function CatalogueCategoryPage({
   const singleEmptyChild =
     !showVisualLinks &&
     !isFlatHub &&
+    !isSingleLeafPassthrough &&
     children.length === 1 &&
     getCategoryProductCount(children[0]) === 0 &&
     getCategoryChildren(children[0]).length > 0
@@ -532,8 +543,8 @@ export default function CatalogueCategoryPage({
   const flattenedGroupLabel = singleEmptyChild?.name ?? null;
 
   const visualCategoryByHref = new Map(displayChildren.map((child) => [child.route, child]));
-  // Flat hubs show the product browser instead of subcategory cards.
-  const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks && !isFlatHub;
+  // Flat hubs and single-leaf passthroughs show the product browser directly.
+  const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks && !isFlatHub && !isSingleLeafPassthrough;
 
   // The first standalone image (e.g. from a Magento category description) is
   // promoted to the hero right column so it fills the empty blue space.
