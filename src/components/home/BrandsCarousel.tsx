@@ -1,7 +1,13 @@
 import Image from "next/image";
 import { brands } from "@/data/brands";
 
-const logoBrands = brands.filter((brand) => brand.logo && brand.website);
+const seen = new Set<string>();
+const logoBrands = brands.filter((brand) => {
+  if (!brand.logo || !brand.website) return false;
+  if (seen.has(brand.logo)) return false;
+  seen.add(brand.logo);
+  return true;
+});
 
 const marqueeCss = `
 @keyframes adc-marquee {
