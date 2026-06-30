@@ -88,7 +88,7 @@ export default function HeroSearch() {
       <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 py-10 sm:py-14 md:py-16 lg:py-10 w-full flex-1 flex items-center">
         <div className="max-w-3xl animate-fade-up">
           {/* Headline */}
-          <h1 className="text-[34px] sm:text-[40px] md:text-[44px] lg:text-[50px] font-extrabold text-white leading-[1.08] tracking-[-0.03em] mb-4 sm:mb-5">
+          <h1 className="text-[clamp(1.625rem,5.5vw,3.125rem)] font-extrabold text-white leading-[1.1] tracking-[-0.025em] text-balance mb-4 sm:mb-5">
             Source the right component.{" "}
             <span className="bg-gradient-to-r from-[#60a5fa] to-[#3b82f6] bg-clip-text text-transparent">
               Build the right process.
