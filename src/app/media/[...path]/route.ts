@@ -191,6 +191,15 @@ function withUppercaseFirstDir(relativePath: string): string | null {
   return `${match[1]}${match[2].toUpperCase()}${match[3]}`;
 }
 
+// Some images are stored with both subdirectory letters uppercased (H/D/ not h/d/).
+function withUppercaseDirs(relativePath: string): string | null {
+  const uppercased = relativePath.replace(
+    /^(catalog\/product\/)([A-Za-z])\/([A-Za-z])\//,
+    (_, prefix, d1, d2) => `${prefix}${d1.toUpperCase()}/${d2.toUpperCase()}/`,
+  );
+  return uppercased !== relativePath ? uppercased : null;
+}
+
 async function fetchMedia(path: string, origin: string, qs: string): Promise<Response | null> {
   const url = new URL(`/media/${path}`, origin);
   url.search = qs;
