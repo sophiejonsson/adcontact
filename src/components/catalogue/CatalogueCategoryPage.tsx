@@ -518,16 +518,15 @@ export default function CatalogueCategoryPage({
   // production-equipment hubs like Crimping Equipment.
   const isFlatHub = !isWebshopRoot && category.productIds.length > 0 && children.length > 0;
 
-  // "Descendant hub": no direct products, but a compact set of descendant products
-  // (≤ 500) that are worth surfacing in a product browser rather than hiding behind
-  // brand-card navigation. Heat Shrink Tubing is the canonical example. Large
-  // categories (Connectors, Vogt, …) have far more than 500 descendants and keep
-  // their visual-link / category-card navigation instead.
+  // "Descendant hub": no direct products, but a browsable set of descendant products
+  // worth surfacing in a product browser rather than hiding behind deep navigation.
+  // Threshold ≤ 2000 catches brand hubs like Stocko (1 227) and Cvilux (888) while
+  // keeping huge categories (Connectors 20k, Vogt 14k) as category-card pages.
   const descendantPool =
     !isWebshopRoot && !isFlatHub && category.productIds.length === 0 && children.length > 0
       ? getCategoryAllProducts(category)
       : [];
-  const isDescendantHub = descendantPool.length > 0 && descendantPool.length <= 500;
+  const isDescendantHub = descendantPool.length > 0 && descendantPool.length <= 2000;
 
   // "Leaf of flat hub": a leaf sub-category (e.g. a brand page) whose parent is a
   // flat hub. The leaf's own products all share the same attribute value, so the
