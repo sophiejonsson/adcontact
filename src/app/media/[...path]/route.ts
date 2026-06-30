@@ -230,14 +230,18 @@ async function proxyR2Media(request: NextRequest, relativePath: string): Promise
 
   const lowercased = withLowercaseDirs(relativePath);
   const uppercased = withUppercaseFirstDir(relativePath);
+  const uppercasedDirs = withUppercaseDirs(relativePath);
   const qs = request.nextUrl.search;
 
-  // Magento dumps use mixed-case subdirs (D/T/); R2 stores them lowercased
-  // (d/t/). Try as-is, then lowercase dirs, then uppercase first dir.
+  // R2 stores subdirs in mixed case: most are lowercase (d/t/), but whole
+  // series (HD/HDP/BRC/YC...) are uppercased (H/D/). The data references them
+  // lowercased, so try as-is, lowercase dirs, uppercase first dir, then both
+  // dirs uppercased.
   const candidates = [
     relativePath,
     ...(lowercased ? [lowercased] : []),
     ...(uppercased ? [uppercased] : []),
+    ...(uppercasedDirs ? [uppercasedDirs] : []),
   ];
 
   for (const path of candidates) {
@@ -269,17 +273,21 @@ async function proxyOrderlandMedia(request: NextRequest, relativePath: string) {
   const fallbackOrigin = process.env.ORDERLAND_MEDIA_FALLBACK_ORIGIN ?? null;
   const lowercased = withLowercaseDirs(relativePath);
   const uppercased = withUppercaseFirstDir(relativePath);
+  const uppercasedDirs = withUppercaseDirs(relativePath);
   const qs = request.nextUrl.search;
 
-  // Try path variants in order: as-is, lowercase dirs (server stores d/t/ not D/T/),
-  // uppercase first dir, then same set on fallback origin.
+  // Try path variants in order: as-is, lowercase dirs (d/t/), uppercase first
+  // dir (D/t/), both dirs uppercased (D/T/ — whole series like HD/HDP/BRC are
+  // stored this way), then the same set on the fallback origin.
+  const variants = [
+    relativePath,
+    ...(lowercased ? [lowercased] : []),
+    ...(uppercased ? [uppercased] : []),
+    ...(uppercasedDirs ? [uppercasedDirs] : []),
+  ];
   const candidates: [string, string][] = [
-    [relativePath, origin],
-    ...(lowercased ? [[lowercased, origin] as [string, string]] : []),
-    ...(uppercased ? [[uppercased, origin] as [string, string]] : []),
-    ...(fallbackOrigin ? [[relativePath, fallbackOrigin] as [string, string]] : []),
-    ...(fallbackOrigin && lowercased ? [[lowercased, fallbackOrigin] as [string, string]] : []),
-    ...(fallbackOrigin && uppercased ? [[uppercased, fallbackOrigin] as [string, string]] : []),
+    ...variants.map((v) => [v, origin] as [string, string]),
+    ...(fallbackOrigin ? variants.map((v) => [v, fallbackOrigin] as [string, string]) : []),
   ];
 
   let found: Response | null = null;
