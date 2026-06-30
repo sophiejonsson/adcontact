@@ -210,6 +210,53 @@ async function fetchMedia(path: string, origin: string, qs: string): Promise<Res
   return res.ok ? res : null;
 }
 
+// The Cloudflare R2 bucket IS the old "media" folder, so its files live at the
+// bucket root (no /media/ prefix). Fetch without the prefix.
+async function fetchR2Media(path: string, origin: string, qs: string): Promise<Response | null> {
+  const url = new URL(`/${path}`, origin);
+  url.search = qs;
+  const res = await fetch(url, {
+    headers: { Accept: "*/*", "User-Agent": "Adcontact catalogue media proxy" },
+    cache: "no-store",
+  });
+  return res.ok ? res : null;
+}
+
+// Primary source: Cloudflare R2 (R2_MEDIA_ORIGIN). Returns null when not
+// configured or the file is absent, so the caller can fall back to Oderland.
+async function proxyR2Media(request: NextRequest, relativePath: string): Promise<Response | null> {
+  const origin = process.env.R2_MEDIA_ORIGIN;
+  if (!origin) return null;
+
+  const lowercased = withLowercaseDirs(relativePath);
+  const uppercased = withUppercaseFirstDir(relativePath);
+  const qs = request.nextUrl.search;
+
+  // Magento dumps use mixed-case subdirs (D/T/); R2 stores them lowercased
+  // (d/t/). Try as-is, then lowercase dirs, then uppercase first dir.
+  const candidates = [
+    relativePath,
+    ...(lowercased ? [lowercased] : []),
+    ...(uppercased ? [uppercased] : []),
+  ];
+
+  for (const path of candidates) {
+    const upstream = await fetchR2Media(path, origin, qs);
+    if (!upstream) continue;
+
+    const headers = new Headers();
+    headers.set("cache-control", CACHE_CONTROL);
+    headers.set("content-type", upstream.headers.get("content-type") ?? contentTypeFor(relativePath));
+    headers.set("x-adcontact-media-source", `${origin}/${path}`);
+    const contentLength = upstream.headers.get("content-length");
+    if (contentLength) headers.set("content-length", contentLength);
+
+    return new Response(upstream.body, { headers });
+  }
+
+  return null;
+}
+
 async function proxyOrderlandMedia(request: NextRequest, relativePath: string) {
   const origin = process.env.ORDERLAND_MEDIA_ORIGIN;
   if (!origin) {
@@ -277,6 +324,10 @@ export async function GET(request: NextRequest, { params }: Context) {
 
   const local = await serveLocalMedia(relativePath);
   if (local) return local;
+
+  // Primary: Cloudflare R2. Falls through to Oderland if not configured/missing.
+  const r2 = await proxyR2Media(request, relativePath);
+  if (r2) return r2;
 
   const proxied = await proxyOrderlandMedia(request, relativePath);
   if (proxied.status !== 404) return proxied;
