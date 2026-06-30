@@ -9,7 +9,7 @@ const marqueeCss = `
   to { transform: translateX(-50%); }
 }
 .adc-marquee-track {
-  animation: adc-marquee 40s linear infinite;
+  animation: adc-marquee 80s linear infinite;
   will-change: transform;
 }
 .adc-marquee-viewport:hover .adc-marquee-track {
