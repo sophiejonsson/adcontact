@@ -225,6 +225,27 @@ export function getCategoryProducts(
   return out;
 }
 
+// Returns all enabled products from the category itself AND all descendants,
+// deduplicated. Use this for parent categories that carry both their own
+// productIds and subcategories (e.g. production-equipment hubs).
+export function getCategoryAllProducts(
+  category: CatalogueCategory,
+  limit?: number,
+): CatalogueProduct[] {
+  const seen = new Set<number>();
+  const out: CatalogueProduct[] = [];
+
+  for (const id of [...category.productIds, ...getCategoryDescendantProductIds(category)]) {
+    if (seen.has(id)) continue;
+    seen.add(id);
+    const product = getCatalogueProduct(id);
+    if (!product || product.status !== "enabled") continue;
+    out.push(product);
+    if (limit && out.length >= limit) break;
+  }
+  return out;
+}
+
 function firstParamValue(value: string | string[] | undefined): string | null {
   if (Array.isArray(value)) return value[0] ?? null;
   return value ?? null;

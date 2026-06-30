@@ -8,6 +8,7 @@ import {
   getCategoryChildren,
   getCategoryProductCount,
   getCategoryProducts,
+  getCategoryAllProducts,
   type CatalogueCategory,
   type CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
@@ -493,7 +494,17 @@ export default function CatalogueCategoryPage({
   const children = getCategoryChildren(category).filter(
     (child) => !(isWebshopRoot && child.name === "Featured Products"),
   );
-  const productPool = getCategoryProducts(category, undefined);
+
+  // When a category has both its own productIds AND subcategories, treat it as
+  // a "flat catalogue hub": show all products (direct + descendants) in the
+  // product browser with attribute filters, instead of forcing an extra click
+  // through subcategory cards. This matches the legacy Magento behaviour for
+  // production-equipment hubs like Crimping Equipment.
+  const isFlatHub = !isWebshopRoot && category.productIds.length > 0 && children.length > 0;
+  const productPool = isFlatHub
+    ? getCategoryAllProducts(category)
+    : getCategoryProducts(category, undefined);
+
   const content = descriptionContent(category.description);
   const breadcrumbs = getCategoryBreadcrumbs(category.id);
   const title = category.name ?? "Catalogue";
@@ -501,7 +512,7 @@ export default function CatalogueCategoryPage({
   const productCount = getCategoryProductCount(category);
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
   const productSectionTitle = isWebshopRoot ? "Featured product selection" : "Catalogue items";
-  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || category.productIds.length > 0);
+  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub);
   const showVisualLinks = content.visualLinks.length > 0;
 
   // When the category has exactly one child that carries no direct products but
@@ -509,6 +520,7 @@ export default function CatalogueCategoryPage({
   // as first-class cards instead of requiring an extra click.
   const singleEmptyChild =
     !showVisualLinks &&
+    !isFlatHub &&
     children.length === 1 &&
     getCategoryProductCount(children[0]) === 0 &&
     getCategoryChildren(children[0]).length > 0
@@ -520,7 +532,8 @@ export default function CatalogueCategoryPage({
   const flattenedGroupLabel = singleEmptyChild?.name ?? null;
 
   const visualCategoryByHref = new Map(displayChildren.map((child) => [child.route, child]));
-  const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks;
+  // Flat hubs show the product browser instead of subcategory cards.
+  const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks && !isFlatHub;
 
   // The first standalone image (e.g. from a Magento category description) is
   // promoted to the hero right column so it fills the empty blue space.
