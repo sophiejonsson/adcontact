@@ -516,9 +516,23 @@ export default function CatalogueCategoryPage({
   // through subcategory cards. This matches the legacy Magento behaviour for
   // production-equipment hubs like Crimping Equipment.
   const isFlatHub = !isWebshopRoot && category.productIds.length > 0 && children.length > 0;
+
+  // "Descendant hub": no direct products, but a compact set of descendant products
+  // (≤ 500) that are worth surfacing in a product browser rather than hiding behind
+  // brand-card navigation. Heat Shrink Tubing is the canonical example. Large
+  // categories (Connectors, Vogt, …) have far more than 500 descendants and keep
+  // their visual-link / category-card navigation instead.
+  const descendantPool =
+    !isWebshopRoot && !isFlatHub && category.productIds.length === 0 && children.length > 0
+      ? getCategoryAllProducts(category)
+      : [];
+  const isDescendantHub = descendantPool.length > 0 && descendantPool.length <= 500;
+
   const productPool = isFlatHub
     ? getCategoryAllProducts(category)
-    : getCategoryProducts(category, undefined);
+    : isDescendantHub
+      ? descendantPool
+      : getCategoryProducts(category, undefined);
 
   const content = descriptionContent(category.description);
   const breadcrumbs = getCategoryBreadcrumbs(category.id);
@@ -533,12 +547,15 @@ export default function CatalogueCategoryPage({
   const isSingleLeafPassthrough =
     !isWebshopRoot &&
     !isFlatHub &&
+    !isDescendantHub &&
     children.length === 1 &&
     getCategoryChildren(children[0]).length === 0 &&
     getCategoryProductCount(children[0]) > 0;
 
-  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough);
-  const showVisualLinks = content.visualLinks.length > 0;
+  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub);
+  // Suppress visual link cards on descendant hubs — the product browser with brand
+  // filters replaces them, just like isFlatHub pages show no category cards.
+  const showVisualLinks = content.visualLinks.length > 0 && !isDescendantHub;
 
   // When the category has exactly one child that carries no direct products but
   // itself has sub-categories, flatten one level so those sub-categories appear
@@ -558,8 +575,8 @@ export default function CatalogueCategoryPage({
   const flattenedGroupLabel = singleEmptyChild?.name ?? null;
 
   const visualCategoryByHref = new Map(displayChildren.map((child) => [child.route, child]));
-  // Flat hubs and single-leaf passthroughs show the product browser directly.
-  const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks && !isFlatHub && !isSingleLeafPassthrough;
+  // Flat hubs, descendant hubs, and single-leaf passthroughs show the product browser directly.
+  const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks && !isFlatHub && !isDescendantHub && !isSingleLeafPassthrough;
 
   // Video embeds and standalone images are promoted to the hero right column.
   // Video takes precedence over an image when both are present.
