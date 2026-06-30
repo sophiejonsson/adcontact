@@ -185,7 +185,13 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
       return { label, param, values, totalProducts };
     })
     .filter((facet) => facet.values.length > 1 || Boolean(activeFilters[facet.param]))
-    .sort((a, b) => b.totalProducts - a.totalProducts || a.label.localeCompare(b.label))
+    .sort((a, b) => {
+      const PRIORITY: Record<string, number> = { Series: 0, Brand: 1, "Wire Size": 2 };
+      const pa = PRIORITY[a.label] ?? 99;
+      const pb = PRIORITY[b.label] ?? 99;
+      if (pa !== pb) return pa - pb;
+      return b.totalProducts - a.totalProducts || a.label.localeCompare(b.label);
+    })
     .slice(0, 7);
 }
 

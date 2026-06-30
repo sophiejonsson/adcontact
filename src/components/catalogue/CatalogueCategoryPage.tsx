@@ -434,16 +434,25 @@ function SeriesSection({
 }) {
   return (
     <section className="mb-14">
-      <div className="mb-3 flex items-end justify-between gap-4">
+      <div className="mb-3 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
             Product series
           </p>
           <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">Browse by series</h2>
         </div>
-        <span className="text-sm font-medium text-[#64748b]">
-          {facets.length.toLocaleString()} series
-        </span>
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-medium text-[#64748b]">
+            {facets.length.toLocaleString()} series
+          </span>
+          <a
+            href="#products"
+            className="flex items-center gap-1.5 rounded-lg border border-[#d8dee7] bg-white px-3.5 py-2 text-sm font-semibold text-[#374151] shadow-sm transition-colors hover:border-[#93c5fd] hover:text-[#2563eb]"
+          >
+            Browse by product
+            <ArrowRight size={14} />
+          </a>
+        </div>
       </div>
       <p className="mb-6 max-w-3xl text-sm leading-6 text-[#64748b]">
         {intro}
@@ -838,6 +847,7 @@ export default function CatalogueCategoryPage({
         )}
 
         {showProductBrowser && (
+          <div id="products">
           <CatalogueProductBrowser
             products={productPool}
             route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
@@ -847,6 +857,7 @@ export default function CatalogueCategoryPage({
             sectionTitle={productSectionTitle}
             deutschImageMap={buildDeutschImageMap(productPool)}
           />
+          </div>
         )}
 
         {children.length === 0 && productPool.length === 0 && !content.html && content.standaloneImages.length === 0 && (
