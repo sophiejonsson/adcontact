@@ -1,0 +1,12 @@
+{
+  // Save files as UTF-8 WITHOUT a byte-order mark (BOM).
+  // A BOM at the start of JSON breaks JSON.parse / JSON imports on the Vercel (Turbopack) build.
+  "files.encoding": "utf8",
+  "files.autoGuessEncoding": false,
+  "[json]": {
+    "files.encoding": "utf8"
+  },
+  "[jsonc]": {
+    "files.encoding": "utf8"
+  }
+}
