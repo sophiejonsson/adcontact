@@ -138,9 +138,12 @@ export default function ApplicationsSection() {
               const isLonelyLast =
                 i === industries.length - 1 && industries.length % 2 === 1;
               return (
-                <div
+                <Link
                   key={ind.name}
-                  className={`flex flex-col items-center gap-2 sm:gap-3 px-1 text-center ${
+                  href="/about#industries"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex flex-col items-center gap-2 sm:gap-3 px-1 text-center transition-opacity hover:opacity-70 ${
                     isLonelyLast ? "col-span-2 sm:col-span-1" : ""
                   }`}
                 >
@@ -150,7 +153,7 @@ export default function ApplicationsSection() {
                   <span className="text-[11px] sm:text-[13px] font-medium leading-snug text-[#9fb0c6]">
                     {ind.name}
                   </span>
-                </div>
+                </Link>
               );
             })}
           </div>
