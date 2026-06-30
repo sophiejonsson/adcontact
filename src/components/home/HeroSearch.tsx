@@ -35,7 +35,7 @@ const quickLinks = [
   { label: "Heat shrink tubing", href: "/webshop/components/heat-shrinkable.html" },
   { label: "Crimping equipment", href: "/webshop/production-equipment/crimping-equipment.html" },
   { label: "M8/M12 connectors", href: "/webshop/components/sealed-connectors/htp.html" },
-  { label: "Wire ferrules", href: "/webshop/components/sealed-connectors/zoller-frohlich/wire-ferrules.html" },
+  { label: "Wire ferrules", href: "/webshop/components/sealed-connectors/zoller-frohlich.html" },
 ];
 
 const trustBadges = [
