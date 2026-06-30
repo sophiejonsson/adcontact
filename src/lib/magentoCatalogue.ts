@@ -120,12 +120,17 @@ function legacyNumberedCategoryAlias(path: string) {
     .replace("/clamping-straps-116.html", "/clamping-straps-2105.html");
 }
 
+// Disabled products (status !== "enabled") are excluded everywhere they could
+// render: detail pages 404, lookups skip them, listings already filtered. These
+// are mostly dropped-supplier equipment we no longer represent and must not
+// surface anywhere on the live site.
 export function getCatalogueProduct(id: number | string): CatalogueProduct | undefined {
-  return products[String(id)];
+  const product = products[String(id)];
+  return product?.status === "enabled" ? product : undefined;
 }
 
 export function getAllCatalogueProducts(): CatalogueProduct[] {
-  return Object.values(products);
+  return Object.values(products).filter((product) => product.status === "enabled");
 }
 
 export function catalogueProductLegacyRoute(product: CatalogueProduct): string {
