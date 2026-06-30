@@ -837,10 +837,10 @@ export default function CatalogueCategoryPage({
 
         {showProductBrowser && (
           <div id="products">
-            {showSeries && (
+            {(showSeries || isLeafOfFlatHub) && (
               <div className="mb-6 flex justify-end">
                 <a
-                  href="#series"
+                  href={isLeafOfFlatHub && parentCategory?.route ? `${parentCategory.route}#series` : "#series"}
                   className="flex items-center gap-1.5 rounded-lg border border-[#d8dee7] bg-white px-3.5 py-2 text-sm font-semibold text-[#374151] shadow-sm transition-colors hover:border-[#93c5fd] hover:text-[#2563eb]"
                 >
                   Browse by series
