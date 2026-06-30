@@ -124,16 +124,24 @@ export default function Header() {
 
           {/* Right column: search on top, nav + CTA on bottom */}
           <div className="flex flex-1 flex-col min-w-0 pl-8">
-            {/* Row 1: Search bar */}
-            <div className="flex h-[72px] items-center border-b border-[#edf2f7]">
+            {/* Row 1: Search bar + Request a quote */}
+            <div className="flex h-[72px] items-center gap-4 border-b border-[#edf2f7]">
               <SearchAutocomplete
                 className="flex-1 min-w-0"
                 onNavigate={closeAll}
                 prominent
               />
+              <Link
+                href="/contact/quote"
+                onClick={closeAll}
+                className="flex flex-shrink-0 items-center gap-2 rounded-xl bg-[#f59e0b] px-5 py-2.5 text-sm font-bold text-[#0a1628] shadow-sm transition-all hover:bg-[#d97706] hover:shadow-md"
+              >
+                <FileText size={15} />
+                Request a quote
+              </Link>
             </div>
 
-            {/* Row 2: Nav + Request a quote */}
+            {/* Row 2: Nav */}
             <div className="flex h-11 items-center">
               <nav className="flex flex-1 items-center h-full">
                 {megaMenuSections.map((section) => (
@@ -203,16 +211,6 @@ export default function Header() {
                   )
                 )}
               </nav>
-
-              {/* Request a quote — end of nav row */}
-              <Link
-                href="/contact/quote"
-                onClick={closeAll}
-                className="ml-4 flex flex-shrink-0 items-center gap-2 rounded-xl bg-[#f59e0b] px-5 py-2 text-sm font-bold text-[#0a1628] shadow-sm transition-all hover:bg-[#d97706] hover:shadow-md"
-              >
-                <FileText size={15} />
-                Request a quote
-              </Link>
             </div>
           </div>
         </div>
