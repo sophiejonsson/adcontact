@@ -292,10 +292,11 @@ function descriptionContent(description: string | null): DescriptionContent {
     const [, , href, innerHtml] = match;
     const title = stripTags(innerHtml);
     const rawImage = firstImageSrc(innerHtml);
-    // Magento template strings like {{media url="..."}} are not real URLs — treat as null.
-    // Regular relative paths are prefixed with the legacy origin.
+    // Magento template strings are already resolved to /media/... paths by normalizeLegacyHtml.
+    // Both the original {{media url="..."}} form and the resolved /media/ paths should be
+    // treated as null — we prefer brand logos from the brands.ts data over stale Magento images.
     const image =
-      !rawImage || rawImage.startsWith("{{")
+      !rawImage || rawImage.startsWith("{{") || rawImage.startsWith("/media/")
         ? null
         : rawImage.startsWith("/")
           ? `https://www.adcontact.se${rawImage}`
