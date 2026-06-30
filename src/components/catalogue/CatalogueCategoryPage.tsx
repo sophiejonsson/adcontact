@@ -655,6 +655,10 @@ export default function CatalogueCategoryPage({
 
   // Current manufacturer logo for brand-named categories (e.g. Deutsch → TE).
   const brand = brandForCategory(category);
+  // Trial: DEUTSCH-only sourcing CTA moved to the bottom of the page (under the
+  // product grid) instead of the top "Go to partner shop" box. Evaluate here
+  // before rolling out to all brands.
+  const isDeutsch = brand?.slug === "deutsch";
 
   // "Browse by series" — on brand hubs (DEUTSCH, TE Connectivity) whose products
   const breadcrumbCrumbs =
@@ -713,7 +717,7 @@ export default function CatalogueCategoryPage({
                 {heroStatText}
               </p>
 
-              {brand?.shopUrl && (
+              {brand?.shopUrl && !isDeutsch && (
                 <div className="mt-5 inline-flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3">
                   <span className="text-sm text-[#94a3b8]">
                     Can&apos;t find what you&apos;re looking for? Browse the full range directly with {brand.name}.
@@ -872,6 +876,40 @@ export default function CatalogueCategoryPage({
               sectionTitle={productSectionTitle}
               deutschImageMap={buildDeutschImageMap(productPool)}
             />
+
+            {/* Trial sourcing CTA (DEUTSCH only) — sits directly under the product
+                grid, not at the very bottom, since some pages have more sections
+                before the footer. */}
+            {brand?.shopUrl && isDeutsch && (
+              <section className="mt-10 rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] px-6 py-7 sm:px-8">
+                <h2 className="text-lg font-bold text-[#0a1628] sm:text-xl">
+                  Can&apos;t find the exact part?
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-[#475569]">
+                  We supply the complete {brand.name} range — not only what&apos;s listed
+                  here. Find the exact reference in the {brand.name} catalogue, then send
+                  it to us and we&apos;ll source it for you.
+                </p>
+                <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                  <a
+                    href={`mailto:info@adcontact.se?subject=${encodeURIComponent(`Sourcing request: ${brand.name}`)}`}
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
+                  >
+                    Send us the part number
+                    <ArrowRight size={15} />
+                  </a>
+                  <a
+                    href={brand.shopUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] transition-colors hover:text-[#2563eb]"
+                  >
+                    View {brand.name} catalogue
+                    <ArrowUpRight size={14} />
+                  </a>
+                </div>
+              </section>
+            )}
           </div>
         )}
 
