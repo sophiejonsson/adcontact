@@ -88,7 +88,7 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
 
   if (route.type === "product") {
     const product = getCatalogueProduct(route.id);
-    if (!product) notFound();
+    if (!product || product.status !== "enabled") notFound();
 
     // Deutsch connector products have a richer dedicated page — redirect there.
     // Match by SKU first; fall back to product name (some Magento entries use a
