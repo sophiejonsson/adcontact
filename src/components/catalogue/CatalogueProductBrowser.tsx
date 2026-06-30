@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Search, X, ArrowRight, Package } from "lucide-react";
+import { Search, X, ArrowRight, Package, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import type {
   CatalogueProduct,
@@ -337,6 +337,7 @@ export default function CatalogueProductBrowser({
     PAGE_SIZE_OPTIONS.includes(initialPageSize) ? initialPageSize : DEFAULT_PAGE_SIZE,
   );
   const [page, setPage] = useState(positiveInt(searchParams.page ?? searchParams.p, 1));
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const queryText = query.toLowerCase().trim();
   const queryTokens = queryText.split(/\s+/).filter(Boolean);
@@ -401,59 +402,134 @@ export default function CatalogueProductBrowser({
     setPage(1);
   }
 
+  const activeFilterCount = Object.keys(activeFilters).length;
+
+  const filterPanel = showFilters ? (
+    <div className="space-y-5">
+      <div className="rounded-lg border border-[#e5e7eb] bg-white p-5">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-[#0a1628]">
+            Filter
+          </h2>
+          {(query || activeFilterCount > 0) && (
+            <button
+              type="button"
+              onClick={clearAll}
+              className="text-xs font-bold text-[#2563eb] hover:text-[#1d4ed8]"
+            >
+              Clear all
+            </button>
+          )}
+        </div>
+
+        {facets.length > 0 && (
+          <div className="mt-5 space-y-5">
+            {facets.map((facet) => (
+              <div key={facet.param}>
+                <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
+                  {facet.label}
+                </h3>
+                <div className="mt-2 space-y-1.5">
+                  {facet.values.map((item) => (
+                    <button
+                      key={item.value}
+                      type="button"
+                      onClick={() => toggleFilter(facet.param, item.value)}
+                      className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
+                        item.active
+                          ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
+                          : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
+                      }`}
+                    >
+                      <span>{item.value}</span>
+                      <span className="flex-none text-[#94a3b8]">{item.count}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  ) : null;
+
   return (
     <section className={showFilters ? "grid gap-8 lg:grid-cols-[280px_1fr]" : ""}>
+      {/* Desktop sidebar — hidden on mobile */}
       {showFilters && (
-        <aside className="space-y-5">
-          <div className="rounded-lg border border-[#e5e7eb] bg-white p-5">
-            <div className="flex items-center justify-between gap-3">
-              <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-[#0a1628]">
-                Filter
-              </h2>
-              {(query || Object.keys(activeFilters).length > 0) && (
-                <button
-                  type="button"
-                  onClick={clearAll}
-                  className="text-xs font-bold text-[#2563eb] hover:text-[#1d4ed8]"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
+        <aside className="hidden lg:block space-y-5">
+          {filterPanel}
+        </aside>
+      )}
 
-            {facets.length > 0 && (
-              <div className="mt-5 space-y-5">
-                {facets.map((facet) => (
-                  <div key={facet.param}>
-                    <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
-                      {facet.label}
-                    </h3>
-                    <div className="mt-2 space-y-1.5">
-                      {facet.values.map((item) => (
-                        <button
-                          key={item.value}
-                          type="button"
-                          onClick={() => toggleFilter(facet.param, item.value)}
-                          className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
-                            item.active
-                              ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
-                              : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
-                          }`}
-                        >
-                          <span>{item.value}</span>
-                          <span className="flex-none text-[#94a3b8]">{item.count}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+      {/* Mobile bottom sheet */}
+      {showFilters && filtersOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+            onClick={() => setFiltersOpen(false)}
+          />
+          <div className="fixed bottom-0 left-0 right-0 z-50 flex max-h-[80vh] flex-col rounded-t-2xl bg-white shadow-2xl lg:hidden">
+            <div className="flex items-center justify-between border-b border-[#e5e7eb] px-5 py-4">
+              <span className="text-sm font-bold text-[#0a1628]">Filter</span>
+              <button
+                type="button"
+                onClick={() => setFiltersOpen(false)}
+                className="rounded-full p-1.5 text-[#64748b] hover:bg-[#f1f5f9]"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <div className="overflow-y-auto p-5">{filterPanel}</div>
+            <div className="border-t border-[#e5e7eb] p-4">
+              <button
+                type="button"
+                onClick={() => setFiltersOpen(false)}
+                className="w-full rounded-xl bg-[#2563eb] py-3 text-sm font-bold text-white hover:bg-[#1d4ed8]"
+              >
+                Show {filteredProducts.length.toLocaleString()} results
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
+      <div>
+        {/* Mobile filter trigger — only shown when there are filters and on small screens */}
+        {showFilters && (
+          <div className="mb-4 flex items-center gap-3 lg:hidden">
+            <button
+              type="button"
+              onClick={() => setFiltersOpen(true)}
+              className="flex items-center gap-2 rounded-xl border border-[#d8dee7] bg-white px-4 py-2.5 text-sm font-semibold text-[#374151] shadow-sm hover:border-[#93c5fd] hover:text-[#2563eb]"
+            >
+              <SlidersHorizontal size={15} />
+              Filters
+              {activeFilterCount > 0 && (
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#2563eb] text-[10px] font-bold text-white">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
+            {activeFilterCount > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {Object.entries(activeFilters).map(([param, value]) => (
+                  <button
+                    key={param}
+                    type="button"
+                    onClick={() => toggleFilter(param, value)}
+                    className="flex items-center gap-1 rounded-full bg-[#eaf2ff] px-2.5 py-1 text-xs font-bold text-[#1d4ed8]"
+                  >
+                    {value}
+                    <X size={10} />
+                  </button>
                 ))}
               </div>
             )}
           </div>
-        </aside>
-      )}
+        )}
 
-      <div>
         <div className={`mb-5 rounded-lg border border-[#d8dee7] bg-white p-4${isWebshopRoot ? " hidden" : ""}`}>
           <label className="sr-only" htmlFor="instant-catalogue-search">
             Search within this catalogue page
