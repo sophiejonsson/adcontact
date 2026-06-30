@@ -628,8 +628,16 @@ export default function CatalogueCategoryPage({
   const flattenedGroupLabel = singleEmptyChild?.name ?? null;
 
   const visualCategoryByHref = new Map(displayChildren.map((child) => [child.route, child]));
-  // Flat hubs, descendant hubs, and single-leaf passthroughs show the product browser directly.
-  const showGenericCategoryCards = displayChildren.length > 0 && !showVisualLinks && !isFlatHub && !isDescendantHub && !isSingleLeafPassthrough;
+  // For descendant hubs filter out empty subcategories so only navigable buckets
+  // (e.g. Crimp Contacts, Solderless Terminals) appear as cards alongside the browser.
+  const browsableChildren = isDescendantHub
+    ? displayChildren.filter((c) => getCategoryProductCount(c) > 0)
+    : displayChildren;
+  // Flat hubs and single-leaf passthroughs show the product browser directly without
+  // category cards. Descendant hubs show cards when 2+ non-empty children exist.
+  const showGenericCategoryCards =
+    !showVisualLinks && !isFlatHub && !isSingleLeafPassthrough &&
+    (isDescendantHub ? browsableChildren.length > 1 : displayChildren.length > 0);
 
   const heroStatText = (() => {
     const itemsPart = `${productCount.toLocaleString()} catalogue items`;
@@ -642,7 +650,7 @@ export default function CatalogueCategoryPage({
     }
     if (showGenericCategoryCards) {
       const label = isWebshopRoot ? "categories" : "subcategories";
-      return `${displayChildren.length.toLocaleString()} ${label} · ${itemsPart}`;
+      return `${browsableChildren.length.toLocaleString()} ${label} · ${itemsPart}`;
     }
     return itemsPart;
   })();
@@ -834,11 +842,11 @@ export default function CatalogueCategoryPage({
                 </h2>
               </div>
               <span className="text-sm font-medium text-[#64748b]">
-                {displayChildren.length.toLocaleString()} categories
+                {browsableChildren.length.toLocaleString()} categories
               </span>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
-              {displayChildren.map((child) => (
+              {browsableChildren.map((child) => (
                 <CategoryCard key={child.id} category={child} />
               ))}
             </div>
