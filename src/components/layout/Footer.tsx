@@ -9,7 +9,7 @@ const footerLinks = {
     { label: "Contacts & Terminals", href: "/webshop/components/contacts.html" },
     { label: "Accessories", href: "/webshop/components/accessories.html" },
     { label: "Tools", href: "/webshop/components/tools.html" },
-    { label: "Wire Ferrules", href: "/webshop/components/sealed-connectors/zoller-frohlich/wire-ferrules.html" },
+    { label: "Wire Ferrules", href: "/webshop/components/sealed-connectors/zoller-frohlich.html" },
   ],
   "Production Equipment": [
     { label: "Cutting Machines", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials.html" },
