@@ -894,9 +894,7 @@ export default function CatalogueCategoryPage({
                   Can&apos;t find the exact part?
                 </h2>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-[#475569]">
-                  We supply the complete {brand.name} range — not only what&apos;s listed
-                  here. Find the exact reference in the {brand.name} catalogue, then send
-                  it to us and we&apos;ll source it for you.
+                  {`We supply the complete ${brand.name} range, not only what's listed here. Find the exact reference in the ${brand.name} catalogue, then send it to us and we'll source it for you.`}
                 </p>
                 <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
                   <a
@@ -912,7 +910,7 @@ export default function CatalogueCategoryPage({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] transition-colors hover:text-[#2563eb]"
                   >
-                    View {brand.name} catalogue
+                    {`View ${brand.name} catalogue`}
                     <ArrowUpRight size={14} />
                   </a>
                 </div>
