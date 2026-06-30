@@ -9,6 +9,10 @@ const PUBLIC_MEDIA_ROOT = join(process.cwd(), "public", "media");
 const PUBLIC_IMAGES_ROOT = join(process.cwd(), "public", "images");
 const PLACEHOLDER_IMAGE = "placeholders_small_1.png";
 const CACHE_CONTROL = "public, max-age=86400, stale-while-revalidate=604800";
+// Short cache for "not in primary store" responses (placeholder / public-images
+// fallback) so an image self-heals quickly once it's added to R2, instead of a
+// stale placeholder sticking around for a day.
+const FALLBACK_CACHE_CONTROL = "public, max-age=300, stale-while-revalidate=3600";
 
 const CONTENT_TYPES: Record<string, string> = {
   ".avif": "image/avif",
@@ -94,7 +98,7 @@ async function servePublicImageFallback(relativePath: string) {
     const body = await readFile(absolutePath);
     return new Response(body, {
       headers: {
-        "cache-control": CACHE_CONTROL,
+        "cache-control": FALLBACK_CACHE_CONTROL,
         "content-length": String(fileStat.size),
         "content-type": contentTypeFor(absolutePath),
         "x-adcontact-media-source": `public-images-fallback:${relative(PUBLIC_IMAGES_ROOT, absolutePath)}`,
@@ -115,7 +119,7 @@ async function servePlaceholderImage(relativePath: string) {
     const body = await readFile(absolutePath);
     return new Response(body, {
       headers: {
-        "cache-control": CACHE_CONTROL,
+        "cache-control": FALLBACK_CACHE_CONTROL,
         "content-length": String(fileStat.size),
         "content-type": contentTypeFor(absolutePath),
         "x-adcontact-media-source": "public-images-placeholder",
