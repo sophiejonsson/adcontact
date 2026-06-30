@@ -150,7 +150,7 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
   }
 
   return [...universe.entries()]
-    .filter(([, tokens]) => tokens.size > 1 && tokens.size <= 35)
+    .filter(([, tokens]) => tokens.size > 1 && tokens.size <= 35 && [...tokens.values()].some((c) => c < products.length))
     .map(([label, baseTokens]) => {
       const param = filterParamFor(label);
       const activeValue = activeFilters[param];
