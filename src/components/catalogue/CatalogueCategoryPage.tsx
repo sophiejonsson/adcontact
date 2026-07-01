@@ -633,11 +633,14 @@ export default function CatalogueCategoryPage({
   const browsableChildren = isDescendantHub
     ? displayChildren.filter((c) => getCategoryProductCount(c) > 0)
     : displayChildren;
-  // Flat hubs and single-leaf passthroughs show the product browser directly without
-  // category cards. Descendant hubs show cards when 2+ non-empty children exist.
+  // Flat hubs, descendant hubs, and single-leaf passthroughs show the product browser
+  // directly without large category cards.
   const showGenericCategoryCards =
-    !showVisualLinks && !isFlatHub && !isSingleLeafPassthrough &&
-    (isDescendantHub ? browsableChildren.length > 1 : displayChildren.length > 0);
+    !showVisualLinks && !isFlatHub && !isDescendantHub && !isSingleLeafPassthrough &&
+    displayChildren.length > 0;
+  // Descendant hubs with multiple non-empty children show a compact chip strip above
+  // the product browser instead of large category cards.
+  const showSubcategoryChips = isDescendantHub && browsableChildren.length > 1;
 
   const heroStatText = (() => {
     const itemsPart = `${productCount.toLocaleString()} catalogue items`;
@@ -877,6 +880,24 @@ export default function CatalogueCategoryPage({
                 </a>
               </div>
             )}
+
+            {showSubcategoryChips && (
+              <div className="mb-5 flex flex-wrap gap-2">
+                {browsableChildren.map((child) => (
+                  <Link
+                    key={child.id}
+                    href={child.route ?? "#"}
+                    className="inline-flex items-center gap-2 rounded-full border border-[#d8dee7] bg-white px-4 py-1.5 text-sm font-medium text-[#374151] transition-all hover:border-[#2563eb] hover:bg-[#eff6ff] hover:text-[#2563eb]"
+                  >
+                    {child.name}
+                    <span className="rounded-full bg-[#f1f5f9] px-1.5 py-0.5 text-xs font-semibold text-[#64748b]">
+                      {getCategoryProductCount(child).toLocaleString()}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
+
             <CatalogueProductBrowser
               products={productPool}
               route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
