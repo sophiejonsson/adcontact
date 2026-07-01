@@ -121,9 +121,8 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
     return <ZFerrulesPage category={category} />;
   }
 
-  // Cvilux hub — redirect to the rich brand page. Magento has products only at
-  // the grandchild level (series pages); the category hub itself shows nothing
-  // useful. The 859-product flat catalogue lives at /products/cvilux.
+  // Cvilux hub — the rich catalogue lives at /products/cvilux (same
+  // CatalogueProductBrowser as the webshop hubs, plus branded hero + FAQ).
   if (category.id === 226) {
     permanentRedirect("/products/cvilux");
   }

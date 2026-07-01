@@ -6,7 +6,9 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import BrandHero from "@/components/brand/BrandHero";
-import BrandCatalogue from "@/components/brand/BrandCatalogue";
+import CatalogueProductBrowser, {
+  type SubcategoryOption,
+} from "@/components/catalogue/CatalogueProductBrowser";
 import {
   SectionHeader,
   BrandJumpNav,
@@ -15,11 +17,42 @@ import {
   BrandCTA,
 } from "@/components/brand/BrandChrome";
 import {
-  cviluxProducts,
-  cviluxProductAttributes,
-  cviluxFilterAttributes,
-  cviluxOverviewCards,
-} from "@/data/cviluxCatalogue";
+  getCatalogueCategory,
+  getCategoryChildren,
+  getCategoryProductCount,
+  getCategoryAllProducts,
+  type CatalogueCategory,
+} from "@/lib/magentoCatalogue";
+
+// Cvilux lives in the Magento catalogue as category 226 — ~888 products across
+// 9 families. Render them through the same CatalogueProductBrowser used by the
+// webshop hubs (Stocko, etc.) so the page is a real filterable/searchable
+// catalogue, with each family available as a "Category" filter.
+const CVILUX_CATEGORY_ID = 226;
+
+function allDescendantCategoryIds(cat: CatalogueCategory): number[] {
+  const ids = [cat.id];
+  for (const childId of cat.children) {
+    const child = getCatalogueCategory(childId);
+    if (child) ids.push(...allDescendantCategoryIds(child));
+  }
+  return ids;
+}
+
+const cviluxCategory = getCatalogueCategory(CVILUX_CATEGORY_ID);
+const cviluxCatalogueProducts = cviluxCategory
+  ? getCategoryAllProducts(cviluxCategory)
+  : [];
+const cviluxSubcategoryOptions: SubcategoryOption[] = cviluxCategory
+  ? getCategoryChildren(cviluxCategory)
+      .filter((c) => getCategoryProductCount(c) > 0)
+      .map((c) => ({
+        id: c.id,
+        name: c.name ?? "Category",
+        count: getCategoryProductCount(c),
+        allCategoryIds: allDescendantCategoryIds(c),
+      }))
+  : [];
 
 const PAGE_URL = "https://www.adcontact.se/products/cvilux";
 
@@ -126,7 +159,7 @@ export default function CviluxPage() {
           { icon: Cable, label: "Broad application fit" },
         ]}
         stats={[
-          { label: "Parts catalogued", value: cviluxProducts.length.toLocaleString() },
+          { label: "Parts catalogued", value: cviluxCatalogueProducts.length.toLocaleString() },
           { label: "Product families", value: "9" },
           { label: "Coverage", value: "B2B to I/O" },
           { label: "Origin", value: "Taiwan" },
@@ -134,14 +167,13 @@ export default function CviluxPage() {
           { label: "Support", value: "Technical sales" },
         ]}
         primaryCta={{ label: "Request a quote", href: "/contact/quote" }}
-        secondaryCta={{ label: "Browse families", href: "#overview" }}
+        secondaryCta={{ label: "Browse catalogue", href: "#catalogue" }}
         shopUrl="https://www.cvilux.com/products"
       />
 
       <BrandJumpNav
         items={[
-          { label: "Families", href: "#overview" },
-          { label: "Catalogue", href: "#catalogue-grid" },
+          { label: "Catalogue", href: "#catalogue" },
           { label: "Why Cvilux", href: "#why" },
           { label: "Applications", href: "#applications" },
           { label: "FAQ", href: "#faq" },
@@ -149,18 +181,18 @@ export default function CviluxPage() {
       />
 
       <div className="mx-auto max-w-[1440px] px-6 py-16">
-        {/* Overview cards + filterable catalogue */}
-        <div className="mb-20">
-          <BrandCatalogue
-            products={cviluxProducts}
-            productAttributes={cviluxProductAttributes}
-            filterAttributes={cviluxFilterAttributes}
-            overviewCards={cviluxOverviewCards}
-            overviewAttr="Family"
-            overviewEyebrow="Browse by family"
-            overviewTitle="Cvilux product families"
-            overviewIntro={`${cviluxProducts.length.toLocaleString()} Cvilux parts across the families below. Select a family to filter the catalogue, or narrow by sub-category.`}
-            scrollGroups={["Sub-category"]}
+        {/* Filterable, searchable catalogue — same browser as the webshop hubs */}
+        <div id="catalogue" className="mb-20 scroll-mt-28">
+          <CatalogueProductBrowser
+            products={cviluxCatalogueProducts}
+            route={cviluxCategory?.route ?? "/products/cvilux"}
+            searchParams={{}}
+            isWebshopRoot={false}
+            sectionLabel="Catalogue"
+            sectionTitle="Cvilux catalogue items"
+            subcategoryOptions={
+              cviluxSubcategoryOptions.length > 0 ? cviluxSubcategoryOptions : undefined
+            }
           />
         </div>
 
