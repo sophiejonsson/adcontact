@@ -9,7 +9,6 @@ import type {
   CatalogueProduct,
   CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
-import { brands } from "@/data/brands";
 
 const DEFAULT_PAGE_SIZE = 25;
 const PAGE_SIZE_OPTIONS = [25, 50, 100];
@@ -232,11 +231,6 @@ function productHref(product: CatalogueProduct, categoryRoute: string | null) {
   return product.route ?? product.routes[0] ?? "#";
 }
 
-function brandLogoForProduct(product: CatalogueProduct): string | undefined {
-  const name = (product.brand ?? product.manufacturer ?? "").toLowerCase();
-  return brands.find((b) => b.logo && b.name.toLowerCase() === name)?.logo ?? undefined;
-}
-
 
 function ProductCard({
   product,
@@ -249,14 +243,10 @@ function ProductCard({
   deutschImageMap?: Record<string, string>;
   compact?: boolean;
 }) {
-  const realImageUrl =
+  const imageUrl =
     deutschImageMap?.[String(product.id)] ??
     magentoImageSrc(product.thumbnail ?? product.image) ??
     null;
-  const hasRealImage = Boolean(realImageUrl);
-  // Hybrid fallback: a faded brand logo when the product has a known brand,
-  // otherwise the "No image available" placeholder.
-  const imageUrl = realImageUrl ?? brandLogoForProduct(product) ?? null;
 
   if (compact) {
     return (
@@ -272,7 +262,7 @@ function ProductCard({
               fill
               unoptimized
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px"
-              className={`object-contain transition-transform duration-300 group-hover:scale-[1.05] ${hasRealImage ? "p-3" : "p-6 opacity-30"}`}
+              className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.05]"
             />
           ) : (
             <div className="flex h-full flex-col items-center justify-center gap-1.5">
@@ -307,7 +297,7 @@ function ProductCard({
             fill
             unoptimized
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
-            className={`object-contain transition-transform duration-300 group-hover:scale-[1.04] ${hasRealImage ? "p-4" : "p-8 opacity-25"}`}
+            className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.04]"
           />
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-2">
