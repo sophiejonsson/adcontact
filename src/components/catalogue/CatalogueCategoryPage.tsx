@@ -26,7 +26,7 @@ import {
   teConnectivitySeriesByName,
   type DeutschSeriesInfo,
 } from "@/data/deutschSeries";
-import { STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID } from "@/data/stockoConnectorSystems";
+import { STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID, stockoSeriesCount } from "@/data/stockoConnectorSystems";
 
 // Build a map of Magento product id → Deutsch CDN imageUrl for products that
 // have no Magento image, so the category listing can show the correct thumbnail.
@@ -175,7 +175,19 @@ function isBrandOwnCategory(category: CatalogueCategory) {
   );
 }
 
-function CategoryCard({ category }: { category: CatalogueCategory }) {
+type CategoryCardOverrides = {
+  image?: string;
+  countLabel?: string;
+  hideChildren?: boolean;
+};
+
+function CategoryCard({
+  category,
+  overrides,
+}: {
+  category: CatalogueCategory;
+  overrides?: CategoryCardOverrides;
+}) {
   const children = getCategoryChildren(category).slice(0, 6);
   const productCount = getCategoryProductCount(category);
 
@@ -189,6 +201,7 @@ function CategoryCard({ category }: { category: CatalogueCategory }) {
         includeDescendantsWhenEmpty: true,
       }).find((p) => p.thumbnail || p.image);
   const cardImage =
+    overrides?.image ??
     brand?.logo ??
     magentoMediaSrc(representativeProduct?.thumbnail ?? representativeProduct?.image) ??
     magentoMediaSrc(category.image);
@@ -224,7 +237,7 @@ function CategoryCard({ category }: { category: CatalogueCategory }) {
               {category.name ?? "Category"}
             </Link>
             <p className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#64748b]">
-              {productCount.toLocaleString()} catalogue items
+              {overrides?.countLabel ?? `${productCount.toLocaleString()} catalogue items`}
             </p>
           </div>
           <Link
@@ -235,7 +248,7 @@ function CategoryCard({ category }: { category: CatalogueCategory }) {
           </Link>
         </div>
 
-        {children.length > 0 && (
+        {!overrides?.hideChildren && children.length > 0 && (
           <div className="mt-5 grid gap-2 border-t border-[#eef2f7] pt-4 sm:grid-cols-2">
             {children.map((child) => (
               <Link
@@ -637,14 +650,13 @@ export default function CatalogueCategoryPage({
         (c) => getCategoryProductCount(c) > 0 || c.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
       )
     : displayChildren;
-  // Flat hubs, descendant hubs, and single-leaf passthroughs show the product browser
-  // directly without large category cards.
+  // Show category cards for non-hub pages and for descendant hubs with multiple
+  // non-empty children (e.g. Stocko with Crimp Contacts / Solderless Terminals /
+  // Housing / Connector Systems). Descendant hubs previously showed a chip strip
+  // which looked cheap and showed "0 items" for categories with scraped data.
   const showGenericCategoryCards =
-    !showVisualLinks && !isFlatHub && !isDescendantHub && !isSingleLeafPassthrough &&
-    displayChildren.length > 0;
-  // Descendant hubs with multiple non-empty children show a compact chip strip above
-  // the product browser instead of large category cards.
-  const showSubcategoryChips = isDescendantHub && browsableChildren.length > 1;
+    !showVisualLinks && !isFlatHub && !isSingleLeafPassthrough &&
+    (isDescendantHub ? browsableChildren.length > 1 : displayChildren.length > 0);
 
   const heroStatText = (() => {
     const itemsPart = `${productCount.toLocaleString()} catalogue items`;
@@ -855,8 +867,20 @@ export default function CatalogueCategoryPage({
               </span>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
-              {browsableChildren.map((child) => (
-                <CategoryCard key={child.id} category={child} />
+              {(isDescendantHub ? browsableChildren : displayChildren).map((child) => (
+                <CategoryCard
+                  key={child.id}
+                  category={child}
+                  overrides={
+                    child.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID
+                      ? {
+                          image: "/images/stocko/connector-systems/eco-tronic.jpg",
+                          countLabel: `${stockoSeriesCount} connector series`,
+                          hideChildren: true,
+                        }
+                      : undefined
+                  }
+                />
               ))}
             </div>
           </section>
@@ -882,23 +906,6 @@ export default function CatalogueCategoryPage({
                   Browse by series
                   <ArrowRight size={14} />
                 </a>
-              </div>
-            )}
-
-            {showSubcategoryChips && (
-              <div className="mb-5 flex flex-wrap gap-2">
-                {browsableChildren.map((child) => (
-                  <Link
-                    key={child.id}
-                    href={child.route ?? "#"}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#d8dee7] bg-white px-4 py-1.5 text-sm font-medium text-[#374151] transition-all hover:border-[#2563eb] hover:bg-[#eff6ff] hover:text-[#2563eb]"
-                  >
-                    {child.name}
-                    <span className="rounded-full bg-[#f1f5f9] px-1.5 py-0.5 text-xs font-semibold text-[#64748b]">
-                      {getCategoryProductCount(child).toLocaleString()}
-                    </span>
-                  </Link>
-                ))}
               </div>
             )}
 
