@@ -770,6 +770,69 @@ export default function CatalogueCategoryPage({
     !!brand &&
     (brand.categories.includes("connectors") || brand.categories.includes("heat-shrink"));
 
+  // Trial (Hongshang): render the subcategory cards BELOW the product grid with a
+  // "Browse by category" jump button, mirroring the DEUTSCH series layout. The
+  // category cards markup is shared so it can render either in its usual spot or
+  // below the products depending on this flag.
+  const categoriesBelowProducts = brand?.slug === "hongshang";
+  const categoryCardsBlock = (
+    <>
+      {showVisualLinks && (
+        <section className="mb-14">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
+                Categories
+              </p>
+              <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">
+                {`Browse ${title}`}
+              </h2>
+            </div>
+            <span className="text-sm font-medium text-[#64748b]">
+              {content.visualLinks.length.toLocaleString()} categories
+            </span>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {content.visualLinks.map((item) => (
+              <CategoryVisualLinkCard
+                key={`${item.href}-${item.title}`}
+                item={item}
+                category={visualCategoryByHref.get(item.href)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {showGenericCategoryCards && (
+        <section className="mb-14">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
+                {flattenedGroupLabel ?? "Categories"}
+              </p>
+              <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">
+                {flattenedGroupLabel
+                  ? `Browse ${flattenedGroupLabel}`
+                  : isWebshopRoot
+                    ? "Browse catalogue areas"
+                    : "Browse subcategories"}
+              </h2>
+            </div>
+            <span className="text-sm font-medium text-[#64748b]">
+              {browsableChildren.length.toLocaleString()} categories
+            </span>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {displayChildren.map((child) => (
+              <CategoryCard key={child.id} category={child} />
+            ))}
+          </div>
+        </section>
+      )}
+    </>
+  );
+
   // "Browse by series" — on brand hubs (DEUTSCH, TE Connectivity) whose products
   const breadcrumbCrumbs =
     category.id === 3
@@ -901,59 +964,9 @@ export default function CatalogueCategoryPage({
           <ImageShowcase images={remainingImages} title={title} />
         )}
 
-        {showVisualLinks && (
-          <section className="mb-14">
-            <div className="mb-6 flex items-end justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
-                  Categories
-                </p>
-                <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">
-                  Browse {title}
-                </h2>
-              </div>
-              <span className="text-sm font-medium text-[#64748b]">
-                {content.visualLinks.length.toLocaleString()} categories
-              </span>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {content.visualLinks.map((item) => (
-                <CategoryVisualLinkCard
-                  key={`${item.href}-${item.title}`}
-                  item={item}
-                  category={visualCategoryByHref.get(item.href)}
-                />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {showGenericCategoryCards && (
-          <section className="mb-14">
-            <div className="mb-6 flex items-end justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
-                  {flattenedGroupLabel ?? "Categories"}
-                </p>
-                <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">
-                  {flattenedGroupLabel
-                    ? `Browse ${flattenedGroupLabel}`
-                    : isWebshopRoot
-                      ? "Browse catalogue areas"
-                      : "Browse subcategories"}
-                </h2>
-              </div>
-              <span className="text-sm font-medium text-[#64748b]">
-                {browsableChildren.length.toLocaleString()} categories
-              </span>
-            </div>
-            <div className="grid gap-4 lg:grid-cols-2">
-              {displayChildren.map((child) => (
-                <CategoryCard key={child.id} category={child} />
-              ))}
-            </div>
-          </section>
-        )}
+        {/* Category cards render here for most pages, but for Hongshang they move
+            below the product grid (see categoriesBelowProducts). */}
+        {!categoriesBelowProducts && categoryCardsBlock}
 
         {content.html && (
           <section className="mb-12">
@@ -977,7 +990,17 @@ export default function CatalogueCategoryPage({
                 </a>
               </div>
             )}
-
+            {categoriesBelowProducts && (
+              <div className="mb-6 flex justify-end">
+                <a
+                  href="#categories"
+                  className="flex items-center gap-1.5 rounded-lg border border-[#d8dee7] bg-white px-3.5 py-2 text-sm font-semibold text-[#374151] shadow-sm transition-colors hover:border-[#93c5fd] hover:text-[#2563eb]"
+                >
+                  Browse by category
+                  <ArrowRight size={14} />
+                </a>
+              </div>
+            )}
             <CatalogueProductBrowser
               products={browserProducts}
               route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
@@ -1035,6 +1058,13 @@ export default function CatalogueCategoryPage({
                 </div>
               </section>
             )}
+          </div>
+        )}
+
+        {/* Hongshang trial: subcategory cards below the product grid. */}
+        {categoriesBelowProducts && (
+          <div id="categories" className="mt-14 scroll-mt-24">
+            {categoryCardsBlock}
           </div>
         )}
 

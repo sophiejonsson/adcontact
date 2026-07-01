@@ -97,6 +97,7 @@ export const brands: Brand[] = [
     categories: ["heat-shrink"],
     linecardSection: "components",
     website: "https://www.hongshang.com/",
+    shopUrl: "https://www.hongshang.com/Products_list/1197913681259880448.html",
     featured: false,
   },
   {
