@@ -31,13 +31,7 @@ import {
   stockoSeriesCount,
   stockoConnectorSystems,
 } from "@/data/stockoConnectorSystems";
-import {
-  STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID,
-  stockoMachinesCount,
-  stockoMachineGroups,
-} from "@/data/stockoTerminatingTechnology";
 import StockoSeriesBrowser from "@/components/catalogue/StockoSeriesBrowser";
-import StockoMachineBrowser from "@/components/catalogue/StockoMachineBrowser";
 
 // Build a map of Magento product id → Deutsch CDN imageUrl for products that
 // have no Magento image, so the category listing can show the correct thumbnail.
@@ -654,16 +648,11 @@ export default function CatalogueCategoryPage({
 
   const visualCategoryByHref = new Map(displayChildren.map((child) => [child.route, child]));
   // For descendant hubs filter out empty subcategories so only navigable buckets
-  // appear as chips alongside the browser. Non-product categories with their own
-  // dedicated pages (Connector Systems, Terminating Technology) are included too
-  // so they appear in the sidebar Category filter as navigation links.
-  const PARTNER_CONTENT_IDS = new Set([
-    STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
-    STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID,
-  ]);
+  // appear as chips alongside the browser. Connector Systems is included even
+  // though it has no Magento products, since it has its own partner content page.
   const browsableChildren = isDescendantHub
     ? displayChildren.filter(
-        (c) => getCategoryProductCount(c) > 0 || PARTNER_CONTENT_IDS.has(c.id),
+        (c) => getCategoryProductCount(c) > 0 || c.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
       )
     : displayChildren;
   // Non-hub pages show category cards. Descendant hubs (e.g. Stocko) use the
@@ -692,15 +681,6 @@ export default function CatalogueCategoryPage({
             name: c.name ?? "Connector Systems",
             count: stockoSeriesCount,
             countLabel: `${stockoSeriesCount} series`,
-            allCategoryIds: [] as number[],
-          };
-        }
-        if (c.id === STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID) {
-          return {
-            id: c.id,
-            name: c.name ?? "Terminating Technology",
-            count: stockoMachinesCount,
-            countLabel: `${stockoMachinesCount} machines`,
             allCategoryIds: [] as number[],
           };
         }
@@ -968,10 +948,6 @@ export default function CatalogueCategoryPage({
                 {
                   categoryId: STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
                   content: <StockoSeriesBrowser groups={stockoConnectorSystems} />,
-                },
-                {
-                  categoryId: STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID,
-                  content: <StockoMachineBrowser groups={stockoMachineGroups} />,
                 },
               ]}
             />
