@@ -540,13 +540,14 @@ export default function CatalogueCategoryPage({
 
   // "Descendant hub": no direct products, but a browsable set of descendant products
   // worth surfacing in a product browser rather than hiding behind deep navigation.
-  // Threshold ≤ 2000 catches brand hubs like Stocko (1 227) and Cvilux (888) while
-  // keeping huge categories (Connectors 20k, Vogt 14k) as category-card pages.
+  // Threshold catches brand hubs like Stocko (1.2k), Cvilux (888) and Vogt (14.5k)
+  // while keeping genuine mega-categories (Connectors 20k, the catalogue root) as
+  // category-card drill-down pages.
   const descendantPool =
     !isWebshopRoot && !isFlatHub && category.productIds.length === 0 && children.length > 0
       ? getCategoryAllProducts(category)
       : [];
-  const isDescendantHub = descendantPool.length > 0 && descendantPool.length <= 2000;
+  const isDescendantHub = descendantPool.length > 0 && descendantPool.length <= 16000;
 
   // "Leaf of flat hub": a leaf sub-category (e.g. a brand page) whose parent is a
   // flat hub. The leaf's own products all share the same attribute value, so the
@@ -607,6 +608,37 @@ export default function CatalogueCategoryPage({
       })
     : rawProductPool;
 
+  // Very large hubs (e.g. Vogt, 14.5k products) serialise into a multi-megabyte
+  // client payload if every product carries its full 25-field shape. Above this
+  // size, rebuild each product with only the ~dozen fields the browser actually
+  // reads (card, search, links, subcategory filter). Attribute facets are
+  // dropped, but the Category filter, name/SKU/brand search, the grid and
+  // pagination keep working at a fraction of the weight. `routes` is trimmed to
+  // the single category-scoped entry so product links stay correct (the bare
+  // `route` is a root-level legacy URL).
+  const LARGE_HUB_PRODUCT_LIMIT = 3000;
+  const hubBasePath = (category.route ?? "").replace(/\.html$/, "/");
+  const browserProducts =
+    productPool.length > LARGE_HUB_PRODUCT_LIMIT
+      ? productPool.map((p) => {
+          const scoped = p.routes.filter((r) => r.startsWith(hubBasePath));
+          return {
+            id: p.id,
+            name: p.name,
+            sku: p.sku,
+            brand: p.brand,
+            manufacturer: p.manufacturer,
+            route: p.route,
+            routes: scoped.length > 0 ? [scoped[0]] : p.routes.slice(0, 1),
+            image: p.image,
+            thumbnail: p.thumbnail,
+            categoryIds: p.categoryIds,
+            shortDescription: null,
+            attributes: {},
+          } as unknown as CatalogueProduct;
+        })
+      : productPool;
+
   const content = descriptionContent(category.description);
   const breadcrumbs = getCategoryBreadcrumbs(category.id);
   const title = category.name ?? "Catalogue";
@@ -651,7 +683,7 @@ export default function CatalogueCategoryPage({
   // For descendant hubs filter out empty subcategories so only navigable buckets
   // appear as chips alongside the browser. Connector Systems is included even
   // though it has no Magento products, since it has its own partner content page.
-  const browsableChildren = isDescendantHub
+  const browsableChildren = (isDescendantHub || isFlatHub)
     ? displayChildren.filter(
         (c) => getCategoryProductCount(c) > 0 || c.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
       )
@@ -674,7 +706,7 @@ export default function CatalogueCategoryPage({
     }
     return ids;
   }
-  const subcategoryOptions = isDescendantHub
+  const subcategoryOptions = (isDescendantHub || isFlatHub)
     ? browsableChildren
         // Connector Systems is partner-sourced (no products) — list it last,
         // after the product-backed categories like Solderless Terminals.
@@ -713,7 +745,7 @@ export default function CatalogueCategoryPage({
       const label = isWebshopRoot ? "categories" : "subcategories";
       return `${content.visualLinks.length.toLocaleString()} ${label} · ${itemsPart}`;
     }
-    if (isDescendantHub && subcategoryOptions.length > 0) {
+    if ((isDescendantHub || isFlatHub) && subcategoryOptions.length > 0) {
       return `${subcategoryOptions.length} subcategories · ${itemsPart}`;
     }
     if (showGenericCategoryCards) {
@@ -947,7 +979,7 @@ export default function CatalogueCategoryPage({
             )}
 
             <CatalogueProductBrowser
-              products={productPool}
+              products={browserProducts}
               route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
               searchParams={isLeafOfFlatHub ? { ...leafPreFilter, ...searchParams } : searchParams}
               isWebshopRoot={isWebshopRoot}
