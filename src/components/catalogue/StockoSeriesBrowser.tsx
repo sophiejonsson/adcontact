@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { ArrowUpRight, Search, X } from "lucide-react";
 import type { StockoConnectorPitchGroup } from "@/data/stockoConnectorSystems";
-import { usePartnerSearch } from "@/lib/partnerSearchContext";
+import { usePartnerSearch, usePartnerFilter } from "@/lib/partnerSearchContext";
 
 type FlatSeries = {
   name: string;
@@ -13,24 +13,72 @@ type FlatSeries = {
   pitch: string;
 };
 
+/** Build the { value, count } pitch options for the parent browser's sidebar
+ *  facet, so the embedded browser and the sidebar stay in sync. */
+export function stockoPitchOptions(groups: StockoConnectorPitchGroup[]) {
+  return groups.map((g) => ({ value: g.pitch, count: g.series.length }));
+}
+
+function SeriesGrid({ series }: { series: FlatSeries[] }) {
+  return (
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      {series.map((s) => (
+        <a
+          key={s.url}
+          href={s.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex min-w-0 flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white transition-all duration-200 hover:border-[#93c5fd] hover:shadow-[0_8px_28px_-10px_rgba(15,23,42,0.18)]"
+        >
+          <div className="relative aspect-square bg-[#f8fafc]">
+            <Image
+              src={s.image}
+              alt={s.name}
+              fill
+              unoptimized
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
+              className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.04]"
+            />
+          </div>
+          <div className="flex flex-1 flex-col px-3 pt-3">
+            <h3 className="line-clamp-2 text-sm font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
+              {s.name}
+            </h3>
+            <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#94a3b8]">
+              {s.pitch}
+            </p>
+          </div>
+          <div className="mx-3 mb-3 mt-3 flex items-center justify-between rounded-lg bg-[#f1f5f9] px-3 py-2 transition-colors group-hover:bg-[#eff6ff]">
+            <span className="text-xs font-semibold text-[#374151] group-hover:text-[#2563eb]">
+              View series
+            </span>
+            <ArrowUpRight
+              size={12}
+              className="text-[#94a3b8] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-[#2563eb]"
+            />
+          </div>
+        </a>
+      ))}
+    </div>
+  );
+}
+
 export default function StockoSeriesBrowser({
   groups,
   initialPitch,
-  hideSearch,
+  embedded,
 }: {
   groups: StockoConnectorPitchGroup[];
   initialPitch?: string;
-  /** Hide the internal search bar — used when embedded in the product browser
-   *  where the parent search bar drives the query via PartnerSearchContext. */
-  hideSearch?: boolean;
+  /** Full embedded mode: no outer wrapper, no chips, no search. The parent
+   *  product browser owns the pitch facet (left sidebar) and search bar; this
+   *  component just renders a header + grid matching the rest of the page,
+   *  reading the query/pitch from PartnerSearch/PartnerFilter context. */
+  embedded?: boolean;
 }) {
   const partnerQuery = usePartnerSearch();
-  const [query, setQuery] = useState(partnerQuery);
-
-  // Sync whenever the parent product browser search changes
-  useEffect(() => {
-    setQuery(partnerQuery);
-  }, [partnerQuery]);
+  const partnerPitch = usePartnerFilter();
+  const [localQuery, setLocalQuery] = useState("");
   const [selectedPitch, setSelectedPitch] = useState<string | null>(initialPitch ?? null);
 
   const allSeries: FlatSeries[] = useMemo(
@@ -38,9 +86,14 @@ export default function StockoSeriesBrowser({
     [groups],
   );
 
+  // In embedded mode the query + pitch come from the parent (via context);
+  // standalone mode uses this component's own search box and chip row.
+  const query = embedded ? partnerQuery : localQuery;
+  const activePitch = embedded ? partnerPitch : selectedPitch;
+
   const filtered = useMemo(() => {
     let result = allSeries;
-    if (selectedPitch) result = result.filter((s) => s.pitch === selectedPitch);
+    if (activePitch) result = result.filter((s) => s.pitch === activePitch);
     if (query.trim()) {
       const q = query.toLowerCase();
       result = result.filter(
@@ -48,7 +101,7 @@ export default function StockoSeriesBrowser({
       );
     }
     return result;
-  }, [allSeries, selectedPitch, query]);
+  }, [allSeries, activePitch, query]);
 
   const pitchCounts = useMemo(() => {
     const map = new Map<string, number>();
@@ -56,36 +109,64 @@ export default function StockoSeriesBrowser({
     return map;
   }, [allSeries]);
 
+  // ---- Embedded mode: header + grid only, matching the product browser. ----
+  if (embedded) {
+    return (
+      <div>
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
+              Connector systems
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">Browse series</h2>
+          </div>
+          <span className="text-sm font-medium text-[#64748b]">
+            {filtered.length.toLocaleString()} of {allSeries.length.toLocaleString()} series
+          </span>
+        </div>
+
+        {filtered.length === 0 ? (
+          <div className="rounded-lg border border-[#e5e7eb] bg-white px-6 py-12 text-center">
+            <h3 className="text-base font-bold text-[#0a1628]">No matching series</h3>
+            <p className="mt-2 text-sm text-[#64748b]">
+              Try a different pitch or a shorter series name.
+            </p>
+          </div>
+        ) : (
+          <SeriesGrid series={filtered} />
+        )}
+      </div>
+    );
+  }
+
+  // ---- Standalone page mode: search + pitch chips + grid. ----
   const hasActiveFilter = selectedPitch !== null || query.trim() !== "";
 
   return (
     <div className="mx-auto max-w-[1440px] px-6 py-8">
       {/* Search + filter bar */}
       <div className="sticky top-0 z-10 bg-[#f8fafc] pb-4 pt-1">
-        {/* Search input — hidden when parent browser is driving the query */}
-        {!hideSearch && (
-          <div className="relative mb-3">
-            <Search
-              size={15}
-              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8]"
-            />
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search connector series…"
-              className="w-full rounded-xl border border-[#d8dee7] bg-white py-2.5 pl-10 pr-10 text-sm text-[#0a1628] placeholder-[#94a3b8] shadow-sm focus:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]/20"
-            />
-            {query && (
-              <button
-                onClick={() => setQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#374151]"
-              >
-                <X size={14} />
-              </button>
-            )}
-          </div>
-        )}
+        <div className="relative mb-3">
+          <Search
+            size={15}
+            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8]"
+          />
+          <input
+            type="text"
+            value={localQuery}
+            onChange={(e) => setLocalQuery(e.target.value)}
+            placeholder="Search connector series…"
+            className="w-full rounded-xl border border-[#d8dee7] bg-white py-2.5 pl-10 pr-10 text-sm text-[#0a1628] placeholder-[#94a3b8] shadow-sm focus:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]/20"
+          />
+          {localQuery && (
+            <button
+              onClick={() => setLocalQuery("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#374151]"
+            >
+              <X size={14} />
+            </button>
+          )}
+        </div>
 
         {/* Pitch filter chips */}
         <div className="flex flex-wrap gap-2">
@@ -135,7 +216,7 @@ export default function StockoSeriesBrowser({
             <button
               onClick={() => {
                 setSelectedPitch(null);
-                setQuery("");
+                setLocalQuery("");
               }}
               className="ml-1 inline-flex items-center gap-1 text-xs text-[#64748b] underline underline-offset-2 hover:text-[#374151]"
             >
@@ -159,7 +240,7 @@ export default function StockoSeriesBrowser({
           <button
             onClick={() => {
               setSelectedPitch(null);
-              setQuery("");
+              setLocalQuery("");
             }}
             className="mt-3 text-sm font-medium text-[#2563eb] hover:underline"
           >
@@ -167,40 +248,7 @@ export default function StockoSeriesBrowser({
           </button>
         </div>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {filtered.map((series) => (
-            <a
-              key={series.url}
-              href={series.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
-            >
-              <div className="relative aspect-[4/3] bg-[#f8fafc]">
-                <Image
-                  src={series.image}
-                  alt={series.name}
-                  fill
-                  unoptimized
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-contain p-6 transition-transform duration-300 group-hover:scale-[1.04]"
-                />
-              </div>
-              <div className="border-t border-[#eef2f7] px-4 py-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-[#0a1628] group-hover:text-[#2563eb]">
-                    {series.name}
-                  </span>
-                  <ArrowUpRight
-                    size={14}
-                    className="flex-none text-[#93c5fd] transition-colors group-hover:text-[#2563eb]"
-                  />
-                </div>
-                <p className="mt-0.5 text-xs text-[#94a3b8]">{series.pitch}</p>
-              </div>
-            </a>
-          ))}
-        </div>
+        <SeriesGrid series={filtered} />
       )}
     </div>
   );

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, X, ArrowRight, Package, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
-import { PartnerSearchContext } from "@/lib/partnerSearchContext";
+import { PartnerSearchContext, PartnerFilterContext } from "@/lib/partnerSearchContext";
 import type {
   CatalogueProduct,
   CatalogueSearchParams,
@@ -352,8 +352,16 @@ export default function CatalogueProductBrowser({
   subcategoryOptions?: SubcategoryOption[];
   /** When a non-product subcategory is active, render this content instead of
    *  the product grid. searchNames is the list of item names to match against
-   *  the main search query for auto-activation (when no products match). */
-  partnerSlots?: { categoryId: number; content: React.ReactNode; searchNames?: string[] }[];
+   *  the main search query for auto-activation (when no products match).
+   *  `facet`, when present, is rendered by THIS browser in its own left sidebar
+   *  (so it matches every other filter on the page) and the selected value is
+   *  pushed to the embedded content via PartnerFilterContext. */
+  partnerSlots?: {
+    categoryId: number;
+    content: React.ReactNode;
+    searchNames?: string[];
+    facet?: { label: string; options: { value: string; count: number }[] };
+  }[];
 }) {
   const initialPageSize = positiveInt(searchParams.per_page, DEFAULT_PAGE_SIZE);
   const [query, setQuery] = useState(firstParamValue(searchParams.q) ?? "");
@@ -364,6 +372,8 @@ export default function CatalogueProductBrowser({
   const [page, setPage] = useState(positiveInt(searchParams.page ?? searchParams.p, 1));
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [activeSubcategoryId, setActiveSubcategoryId] = useState<number | null>(null);
+  // Selected value of the active partner slot's facet (e.g. Stocko pitch).
+  const [partnerFacetValue, setPartnerFacetValue] = useState<string | null>(null);
 
   // Subcategory filter runs first — before text search and attribute filters.
   // For partner-content subcategories (allCategoryIds empty) we return products
@@ -472,6 +482,7 @@ export default function CatalogueProductBrowser({
     setQuery("");
     setActiveFilters({});
     setActiveSubcategoryId(null);
+    setPartnerFacetValue(null);
     setPage(1);
   }
 
@@ -512,6 +523,7 @@ export default function CatalogueProductBrowser({
                     type="button"
                     onClick={() => {
                       setActiveSubcategoryId(active ? null : option.id);
+                      setPartnerFacetValue(null);
                       setPage(1);
                     }}
                     className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
@@ -524,6 +536,50 @@ export default function CatalogueProductBrowser({
                     <span className="flex-none text-[#94a3b8]">
                       {option.countLabel ?? option.count.toLocaleString()}
                     </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Partner facet (e.g. Stocko pitch) — rendered here so it looks like
+            every other filter on the page, instead of floating chips. */}
+        {activePartnerSlot?.facet && activePartnerSlot.facet.options.length > 1 && (
+          <div className={`${hasSubcategoryFilter ? "mt-5 border-t border-[#eef2f7] pt-5" : "mt-5"}`}>
+            <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
+              {activePartnerSlot.facet.label}
+            </h3>
+            <div className="mt-2 space-y-1.5">
+              <button
+                type="button"
+                onClick={() => setPartnerFacetValue(null)}
+                className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
+                  partnerFacetValue === null
+                    ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
+                    : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
+                }`}
+              >
+                <span>All</span>
+                <span className="flex-none text-[#94a3b8]">
+                  {activePartnerSlot.facet.options.reduce((sum, o) => sum + o.count, 0)}
+                </span>
+              </button>
+              {activePartnerSlot.facet.options.map((option) => {
+                const active = partnerFacetValue === option.value;
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => setPartnerFacetValue(active ? null : option.value)}
+                    className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
+                      active
+                        ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
+                        : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
+                    }`}
+                  >
+                    <span>{option.value}</span>
+                    <span className="flex-none text-[#94a3b8]">{option.count}</span>
                   </button>
                 );
               })}
@@ -693,7 +749,9 @@ export default function CatalogueProductBrowser({
              The context passes the current search query so the embedded browser
              can filter its own content accordingly. */
           <PartnerSearchContext.Provider value={query}>
-            <div>{activePartnerSlot.content}</div>
+            <PartnerFilterContext.Provider value={partnerFacetValue}>
+              <div>{activePartnerSlot.content}</div>
+            </PartnerFilterContext.Provider>
           </PartnerSearchContext.Provider>
         ) : (
           <>

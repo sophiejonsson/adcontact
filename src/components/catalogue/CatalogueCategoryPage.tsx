@@ -31,7 +31,9 @@ import {
   stockoSeriesCount,
   stockoConnectorSystems,
 } from "@/data/stockoConnectorSystems";
-import StockoSeriesBrowser from "@/components/catalogue/StockoSeriesBrowser";
+import StockoSeriesBrowser, {
+  stockoPitchOptions,
+} from "@/components/catalogue/StockoSeriesBrowser";
 
 // Build a map of Magento product id → Deutsch CDN imageUrl for products that
 // have no Magento image, so the category listing can show the correct thumbnail.
@@ -674,23 +676,33 @@ export default function CatalogueCategoryPage({
     return ids;
   }
   const subcategoryOptions = isDescendantHub
-    ? browsableChildren.map((c) => {
-        if (c.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID) {
+    ? browsableChildren
+        // Connector Systems is partner-sourced (no products) — list it last,
+        // after the product-backed categories like Solderless Terminals.
+        .slice()
+        .sort((a, b) => {
+          const aPartner = a.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID ? 1 : 0;
+          const bPartner = b.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID ? 1 : 0;
+          return aPartner - bPartner;
+        })
+        .map((c) => {
+          if (c.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID) {
+            return {
+              id: c.id,
+              // Shorten the long Magento name so the chip matches its siblings.
+              name: "Connector Systems",
+              count: stockoSeriesCount,
+              countLabel: `${stockoSeriesCount} series`,
+              allCategoryIds: [] as number[],
+            };
+          }
           return {
             id: c.id,
-            name: c.name ?? "Connector Systems",
-            count: stockoSeriesCount,
-            countLabel: `${stockoSeriesCount} series`,
-            allCategoryIds: [] as number[],
+            name: c.name ?? "Category",
+            count: getCategoryProductCount(c),
+            allCategoryIds: getAllDescendantCategoryIds(c),
           };
-        }
-        return {
-          id: c.id,
-          name: c.name ?? "Category",
-          count: getCategoryProductCount(c),
-          allCategoryIds: getAllDescendantCategoryIds(c),
-        };
-      })
+        })
     : [];
 
   const heroStatText = (() => {
@@ -950,7 +962,8 @@ export default function CatalogueCategoryPage({
                   searchNames: stockoConnectorSystems.flatMap((g) =>
                     g.series.map((s) => s.name),
                   ),
-                  content: <StockoSeriesBrowser groups={stockoConnectorSystems} hideSearch />,
+                  facet: { label: "Pitch", options: stockoPitchOptions(stockoConnectorSystems) },
+                  content: <StockoSeriesBrowser groups={stockoConnectorSystems} embedded />,
                 },
               ]}
             />
