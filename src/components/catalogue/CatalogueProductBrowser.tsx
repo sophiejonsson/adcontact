@@ -319,6 +319,14 @@ function ProductCard({
   );
 }
 
+export type SubcategoryOption = {
+  id: number;
+  name: string;
+  count: number;
+  /** All category IDs in this subcategory's tree — used for product filtering. */
+  allCategoryIds: number[];
+};
+
 export default function CatalogueProductBrowser({
   products,
   route,
@@ -327,6 +335,7 @@ export default function CatalogueProductBrowser({
   sectionLabel,
   sectionTitle,
   deutschImageMap,
+  subcategoryOptions,
 }: {
   products: CatalogueProduct[];
   route: string | null;
@@ -335,6 +344,7 @@ export default function CatalogueProductBrowser({
   sectionLabel: string;
   sectionTitle: string;
   deutschImageMap?: Record<string, string>;
+  subcategoryOptions?: SubcategoryOption[];
 }) {
   const initialPageSize = positiveInt(searchParams.per_page, DEFAULT_PAGE_SIZE);
   const [query, setQuery] = useState(firstParamValue(searchParams.q) ?? "");
@@ -344,13 +354,23 @@ export default function CatalogueProductBrowser({
   );
   const [page, setPage] = useState(positiveInt(searchParams.page ?? searchParams.p, 1));
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [activeSubcategoryId, setActiveSubcategoryId] = useState<number | null>(null);
+
+  // Subcategory filter runs first — before text search and attribute filters.
+  const subcategoryFilteredProducts = useMemo(() => {
+    if (!activeSubcategoryId || !subcategoryOptions?.length) return products;
+    const option = subcategoryOptions.find((o) => o.id === activeSubcategoryId);
+    if (!option) return products;
+    const catIdSet = new Set(option.allCategoryIds);
+    return products.filter((p) => p.categoryIds.some((id) => catIdSet.has(id)));
+  }, [products, activeSubcategoryId, subcategoryOptions]);
 
   const queryText = query.toLowerCase().trim();
   const queryTokens = queryText.split(/\s+/).filter(Boolean);
   const normalizedTokens = queryTokens.map(normalizedQuery).filter(Boolean);
   const searchedProducts = useMemo(() => {
-    if (queryTokens.length === 0) return products;
-    return products
+    if (queryTokens.length === 0) return subcategoryFilteredProducts;
+    return subcategoryFilteredProducts
       .filter((product) => {
       const haystack = searchableText(product);
         const normalizedHaystack = normalizedSearchText(product);
@@ -367,7 +387,7 @@ export default function CatalogueProductBrowser({
           productSearchScore(b, queryText) - productSearchScore(a, queryText) ||
           a.name.localeCompare(b.name),
       );
-  }, [products, queryText, queryTokens, normalizedTokens]);
+  }, [subcategoryFilteredProducts, queryText, queryTokens, normalizedTokens]);
 
   const facets = useMemo(
     () => buildFacets(searchedProducts, activeFilters),
@@ -385,7 +405,6 @@ export default function CatalogueProductBrowser({
   const pageProducts = filteredProducts.slice(startIndex, startIndex + pageSize);
   const visibleStart = filteredProducts.length > 0 ? startIndex + 1 : 0;
   const visibleEnd = startIndex + pageProducts.length;
-  const showFilters = !isWebshopRoot && facets.length > 0;
 
   function updateQuery(value: string) {
     setQuery(value);
@@ -405,10 +424,13 @@ export default function CatalogueProductBrowser({
   function clearAll() {
     setQuery("");
     setActiveFilters({});
+    setActiveSubcategoryId(null);
     setPage(1);
   }
 
-  const activeFilterCount = Object.keys(activeFilters).length;
+  const activeFilterCount = Object.keys(activeFilters).length + (activeSubcategoryId ? 1 : 0);
+  const hasSubcategoryFilter = (subcategoryOptions?.length ?? 0) > 1;
+  const showFilters = !isWebshopRoot && (facets.length > 0 || hasSubcategoryFilter);
 
   const filterPanel = showFilters ? (
     <div className="space-y-5">
@@ -428,8 +450,40 @@ export default function CatalogueProductBrowser({
           )}
         </div>
 
+        {/* Subcategory filter — always first, before attribute facets */}
+        {hasSubcategoryFilter && (
+          <div className="mt-5">
+            <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
+              Category
+            </h3>
+            <div className="mt-2 space-y-1.5">
+              {subcategoryOptions!.map((option) => {
+                const active = activeSubcategoryId === option.id;
+                return (
+                  <button
+                    key={option.id}
+                    type="button"
+                    onClick={() => {
+                      setActiveSubcategoryId(active ? null : option.id);
+                      setPage(1);
+                    }}
+                    className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
+                      active
+                        ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
+                        : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
+                    }`}
+                  >
+                    <span>{option.name}</span>
+                    <span className="flex-none text-[#94a3b8]">{option.count.toLocaleString()}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {facets.length > 0 && (
-          <div className="mt-5 space-y-5">
+          <div className={`space-y-5 ${hasSubcategoryFilter ? "mt-5 border-t border-[#eef2f7] pt-5" : "mt-5"}`}>
             {facets.map((facet) => (
               <div key={facet.param}>
                 <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">

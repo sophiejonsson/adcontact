@@ -650,13 +650,38 @@ export default function CatalogueCategoryPage({
         (c) => getCategoryProductCount(c) > 0 || c.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
       )
     : displayChildren;
-  // Show category cards for non-hub pages and for descendant hubs with multiple
-  // non-empty children (e.g. Stocko with Crimp Contacts / Solderless Terminals /
-  // Housing / Connector Systems). Descendant hubs previously showed a chip strip
-  // which looked cheap and showed "0 items" for categories with scraped data.
+  // Non-hub pages show category cards. Descendant hubs (e.g. Stocko) use the
+  // product browser directly with subcategory options injected as a "Category"
+  // filter facet — Zalando-style: grid first, filters on the left.
   const showGenericCategoryCards =
-    !showVisualLinks && !isFlatHub && !isSingleLeafPassthrough &&
-    (isDescendantHub ? browsableChildren.length > 1 : displayChildren.length > 0);
+    !showVisualLinks && !isFlatHub && !isDescendantHub && !isSingleLeafPassthrough &&
+    displayChildren.length > 0;
+
+  // For descendant hubs: build subcategory filter options (product-bearing only)
+  // and a separate list of non-product subcategories with dedicated pages.
+  function getAllDescendantCategoryIds(cat: CatalogueCategory): number[] {
+    const ids = [cat.id];
+    for (const childId of cat.children) {
+      const child = getCatalogueCategory(childId);
+      if (child) ids.push(...getAllDescendantCategoryIds(child));
+    }
+    return ids;
+  }
+  const subcategoryOptions = isDescendantHub
+    ? browsableChildren
+        .filter((c) => getCategoryProductCount(c) > 0)
+        .map((c) => ({
+          id: c.id,
+          name: c.name ?? "Category",
+          count: getCategoryProductCount(c),
+          allCategoryIds: getAllDescendantCategoryIds(c),
+        }))
+    : [];
+  // Non-product subcategories with dedicated pages (e.g. Connector Systems)
+  // shown as an "Explore" link above the product browser.
+  const nonProductBrowsableChildren = isDescendantHub
+    ? browsableChildren.filter((c) => getCategoryProductCount(c) === 0 && c.route)
+    : [];
 
   const heroStatText = (() => {
     const itemsPart = `${productCount.toLocaleString()} catalogue items`;
@@ -667,9 +692,12 @@ export default function CatalogueCategoryPage({
       const label = isWebshopRoot ? "categories" : "subcategories";
       return `${content.visualLinks.length.toLocaleString()} ${label} · ${itemsPart}`;
     }
+    if (isDescendantHub && subcategoryOptions.length > 0) {
+      return `${subcategoryOptions.length} subcategories · ${itemsPart}`;
+    }
     if (showGenericCategoryCards) {
       const label = isWebshopRoot ? "categories" : "subcategories";
-      return `${browsableChildren.length.toLocaleString()} ${label} · ${itemsPart}`;
+      return `${displayChildren.length.toLocaleString()} ${label} · ${itemsPart}`;
     }
     return itemsPart;
   })();
@@ -867,20 +895,8 @@ export default function CatalogueCategoryPage({
               </span>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
-              {(isDescendantHub ? browsableChildren : displayChildren).map((child) => (
-                <CategoryCard
-                  key={child.id}
-                  category={child}
-                  overrides={
-                    child.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID
-                      ? {
-                          image: "/images/stocko/connector-systems/eco-tronic.jpg",
-                          countLabel: `${stockoSeriesCount} connector series`,
-                          hideChildren: true,
-                        }
-                      : undefined
-                  }
-                />
+              {displayChildren.map((child) => (
+                <CategoryCard key={child.id} category={child} />
               ))}
             </div>
           </section>
@@ -909,6 +925,27 @@ export default function CatalogueCategoryPage({
               </div>
             )}
 
+            {/* Non-product subcategories (e.g. Connector Systems): shown as
+                explore links above the product grid since they can't be a
+                product filter but still deserve prominent navigation. */}
+            {nonProductBrowsableChildren.length > 0 && (
+              <div className="mb-5 flex flex-wrap gap-2">
+                {nonProductBrowsableChildren.map((child) => (
+                  <Link
+                    key={child.id}
+                    href={child.route ?? "#"}
+                    className="inline-flex items-center gap-2 rounded-full border border-[#d8dee7] bg-white px-4 py-1.5 text-sm font-medium text-[#374151] transition-all hover:border-[#2563eb] hover:bg-[#eff6ff] hover:text-[#2563eb]"
+                  >
+                    {child.name}
+                    {child.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID && (
+                      <span className="text-[#94a3b8]">· {stockoSeriesCount} series</span>
+                    )}
+                    <ArrowRight size={12} />
+                  </Link>
+                ))}
+              </div>
+            )}
+
             <CatalogueProductBrowser
               products={productPool}
               route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
@@ -917,6 +954,7 @@ export default function CatalogueCategoryPage({
               sectionLabel={productSectionLabel}
               sectionTitle={productSectionTitle}
               deutschImageMap={buildDeutschImageMap(productPool)}
+              subcategoryOptions={subcategoryOptions.length > 1 ? subcategoryOptions : undefined}
             />
 
             {/* Sourcing CTA for connector & heat-shrink brands — sits directly
