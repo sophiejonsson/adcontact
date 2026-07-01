@@ -9,7 +9,6 @@ import type {
   CatalogueProduct,
   CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
-import { brands } from "@/data/brands";
 
 const DEFAULT_PAGE_SIZE = 25;
 const PAGE_SIZE_OPTIONS = [25, 50, 100];
@@ -212,6 +211,9 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
 
 function magentoImageSrc(path: string | null | undefined): string | null {
   if (!path) return null;
+  // Magento's "no photo" placeholder → treat as no image so the clean
+  // "No image available" fallback shows instead of the dated graphic.
+  if (/no_photo|placeholder/i.test(path)) return null;
   // Serve via our /media proxy (handles uppercase/lowercase dir variants and
   // fetches from ORDERLAND_MEDIA_ORIGIN) rather than hardcoding adcontact.se,
   // which 404s on uppercase subdirectories like /D/T/.
@@ -229,10 +231,6 @@ function productHref(product: CatalogueProduct, categoryRoute: string | null) {
   return product.route ?? product.routes[0] ?? "#";
 }
 
-function brandLogoForProduct(product: CatalogueProduct): string | undefined {
-  const name = (product.brand ?? product.manufacturer ?? "").toLowerCase();
-  return brands.find((b) => b.logo && b.name.toLowerCase() === name)?.logo ?? undefined;
-}
 
 function ProductCard({
   product,
@@ -245,12 +243,10 @@ function ProductCard({
   deutschImageMap?: Record<string, string>;
   compact?: boolean;
 }) {
-  const realImageUrl =
+  const imageUrl =
     deutschImageMap?.[String(product.id)] ??
     magentoImageSrc(product.thumbnail ?? product.image) ??
     null;
-  const hasRealImage = Boolean(realImageUrl);
-  const imageUrl = realImageUrl ?? brandLogoForProduct(product) ?? null;
 
   if (compact) {
     return (
@@ -266,11 +262,12 @@ function ProductCard({
               fill
               unoptimized
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px"
-              className={`object-contain transition-transform duration-300 group-hover:scale-[1.05] ${hasRealImage ? "p-3" : "p-6 opacity-30"}`}
+              className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.05]"
             />
           ) : (
-            <div className="flex h-full items-center justify-center">
-              <Package size={22} className="text-[#d1d5db]" />
+            <div className="flex h-full flex-col items-center justify-center gap-1.5">
+              <Package size={20} strokeWidth={1.5} className="text-[#cbd5e1]" />
+              <span className="text-[9px] font-medium text-[#94a3b8]">No image</span>
             </div>
           )}
         </div>
@@ -300,11 +297,12 @@ function ProductCard({
             fill
             unoptimized
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
-            className={`object-contain transition-transform duration-300 group-hover:scale-[1.04] ${hasRealImage ? "p-4" : "p-8 opacity-25"}`}
+            className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.04]"
           />
         ) : (
-          <div className="flex h-full items-center justify-center">
-            <Package size={28} className="text-[#d1d5db]" />
+          <div className="flex h-full flex-col items-center justify-center gap-2">
+            <Package size={28} strokeWidth={1.4} className="text-[#cbd5e1]" />
+            <span className="text-xs font-medium text-[#94a3b8]">No image available</span>
           </div>
         )}
       </div>
