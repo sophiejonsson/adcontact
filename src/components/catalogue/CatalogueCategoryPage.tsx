@@ -327,13 +327,19 @@ function descriptionContent(description: string | null): DescriptionContent {
     const title = stripTags(innerHtml);
     const rawImage = firstImageSrc(innerHtml);
     // Magento template strings are already resolved to /media/... paths by normalizeLegacyHtml.
-    // Both the original {{media url="..."}} form and the resolved /media/ paths should be
-    // treated as null — we prefer brand logos from the brands.ts data over stale Magento images.
+    // Stale Magento product images (/media/catalog/...) are dropped — we prefer brand logos
+    // from brands.ts. BUT curated theme "category_images" (e.g.
+    // /media/wysiwyg/.../category_images/HTP/M8.png) are proper per-category illustrations
+    // now served from R2, so keep those as the card image.
     const image =
-      !rawImage || rawImage.startsWith("{{") || rawImage.startsWith("/media/")
+      !rawImage || rawImage.startsWith("{{")
         ? null
-        : rawImage.startsWith("/")
-          ? `https://www.adcontact.se${rawImage}`
+        : rawImage.includes("/category_images/")
+          ? rawImage
+          : rawImage.startsWith("/media/")
+            ? null
+            : rawImage.startsWith("/")
+              ? `https://www.adcontact.se${rawImage}`
           : rawImage;
     if (!href || !title) continue;
     linkedBlocks.push(match[0]);
