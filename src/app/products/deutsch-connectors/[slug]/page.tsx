@@ -139,10 +139,17 @@ function DetailRelatedCard({ item }: { item: RelatedProduct }) {
   const deutsch = deutschProducts.find(
     (p) => p.partNumber.toLowerCase() === item.partNumber.toLowerCase(),
   );
+  // Non-connector related parts (contacts, wedgelocks, accessories) aren't in
+  // deutschProducts, so resolve them against the Magento catalogue to get an
+  // internal /webshop route. Only fall back to the item's legacy adcontact.se
+  // URL when the part can't be found on the site at all.
+  const magentoProduct = deutsch ? undefined : findCatalogueProductByReference(item.partNumber);
   const href = deutsch
     ? `/products/deutsch-connectors/${deutsch.partNumber.toLowerCase()}`
-    : item.url ?? null;
-  const imageUrl = item.imageUrl ?? deutsch?.imageUrl;
+    : magentoProduct
+      ? catalogueProductLegacyRoute(magentoProduct)
+      : item.url ?? null;
+  const imageUrl = item.imageUrl ?? deutsch?.imageUrl ?? magentoProduct?.thumbnail ?? magentoProduct?.image;
 
   return <RelatedCard partNumber={item.partNumber} imageUrl={imageUrl} href={href} />;
 }
