@@ -30,6 +30,9 @@ const RELATIONSHIP_ATTRIBUTES = new Set(
 
 function magentoImageSrc(path: string | null | undefined): string | null {
   if (!path) return null;
+  // Treat Magento's "no photo" placeholder as no image, so the clean fallback
+  // shows instead of the dated placeholder graphic.
+  if (/no_photo|placeholder/i.test(path)) return null;
   if (path.startsWith("/")) return path;
   return path;
 }
@@ -183,8 +186,9 @@ export default function CatalogueProductPage({
                 className="object-contain p-8"
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Package size={64} className="text-[#d1d5db]" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 bg-[#f8fafc]">
+                <Package size={52} strokeWidth={1.4} className="text-[#cbd5e1]" />
+                <span className="text-xs font-medium text-[#94a3b8]">No image available</span>
               </div>
             )}
           </div>
