@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Boxes, Package, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowLeft, Boxes, Package, ArrowUpRight } from "lucide-react";
 import CatalogueProductBrowser from "@/components/catalogue/CatalogueProductBrowser";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import {
@@ -775,6 +775,18 @@ export default function CatalogueCategoryPage({
   // category cards markup is shared so it can render either in its usual spot or
   // below the products depending on this flag.
   const categoriesBelowProducts = brand?.slug === "hongshang";
+  // Is this the brand's own landing page (e.g. Hongshang), vs a descendant
+  // subcategory (Thin Wall Tubing, etc.)? On the landing page the jump button
+  // scrolls down to the categories; on a descendant it links back UP to the
+  // landing page's category list so a visitor can "start over".
+  const isBrandHome = isBrandOwnCategory(category)?.slug === brand?.slug && !!brand;
+  const brandHomeRoute =
+    categoriesBelowProducts && !isBrandHome
+      ? breadcrumbs.find((crumb) => {
+          const seg = crumb.route?.split("/").filter(Boolean).pop()?.replace(/\.html$/, "");
+          return seg === brand?.slug;
+        })?.route ?? null
+      : null;
   const categoryCardsBlock = (
     <>
       {showVisualLinks && (
@@ -993,11 +1005,20 @@ export default function CatalogueCategoryPage({
             {categoriesBelowProducts && (
               <div className="mb-6 flex justify-end">
                 <a
-                  href="#categories"
+                  href={brandHomeRoute ? `${brandHomeRoute}#categories` : "#categories"}
                   className="flex items-center gap-1.5 rounded-lg border border-[#d8dee7] bg-white px-3.5 py-2 text-sm font-semibold text-[#374151] shadow-sm transition-colors hover:border-[#93c5fd] hover:text-[#2563eb]"
                 >
-                  Browse by category
-                  <ArrowRight size={14} />
+                  {brandHomeRoute ? (
+                    <>
+                      <ArrowLeft size={14} />
+                      {`All ${brand?.name ?? ""} categories`}
+                    </>
+                  ) : (
+                    <>
+                      Browse by category
+                      <ArrowRight size={14} />
+                    </>
+                  )}
                 </a>
               </div>
             )}
@@ -1061,8 +1082,9 @@ export default function CatalogueCategoryPage({
           </div>
         )}
 
-        {/* Hongshang trial: subcategory cards below the product grid. */}
-        {categoriesBelowProducts && (
+        {/* Hongshang trial: subcategory cards below the product grid. Only on
+            pages that actually have category cards (skips empty leaf pages). */}
+        {categoriesBelowProducts && (showVisualLinks || showGenericCategoryCards) && (
           <div id="categories" className="mt-14 scroll-mt-24">
             {categoryCardsBlock}
           </div>
