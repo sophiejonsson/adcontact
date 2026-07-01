@@ -103,6 +103,19 @@ function activeFiltersFromSearchParams(searchParams: CatalogueSearchParams) {
   return filters;
 }
 
+// Some Magento attributes hold things that are not clean categorical values and
+// so must never become a filter facet:
+//  - embedded HTML / download links (Catalog-page, Product Drawings,
+//    Specification, Test Report);
+//  - legend descriptions keyed with "=" (Plating Code: "1= Tin Over Nickel
+//    Plated 2= Gold Flash Plated over 50μ" Nickel …").
+// A genuine filter value ("Gold", "M12", "2.5 mm") never contains "=" or a tag.
+function isFacetableValue(value: string): boolean {
+  if (/<[a-z!/]/i.test(value)) return false;
+  if (value.includes("=")) return false;
+  return true;
+}
+
 // Attribute values can be comma-separated lists (e.g. Series: "DT Series, DTM
 // Series"), so treat each value as a set of tokens for both faceting and matching.
 function attributeTokens(value: string): string[] {
@@ -142,6 +155,7 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
   for (const product of products) {
     for (const [label, value] of Object.entries(product.attributes)) {
       if (!value || HIDDEN_FILTER_ATTRIBUTES.has(label) || value.length > 80) continue;
+      if (!isFacetableValue(value)) continue;
       if (!universe.has(label)) universe.set(label, new Map());
       const counts = universe.get(label)!;
       for (const token of attributeTokens(value)) {
@@ -163,7 +177,7 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
       const counts = new Map<string, number>();
       for (const product of narrowed) {
         const value = product.attributes[label];
-        if (!value) continue;
+        if (!value || !isFacetableValue(value)) continue;
         for (const token of attributeTokens(value)) {
           counts.set(token, (counts.get(token) ?? 0) + 1);
         }

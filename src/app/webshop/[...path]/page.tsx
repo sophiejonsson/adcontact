@@ -121,11 +121,9 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
     return <ZFerrulesPage category={category} />;
   }
 
-  // Cvilux hub — the rich catalogue lives at /products/cvilux (same
-  // CatalogueProductBrowser as the webshop hubs, plus branded hero + FAQ).
-  if (category.id === 226) {
-    permanentRedirect("/products/cvilux");
-  }
+  // Cvilux hub renders as a normal webshop descendant hub (dark hero + product
+  // browser), identical to Stocko et al. — so /products/cvilux redirects here
+  // instead of the other way around, keeping the header consistent.
 
   // Stocko Connector Systems hub and its pitch sub-categories — no Magento
   // products exist here, so show the manufacturer-sourced reference page.
