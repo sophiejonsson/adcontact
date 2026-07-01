@@ -26,7 +26,16 @@ import {
   teConnectivitySeriesByName,
   type DeutschSeriesInfo,
 } from "@/data/deutschSeries";
-import { STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID, stockoSeriesCount } from "@/data/stockoConnectorSystems";
+import {
+  STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
+  STOCKO_CONNECTOR_SYSTEMS_ROUTE,
+  stockoSeriesCount,
+} from "@/data/stockoConnectorSystems";
+import {
+  STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID,
+  STOCKO_TERMINATING_TECHNOLOGY_ROUTE,
+  stockoMachinesCount,
+} from "@/data/stockoTerminatingTechnology";
 
 // Build a map of Magento product id → Deutsch CDN imageUrl for products that
 // have no Magento image, so the category listing can show the correct thumbnail.
@@ -643,11 +652,16 @@ export default function CatalogueCategoryPage({
 
   const visualCategoryByHref = new Map(displayChildren.map((child) => [child.route, child]));
   // For descendant hubs filter out empty subcategories so only navigable buckets
-  // appear as chips alongside the browser. Exception: categories with their own
-  // dedicated page (e.g. Stocko Connector Systems) are always included.
+  // appear as chips alongside the browser. Non-product categories with their own
+  // dedicated pages (Connector Systems, Terminating Technology) are included too
+  // so they appear in the sidebar Category filter as navigation links.
+  const PARTNER_CONTENT_IDS = new Set([
+    STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
+    STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID,
+  ]);
   const browsableChildren = isDescendantHub
     ? displayChildren.filter(
-        (c) => getCategoryProductCount(c) > 0 || c.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
+        (c) => getCategoryProductCount(c) > 0 || PARTNER_CONTENT_IDS.has(c.id),
       )
     : displayChildren;
   // Non-hub pages show category cards. Descendant hubs (e.g. Stocko) use the
@@ -657,8 +671,9 @@ export default function CatalogueCategoryPage({
     !showVisualLinks && !isFlatHub && !isDescendantHub && !isSingleLeafPassthrough &&
     displayChildren.length > 0;
 
-  // For descendant hubs: build subcategory filter options (product-bearing only)
-  // and a separate list of non-product subcategories with dedicated pages.
+  // For descendant hubs: build subcategory filter options. Product-bearing
+  // categories get filter buttons; non-product partner categories get navigation
+  // links (href set) so clicking takes the user to their dedicated page.
   function getAllDescendantCategoryIds(cat: CatalogueCategory): number[] {
     const ids = [cat.id];
     for (const childId of cat.children) {
@@ -668,19 +683,34 @@ export default function CatalogueCategoryPage({
     return ids;
   }
   const subcategoryOptions = isDescendantHub
-    ? browsableChildren
-        .filter((c) => getCategoryProductCount(c) > 0)
-        .map((c) => ({
+    ? browsableChildren.map((c) => {
+        if (c.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID) {
+          return {
+            id: c.id,
+            name: c.name ?? "Connector Systems",
+            count: stockoSeriesCount,
+            countLabel: `${stockoSeriesCount} series`,
+            allCategoryIds: [] as number[],
+            href: c.route ?? STOCKO_CONNECTOR_SYSTEMS_ROUTE,
+          };
+        }
+        if (c.id === STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID) {
+          return {
+            id: c.id,
+            name: c.name ?? "Terminating Technology",
+            count: stockoMachinesCount,
+            countLabel: `${stockoMachinesCount} machines`,
+            allCategoryIds: [] as number[],
+            href: c.route ?? STOCKO_TERMINATING_TECHNOLOGY_ROUTE,
+          };
+        }
+        return {
           id: c.id,
           name: c.name ?? "Category",
           count: getCategoryProductCount(c),
           allCategoryIds: getAllDescendantCategoryIds(c),
-        }))
-    : [];
-  // Non-product subcategories with dedicated pages (e.g. Connector Systems)
-  // shown as an "Explore" link above the product browser.
-  const nonProductBrowsableChildren = isDescendantHub
-    ? browsableChildren.filter((c) => getCategoryProductCount(c) === 0 && c.route)
+        };
+      })
     : [];
 
   const heroStatText = (() => {
@@ -925,27 +955,6 @@ export default function CatalogueCategoryPage({
               </div>
             )}
 
-            {/* Non-product subcategories (e.g. Connector Systems): shown as
-                explore links above the product grid since they can't be a
-                product filter but still deserve prominent navigation. */}
-            {nonProductBrowsableChildren.length > 0 && (
-              <div className="mb-5 flex flex-wrap gap-2">
-                {nonProductBrowsableChildren.map((child) => (
-                  <Link
-                    key={child.id}
-                    href={child.route ?? "#"}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#d8dee7] bg-white px-4 py-1.5 text-sm font-medium text-[#374151] transition-all hover:border-[#2563eb] hover:bg-[#eff6ff] hover:text-[#2563eb]"
-                  >
-                    {child.name}
-                    {child.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID && (
-                      <span className="text-[#94a3b8]">· {stockoSeriesCount} series</span>
-                    )}
-                    <ArrowRight size={12} />
-                  </Link>
-                ))}
-              </div>
-            )}
-
             <CatalogueProductBrowser
               products={productPool}
               route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
@@ -954,7 +963,7 @@ export default function CatalogueCategoryPage({
               sectionLabel={productSectionLabel}
               sectionTitle={productSectionTitle}
               deutschImageMap={buildDeutschImageMap(productPool)}
-              subcategoryOptions={subcategoryOptions.length > 1 ? subcategoryOptions : undefined}
+              subcategoryOptions={subcategoryOptions.length > 0 ? subcategoryOptions : undefined}
             />
 
             {/* Sourcing CTA for connector & heat-shrink brands — sits directly

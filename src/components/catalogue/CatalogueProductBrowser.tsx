@@ -323,8 +323,14 @@ export type SubcategoryOption = {
   id: number;
   name: string;
   count: number;
-  /** All category IDs in this subcategory's tree — used for product filtering. */
+  /** Display label overriding the numeric count, e.g. "28 series". */
+  countLabel?: string;
+  /** All category IDs in this subcategory's tree — used for product filtering.
+   *  Empty array for non-product (partner content) categories. */
   allCategoryIds: number[];
+  /** If set, clicking navigates to this route instead of filtering products.
+   *  Used for non-product subcategories (Connector Systems, Terminating Technology). */
+  href?: string;
 };
 
 export default function CatalogueProductBrowser({
@@ -458,6 +464,22 @@ export default function CatalogueProductBrowser({
             </h3>
             <div className="mt-2 space-y-1.5">
               {subcategoryOptions!.map((option) => {
+                if (option.href) {
+                  // Non-product subcategory: navigate to its dedicated page.
+                  return (
+                    <Link
+                      key={option.id}
+                      href={option.href}
+                      className="flex w-full items-center justify-between gap-3 rounded-md px-2 py-1.5 text-xs text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
+                    >
+                      <span>{option.name}</span>
+                      <span className="flex items-center gap-1 flex-none text-[#94a3b8]">
+                        {option.countLabel ?? option.count}
+                        <ArrowRight size={10} />
+                      </span>
+                    </Link>
+                  );
+                }
                 const active = activeSubcategoryId === option.id;
                 return (
                   <button
@@ -474,7 +496,9 @@ export default function CatalogueProductBrowser({
                     }`}
                   >
                     <span>{option.name}</span>
-                    <span className="flex-none text-[#94a3b8]">{option.count.toLocaleString()}</span>
+                    <span className="flex-none text-[#94a3b8]">
+                      {option.countLabel ?? option.count.toLocaleString()}
+                    </span>
                   </button>
                 );
               })}

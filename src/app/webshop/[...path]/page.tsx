@@ -4,6 +4,7 @@ import CatalogueCategoryPage from "@/components/catalogue/CatalogueCategoryPage"
 import CatalogueProductPage from "@/components/catalogue/CatalogueProductPage";
 import ZFerrulesPage from "@/components/catalogue/ZFerrulesPage";
 import StockoConnectorSystemsPage from "@/components/catalogue/StockoConnectorSystemsPage";
+import StockoTerminatingTechnologyPage from "@/components/catalogue/StockoTerminatingTechnologyPage";
 import {
   getCatalogueCategory,
   getCatalogueProduct,
@@ -13,12 +14,11 @@ import {
 } from "@/lib/magentoCatalogue";
 import { deutschProducts } from "@/data/deutschConnectors";
 import { getStockoPitchGroupByCategoryRoute } from "@/data/stockoConnectorSystems";
+import { getStockoMachineGroupByCategoryRoute } from "@/data/stockoTerminatingTechnology";
 
-// Stocko "Connector Systems" category (125) and its pitch sub-categories have
-// 0 Magento products — those series were never imported, but they exist on
-// the manufacturer's own site. Render the scraped reference data instead of
-// an empty category page.
+// Stocko categories with no Magento products: route to dedicated scraped pages.
 const STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID = 125;
+const STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID = 171;
 import {
   absoluteUrl,
   categoryMetaDescription,
@@ -131,6 +131,17 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
       ? getStockoPitchGroupByCategoryRoute(category.route)
       : undefined;
     return <StockoConnectorSystemsPage category={category} pitchGroup={pitchGroup} />;
+  }
+
+  // Stocko Terminating Technology hub and its machine sub-categories.
+  if (category.id === STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID) {
+    return <StockoTerminatingTechnologyPage category={category} />;
+  }
+  if (category.parentId === STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID) {
+    const machineGroup = category.route
+      ? getStockoMachineGroupByCategoryRoute(category.route)
+      : undefined;
+    return <StockoTerminatingTechnologyPage category={category} machineGroup={machineGroup} />;
   }
 
   return <CatalogueCategoryPage category={category} searchParams={await searchParams} />;
