@@ -28,14 +28,16 @@ import {
 } from "@/data/deutschSeries";
 import {
   STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
-  STOCKO_CONNECTOR_SYSTEMS_ROUTE,
   stockoSeriesCount,
+  stockoConnectorSystems,
 } from "@/data/stockoConnectorSystems";
 import {
   STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID,
-  STOCKO_TERMINATING_TECHNOLOGY_ROUTE,
   stockoMachinesCount,
+  stockoMachineGroups,
 } from "@/data/stockoTerminatingTechnology";
+import StockoSeriesBrowser from "@/components/catalogue/StockoSeriesBrowser";
+import StockoMachineBrowser from "@/components/catalogue/StockoMachineBrowser";
 
 // Build a map of Magento product id → Deutsch CDN imageUrl for products that
 // have no Magento image, so the category listing can show the correct thumbnail.
@@ -691,7 +693,6 @@ export default function CatalogueCategoryPage({
             count: stockoSeriesCount,
             countLabel: `${stockoSeriesCount} series`,
             allCategoryIds: [] as number[],
-            href: c.route ?? STOCKO_CONNECTOR_SYSTEMS_ROUTE,
           };
         }
         if (c.id === STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID) {
@@ -701,7 +702,6 @@ export default function CatalogueCategoryPage({
             count: stockoMachinesCount,
             countLabel: `${stockoMachinesCount} machines`,
             allCategoryIds: [] as number[],
-            href: c.route ?? STOCKO_TERMINATING_TECHNOLOGY_ROUTE,
           };
         }
         return {
@@ -964,6 +964,16 @@ export default function CatalogueCategoryPage({
               sectionTitle={productSectionTitle}
               deutschImageMap={buildDeutschImageMap(productPool)}
               subcategoryOptions={subcategoryOptions.length > 0 ? subcategoryOptions : undefined}
+              partnerSlots={[
+                {
+                  categoryId: STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
+                  content: <StockoSeriesBrowser groups={stockoConnectorSystems} />,
+                },
+                {
+                  categoryId: STOCKO_TERMINATING_TECHNOLOGY_CATEGORY_ID,
+                  content: <StockoMachineBrowser groups={stockoMachineGroups} />,
+                },
+              ]}
             />
 
             {/* Sourcing CTA for connector & heat-shrink brands — sits directly

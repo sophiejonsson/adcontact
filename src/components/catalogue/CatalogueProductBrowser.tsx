@@ -328,9 +328,6 @@ export type SubcategoryOption = {
   /** All category IDs in this subcategory's tree — used for product filtering.
    *  Empty array for non-product (partner content) categories. */
   allCategoryIds: number[];
-  /** If set, clicking navigates to this route instead of filtering products.
-   *  Used for non-product subcategories (Connector Systems, Terminating Technology). */
-  href?: string;
 };
 
 export default function CatalogueProductBrowser({
@@ -342,6 +339,7 @@ export default function CatalogueProductBrowser({
   sectionTitle,
   deutschImageMap,
   subcategoryOptions,
+  partnerSlots,
 }: {
   products: CatalogueProduct[];
   route: string | null;
@@ -351,6 +349,8 @@ export default function CatalogueProductBrowser({
   sectionTitle: string;
   deutschImageMap?: Record<string, string>;
   subcategoryOptions?: SubcategoryOption[];
+  /** When a non-product subcategory is active, render this content instead of the product grid. */
+  partnerSlots?: { categoryId: number; content: React.ReactNode }[];
 }) {
   const initialPageSize = positiveInt(searchParams.per_page, DEFAULT_PAGE_SIZE);
   const [query, setQuery] = useState(firstParamValue(searchParams.q) ?? "");
@@ -362,11 +362,17 @@ export default function CatalogueProductBrowser({
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [activeSubcategoryId, setActiveSubcategoryId] = useState<number | null>(null);
 
+  const activePartnerSlot = activeSubcategoryId
+    ? (partnerSlots?.find((s) => s.categoryId === activeSubcategoryId) ?? null)
+    : null;
+
   // Subcategory filter runs first — before text search and attribute filters.
+  // For partner-content subcategories (allCategoryIds empty) we return products
+  // unchanged; the product grid is hidden and the partner slot renders instead.
   const subcategoryFilteredProducts = useMemo(() => {
     if (!activeSubcategoryId || !subcategoryOptions?.length) return products;
     const option = subcategoryOptions.find((o) => o.id === activeSubcategoryId);
-    if (!option) return products;
+    if (!option || option.allCategoryIds.length === 0) return products;
     const catIdSet = new Set(option.allCategoryIds);
     return products.filter((p) => p.categoryIds.some((id) => catIdSet.has(id)));
   }, [products, activeSubcategoryId, subcategoryOptions]);
@@ -464,22 +470,6 @@ export default function CatalogueProductBrowser({
             </h3>
             <div className="mt-2 space-y-1.5">
               {subcategoryOptions!.map((option) => {
-                if (option.href) {
-                  // Non-product subcategory: navigate to its dedicated page.
-                  return (
-                    <Link
-                      key={option.id}
-                      href={option.href}
-                      className="flex w-full items-center justify-between gap-3 rounded-md px-2 py-1.5 text-xs text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
-                    >
-                      <span>{option.name}</span>
-                      <span className="flex items-center gap-1 flex-none text-[#94a3b8]">
-                        {option.countLabel ?? option.count}
-                        <ArrowRight size={10} />
-                      </span>
-                    </Link>
-                  );
-                }
                 const active = activeSubcategoryId === option.id;
                 return (
                   <button
@@ -506,7 +496,7 @@ export default function CatalogueProductBrowser({
           </div>
         )}
 
-        {facets.length > 0 && (
+        {!activePartnerSlot && facets.length > 0 && (
           <div className={`space-y-5 ${hasSubcategoryFilter ? "mt-5 border-t border-[#eef2f7] pt-5" : "mt-5"}`}>
             {facets.map((facet) => (
               <div key={facet.param}>
@@ -663,85 +653,92 @@ export default function CatalogueProductBrowser({
           )}
         </div>
 
-        <div className="mb-6 flex items-end justify-between gap-4">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
-              {sectionLabel}
-            </p>
-            <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">{sectionTitle}</h2>
-          </div>
-          <span className="text-sm font-medium text-[#64748b]">
-            Items {visibleStart.toLocaleString()} to {visibleEnd.toLocaleString()} of{" "}
-            {filteredProducts.length.toLocaleString()} total
-          </span>
-        </div>
-
-        {pageProducts.length > 0 ? (
-          <div className={isWebshopRoot
-            ? "grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
-            : "grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
-          }>
-            {pageProducts.map((product) => (
-              <ProductCard key={product.id} product={product} categoryRoute={route} deutschImageMap={deutschImageMap} compact={isWebshopRoot} />
-            ))}
-          </div>
+        {activePartnerSlot ? (
+          /* Partner-content subcategory active: show the dedicated browser inline */
+          <div className="-mx-0">{activePartnerSlot.content}</div>
         ) : (
-          <div className="rounded-lg border border-[#e5e7eb] bg-white px-6 py-12 text-center">
-            <h3 className="text-base font-bold text-[#0a1628]">No matching catalogue items</h3>
-            <p className="mt-2 text-sm text-[#64748b]">
-              Try a shorter part number, product family, material, colour, or brand.
-            </p>
-          </div>
-        )}
-
-        <div className="mt-8 flex flex-col gap-4 border-t border-[#e5e7eb] pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
-              Show
-            </span>
-            {PAGE_SIZE_OPTIONS.map((size) => (
-              <button
-                key={size}
-                type="button"
-                onClick={() => {
-                  setPageSize(size);
-                  setPage(1);
-                }}
-                className={`rounded-md border px-3 py-1.5 text-xs font-bold ${
-                  size === pageSize
-                    ? "border-[#2563eb] bg-[#eff6ff] text-[#1d4ed8]"
-                    : "border-[#d8dee7] bg-white text-[#475569] hover:border-[#93c5fd] hover:text-[#2563eb]"
-                }`}
-              >
-                {size}
-              </button>
-            ))}
-          </div>
-
-          {pageCount > 1 && (
-            <div className="flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setPage(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-                className="rounded-md border border-[#d8dee7] bg-white px-3 py-1.5 text-xs font-bold text-[#475569] hover:border-[#93c5fd] hover:text-[#2563eb] disabled:pointer-events-none disabled:border-[#e5e7eb] disabled:text-[#cbd5e1]"
-              >
-                Previous
-              </button>
-              <span className="text-xs font-bold text-[#64748b]">
-                Page {currentPage.toLocaleString()} of {pageCount.toLocaleString()}
+          <>
+            <div className="mb-6 flex items-end justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
+                  {sectionLabel}
+                </p>
+                <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">{sectionTitle}</h2>
+              </div>
+              <span className="text-sm font-medium text-[#64748b]">
+                Items {visibleStart.toLocaleString()} to {visibleEnd.toLocaleString()} of{" "}
+                {filteredProducts.length.toLocaleString()} total
               </span>
-              <button
-                type="button"
-                onClick={() => setPage(Math.min(pageCount, currentPage + 1))}
-                disabled={currentPage === pageCount}
-                className="rounded-md border border-[#d8dee7] bg-white px-3 py-1.5 text-xs font-bold text-[#475569] hover:border-[#93c5fd] hover:text-[#2563eb] disabled:pointer-events-none disabled:border-[#e5e7eb] disabled:text-[#cbd5e1]"
-              >
-                Next
-              </button>
             </div>
-          )}
-        </div>
+
+            {pageProducts.length > 0 ? (
+              <div className={isWebshopRoot
+                ? "grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
+                : "grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+              }>
+                {pageProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} categoryRoute={route} deutschImageMap={deutschImageMap} compact={isWebshopRoot} />
+                ))}
+              </div>
+            ) : (
+              <div className="rounded-lg border border-[#e5e7eb] bg-white px-6 py-12 text-center">
+                <h3 className="text-base font-bold text-[#0a1628]">No matching catalogue items</h3>
+                <p className="mt-2 text-sm text-[#64748b]">
+                  Try a shorter part number, product family, material, colour, or brand.
+                </p>
+              </div>
+            )}
+
+            <div className="mt-8 flex flex-col gap-4 border-t border-[#e5e7eb] pt-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
+                  Show
+                </span>
+                {PAGE_SIZE_OPTIONS.map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => {
+                      setPageSize(size);
+                      setPage(1);
+                    }}
+                    className={`rounded-md border px-3 py-1.5 text-xs font-bold ${
+                      size === pageSize
+                        ? "border-[#2563eb] bg-[#eff6ff] text-[#1d4ed8]"
+                        : "border-[#d8dee7] bg-white text-[#475569] hover:border-[#93c5fd] hover:text-[#2563eb]"
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+
+              {pageCount > 1 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setPage(Math.max(1, currentPage - 1))}
+                    disabled={currentPage === 1}
+                    className="rounded-md border border-[#d8dee7] bg-white px-3 py-1.5 text-xs font-bold text-[#475569] hover:border-[#93c5fd] hover:text-[#2563eb] disabled:pointer-events-none disabled:border-[#e5e7eb] disabled:text-[#cbd5e1]"
+                  >
+                    Previous
+                  </button>
+                  <span className="text-xs font-bold text-[#64748b]">
+                    Page {currentPage.toLocaleString()} of {pageCount.toLocaleString()}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setPage(Math.min(pageCount, currentPage + 1))}
+                    disabled={currentPage === pageCount}
+                    className="rounded-md border border-[#d8dee7] bg-white px-3 py-1.5 text-xs font-bold text-[#475569] hover:border-[#93c5fd] hover:text-[#2563eb] disabled:pointer-events-none disabled:border-[#e5e7eb] disabled:text-[#cbd5e1]"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
