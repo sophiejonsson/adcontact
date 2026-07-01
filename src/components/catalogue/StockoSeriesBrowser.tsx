@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import { ArrowUpRight, Search, X } from "lucide-react";
 import type { StockoConnectorPitchGroup } from "@/data/stockoConnectorSystems";
+import { usePartnerSearch } from "@/lib/partnerSearchContext";
 
 type FlatSeries = {
   name: string;
@@ -15,11 +16,21 @@ type FlatSeries = {
 export default function StockoSeriesBrowser({
   groups,
   initialPitch,
+  hideSearch,
 }: {
   groups: StockoConnectorPitchGroup[];
   initialPitch?: string;
+  /** Hide the internal search bar — used when embedded in the product browser
+   *  where the parent search bar drives the query via PartnerSearchContext. */
+  hideSearch?: boolean;
 }) {
-  const [query, setQuery] = useState("");
+  const partnerQuery = usePartnerSearch();
+  const [query, setQuery] = useState(partnerQuery);
+
+  // Sync whenever the parent product browser search changes
+  useEffect(() => {
+    setQuery(partnerQuery);
+  }, [partnerQuery]);
   const [selectedPitch, setSelectedPitch] = useState<string | null>(initialPitch ?? null);
 
   const allSeries: FlatSeries[] = useMemo(
@@ -51,28 +62,30 @@ export default function StockoSeriesBrowser({
     <div className="mx-auto max-w-[1440px] px-6 py-8">
       {/* Search + filter bar */}
       <div className="sticky top-0 z-10 bg-[#f8fafc] pb-4 pt-1">
-        {/* Search input */}
-        <div className="relative mb-3">
-          <Search
-            size={15}
-            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8]"
-          />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search connector series…"
-            className="w-full rounded-xl border border-[#d8dee7] bg-white py-2.5 pl-10 pr-10 text-sm text-[#0a1628] placeholder-[#94a3b8] shadow-sm focus:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]/20"
-          />
-          {query && (
-            <button
-              onClick={() => setQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#374151]"
-            >
-              <X size={14} />
-            </button>
-          )}
-        </div>
+        {/* Search input — hidden when parent browser is driving the query */}
+        {!hideSearch && (
+          <div className="relative mb-3">
+            <Search
+              size={15}
+              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#94a3b8]"
+            />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search connector series…"
+              className="w-full rounded-xl border border-[#d8dee7] bg-white py-2.5 pl-10 pr-10 text-sm text-[#0a1628] placeholder-[#94a3b8] shadow-sm focus:border-[#2563eb] focus:outline-none focus:ring-2 focus:ring-[#2563eb]/20"
+            />
+            {query && (
+              <button
+                onClick={() => setQuery("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-[#374151]"
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Pitch filter chips */}
         <div className="flex flex-wrap gap-2">

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, X, ArrowRight, Package, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
+import { PartnerSearchContext } from "@/lib/partnerSearchContext";
 import type {
   CatalogueProduct,
   CatalogueSearchParams,
@@ -349,8 +350,10 @@ export default function CatalogueProductBrowser({
   sectionTitle: string;
   deutschImageMap?: Record<string, string>;
   subcategoryOptions?: SubcategoryOption[];
-  /** When a non-product subcategory is active, render this content instead of the product grid. */
-  partnerSlots?: { categoryId: number; content: React.ReactNode }[];
+  /** When a non-product subcategory is active, render this content instead of
+   *  the product grid. searchNames is the list of item names to match against
+   *  the main search query for auto-activation (when no products match). */
+  partnerSlots?: { categoryId: number; content: React.ReactNode; searchNames?: string[] }[];
 }) {
   const initialPageSize = positiveInt(searchParams.per_page, DEFAULT_PAGE_SIZE);
   const [query, setQuery] = useState(firstParamValue(searchParams.q) ?? "");
@@ -361,10 +364,6 @@ export default function CatalogueProductBrowser({
   const [page, setPage] = useState(positiveInt(searchParams.page ?? searchParams.p, 1));
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [activeSubcategoryId, setActiveSubcategoryId] = useState<number | null>(null);
-
-  const activePartnerSlot = activeSubcategoryId
-    ? (partnerSlots?.find((s) => s.categoryId === activeSubcategoryId) ?? null)
-    : null;
 
   // Subcategory filter runs first — before text search and attribute filters.
   // For partner-content subcategories (allCategoryIds empty) we return products
@@ -380,6 +379,42 @@ export default function CatalogueProductBrowser({
   const queryText = query.toLowerCase().trim();
   const queryTokens = queryText.split(/\s+/).filter(Boolean);
   const normalizedTokens = queryTokens.map(normalizedQuery).filter(Boolean);
+
+  // When query matches a partner slot's names and no products match, auto-show
+  // that partner slot so searches like "RFK 2" surface series results.
+  const hasAnyProductMatch = useMemo(() => {
+    if (!queryText) return true;
+    return products.some((product) => {
+      const haystack = searchableText(product);
+      const normalizedHaystack = normalizedSearchText(product);
+      return queryTokens.every((token, index) => {
+        const normalizedToken = normalizedTokens[index];
+        return (
+          haystack.includes(token) ||
+          Boolean(normalizedToken && normalizedHaystack.includes(normalizedToken))
+        );
+      });
+    });
+  }, [products, queryText, queryTokens, normalizedTokens]);
+
+  const autoPartnerSlotId = useMemo(() => {
+    if (!queryText || hasAnyProductMatch || activeSubcategoryId !== null) return null;
+    const matched = partnerSlots?.find((slot) =>
+      slot.searchNames?.some((name) => {
+        const nl = name.toLowerCase();
+        return queryTokens.every((token) => nl.includes(token));
+      }),
+    );
+    return matched?.categoryId ?? null;
+  }, [queryText, hasAnyProductMatch, activeSubcategoryId, partnerSlots, queryTokens]);
+
+  // Explicit user selection takes priority; fall back to query-driven auto-slot.
+  const effectiveSubcategoryId = activeSubcategoryId ?? autoPartnerSlotId;
+
+  const activePartnerSlot = effectiveSubcategoryId
+    ? (partnerSlots?.find((s) => s.categoryId === effectiveSubcategoryId) ?? null)
+    : null;
+
   const searchedProducts = useMemo(() => {
     if (queryTokens.length === 0) return subcategoryFilteredProducts;
     return subcategoryFilteredProducts
@@ -440,7 +475,7 @@ export default function CatalogueProductBrowser({
     setPage(1);
   }
 
-  const activeFilterCount = Object.keys(activeFilters).length + (activeSubcategoryId ? 1 : 0);
+  const activeFilterCount = Object.keys(activeFilters).length + (effectiveSubcategoryId ? 1 : 0);
   const hasSubcategoryFilter = (subcategoryOptions?.length ?? 0) > 1;
   const showFilters = !isWebshopRoot && (facets.length > 0 || hasSubcategoryFilter);
 
@@ -470,7 +505,7 @@ export default function CatalogueProductBrowser({
             </h3>
             <div className="mt-2 space-y-1.5">
               {subcategoryOptions!.map((option) => {
-                const active = activeSubcategoryId === option.id;
+                const active = effectiveSubcategoryId === option.id;
                 return (
                   <button
                     key={option.id}
@@ -654,8 +689,12 @@ export default function CatalogueProductBrowser({
         </div>
 
         {activePartnerSlot ? (
-          /* Partner-content subcategory active: show the dedicated browser inline */
-          <div className="-mx-0">{activePartnerSlot.content}</div>
+          /* Partner-content subcategory active: show the dedicated browser inline.
+             The context passes the current search query so the embedded browser
+             can filter its own content accordingly. */
+          <PartnerSearchContext.Provider value={query}>
+            <div>{activePartnerSlot.content}</div>
+          </PartnerSearchContext.Provider>
         ) : (
           <>
             <div className="mb-6 flex items-end justify-between gap-4">

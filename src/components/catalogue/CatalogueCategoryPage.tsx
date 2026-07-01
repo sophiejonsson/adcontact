@@ -947,7 +947,10 @@ export default function CatalogueCategoryPage({
               partnerSlots={[
                 {
                   categoryId: STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
-                  content: <StockoSeriesBrowser groups={stockoConnectorSystems} />,
+                  searchNames: stockoConnectorSystems.flatMap((g) =>
+                    g.series.map((s) => s.name),
+                  ),
+                  content: <StockoSeriesBrowser groups={stockoConnectorSystems} hideSearch />,
                 },
               ]}
             />
