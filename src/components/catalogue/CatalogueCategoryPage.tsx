@@ -770,11 +770,13 @@ export default function CatalogueCategoryPage({
     !!brand &&
     (brand.categories.includes("connectors") || brand.categories.includes("heat-shrink"));
 
-  // Trial (Hongshang): render the subcategory cards BELOW the product grid with a
-  // "Browse by category" jump button, mirroring the DEUTSCH series layout. The
+  // Trial: for these brands render the subcategory cards BELOW the product grid
+  // with a "Browse by category" jump button, mirroring the DEUTSCH series layout.
+  // Suits brands that browse by sub-category and have no "series" data. The
   // category cards markup is shared so it can render either in its usual spot or
   // below the products depending on this flag.
-  const categoriesBelowProducts = brand?.slug === "hongshang";
+  const CATEGORIES_BELOW_PRODUCTS_BRANDS = new Set(["hongshang", "htp"]);
+  const categoriesBelowProducts = !!brand && CATEGORIES_BELOW_PRODUCTS_BRANDS.has(brand.slug);
   // Is this the brand's own landing page (e.g. Hongshang), vs a descendant
   // subcategory (Thin Wall Tubing, etc.)? On the landing page the jump button
   // scrolls down to the categories; on a descendant it links back UP to the
