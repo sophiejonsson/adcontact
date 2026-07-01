@@ -26,6 +26,7 @@ import {
   teConnectivitySeriesByName,
   type DeutschSeriesInfo,
 } from "@/data/deutschSeries";
+import { STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID } from "@/data/stockoConnectorSystems";
 
 // Build a map of Magento product id → Deutsch CDN imageUrl for products that
 // have no Magento image, so the category listing can show the correct thumbnail.
@@ -629,9 +630,12 @@ export default function CatalogueCategoryPage({
 
   const visualCategoryByHref = new Map(displayChildren.map((child) => [child.route, child]));
   // For descendant hubs filter out empty subcategories so only navigable buckets
-  // (e.g. Crimp Contacts, Solderless Terminals) appear as cards alongside the browser.
+  // appear as chips alongside the browser. Exception: categories with their own
+  // dedicated page (e.g. Stocko Connector Systems) are always included.
   const browsableChildren = isDescendantHub
-    ? displayChildren.filter((c) => getCategoryProductCount(c) > 0)
+    ? displayChildren.filter(
+        (c) => getCategoryProductCount(c) > 0 || c.id === STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
+      )
     : displayChildren;
   // Flat hubs, descendant hubs, and single-leaf passthroughs show the product browser
   // directly without large category cards.

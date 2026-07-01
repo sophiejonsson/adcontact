@@ -20,6 +20,8 @@ export type StockoConnectorPitchGroup = {
   series: StockoConnectorSeries[];
 };
 
+export const STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID = 125;
+
 export const STOCKO_CONNECTOR_SYSTEMS_ROUTE =
   "/webshop/components/sealed-connectors/stocko/connector-systems.html";
 
