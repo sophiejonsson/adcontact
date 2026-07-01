@@ -257,6 +257,13 @@ export const stockoSeriesCount = stockoConnectorSystems.reduce(
   0,
 );
 
+/** { value, count } pitch options for the product browser's sidebar facet.
+ *  Lives here (not in the client browser component) so server components can
+ *  build the facet without pulling in a client module. */
+export function stockoPitchOptions(groups: StockoConnectorPitchGroup[]) {
+  return groups.map((g) => ({ value: g.pitch, count: g.series.length }));
+}
+
 export function getStockoPitchGroupByCategoryRoute(
   route: string,
 ): StockoConnectorPitchGroup | undefined {

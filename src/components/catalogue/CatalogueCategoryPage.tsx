@@ -30,10 +30,9 @@ import {
   STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
   stockoSeriesCount,
   stockoConnectorSystems,
-} from "@/data/stockoConnectorSystems";
-import StockoSeriesBrowser, {
   stockoPitchOptions,
-} from "@/components/catalogue/StockoSeriesBrowser";
+} from "@/data/stockoConnectorSystems";
+import StockoSeriesBrowser from "@/components/catalogue/StockoSeriesBrowser";
 
 // Build a map of Magento product id → Deutsch CDN imageUrl for products that
 // have no Magento image, so the category listing can show the correct thumbnail.

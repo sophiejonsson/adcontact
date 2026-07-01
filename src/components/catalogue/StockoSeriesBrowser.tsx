@@ -13,12 +13,6 @@ type FlatSeries = {
   pitch: string;
 };
 
-/** Build the { value, count } pitch options for the parent browser's sidebar
- *  facet, so the embedded browser and the sidebar stay in sync. */
-export function stockoPitchOptions(groups: StockoConnectorPitchGroup[]) {
-  return groups.map((g) => ({ value: g.pitch, count: g.series.length }));
-}
-
 function SeriesGrid({ series }: { series: FlatSeries[] }) {
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
