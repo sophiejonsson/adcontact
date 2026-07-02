@@ -783,6 +783,9 @@ export default function CatalogueCategoryPage({
   // below the products depending on this flag.
   const CATEGORIES_BELOW_PRODUCTS_BRANDS = new Set(["hongshang", "htp"]);
   const categoriesBelowProducts = !!brand && CATEGORIES_BELOW_PRODUCTS_BRANDS.has(brand.slug);
+  // Trial (HTP): show 4 category cards per row on large screens instead of 3,
+  // so each card is a bit smaller and the grid takes less vertical space.
+  const fourColumnCategories = brand?.slug === "htp";
   // Is this the brand's own landing page (e.g. Hongshang), vs a descendant
   // subcategory (Thin Wall Tubing, etc.)? On the landing page the jump button
   // scrolls down to the categories; on a descendant it links back UP to the
@@ -812,7 +815,7 @@ export default function CatalogueCategoryPage({
               {content.visualLinks.length.toLocaleString()} categories
             </span>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className={`grid gap-4 sm:grid-cols-2 ${fourColumnCategories ? "md:grid-cols-3 lg:grid-cols-4" : "lg:grid-cols-3"}`}>
             {content.visualLinks.map((item) => (
               <CategoryVisualLinkCard
                 key={`${item.href}-${item.title}`}
