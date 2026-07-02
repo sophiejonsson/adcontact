@@ -371,9 +371,11 @@ function descriptionContent(description: string | null): DescriptionContent {
 function CategoryVisualLinkCard({
   item,
   category,
+  compact = false,
 }: {
   item: VisualLink;
   category: CatalogueCategory | undefined;
+  compact?: boolean;
 }) {
   const productCount = category ? getCategoryProductCount(category) : null;
   const childCount = category ? getCategoryChildren(category).length : 0;
@@ -383,34 +385,34 @@ function CategoryVisualLinkCard({
   return (
     <Link
       href={item.href}
-      className="group grid min-h-[210px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+      className={`group grid overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)] ${compact ? "min-h-[180px]" : "min-h-[210px]"}`}
     >
-      <div className={`relative flex min-h-32 items-center justify-center border-b border-[#eef2f7] ${brand ? "bg-white" : "bg-[#f8fafc]"}`}>
+      <div className={`relative flex items-center justify-center border-b border-[#eef2f7] ${compact ? "min-h-28" : "min-h-32"} ${brand ? "bg-white" : "bg-[#f8fafc]"}`}>
         {imageSrc ? (
           <Image
             src={imageSrc}
             alt={item.title}
             fill
             unoptimized
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 280px"
-            className={`object-contain transition-transform group-hover:scale-105 ${brand ? "p-6" : "p-4"}`}
+            sizes={compact ? "(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 240px" : "(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 280px"}
+            className={`object-contain transition-transform group-hover:scale-105 ${brand ? (compact ? "p-5" : "p-6") : (compact ? "p-3" : "p-4")}`}
           />
         ) : (
-          <Boxes size={34} strokeWidth={1.6} className="text-[#2563eb]" />
+          <Boxes size={compact ? 28 : 34} strokeWidth={1.6} className="text-[#2563eb]" />
         )}
       </div>
-      <div className="flex min-w-0 flex-col p-4">
-        <h3 className="min-h-11 text-base font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
+      <div className={`flex min-w-0 flex-col ${compact ? "p-3.5" : "p-4"}`}>
+        <h3 className={`font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb] ${compact ? "min-h-10 text-sm" : "min-h-11 text-base"}`}>
           {item.title}
         </h3>
-        <div className="mt-3 flex items-center justify-between gap-3 border-t border-[#eef2f7] pt-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#64748b]">
+        <div className={`flex items-center justify-between gap-3 border-t border-[#eef2f7] ${compact ? "mt-2.5 pt-2.5" : "mt-3 pt-3"}`}>
+          <span className={`font-semibold uppercase text-[#64748b] ${compact ? "text-[11px] tracking-[0.1em]" : "text-xs tracking-[0.12em]"}`}>
             {productCount !== null
               ? `${productCount.toLocaleString()} items`
               : "Open category"}
             {childCount > 0 ? ` · ${childCount} areas` : ""}
           </span>
-          <ArrowRight size={15} className="flex-none text-[#2563eb]" />
+          <ArrowRight size={compact ? 14 : 15} className="flex-none text-[#2563eb]" />
         </div>
       </div>
     </Link>
@@ -821,6 +823,7 @@ export default function CatalogueCategoryPage({
                 key={`${item.href}-${item.title}`}
                 item={item}
                 category={visualCategoryByHref.get(item.href)}
+                compact={fourColumnCategories}
               />
             ))}
           </div>
