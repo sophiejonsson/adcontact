@@ -42,7 +42,11 @@ function buildDeutschImageMap(products: CatalogueProduct[]): Record<string, stri
   for (const product of products) {
     const sku = (product.sku ?? product.name ?? "").toUpperCase();
     const deutsch = deutschProducts.find((d) => d.partNumber.toUpperCase() === sku);
-    if (deutsch?.imageUrl) map[String(product.id)] = deutsch.imageUrl;
+    // Skip Magento no_photo/placeholder images so the card falls through to the
+    // clean "No image available" placeholder instead of "image coming soon".
+    if (deutsch?.imageUrl && !/no_photo|placeholder/i.test(deutsch.imageUrl)) {
+      map[String(product.id)] = deutsch.imageUrl;
+    }
   }
   return map;
 }

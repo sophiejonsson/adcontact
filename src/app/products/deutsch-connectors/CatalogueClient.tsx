@@ -12,6 +12,13 @@ import { productDetailHref } from "@/lib/productHref";
 
 const RICH_SLUGS = new Set(deutschProductDetails.map((p) => p.slug));
 
+// Treat Magento's "no photo"/placeholder graphic as no image.
+function cleanImage(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (/no_photo|placeholder/i.test(path)) return null;
+  return path;
+}
+
 // Attribute groups long enough to warrant a scroll area in the filter panel.
 const SCROLL_GROUPS = new Set(["No. of cavities", "Color"]);
 
@@ -44,9 +51,9 @@ function ProductCard({ product }: { product: DeutschProduct }) {
     <Link href={detailHref} className="group bg-white border border-[#e5e7eb] rounded-xl overflow-hidden hover:border-[#2563eb] hover:shadow-[0_4px_16px_rgba(37,99,235,0.12)] transition-all duration-200 flex flex-col">
       {/* Product image */}
       <div className="relative h-40 bg-[#f8fafc] overflow-hidden flex-shrink-0">
-        {product.imageUrl && !imgError ? (
+        {cleanImage(product.imageUrl) && !imgError ? (
           <Image
-            src={product.imageUrl}
+            src={cleanImage(product.imageUrl)!}
             alt={product.partNumber}
             fill
             className="object-contain p-3 group-hover:scale-105 transition-transform duration-300"
