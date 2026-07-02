@@ -9,7 +9,7 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 // picture stored in our R2) so visitors stay on our site instead of being sent
 // to zofre.de. Add the remaining categories here as they are done.
 const ZOFRE_FERRULES = "https://www.zofre.de/en/ferrules";
-const WIRE_FERRULES_HUB = "/webshop/components/sealed-connectors/zoller-frohlich/wire-ferrules.html";
+const WIRE_FERRULES_HUB = "/webshop/components/sealed-connectors/zoller-frohlich.html";
 
 type FerrulePage = {
   title: string;
