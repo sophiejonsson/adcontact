@@ -44,16 +44,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// Treat Magento's "no photo"/placeholder graphic as no image, so the clean
+// fallback shows instead of the dated "image coming soon" placeholder.
+function cleanImage(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (/no_photo|placeholder/i.test(path)) return null;
+  return path;
+}
+
 function RelatedCard({ sku, image }: { sku: string; image: string | null }) {
+  const cleaned = cleanImage(image);
   return (
     <Link
       href={productDetailHref(sku)}
       className="group flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white transition-all duration-200 hover:-translate-y-1 hover:border-[#bfdbfe] hover:shadow-[0_16px_30px_-16px_rgba(15,23,42,0.22)]"
     >
       <div className="relative aspect-square w-full bg-white">
-        {image ? (
+        {cleaned ? (
           <Image
-            src={image}
+            src={cleaned}
             alt={sku}
             fill
             className="object-contain p-3 transition-transform duration-300 group-hover:scale-110"
@@ -84,7 +93,7 @@ export default async function ProductPage({ params }: Props) {
     product.brand === "Deutsch" ? getProductDetail(product.sku.toLowerCase()) : undefined;
   const specs =
     detail?.specs && Object.keys(detail.specs).length ? detail.specs : product.specs;
-  const image = detail?.largImageUrl ?? product.image;
+  const image = cleanImage(detail?.largImageUrl ?? product.image);
 
   const chips = Object.entries(specs)
     .filter(([k]) => k !== "Brand" && k !== "Part Number")
@@ -134,8 +143,9 @@ export default async function ProductPage({ params }: Props) {
                 unoptimized
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Package size={64} className="text-[#d1d5db]" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 bg-[#f8fafc]">
+                <Package size={52} strokeWidth={1.4} className="text-[#cbd5e1]" />
+                <span className="text-xs font-medium text-[#94a3b8]">No image available</span>
               </div>
             )}
           </div>

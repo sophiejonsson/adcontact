@@ -50,9 +50,16 @@ function productHref(item: RelatedProduct): string {
   }
 }
 
+// Treat Magento's "no photo"/placeholder graphic as no image.
+function cleanImage(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (/no_photo|placeholder/i.test(path)) return null;
+  return path;
+}
+
 function RelatedCard({ item }: { item: RelatedProduct }) {
   const localProduct = getRelatedProductByPartNumber(item.partNumber);
-  const imageUrl = localProduct?.imageUrl ?? item.imageUrl;
+  const imageUrl = cleanImage(localProduct?.imageUrl ?? item.imageUrl);
 
   return (
     <Link
@@ -156,15 +163,22 @@ export default async function StorefrontProductPage({
       <main className="mx-auto max-w-[1440px] px-6 py-10">
         <div className="mb-12 grid gap-10 lg:grid-cols-2">
           <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
-            <Image
-              src={product.largeImageUrl}
-              alt={product.partNumber}
-              fill
-              className="object-contain p-8"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              priority
-              unoptimized
-            />
+            {cleanImage(product.largeImageUrl) ? (
+              <Image
+                src={cleanImage(product.largeImageUrl)!}
+                alt={product.partNumber}
+                fill
+                className="object-contain p-8"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                priority
+                unoptimized
+              />
+            ) : (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 bg-[#f8fafc]">
+                <Package size={52} strokeWidth={1.4} className="text-[#cbd5e1]" />
+                <span className="text-xs font-medium text-[#94a3b8]">No image available</span>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col">

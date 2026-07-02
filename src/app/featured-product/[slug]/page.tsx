@@ -43,6 +43,13 @@ export async function generateMetadata({
   };
 }
 
+// Treat Magento's "no photo"/placeholder graphic as no image.
+function cleanImage(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (/no_photo|placeholder/i.test(path)) return null;
+  return path;
+}
+
 function RelatedCard({ item }: { item: RelatedProduct }) {
   let href = item.url ?? `/webshop/${item.partNumber.toLowerCase()}.html`;
   try {
@@ -50,6 +57,7 @@ function RelatedCard({ item }: { item: RelatedProduct }) {
   } catch {
     // Already a local path.
   }
+  const cleanedImage = cleanImage(item.imageUrl);
 
   return (
     <Link
@@ -57,9 +65,9 @@ function RelatedCard({ item }: { item: RelatedProduct }) {
       className="group flex items-center gap-4 rounded-2xl border border-[#e5eaf0] bg-white p-4 transition-all hover:-translate-y-0.5 hover:border-[#bfdbfe] hover:shadow-[0_14px_30px_-22px_rgba(15,23,42,0.35)]"
     >
       <div className="relative h-16 w-16 flex-none overflow-hidden rounded-xl bg-[#f8fafc]">
-        {item.imageUrl ? (
+        {cleanedImage ? (
           <Image
-            src={item.imageUrl}
+            src={cleanedImage}
             alt={item.partNumber}
             fill
             className="object-contain p-2"
