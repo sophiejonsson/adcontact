@@ -75,6 +75,14 @@ function splitRefs(value: string | undefined): string[] {
   return [...new Set(value.split(",").map((s) => s.trim()).filter(Boolean))];
 }
 
+// Treat Magento's "no photo"/placeholder graphic as no image, so the clean
+// fallback shows instead of the dated "image coming soon" placeholder.
+function cleanImage(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (/no_photo|placeholder/i.test(path)) return null;
+  return path;
+}
+
 // Horizontal card — small 72 px thumbnail on the left, part number + name on the right.
 function RelatedCard({ partNumber, name, imageUrl, href }: {
   partNumber: string;
@@ -128,7 +136,7 @@ function PartCard({ partNumber, magentoProduct }: {
   const href = deutsch
     ? `/products/deutsch-connectors/${deutsch.partNumber.toLowerCase()}`
     : magentoProduct ? catalogueProductLegacyRoute(magentoProduct) : null;
-  const imageUrl = deutsch?.imageUrl ?? magentoProduct?.thumbnail ?? magentoProduct?.image;
+  const imageUrl = cleanImage(deutsch?.imageUrl ?? magentoProduct?.thumbnail ?? magentoProduct?.image);
   const name = magentoProduct?.name;
 
   return <RelatedCard partNumber={partNumber} name={name} imageUrl={imageUrl} href={href} />;
@@ -149,7 +157,7 @@ function DetailRelatedCard({ item }: { item: RelatedProduct }) {
     : magentoProduct
       ? catalogueProductLegacyRoute(magentoProduct)
       : item.url ?? null;
-  const imageUrl = item.imageUrl ?? deutsch?.imageUrl ?? magentoProduct?.thumbnail ?? magentoProduct?.image;
+  const imageUrl = cleanImage(item.imageUrl ?? deutsch?.imageUrl ?? magentoProduct?.thumbnail ?? magentoProduct?.image);
 
   return <RelatedCard partNumber={item.partNumber} imageUrl={imageUrl} href={href} />;
 }
@@ -253,7 +261,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const resolveRef = (pn: string) => findCatalogueProductByReference(pn);
 
   // Image priority: rich detail > deutsch CDN > magento image.
-  const mainImage = detail?.largImageUrl ?? catalogueProduct.imageUrl ?? magentoProduct?.image ?? magentoProduct?.thumbnail;
+  const mainImage = cleanImage(detail?.largImageUrl ?? catalogueProduct.imageUrl ?? magentoProduct?.image ?? magentoProduct?.thumbnail);
 
   // Quick spec grid entries.
   const quickSpecs = detail
@@ -317,8 +325,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                   unoptimized
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Package size={64} className="text-[#d1d5db]" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 bg-[#f8fafc]">
+                  <Package size={52} strokeWidth={1.4} className="text-[#cbd5e1]" />
+                  <span className="text-xs font-medium text-[#94a3b8]">No image available</span>
                 </div>
               )}
             </div>

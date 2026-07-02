@@ -357,8 +357,19 @@ function descriptionContent(description: string | null): DescriptionContent {
     })
     .filter(Boolean);
 
-  const textWithoutLinksOrImages = stripTags(htmlWithoutLinks.replace(/<img\b[^>]*>/gi, ""));
-  const shouldRenderHtml = visualLinks.length === 0 && standaloneImages.length === 0 && textWithoutLinksOrImages;
+  const textWithoutLinksOrImages = stripTags(htmlWithoutLinks.replace(/<img\b[^>]*>/gi, "")).trim();
+  // Some Magento category descriptions are junk — a bare part number / code with
+  // no spaces (e.g. "DT04-2P", "HBG", "H-2(LS)"). Those must not render as a
+  // description box; a real description is prose with spaces.
+  const isJunkDescription =
+    textWithoutLinksOrImages.length > 0 &&
+    textWithoutLinksOrImages.length < 30 &&
+    !/\s/.test(textWithoutLinksOrImages);
+  const shouldRenderHtml =
+    visualLinks.length === 0 &&
+    standaloneImages.length === 0 &&
+    Boolean(textWithoutLinksOrImages) &&
+    !isJunkDescription;
 
   return {
     html: shouldRenderHtml ? withoutIframe : null,
@@ -1037,6 +1048,10 @@ export default function CatalogueCategoryPage({
               </div>
             )}
             <CatalogueProductBrowser
+              // Re-mount when the URL's filters/query change so a same-page
+              // "Browse by series" link (e.g. TE Connectivity) re-applies the
+              // filter — the browser's filter state is seeded from these params.
+              key={JSON.stringify(isLeafOfFlatHub ? { ...leafPreFilter, ...searchParams } : searchParams)}
               products={browserProducts}
               route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
               searchParams={isLeafOfFlatHub ? { ...leafPreFilter, ...searchParams } : searchParams}
