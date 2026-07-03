@@ -8,12 +8,15 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 // Zoller & Fröhlich ferrule categories reproduced internally (product-range
 // pictures, spec tables and copy stored in our R2) so visitors stay on our site
 // instead of being sent to zofre.de. Add the remaining categories here as they
-// are done — the layout below is fully data-driven.
+// are done — the layout below is fully data-driven and alternates the
+// text/table columns per section (zig-zag).
 const ZOFRE_FERRULES = "https://www.zofre.de/en/ferrules";
 const WIRE_FERRULES_HUB = "/webshop/components/sealed-connectors/zoller-frohlich.html";
 const UL_BADGE = "/media/zoller-frohlich/certificates/ul-certified.jpg";
+const DIN_46228_BADGE = "/media/zoller-frohlich/certificates/din-46228-4.svg";
 
 type Img = { src: string; alt: string };
+type Cert = { src: string; alt: string; label: string };
 
 type FerruleSection = {
   heading: string;
@@ -21,15 +24,13 @@ type FerruleSection = {
   paragraphs?: string[];
   subsections?: { title: string; paragraphs?: string[]; bullets?: string[] }[];
   rangeChart?: Img & { width: number; height: number };
-  productPhoto?: Img;
-  ulCertified?: boolean;
-  standards?: string[];
+  certs?: Cert[];
 };
 
 type FerrulePage = {
   title: string;
   intro: string;
-  heroImage: string; // product picture served from R2 via the /media proxy
+  heroImage: Img; // product picture in the header, served from R2 via /media
   zofreUrl: string;
   sections: FerruleSection[];
 };
@@ -37,7 +38,10 @@ type FerrulePage = {
 const FERRULE_PAGES: Record<string, FerrulePage> = {
   "ferrules-on-reel": {
     title: "Ferrules on reel",
-    heroImage: "/media/zoller-frohlich/ferrules-on-reel.jpg",
+    heroImage: {
+      src: "/media/zoller-frohlich/ferrules-on-reel.jpg",
+      alt: "Zoller & Fröhlich insulated ferrules on reel",
+    },
     intro:
       "Insulated wire ferrules from Zoller & Fröhlich supplied on reels for automated and high-volume crimping — including plastic-collar and multi-standard conductor variants.",
     zofreUrl: `${ZOFRE_FERRULES}/ferrules-on-reel`,
@@ -54,12 +58,10 @@ const FERRULE_PAGES: Record<string, FerrulePage> = {
           width: 523,
           height: 240,
         },
-        productPhoto: {
-          src: "/media/zoller-frohlich/ferrules-on-reel.jpg",
-          alt: "Zoller & Fröhlich insulated ferrules on reel",
-        },
-        ulCertified: true,
-        standards: ["DIN 46228 part 4"],
+        certs: [
+          { src: UL_BADGE, alt: "UL certified", label: "UL certified" },
+          { src: DIN_46228_BADGE, alt: "DIN 46228 part 4", label: "DIN 46228-4" },
+        ],
       },
       {
         heading: "Ferrules on reel for multi-standard conductors",
@@ -88,7 +90,7 @@ const FERRULE_PAGES: Record<string, FerrulePage> = {
           width: 523,
           height: 210,
         },
-        ulCertified: true,
+        certs: [{ src: UL_BADGE, alt: "UL certified", label: "UL certified" }],
       },
     ],
   },
@@ -113,35 +115,51 @@ export async function generateMetadata({
   };
 }
 
-function Approvals({ ulCertified, standards }: { ulCertified?: boolean; standards?: string[] }) {
-  if (!ulCertified && !(standards && standards.length)) return null;
+function Approvals({ certs }: { certs?: Cert[] }) {
+  if (!certs?.length) return null;
   return (
-    <div className="mt-6 flex flex-wrap items-center gap-4">
+    <div className="mt-7">
       <span className="text-xs font-semibold uppercase tracking-wide text-[#94a3b8]">
         Approvals &amp; standards
       </span>
-      {ulCertified && (
-        <span className="inline-flex items-center gap-2 rounded-lg border border-[#e5e7eb] bg-white px-3 py-1.5">
-          <Image
-            src={UL_BADGE}
-            alt="UL certified"
-            width={28}
-            height={28}
-            unoptimized
-            className="h-6 w-6 object-contain"
-          />
-          <span className="text-xs font-semibold text-[#0a1628]">UL certified</span>
-        </span>
-      )}
-      {standards?.map((s) => (
-        <span
-          key={s}
-          className="inline-flex items-center rounded-lg border border-[#e5e7eb] bg-white px-3 py-1.5 text-xs font-semibold text-[#0a1628]"
-        >
-          {s}
-        </span>
-      ))}
+      <div className="mt-3 flex flex-wrap gap-4">
+        {certs.map((c) => (
+          <div key={c.label} className="flex flex-col items-center gap-1.5">
+            <span className="flex h-16 w-16 items-center justify-center rounded-xl border border-[#e5e7eb] bg-white p-2">
+              <Image
+                src={c.src}
+                alt={c.alt}
+                width={48}
+                height={48}
+                unoptimized
+                className="h-11 w-11 object-contain"
+              />
+            </span>
+            <span className="text-[11px] font-semibold text-[#64748b]">{c.label}</span>
+          </div>
+        ))}
+      </div>
     </div>
+  );
+}
+
+function RangeTable({ chart }: { chart: NonNullable<FerruleSection["rangeChart"]> }) {
+  return (
+    <figure>
+      <div className="overflow-x-auto rounded-2xl border border-[#e5e7eb] bg-white p-4 sm:p-6">
+        <Image
+          src={chart.src}
+          alt={chart.alt}
+          width={chart.width}
+          height={chart.height}
+          unoptimized
+          className="mx-auto block h-auto w-full min-w-[520px]"
+        />
+      </div>
+      <figcaption className="mt-2 text-xs text-[#94a3b8]">
+        Product range — cross-section, reel diameter, colour code / order number, dimensions and pieces per reel.
+      </figcaption>
+    </figure>
   );
 }
 
@@ -156,7 +174,7 @@ export default async function ZFerruleDetailPage({
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
-      {/* Hero */}
+      {/* Hero — text left, product photo right */}
       <section className="relative overflow-hidden bg-[#0a1628] text-white">
         <div className="absolute inset-0 tech-grid opacity-30" />
         <div className="relative mx-auto max-w-[1440px] px-6 py-6">
@@ -170,103 +188,100 @@ export default async function ZFerruleDetailPage({
               { label: page.title },
             ]}
           />
-          <div className="mt-5">
-            <span className="mb-4 inline-flex items-center gap-2.5 rounded-lg bg-white px-3.5 py-2 shadow-sm">
-              <Image
-                src="/images/partners/zoller-frohlich.png"
-                alt="Zoller & Fröhlich"
-                width={132}
-                height={28}
-                unoptimized
-                className="h-6 w-auto object-contain"
-              />
-            </span>
-            <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">{page.title}</h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-[#94a3b8]">{page.intro}</p>
+          <div className="mt-5 grid items-center gap-8 lg:grid-cols-2">
+            <div>
+              <span className="mb-4 inline-flex items-center gap-2.5 rounded-lg bg-white px-3.5 py-2 shadow-sm">
+                <Image
+                  src="/images/partners/zoller-frohlich.png"
+                  alt="Zoller & Fröhlich"
+                  width={132}
+                  height={28}
+                  unoptimized
+                  className="h-6 w-auto object-contain"
+                />
+              </span>
+              <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">{page.title}</h1>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-[#94a3b8]">{page.intro}</p>
+            </div>
+            <div className="lg:justify-self-end">
+              <div className="overflow-hidden rounded-2xl bg-white shadow-lg lg:w-[380px]">
+                <div className="relative aspect-[4/3] w-full">
+                  <Image
+                    src={page.heroImage.src}
+                    alt={page.heroImage.alt}
+                    fill
+                    priority
+                    unoptimized
+                    sizes="(max-width: 1024px) 100vw, 380px"
+                    className="object-contain p-6"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <main className="mx-auto max-w-[1440px] px-6 py-10">
         <div className="space-y-12">
-          {page.sections.map((section, i) => (
-            <section
-              key={section.heading}
-              className={i > 0 ? "border-t border-[#e5e7eb] pt-12" : undefined}
-            >
-              <h2 className="text-xl font-bold text-[#0a1628] sm:text-2xl">{section.heading}</h2>
-              {section.subheading && (
-                <p className="mt-1 text-sm font-semibold text-[#2563eb]">{section.subheading}</p>
-              )}
-
-              {/* Description + product photo */}
-              <div className="mt-5 grid gap-8 lg:grid-cols-3">
-                <div className="lg:col-span-2">
-                  {section.paragraphs?.map((p) => (
-                    <p key={p} className="mb-4 text-sm leading-7 text-[#475569]">
-                      {p}
-                    </p>
-                  ))}
-                  {section.subsections?.map((sub) => (
-                    <div key={sub.title} className="mt-5">
-                      <h3 className="text-sm font-bold text-[#0a1628]">{sub.title}</h3>
-                      {sub.paragraphs?.map((p) => (
-                        <p key={p} className="mt-2 text-sm leading-7 text-[#475569]">
-                          {p}
-                        </p>
-                      ))}
-                      {sub.bullets && (
-                        <ul className="mt-2 space-y-1.5">
-                          {sub.bullets.map((b) => (
-                            <li key={b} className="flex items-start gap-2 text-sm leading-6 text-[#475569]">
-                              <Check size={15} className="mt-0.5 flex-none text-[#2563eb]" />
-                              <span>{b}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
-
-                  <Approvals ulCertified={section.ulCertified} standards={section.standards} />
-                </div>
-
-                {section.productPhoto && (
-                  <div className="overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
-                    <div className="relative aspect-[4/3] w-full bg-[#f8fafc]">
-                      <Image
-                        src={section.productPhoto.src}
-                        alt={section.productPhoto.alt}
-                        fill
-                        unoptimized
-                        sizes="(max-width: 1024px) 100vw, 420px"
-                        className="object-contain p-6"
-                      />
-                    </div>
-                  </div>
+          {page.sections.map((section, i) => {
+            // Zig-zag: even sections = text left / table right, odd = reversed.
+            const reverse = i % 2 === 1;
+            return (
+              <section
+                key={section.heading}
+                className={i > 0 ? "border-t border-[#e5e7eb] pt-12" : undefined}
+              >
+                <h2 className="text-xl font-bold text-[#0a1628] sm:text-2xl">{section.heading}</h2>
+                {section.subheading && (
+                  <p className="mt-1 text-sm font-semibold text-[#2563eb]">{section.subheading}</p>
                 )}
-              </div>
 
-              {/* Product-range table (vector chart) */}
-              {section.rangeChart && (
-                <figure className="mt-8">
-                  <div className="overflow-x-auto rounded-2xl border border-[#e5e7eb] bg-white p-4 sm:p-6">
-                    <Image
-                      src={section.rangeChart.src}
-                      alt={section.rangeChart.alt}
-                      width={section.rangeChart.width}
-                      height={section.rangeChart.height}
-                      unoptimized
-                      className="mx-auto block h-auto w-full min-w-[560px] max-w-[880px]"
-                    />
+                <div className="mt-6 grid items-start gap-8 lg:grid-cols-2">
+                  {/* Text block */}
+                  <div className={reverse ? "lg:order-2" : "lg:order-1"}>
+                    {section.paragraphs?.map((p) => (
+                      <p key={p} className="mb-4 text-sm leading-7 text-[#475569]">
+                        {p}
+                      </p>
+                    ))}
+                    {section.subsections?.map((sub) => (
+                      <div key={sub.title} className="mt-5">
+                        <h3 className="text-sm font-bold text-[#0a1628]">{sub.title}</h3>
+                        {sub.paragraphs?.map((p) => (
+                          <p key={p} className="mt-2 text-sm leading-7 text-[#475569]">
+                            {p}
+                          </p>
+                        ))}
+                        {sub.bullets && (
+                          <ul className="mt-2 space-y-1.5">
+                            {sub.bullets.map((b) => (
+                              <li
+                                key={b}
+                                className="flex items-start gap-2 text-sm leading-6 text-[#475569]"
+                              >
+                                <Check size={15} className="mt-0.5 flex-none text-[#2563eb]" />
+                                <span>{b}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+
+                    <Approvals certs={section.certs} />
                   </div>
-                  <figcaption className="mt-2 text-xs text-[#94a3b8]">
-                    Product range — cross-section, reel diameter, colour code / order number, dimensions and pieces per reel.
-                  </figcaption>
-                </figure>
-              )}
-            </section>
-          ))}
+
+                  {/* Range table block */}
+                  {section.rangeChart && (
+                    <div className={reverse ? "lg:order-1" : "lg:order-2"}>
+                      <RangeTable chart={section.rangeChart} />
+                    </div>
+                  )}
+                </div>
+              </section>
+            );
+          })}
         </div>
 
         {/* Sourcing CTA — same as our other brand pages */}
