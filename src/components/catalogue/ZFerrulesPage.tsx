@@ -66,26 +66,43 @@ export default function ZFerrulesPage({ category: _ }: { category: CatalogueCate
               { label: "Zoller & Fröhlich" },
             ]}
           />
-          <div className="mt-5">
-            <span className="mb-4 inline-flex items-center gap-2.5 rounded-lg bg-white px-3.5 py-2 shadow-sm">
-              <Image
-                src="/images/partners/zoller-frohlich.png"
-                alt="Zoller & Fröhlich"
-                width={132}
-                height={28}
-                unoptimized
-                className="h-6 w-auto object-contain"
-              />
-            </span>
-            <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">
-              Wire Ferrules
-            </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-[#94a3b8]">
-              End sleeves and wire ferrules from Zoller &amp; Fröhlich — insulated, twin, multi-standard, reel, belt-strip, and uninsulated types.
-            </p>
-            <p className="mt-4 text-sm font-semibold text-blue-200">
-              {CATEGORIES.length} product categories
-            </p>
+          <div className="mt-5 grid items-center gap-8 lg:grid-cols-2">
+            <div>
+              <span className="mb-4 inline-flex items-center gap-2.5 rounded-lg bg-white px-3.5 py-2 shadow-sm">
+                <Image
+                  src="/images/partners/zoller-frohlich.png"
+                  alt="Zoller & Fröhlich"
+                  width={132}
+                  height={28}
+                  unoptimized
+                  className="h-6 w-auto object-contain"
+                />
+              </span>
+              <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">
+                Wire Ferrules
+              </h1>
+              <p className="mt-4 max-w-2xl text-base leading-7 text-[#94a3b8]">
+                End sleeves and wire ferrules from Zoller &amp; Fröhlich — insulated, twin, multi-standard, reel, belt-strip, and uninsulated types.
+              </p>
+              <p className="mt-4 text-sm font-semibold text-blue-200">
+                {CATEGORIES.length} product categories
+              </p>
+            </div>
+            <div className="lg:justify-self-end">
+              <div className="overflow-hidden rounded-2xl shadow-lg lg:w-[420px]">
+                <div className="relative aspect-[3/2] w-full">
+                  <Image
+                    src="/media/zoller-frohlich/ferrules-application.jpg"
+                    alt="Wire ferrules in use — terminating conductors in an industrial control cabinet"
+                    fill
+                    priority
+                    unoptimized
+                    sizes="(max-width: 1024px) 100vw, 420px"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
