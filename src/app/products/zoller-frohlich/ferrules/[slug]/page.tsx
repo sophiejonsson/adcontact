@@ -12,19 +12,28 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 // text/table columns per section (zig-zag).
 const ZOFRE_FERRULES = "https://www.zofre.de/en/ferrules";
 const WIRE_FERRULES_HUB = "/webshop/components/sealed-connectors/zoller-frohlich.html";
-const UL_BADGE = "/media/zoller-frohlich/certificates/ul-certified.jpg";
-const DIN_46228_BADGE = "/media/zoller-frohlich/certificates/din-46228-4.svg";
+
+// Combined CSA + UL Certified (SAFETY US-CA, file E491449) approval mark — the
+// exact graphic Z&F publish on their ferrule pages. DIN 46228 stays in the body
+// copy, same as zofre.de.
+const APPROVALS_MARK = {
+  src: "/media/zoller-frohlich/certificates/ul-certified.jpg",
+  alt: "CSA certified · UL Certified (SAFETY US-CA, file E491449)",
+  width: 350,
+  height: 137,
+};
 
 type Img = { src: string; alt: string };
-type Cert = { src: string; alt: string; label: string };
+type RangeChart = Img & { width: number; height: number };
+type Approval = Img & { width: number; height: number };
 
 type FerruleSection = {
   heading: string;
   subheading?: string;
   paragraphs?: string[];
   subsections?: { title: string; paragraphs?: string[]; bullets?: string[] }[];
-  rangeChart?: Img & { width: number; height: number };
-  certs?: Cert[];
+  rangeChart?: RangeChart;
+  approvals?: Approval;
 };
 
 type FerrulePage = {
@@ -58,10 +67,7 @@ const FERRULE_PAGES: Record<string, FerrulePage> = {
           width: 523,
           height: 240,
         },
-        certs: [
-          { src: UL_BADGE, alt: "UL certified", label: "UL certified" },
-          { src: DIN_46228_BADGE, alt: "DIN 46228 part 4", label: "DIN 46228-4" },
-        ],
+        approvals: APPROVALS_MARK,
       },
       {
         heading: "Ferrules on reel for multi-standard conductors",
@@ -90,7 +96,7 @@ const FERRULE_PAGES: Record<string, FerrulePage> = {
           width: 523,
           height: 210,
         },
-        certs: [{ src: UL_BADGE, alt: "UL certified", label: "UL certified" }],
+        approvals: APPROVALS_MARK,
       },
     ],
   },
@@ -115,35 +121,30 @@ export async function generateMetadata({
   };
 }
 
-function Approvals({ certs }: { certs?: Cert[] }) {
-  if (!certs?.length) return null;
+function Approvals({ mark }: { mark?: Approval }) {
+  if (!mark) return null;
   return (
     <div className="mt-7">
       <span className="text-xs font-semibold uppercase tracking-wide text-[#94a3b8]">
         Approvals &amp; standards
       </span>
-      <div className="mt-3 flex flex-wrap gap-4">
-        {certs.map((c) => (
-          <div key={c.label} className="flex flex-col items-center gap-1.5">
-            <span className="flex h-16 w-16 items-center justify-center rounded-xl border border-[#e5e7eb] bg-white p-2">
-              <Image
-                src={c.src}
-                alt={c.alt}
-                width={48}
-                height={48}
-                unoptimized
-                className="h-11 w-11 object-contain"
-              />
-            </span>
-            <span className="text-[11px] font-semibold text-[#64748b]">{c.label}</span>
-          </div>
-        ))}
+      <div className="mt-3">
+        <span className="inline-flex items-center rounded-xl border border-[#e5e7eb] bg-white px-4 py-3">
+          <Image
+            src={mark.src}
+            alt={mark.alt}
+            width={mark.width}
+            height={mark.height}
+            unoptimized
+            className="h-12 w-auto object-contain"
+          />
+        </span>
       </div>
     </div>
   );
 }
 
-function RangeTable({ chart }: { chart: NonNullable<FerruleSection["rangeChart"]> }) {
+function RangeTable({ chart }: { chart: RangeChart }) {
   return (
     <figure>
       <div className="overflow-x-auto rounded-2xl border border-[#e5e7eb] bg-white p-4 sm:p-6">
@@ -226,50 +227,54 @@ export default async function ZFerruleDetailPage({
         <div className="space-y-12">
           {page.sections.map((section, i) => {
             // Zig-zag: even sections = text left / table right, odd = reversed.
+            // The heading lives inside the text column so it always sits over
+            // the text, whichever side that is.
             const reverse = i % 2 === 1;
             return (
               <section
                 key={section.heading}
                 className={i > 0 ? "border-t border-[#e5e7eb] pt-12" : undefined}
               >
-                <h2 className="text-xl font-bold text-[#0a1628] sm:text-2xl">{section.heading}</h2>
-                {section.subheading && (
-                  <p className="mt-1 text-sm font-semibold text-[#2563eb]">{section.subheading}</p>
-                )}
-
-                <div className="mt-6 grid items-start gap-8 lg:grid-cols-2">
-                  {/* Text block */}
+                <div className="grid items-start gap-8 lg:grid-cols-2">
+                  {/* Text block (with heading) */}
                   <div className={reverse ? "lg:order-2" : "lg:order-1"}>
-                    {section.paragraphs?.map((p) => (
-                      <p key={p} className="mb-4 text-sm leading-7 text-[#475569]">
-                        {p}
-                      </p>
-                    ))}
-                    {section.subsections?.map((sub) => (
-                      <div key={sub.title} className="mt-5">
-                        <h3 className="text-sm font-bold text-[#0a1628]">{sub.title}</h3>
-                        {sub.paragraphs?.map((p) => (
-                          <p key={p} className="mt-2 text-sm leading-7 text-[#475569]">
-                            {p}
-                          </p>
-                        ))}
-                        {sub.bullets && (
-                          <ul className="mt-2 space-y-1.5">
-                            {sub.bullets.map((b) => (
-                              <li
-                                key={b}
-                                className="flex items-start gap-2 text-sm leading-6 text-[#475569]"
-                              >
-                                <Check size={15} className="mt-0.5 flex-none text-[#2563eb]" />
-                                <span>{b}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    ))}
+                    <h2 className="text-xl font-bold text-[#0a1628] sm:text-2xl">{section.heading}</h2>
+                    {section.subheading && (
+                      <p className="mt-1 text-sm font-semibold text-[#2563eb]">{section.subheading}</p>
+                    )}
 
-                    <Approvals certs={section.certs} />
+                    <div className="mt-5">
+                      {section.paragraphs?.map((p) => (
+                        <p key={p} className="mb-4 text-sm leading-7 text-[#475569]">
+                          {p}
+                        </p>
+                      ))}
+                      {section.subsections?.map((sub) => (
+                        <div key={sub.title} className="mt-5">
+                          <h3 className="text-sm font-bold text-[#0a1628]">{sub.title}</h3>
+                          {sub.paragraphs?.map((p) => (
+                            <p key={p} className="mt-2 text-sm leading-7 text-[#475569]">
+                              {p}
+                            </p>
+                          ))}
+                          {sub.bullets && (
+                            <ul className="mt-2 space-y-1.5">
+                              {sub.bullets.map((b) => (
+                                <li
+                                  key={b}
+                                  className="flex items-start gap-2 text-sm leading-6 text-[#475569]"
+                                >
+                                  <Check size={15} className="mt-0.5 flex-none text-[#2563eb]" />
+                                  <span>{b}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <Approvals mark={section.approvals} />
                   </div>
 
                   {/* Range table block */}
