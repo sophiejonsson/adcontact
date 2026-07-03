@@ -13,16 +13,19 @@ const CATEGORIES: FerruleCard[] = [
     title: "Insulated ferrules",
     href: `${ZOFRE}/en/ferrules/insulatedferrules`,
     image: `${FILES}/isolierte_aderendh%C3%BClsen/zoller-froehlich-aderendhuelsen-bandware-blau.jpg`,
+    internalHref: "/products/zoller-frohlich/ferrules/insulated-ferrules",
   },
   {
     title: "Insulated twin ferrules",
     href: `${ZOFRE}/en/ferrules/insulated-twin-ferrules`,
     image: `${FILES}/isolierte_zwillings_aderendh%C3%BClsen/zoller-froehlich-zwillings-aderendhuelse-als-einzelbeutel-grau.jpg`,
+    internalHref: "/products/zoller-frohlich/ferrules/insulated-twin-ferrules",
   },
   {
     title: "Ferrules for multi-standard conductors",
     href: `${ZOFRE}/en/ferrules/insulated-ferrules-for-multi-standard-conductors`,
     image: `${FILES}/isolierte_aderendh%C3%BClsen_f%C3%BCr_multinorm_leitungen/zoller-froehlich-aderendhuelsen-fuer-multinorm-leitungen-menue.jpg`,
+    internalHref: "/products/zoller-frohlich/ferrules/multi-standard-conductors",
   },
   {
     title: "Ferrules on reel",
@@ -35,11 +38,13 @@ const CATEGORIES: FerruleCard[] = [
     title: "Insulated ferrules as belt-strips",
     href: `${ZOFRE}/en/ferrules/insulated-ferrules-as-belt-strips`,
     image: `${FILES}/isolierte_aderendh%C3%BClsen_als_gurtstreifen/zoller-froehlich-aderendhuelsen-als-grutware-blau.jpg`,
+    internalHref: "/products/zoller-frohlich/ferrules/belt-strips",
   },
   {
     title: "Uninsulated ferrules",
     href: `${ZOFRE}/en/ferrules/uninsulated-ferrules`,
     image: `${FILES}/unisolierte_aderendh%C3%BClsen/zoller-froehlich-unisolierte-aderendhuelsen-in-einzelbeutel-menue.jpg`,
+    internalHref: "/products/zoller-frohlich/ferrules/uninsulated-ferrules",
   },
   {
     title: "Ferrules assortment boxes and case",
