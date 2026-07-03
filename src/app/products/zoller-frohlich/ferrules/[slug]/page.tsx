@@ -40,7 +40,6 @@ type FerrulePage = {
   title: string;
   intro: string;
   heroImage: Img; // product picture in the header, served from R2 via /media
-  zofreUrl: string;
   sections: FerruleSection[];
 };
 
@@ -53,7 +52,6 @@ const FERRULE_PAGES: Record<string, FerrulePage> = {
     },
     intro:
       "Insulated wire ferrules from Zoller & Fröhlich supplied on reels for automated and high-volume crimping — including plastic-collar and multi-standard conductor variants.",
-    zofreUrl: `${ZOFRE_FERRULES}/ferrules-on-reel`,
     sections: [
       {
         heading: "Insulated ferrules on reel",
@@ -304,7 +302,7 @@ export default async function ZFerruleDetailPage({
               <ArrowRight size={15} />
             </a>
             <a
-              href={page.zofreUrl}
+              href={ZOFRE_FERRULES}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] transition-colors hover:text-[#2563eb]"
