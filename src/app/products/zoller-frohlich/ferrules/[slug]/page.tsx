@@ -105,7 +105,7 @@ const FERRULE_PAGES: Record<string, FerrulePage> = {
   "insulated-ferrules": {
     title: "Insulated ferrules",
     heroImage: {
-      src: "/media/zoller-frohlich/insulated-ferrules/hero.jpg",
+      src: "/media/zoller-frohlich/insulated-ferrules/hero-card.jpg",
       alt: "Zoller & Fröhlich insulated ferrules with insulating collar",
     },
     intro:
@@ -132,7 +132,7 @@ const FERRULE_PAGES: Record<string, FerrulePage> = {
   "insulated-twin-ferrules": {
     title: "Insulated twin ferrules",
     heroImage: {
-      src: "/media/zoller-frohlich/insulated-twin-ferrules/hero.jpg",
+      src: "/media/zoller-frohlich/insulated-twin-ferrules/hero-card.jpg",
       alt: "Zoller & Fröhlich insulated twin ferrules with insulating collar",
     },
     intro:
@@ -202,7 +202,7 @@ const FERRULE_PAGES: Record<string, FerrulePage> = {
   "belt-strips": {
     title: "Insulated ferrules as belt-strips",
     heroImage: {
-      src: "/media/zoller-frohlich/belt-strips/hero.jpg",
+      src: "/media/zoller-frohlich/belt-strips/hero-card.jpg",
       alt: "Zoller & Fröhlich insulated ferrules supplied as belt-strips",
     },
     intro:
@@ -230,7 +230,7 @@ const FERRULE_PAGES: Record<string, FerrulePage> = {
   "uninsulated-ferrules": {
     title: "Uninsulated ferrules",
     heroImage: {
-      src: "/media/zoller-frohlich/uninsulated-ferrules/hero.jpg",
+      src: "/media/zoller-frohlich/uninsulated-ferrules/hero-card.jpg",
       alt: "Zoller & Fröhlich uninsulated ferrules",
     },
     intro:

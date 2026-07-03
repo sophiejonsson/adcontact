@@ -46,16 +46,8 @@ const CATEGORIES: FerruleCard[] = [
     image: `${FILES}/unisolierte_aderendh%C3%BClsen/zoller-froehlich-unisolierte-aderendhuelsen-in-einzelbeutel-menue.jpg`,
     internalHref: "/products/zoller-frohlich/ferrules/uninsulated-ferrules",
   },
-  {
-    title: "Ferrules assortment boxes and case",
-    href: `${ZOFRE}/en/ferrules/ferrules-assortment-boxes-and-case`,
-    image: `${FILES}/aderendh%C3%BClsen_sortimentsdosen_und_sortimentskasten/zoller-froehlich-aderendhuelsen-in-sortimentsdosen-mix.jpg`,
-  },
-  {
-    title: "Terminals",
-    href: `${ZOFRE}/en/ferrules/terminals`,
-    image: `${FILES}/kabelschuhe/zoller-froehlich-flachstecker.jpg`,
-  },
+  // "Ferrules assortment boxes and case" and "Terminals" intentionally omitted —
+  // we don't promote/sell them (available from another supplier if ever needed).
 ];
 
 export default function ZFerrulesPage({ category: _ }: { category: CatalogueCategory }) {
