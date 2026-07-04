@@ -130,6 +130,12 @@ function legacyNumberedCategoryAlias(path: string) {
 // Bundling/Insulating/Marking (1724) — plus every product that lives ONLY there.
 export const HIDDEN_CATEGORY_IDS = new Set<number>([75, 49, 54, 55, 112, 113, 1724]);
 
+// Individual products hidden from the live site but kept in the data (reversible
+// — remove the id to bring one back). Currently: the EOL Branson welding
+// machines we no longer feature; the Branson welding hub keeps only the 2032S
+// Wire Splicer (22940) and the Ultraseal20 Metal Tube Sealer (22944).
+export const HIDDEN_PRODUCT_IDS = new Set<number>([22941, 22942, 22943, 22945]);
+
 // A product is hidden only when EVERY category it belongs to is hidden, so a
 // product also filed under a visible category still surfaces there.
 function productIsInHiddenTreeOnly(product: CatalogueProduct): boolean {
@@ -145,12 +151,16 @@ function productIsInHiddenTreeOnly(product: CatalogueProduct): boolean {
 export function getCatalogueProduct(id: number | string): CatalogueProduct | undefined {
   const product = products[String(id)];
   if (!product || product.status !== "enabled") return undefined;
+  if (HIDDEN_PRODUCT_IDS.has(Number(product.id))) return undefined;
   return productIsInHiddenTreeOnly(product) ? undefined : product;
 }
 
 export function getAllCatalogueProducts(): CatalogueProduct[] {
   return Object.values(products).filter(
-    (product) => product.status === "enabled" && !productIsInHiddenTreeOnly(product),
+    (product) =>
+      product.status === "enabled" &&
+      !HIDDEN_PRODUCT_IDS.has(Number(product.id)) &&
+      !productIsInHiddenTreeOnly(product),
   );
 }
 
@@ -209,7 +219,8 @@ export function getCategoryProductCount(category: CatalogueCategory): number {
     stack.push(...child.children);
   }
 
-  return productIds.size;
+  // Exclude individually-hidden products so the count matches the visible grid.
+  return [...productIds].filter((id) => !HIDDEN_PRODUCT_IDS.has(Number(id))).length;
 }
 
 function getCategoryDescendantProductIds(category: CatalogueCategory): number[] {
