@@ -118,6 +118,10 @@ const BRAND_HEADER_IMAGES: Record<string, { src: string; fit: "cover" | "contain
   hongshang: { src: "/media/brand-headers/hongshang.webp", fit: "cover" },
   cvilux: { src: "/media/brand-headers/cvilux.webp", fit: "cover" },
   htp: { src: "/media/brand-headers/htp.webp", fit: "contain" },
+  stocko: { src: "/media/brand-headers/stocko.jpg", fit: "cover" },
+  // TE's existing header art is a wide AMPSEAL info-banner, so it fits inside
+  // the frame rather than filling it (swap for a product photo if one arrives).
+  "te-connectivity": { src: "/media/brand-headers/te-connectivity.png", fit: "contain" },
 };
 
 // "Browse by series" configuration for the brand hubs whose products carry a
