@@ -97,13 +97,16 @@ const productionEquipmentGroup: NavGroup = {
         { label: "Stocko", href: "/webshop/production-equipment/crimping-equipment/stocko.html" },
       ],
     },
-    {
-      label: "Misc. Equipment",
-      href: "/webshop/production-equipment/misc-equipment.html",
-      children: [
-        { label: "DSG Canusa", href: "/webshop/production-equipment/misc-equipment/dsg-canusa.html" },
-      ],
-    },
+    // Temporarily removed from the live site (kept for a potential future
+    // re-post). Also hidden at the data layer via HIDDEN_CATEGORY_IDS in
+    // src/lib/magentoCatalogue.ts — restore both to bring it back.
+    // {
+    //   label: "Misc. Equipment",
+    //   href: "/webshop/production-equipment/misc-equipment.html",
+    //   children: [
+    //     { label: "DSG Canusa", href: "/webshop/production-equipment/misc-equipment/dsg-canusa.html" },
+    //   ],
+    // },
     {
       label: "Plastic- and Metal Welding",
       href: "/webshop/production-equipment/ultrasonic-welding.html",

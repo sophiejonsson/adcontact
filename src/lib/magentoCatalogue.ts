@@ -120,17 +120,38 @@ function legacyNumberedCategoryAlias(path: string) {
     .replace("/clamping-straps-116.html", "/clamping-straps-2105.html");
 }
 
+// Category subtrees temporarily removed from the live site but PRESERVED in the
+// data — routes.json, categories and products are left untouched. To re-post a
+// category later, just remove its ids here and restore its menu entry in
+// navigation.ts; nothing else needs rebuilding.
+//
+// Currently hidden: the "Misc. Equipment" tree (hub 75) — Shrink Tunnel (49),
+// Twist Equipment (54), Taping (55), Komax (112), DSG Canusa (113),
+// Bundling/Insulating/Marking (1724) — plus every product that lives ONLY there.
+export const HIDDEN_CATEGORY_IDS = new Set<number>([75, 49, 54, 55, 112, 113, 1724]);
+
+// A product is hidden only when EVERY category it belongs to is hidden, so a
+// product also filed under a visible category still surfaces there.
+function productIsInHiddenTreeOnly(product: CatalogueProduct): boolean {
+  const cats = product.categoryIds ?? [];
+  return cats.length > 0 && cats.every((id) => HIDDEN_CATEGORY_IDS.has(Number(id)));
+}
+
 // Disabled products (status !== "enabled") are excluded everywhere they could
 // render: detail pages 404, lookups skip them, listings already filtered. These
 // are mostly dropped-supplier equipment we no longer represent and must not
-// surface anywhere on the live site.
+// surface anywhere on the live site. Products inside a hidden category tree are
+// suppressed the same way.
 export function getCatalogueProduct(id: number | string): CatalogueProduct | undefined {
   const product = products[String(id)];
-  return product?.status === "enabled" ? product : undefined;
+  if (!product || product.status !== "enabled") return undefined;
+  return productIsInHiddenTreeOnly(product) ? undefined : product;
 }
 
 export function getAllCatalogueProducts(): CatalogueProduct[] {
-  return Object.values(products).filter((product) => product.status === "enabled");
+  return Object.values(products).filter(
+    (product) => product.status === "enabled" && !productIsInHiddenTreeOnly(product),
+  );
 }
 
 export function catalogueProductLegacyRoute(product: CatalogueProduct): string {
@@ -156,6 +177,7 @@ export function findCatalogueProductByReference(reference: string): CataloguePro
 }
 
 export function getCatalogueCategory(id: number | string): CatalogueCategory | undefined {
+  if (HIDDEN_CATEGORY_IDS.has(Number(id))) return undefined;
   return categories[String(id)];
 }
 
