@@ -154,8 +154,8 @@ const CATEGORY_SOURCING_CTA: Record<
 // The listed machines are mostly EOL and are disregarded; both options point to
 // Branson's catalogue while the final Branson presentation is decided.
 const BRANSON_WELDING_TYPES = [
-  { label: "Ultrasonic Metal welding", href: "https://www.branson.emerson.com/en" },
-  { label: "Ultrasonic Plastic welding", href: "https://www.branson.emerson.com/en" },
+  { label: "Ultrasonic Metal welding", href: "https://www.branson.emerson.com/en/metal-welding" },
+  { label: "Ultrasonic Plastic welding", href: "https://www.branson.emerson.com/en/ultrasonic-plastic-welding" },
 ];
 const CATEGORY_WELDING_TYPES: Record<number, { label: string; href: string }[]> = {
   77: BRANSON_WELDING_TYPES,
