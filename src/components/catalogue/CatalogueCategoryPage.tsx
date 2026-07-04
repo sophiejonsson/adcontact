@@ -130,6 +130,13 @@ const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
   77: "Plastic- and Metal Welding", // "Ultrasonic Welding"
 };
 
+// Header photo for hubs that don't resolve to a single brand (keyed by category
+// id). Rendered in the hero's right column, same frame as BRAND_HEADER_IMAGES.
+const CATEGORY_HEADER_IMAGES: Record<number, { src: string; fit: "cover" | "contain" }> = {
+  77: { src: "/media/branson/hub-header.jpg", fit: "cover" }, // Branson welding hub
+  115: { src: "/media/branson/hub-header.jpg", fit: "cover" }, // Branson sub-page
+};
+
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
 // (e.g. the Branson welding hub, where we redirect to the supplier's catalogue).
 // Mirrors the brand "Can't find the exact part?" box.
@@ -154,10 +161,18 @@ const CATEGORY_SOURCING_CTA: Record<
 // The listed machines are mostly EOL and are disregarded; both options point to
 // Branson's catalogue while the final Branson presentation is decided.
 const BRANSON_WELDING_TYPES = [
-  { label: "Ultrasonic Metal welding", href: "https://www.branson.emerson.com/en/metal-welding" },
-  { label: "Ultrasonic Plastic welding", href: "https://www.branson.emerson.com/en/ultrasonic-plastic-welding" },
+  {
+    label: "Ultrasonic Metal welding",
+    href: "https://www.branson.emerson.com/en/metal-welding",
+    image: "/media/branson/metal-welding.webp",
+  },
+  {
+    label: "Ultrasonic Plastic welding",
+    href: "https://www.branson.emerson.com/en/ultrasonic-plastic-welding",
+    image: "/media/branson/plastic-welding.webp",
+  },
 ];
-const CATEGORY_WELDING_TYPES: Record<number, { label: string; href: string }[]> = {
+const CATEGORY_WELDING_TYPES: Record<number, { label: string; href: string; image: string }[]> = {
   77: BRANSON_WELDING_TYPES,
   115: BRANSON_WELDING_TYPES,
 };
@@ -868,6 +883,9 @@ export default function CatalogueCategoryPage({
   // landing page, and only if a video isn't already taking that slot.
   const brandHeaderImage =
     isBrandHome && brand && !videoEmbedSrc ? BRAND_HEADER_IMAGES[brand.slug] : undefined;
+  // Brand image wins; otherwise a category-level header photo (hubs with no brand).
+  const headerImage =
+    brandHeaderImage ?? (!videoEmbedSrc ? CATEGORY_HEADER_IMAGES[category.id] : undefined);
   const brandHomeRoute =
     categoriesBelowProducts && !isBrandHome
       ? breadcrumbs.find((crumb) => {
@@ -1013,17 +1031,17 @@ export default function CatalogueCategoryPage({
                 Zoller & Fröhlich hub (w-420, 3/2, white card + shadow) so every
                 brand header is a consistent size. Video / description images keep
                 the wider dark 4:3 frame. */}
-            {brandHeaderImage ? (
+            {headerImage ? (
               <div className="w-full lg:w-[420px] lg:flex-shrink-0">
                 <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
                   <div className="relative aspect-[3/2] w-full">
                     <Image
-                      src={brandHeaderImage.src}
+                      src={headerImage.src}
                       alt={title}
                       fill
                       unoptimized
                       sizes="(max-width: 1024px) 100vw, 420px"
-                      className={brandHeaderImage.fit === "cover" ? "object-cover" : "object-contain p-4"}
+                      className={headerImage.fit === "cover" ? "object-cover" : "object-contain p-4"}
                     />
                   </div>
                 </div>
@@ -1074,15 +1092,27 @@ export default function CatalogueCategoryPage({
                   href={w.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between rounded-2xl border border-[#e5e7eb] bg-white px-6 py-5 transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+                  className="group grid overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
                 >
-                  <span className="text-base font-bold text-[#0a1628] group-hover:text-[#2563eb]">
-                    {w.label}
-                  </span>
-                  <ArrowUpRight
-                    size={16}
-                    className="flex-none text-[#93c5fd] transition-colors group-hover:text-[#2563eb]"
-                  />
+                  <div className="relative aspect-[16/9] bg-[#f8fafc]">
+                    <Image
+                      src={w.image}
+                      alt={w.label}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 620px"
+                      className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between gap-3 p-4">
+                    <h3 className="text-base font-bold text-[#0a1628] group-hover:text-[#2563eb]">
+                      {w.label}
+                    </h3>
+                    <span className="inline-flex flex-none items-center gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#64748b] transition-colors group-hover:text-[#2563eb]">
+                      View at Branson
+                      <ArrowUpRight size={14} />
+                    </span>
+                  </div>
                 </a>
               ))}
             </div>

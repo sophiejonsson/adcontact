@@ -136,6 +136,12 @@ export const HIDDEN_CATEGORY_IDS = new Set<number>([75, 49, 54, 55, 112, 113, 17
 // Wire Splicer (22940) and the Ultraseal20 Metal Tube Sealer (22944).
 export const HIDDEN_PRODUCT_IDS = new Set<number>([22941, 22942, 22943, 22945]);
 
+// Replace a product's imagery with a curated picture (reversible). Applied in
+// getCatalogueProduct so it flows to the grid card, detail page and search.
+export const PRODUCT_IMAGE_OVERRIDES: Record<number, string> = {
+  22940: "/media/branson/wire-splicer.webp", // Branson 2032S Wire Splicer
+};
+
 // A product is hidden only when EVERY category it belongs to is hidden, so a
 // product also filed under a visible category still surfaces there.
 function productIsInHiddenTreeOnly(product: CatalogueProduct): boolean {
@@ -152,7 +158,18 @@ export function getCatalogueProduct(id: number | string): CatalogueProduct | und
   const product = products[String(id)];
   if (!product || product.status !== "enabled") return undefined;
   if (HIDDEN_PRODUCT_IDS.has(Number(product.id))) return undefined;
-  return productIsInHiddenTreeOnly(product) ? undefined : product;
+  if (productIsInHiddenTreeOnly(product)) return undefined;
+  const imageOverride = PRODUCT_IMAGE_OVERRIDES[Number(product.id)];
+  if (imageOverride) {
+    return {
+      ...product,
+      image: imageOverride,
+      smallImage: imageOverride,
+      thumbnail: imageOverride,
+      gallery: [imageOverride],
+    };
+  }
+  return product;
 }
 
 export function getAllCatalogueProducts(): CatalogueProduct[] {
