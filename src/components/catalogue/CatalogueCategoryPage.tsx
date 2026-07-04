@@ -883,9 +883,10 @@ export default function CatalogueCategoryPage({
   // landing page, and only if a video isn't already taking that slot.
   const brandHeaderImage =
     isBrandHome && brand && !videoEmbedSrc ? BRAND_HEADER_IMAGES[brand.slug] : undefined;
-  // Brand image wins; otherwise a category-level header photo (hubs with no brand).
-  const headerImage =
-    brandHeaderImage ?? (!videoEmbedSrc ? CATEGORY_HEADER_IMAGES[category.id] : undefined);
+  // Brand image wins; otherwise a category-level header photo (hubs with no
+  // brand). A configured category header photo is an explicit editorial choice,
+  // so it also takes precedence over any auto-detected description video.
+  const headerImage = brandHeaderImage ?? CATEGORY_HEADER_IMAGES[category.id];
   const brandHomeRoute =
     categoriesBelowProducts && !isBrandHome
       ? breadcrumbs.find((crumb) => {
