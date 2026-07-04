@@ -105,7 +105,7 @@ const productionEquipmentGroup: NavGroup = {
       ],
     },
     {
-      label: "Ultrasonic Welding",
+      label: "Plastic- and Metal Welding",
       href: "/webshop/production-equipment/ultrasonic-welding.html",
       children: [
         { label: "Branson", href: "/webshop/production-equipment/ultrasonic-welding/branson.html" },

@@ -124,6 +124,29 @@ const BRAND_HEADER_IMAGES: Record<string, { src: string; fit: "cover" | "contain
   "te-connectivity": { src: "/media/brand-headers/te-connectivity.png", fit: "contain" },
 };
 
+// Display-title overrides for a few categories whose stored Magento name differs
+// from what we want to show (menu + page H1).
+const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
+  77: "Plastic- and Metal Welding", // "Ultrasonic Welding"
+};
+
+// Category-level sourcing CTA for hubs that don't resolve to a single `brand`
+// (e.g. the welding hub, where we redirect to the supplier's catalogue). Mirrors
+// the brand "Can't find the exact part?" box.
+const CATEGORY_SOURCING_CTA: Record<
+  number,
+  { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
+> = {
+  77: {
+    heading: "Can't find the exact machine for your application?",
+    body: "We represent Branson's complete ultrasonic metal- and plastic-welding programme. Tell us about your application and we'll help you find the right machine — or browse Branson's full catalogue.",
+    mailtoSubject: "Branson welding — application enquiry",
+    primaryLabel: "Send us your application",
+    catalogueLabel: "View Branson catalogue",
+    catalogueUrl: "https://www.branson.emerson.com/en",
+  },
+};
+
 // "Browse by series" configuration for the brand hubs whose products carry a
 // "Series" attribute. Each hub defines where its series live and how to
 // present them.
@@ -680,7 +703,8 @@ export default function CatalogueCategoryPage({
 
   const content = descriptionContent(category.description);
   const breadcrumbs = getCategoryBreadcrumbs(category.id);
-  const title = category.name ?? "Catalogue";
+  const title = CATEGORY_TITLE_OVERRIDES[category.id] ?? category.name ?? "Catalogue";
+  const categorySourcingCta = CATEGORY_SOURCING_CTA[category.id];
   const description = category.metaDescription;
   const productCount = getCategoryProductCount(category);
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
@@ -1149,6 +1173,35 @@ export default function CatalogueCategoryPage({
                       <ArrowUpRight size={14} />
                     </a>
                   )}
+                </div>
+              </section>
+            )}
+
+            {categorySourcingCta && (
+              <section className="mt-10 rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] px-6 py-7 sm:px-8">
+                <h2 className="text-lg font-bold text-[#0a1628] sm:text-xl">
+                  {categorySourcingCta.heading}
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-[#475569]">
+                  {categorySourcingCta.body}
+                </p>
+                <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+                  <a
+                    href={`mailto:info@adcontact.se?subject=${encodeURIComponent(categorySourcingCta.mailtoSubject)}`}
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
+                  >
+                    {categorySourcingCta.primaryLabel}
+                    <ArrowRight size={15} />
+                  </a>
+                  <a
+                    href={categorySourcingCta.catalogueUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] transition-colors hover:text-[#2563eb]"
+                  >
+                    {categorySourcingCta.catalogueLabel}
+                    <ArrowUpRight size={14} />
+                  </a>
                 </div>
               </section>
             )}
