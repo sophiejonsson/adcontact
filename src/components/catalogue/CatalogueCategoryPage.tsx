@@ -965,37 +965,53 @@ export default function CatalogueCategoryPage({
               )}
             </div>
 
-            {/* Right: brand header photo, video, or image promoted from the description */}
-            {(videoEmbedSrc || brandHeaderImage || heroImageSrc) && (
-              <div className="w-full lg:w-[420px] lg:flex-shrink-0 xl:w-[480px]">
-                <div
-                  className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]"
-                  style={{ aspectRatio: videoEmbedSrc ? "16/9" : "4/3" }}
-                >
-                  {videoEmbedSrc ? (
-                    <iframe
-                      src={videoEmbedSrc}
-                      title={title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 h-full w-full"
-                    />
-                  ) : (
+            {/* Right column. Brand application photo uses the SAME frame as the
+                Zoller & Fröhlich hub (w-420, 3/2, white card + shadow) so every
+                brand header is a consistent size. Video / description images keep
+                the wider dark 4:3 frame. */}
+            {brandHeaderImage ? (
+              <div className="w-full lg:w-[420px] lg:flex-shrink-0">
+                <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
+                  <div className="relative aspect-[3/2] w-full">
                     <Image
-                      src={brandHeaderImage?.src ?? heroImageSrc!}
+                      src={brandHeaderImage.src}
                       alt={title}
                       fill
                       unoptimized
-                      sizes="(max-width: 1024px) 100vw, 480px"
-                      className={
-                        brandHeaderImage?.fit === "cover"
-                          ? "object-cover"
-                          : "object-contain p-4"
-                      }
+                      sizes="(max-width: 1024px) 100vw, 420px"
+                      className={brandHeaderImage.fit === "cover" ? "object-cover" : "object-contain p-4"}
                     />
-                  )}
+                  </div>
                 </div>
               </div>
+            ) : (
+              (videoEmbedSrc || heroImageSrc) && (
+                <div className="w-full lg:w-[420px] lg:flex-shrink-0 xl:w-[480px]">
+                  <div
+                    className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]"
+                    style={{ aspectRatio: videoEmbedSrc ? "16/9" : "4/3" }}
+                  >
+                    {videoEmbedSrc ? (
+                      <iframe
+                        src={videoEmbedSrc}
+                        title={title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="absolute inset-0 h-full w-full"
+                      />
+                    ) : (
+                      <Image
+                        src={heroImageSrc!}
+                        alt={title}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 1024px) 100vw, 480px"
+                        className="object-contain p-4"
+                      />
+                    )}
+                  </div>
+                </div>
+              )
             )}
           </div>
         </div>
