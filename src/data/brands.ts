@@ -333,6 +333,20 @@ export const brands: Brand[] = [
     website: "https://www.ulmer-gmbh.net/",
     featured: false,
   },
+  {
+    id: "branson",
+    name: "Branson",
+    slug: "branson",
+    // Branson is part of the Emerson group and carries the Emerson brand mark.
+    logo: "/images/partners/branson.webp",
+    description:
+      "Delivering proven performance, unequaled expertise and the broadest technology portfolio for plastic and metal welding and cleaning solutions.",
+    shortDescription: "Ultrasonic, laser and vibration welding plus precision cleaning for plastics and metals.",
+    categories: ["production-equipment"],
+    linecardSection: "equipment",
+    website: "https://www.branson.emerson.com/en",
+    featured: false,
+  },
 ];
 
 export function getBrandBySlug(slug: string): Brand | undefined { // v2

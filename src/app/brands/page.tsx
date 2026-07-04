@@ -88,7 +88,7 @@ export default function BrandsPage() {
           <p className="text-sm text-[#6b7280] mb-8 max-w-2xl">
             Connectors, contacts, heat-shrink, PCB terminals, and cable accessories, sourced directly from the manufacturer.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {componentPartners.map((brand) => (
               <PartnerCard key={brand.id} brand={brand} />
             ))}
@@ -104,7 +104,7 @@ export default function BrandsPage() {
           <p className="text-sm text-[#6b7280] mb-8 max-w-2xl">
             Wire-processing machines, crimping tools, harness testers, and ferrule systems for professional cable assembly.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             {equipmentPartners.map((brand) => (
               <PartnerCard key={brand.id} brand={brand} />
             ))}
