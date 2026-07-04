@@ -131,20 +131,35 @@ const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
-// (e.g. the welding hub, where we redirect to the supplier's catalogue). Mirrors
-// the brand "Can't find the exact part?" box.
+// (e.g. the Branson welding hub, where we redirect to the supplier's catalogue).
+// Mirrors the brand "Can't find the exact part?" box.
+const BRANSON_WELDING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Branson's complete ultrasonic metal- and plastic-welding programme. Tell us about your application and we'll help you find the right machine — or browse Branson's full catalogue.",
+  mailtoSubject: "Branson welding — application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Branson catalogue",
+  catalogueUrl: "https://www.branson.emerson.com/en",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
 > = {
-  77: {
-    heading: "Can't find the exact machine for your application?",
-    body: "We represent Branson's complete ultrasonic metal- and plastic-welding programme. Tell us about your application and we'll help you find the right machine — or browse Branson's full catalogue.",
-    mailtoSubject: "Branson welding — application enquiry",
-    primaryLabel: "Send us your application",
-    catalogueLabel: "View Branson catalogue",
-    catalogueUrl: "https://www.branson.emerson.com/en",
-  },
+  77: BRANSON_WELDING_CTA, // Plastic- and Metal Welding hub
+  115: BRANSON_WELDING_CTA, // Branson sub-page
+};
+
+// "Filter by welding type" — presentational split for the Branson welding hub.
+// The listed machines are mostly EOL and are disregarded; both options point to
+// Branson's catalogue while the final Branson presentation is decided.
+const BRANSON_WELDING_TYPES = [
+  { label: "Ultrasonic Metal welding", href: "https://www.branson.emerson.com/en" },
+  { label: "Ultrasonic Plastic welding", href: "https://www.branson.emerson.com/en" },
+];
+const CATEGORY_WELDING_TYPES: Record<number, { label: string; href: string }[]> = {
+  77: BRANSON_WELDING_TYPES,
+  115: BRANSON_WELDING_TYPES,
 };
 
 // "Browse by series" configuration for the brand hubs whose products carry a
@@ -705,6 +720,7 @@ export default function CatalogueCategoryPage({
   const breadcrumbs = getCategoryBreadcrumbs(category.id);
   const title = CATEGORY_TITLE_OVERRIDES[category.id] ?? category.name ?? "Catalogue";
   const categorySourcingCta = CATEGORY_SOURCING_CTA[category.id];
+  const categoryWeldingTypes = CATEGORY_WELDING_TYPES[category.id];
   const description = category.metaDescription;
   const productCount = getCategoryProductCount(category);
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
@@ -1046,6 +1062,33 @@ export default function CatalogueCategoryPage({
       </section>
 
       <main className="mx-auto max-w-[1440px] px-6 py-6">
+        {categoryWeldingTypes && (
+          <section className="mb-12">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
+              Filter by welding type
+            </p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              {categoryWeldingTypes.map((w) => (
+                <a
+                  key={w.label}
+                  href={w.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between rounded-2xl border border-[#e5e7eb] bg-white px-6 py-5 transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+                >
+                  <span className="text-base font-bold text-[#0a1628] group-hover:text-[#2563eb]">
+                    {w.label}
+                  </span>
+                  <ArrowUpRight
+                    size={16}
+                    className="flex-none text-[#93c5fd] transition-colors group-hover:text-[#2563eb]"
+                  />
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* The brand badge in the hero now represents brand-named categories,
             so the legacy category banner (often a stale brand logo) is hidden
             for them. */}
