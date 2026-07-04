@@ -108,6 +108,18 @@ function getSeriesFacets(category: CatalogueCategory | undefined, exclude?: RegE
     .map(([label, count]) => ({ label, count }));
 }
 
+// Application/brand header photos shown in the hub hero's right column — only on
+// a brand's own landing page. Mirrored into our R2 (see [[cloudflare-r2-media]]).
+// `fit`: "cover" fills the frame (product/application photos); "contain"
+// letterboxes on the dark frame (portrait or self-framed graphics).
+const BRAND_HEADER_IMAGES: Record<string, { src: string; fit: "cover" | "contain" }> = {
+  deutsch: { src: "/media/brand-headers/deutsch.webp", fit: "cover" },
+  vogt: { src: "/media/brand-headers/vogt.webp", fit: "cover" },
+  hongshang: { src: "/media/brand-headers/hongshang.webp", fit: "cover" },
+  cvilux: { src: "/media/brand-headers/cvilux.webp", fit: "cover" },
+  htp: { src: "/media/brand-headers/htp.webp", fit: "contain" },
+};
+
 // "Browse by series" configuration for the brand hubs whose products carry a
 // "Series" attribute. Each hub defines where its series live and how to
 // present them.
@@ -808,6 +820,10 @@ export default function CatalogueCategoryPage({
   // scrolls down to the categories; on a descendant it links back UP to the
   // landing page's category list so a visitor can "start over".
   const isBrandHome = isBrandOwnCategory(category)?.slug === brand?.slug && !!brand;
+  // Brand application photo for the hero right column — only on the brand's own
+  // landing page, and only if a video isn't already taking that slot.
+  const brandHeaderImage =
+    isBrandHome && brand && !videoEmbedSrc ? BRAND_HEADER_IMAGES[brand.slug] : undefined;
   const brandHomeRoute =
     categoriesBelowProducts && !isBrandHome
       ? breadcrumbs.find((crumb) => {
@@ -949,8 +965,8 @@ export default function CatalogueCategoryPage({
               )}
             </div>
 
-            {/* Right: video or image promoted from category description */}
-            {(videoEmbedSrc || heroImageSrc) && (
+            {/* Right: brand header photo, video, or image promoted from the description */}
+            {(videoEmbedSrc || brandHeaderImage || heroImageSrc) && (
               <div className="w-full lg:w-[420px] lg:flex-shrink-0 xl:w-[480px]">
                 <div
                   className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]"
@@ -966,12 +982,16 @@ export default function CatalogueCategoryPage({
                     />
                   ) : (
                     <Image
-                      src={heroImageSrc!}
+                      src={brandHeaderImage?.src ?? heroImageSrc!}
                       alt={title}
                       fill
                       unoptimized
                       sizes="(max-width: 1024px) 100vw, 480px"
-                      className="object-contain p-4"
+                      className={
+                        brandHeaderImage?.fit === "cover"
+                          ? "object-cover"
+                          : "object-contain p-4"
+                      }
                     />
                   )}
                 </div>
