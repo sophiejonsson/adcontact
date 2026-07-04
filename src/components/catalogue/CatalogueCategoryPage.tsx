@@ -165,14 +165,25 @@ const BRANSON_WELDING_TYPES = [
     label: "Ultrasonic Metal welding",
     href: "https://www.branson.emerson.com/en/metal-welding",
     image: "/media/branson/metal-welding.webp",
+    description: [
+      "Ultrasonic energy has been used to join metal materials for decades. In ultrasonic metal welding, dissimilar materials are joined together without the use of applied heat or electric current passing through components.",
+      "Ultrasonic energy can weld through contaminants to create a clean seal while providing increased quality and control.",
+    ],
   },
   {
     label: "Ultrasonic Plastic welding",
     href: "https://www.branson.emerson.com/en/ultrasonic-plastic-welding",
     image: "/media/branson/plastic-welding.webp",
+    description: [
+      "Ultrasonic energy has been used to join thermoplastics for over 70 years. It is frequently chosen when parts are too complex or expensive to be molded in one piece.",
+      "In ultrasonic plastic welding, a vibratory motion at the horn face (amplitude) is transferred to the part. The vibrations move through the part and create friction at the interface between the parts — creating heat, then melting. When cooled, a weld is formed.",
+    ],
   },
 ];
-const CATEGORY_WELDING_TYPES: Record<number, { label: string; href: string; image: string }[]> = {
+const CATEGORY_WELDING_TYPES: Record<
+  number,
+  { label: string; href: string; image: string; description: string[] }[]
+> = {
   77: BRANSON_WELDING_TYPES,
   115: BRANSON_WELDING_TYPES,
 };
@@ -1084,7 +1095,7 @@ export default function CatalogueCategoryPage({
         {categoryWeldingTypes && (
           <section className="mb-12">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
-              Filter by welding type
+              Browse by welding type
             </p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               {categoryWeldingTypes.map((w) => (
@@ -1093,7 +1104,7 @@ export default function CatalogueCategoryPage({
                   href={w.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group grid overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+                  className="group flex flex-col overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
                 >
                   <div className="relative aspect-[16/9] bg-[#f8fafc]">
                     <Image
@@ -1105,14 +1116,23 @@ export default function CatalogueCategoryPage({
                       className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
                     />
                   </div>
-                  <div className="flex items-center justify-between gap-3 p-4">
+                  <div className="flex flex-1 flex-col p-5">
                     <h3 className="text-base font-bold text-[#0a1628] group-hover:text-[#2563eb]">
                       {w.label}
                     </h3>
-                    <span className="inline-flex flex-none items-center gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#64748b] transition-colors group-hover:text-[#2563eb]">
-                      View at Branson
-                      <ArrowUpRight size={14} />
-                    </span>
+                    <div className="mt-2 flex-1 space-y-2.5">
+                      {w.description.map((p) => (
+                        <p key={p} className="text-sm leading-6 text-[#475569]">
+                          {p}
+                        </p>
+                      ))}
+                    </div>
+                    <div className="mt-4 border-t border-[#eef2f7] pt-3">
+                      <span className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#64748b] transition-colors group-hover:text-[#2563eb]">
+                        View at Branson
+                        <ArrowUpRight size={14} />
+                      </span>
+                    </div>
                   </div>
                 </a>
               ))}
