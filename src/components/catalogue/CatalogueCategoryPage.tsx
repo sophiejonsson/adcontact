@@ -146,6 +146,7 @@ const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
 // instead of filtering the grid in place (equipment brands with dedicated pages).
 const SUBCATEGORY_HREF_OVERRIDES: Record<number, string> = {
   109: "/products/zoller-frohlich/wire-processing", // Z+F crimping → wire-processing landing
+  110: "/webshop/production-equipment/crimping-equipment/wezag.html", // Wezag → its brand page (tools + presses boxes)
   111: "/webshop/production-equipment/crimping-equipment/mecal.html", // Mecal → its hub (WIP)
 };
 
