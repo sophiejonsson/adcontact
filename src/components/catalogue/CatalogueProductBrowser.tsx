@@ -170,7 +170,13 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
   const universe = new Map<string, Map<string, number>>();
   for (const product of products) {
     for (const [label, value] of Object.entries(product.attributes)) {
-      if (!value || HIDDEN_FILTER_ATTRIBUTES.has(label) || value.length > 80) continue;
+      if (!value || value.length > 80) continue;
+      // Hidden attributes stay hidden UNLESS they're the active filter. A
+      // leaf-of-flat-hub page (e.g. the Wezag brand page) pre-filters on
+      // "Crimping equipment Brands", so that facet must stay visible and
+      // clearable there — even though it's hidden as a redundant facet on the
+      // parent crimping hub, where it's never active.
+      if (HIDDEN_FILTER_ATTRIBUTES.has(label) && !activeFilters[filterParamFor(label)]) continue;
       if (!isFacetableValue(value)) continue;
       if (!universe.has(label)) universe.set(label, new Map());
       const counts = universe.get(label)!;
