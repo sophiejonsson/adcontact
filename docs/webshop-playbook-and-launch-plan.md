@@ -5,7 +5,7 @@ Living document. Two purposes:
 1. **Best practice** — how we turned Zoller & Fröhlich into a self-contained brand section (so we can repeat it).
 2. **Agenda** — what's left for production equipment, plus the site-wide pre-launch checklist.
 
-Last updated: 2026-07-03 (after completing Zoller & Fröhlich ferrules).
+Last updated: 2026-07-05 (production equipment: Branson + Zoller & Fröhlich locked as the two reference templates).
 
 ---
 
@@ -61,16 +61,22 @@ Context (from the catalogue):
 - 8 equipment brands: **Mecal, Zoller + Fröhlich** (they also make wire-processing machines), **Metzner, Ramatech, Wezag, Tekuwa, Mav Prüftechnik, Ulmer**. (`src/data/brands.ts`, `linecardSection: "equipment"`.)
 - Unlike components (brand-first), production equipment is organised by **machine type**: cutting, stripping, crimping, marking, test/quality, ultrasonic welding, misc — plus many individual machine pages (Komax, Mecal, etc.). (`routes.json`.)
 
-### Tasks
+**Guiding principle (locked):** production equipment is **channel-protected** by supplier agreements in the regions we support, and most legacy equipment products are EOL. So keep these pages **lean — reference + redirect + capture the enquiry**, not full internal catalogues. Components are treated differently (we stock, add selection value, richer pages) — intentionally. **Every production-equipment brand page carries the "Can't find the exact machine for your application?" box.**
 
-- [ ] **Inventory** the machine-type hubs and each brand's page; confirm which are brand-owned vs type-owned, and where each currently links out.
-- [ ] **Hub header pictures** — add an application photo to each machine-type hub / brand header (same two-column hero as Z&F). *(User to source photos.)*
-- [ ] **Browse by category** — apply the components pattern (categories below products + context-aware "Browse by category" jump) from `CatalogueCategoryPage.tsx` (`CATEGORIES_BELOW_PRODUCTS_BRANDS`, `categoriesBelowProducts`). Decide per hub.
-- [ ] **"Can't find the exact part?" box** — roll the sourcing CTA onto equipment hubs/brands, each with a "View <brand> catalogue" link to the brand's site (URLs already in `brands.ts`: mecal.net, zofre.de, metzner.com, ramatech.ch, wezag.de, tekuwa.de, mav-germany.de, ulmer-gmbh.net).
-- [ ] **Reproduce-on-site (optional, Z&F-style)** — only where a brand's key content is off-site and worth pulling in; otherwise the CTA + header photo is enough.
-- [ ] **Navigation decision** — keep machine-type-first, or add brand landing pages for the 8 equipment brands? (Recommend: keep type-first, add light brand headers where a brand owns a hub.)
+### Two reference templates (both live & locked)
 
-**Suggested order:** (1) header photos + sourcing CTA across all equipment hubs (fast, high impact) → (2) browse-by-category where it helps → (3) selective Z&F-style reproductions.
+**Tier A — full reference (BRANSON).** Use when we curate a few *current* machines on-site.
+- Machine-type hub via `CatalogueCategoryPage`: header photo (`CATEGORY_HEADER_IMAGES`) · compact **"Browse by <type>"** cards (`CATEGORY_WELDING_TYPES`, image-left/text-right, linking to the supplier's range pages) · curated product grid (hide EOL via `HIDDEN_PRODUCT_IDS` / `HIDDEN_CATEGORY_IDS`) · sourcing box (`CATEGORY_SOURCING_CTA`).
+- Curated product pages (`PRODUCT_OVERRIDES` + `PRODUCT_PRESENTATIONS`): verbatim supplier overview + Features / Specifications boxes · canonical URL (`PRODUCT_CANONICAL_ROUTES`) · no lead-time / additional-info / highlights / drawings · **"Request full specification and a quote"** CTA. *(Verify any fetched marketing bullets against the supplier's raw HTML — the auto-summariser fabricated a "features" list once.)*
+
+**Tier B — lean redirect-only landing (ZOLLER & FRÖHLICH).** Use when the brand's equipment catalogue is legacy/EOL and they maintain a current site.
+- A standalone landing page (e.g. `src/app/products/zoller-frohlich/wire-processing/page.tsx`): two-column hero (title + intro + application photo) · **NO grid/filter** · one image-left/text-right "link box" (brand blurb → supplier site) · the "Can't find the exact machine…?" sourcing box. `/products/<brand>/…` URLs are SEO-fine.
+
+### Per-brand recipe & status
+- [x] **Branson** — Tier A (welding hub + GMX-W1 / Ultraseal20 product pages).
+- [x] **Zoller & Fröhlich** — Tier B (wire-processing landing; listed under Stripping Machines, Crimping machines & a combined header).
+- [ ] **Mecal, Metzner, Ramatech, Wezag, Tekuwa, Mav Prüftechnik, Ulmer** — for each: inventory → pick Tier A/B → header photo (user supplies) + ranges/curated products or link box + sourcing box.
+- [ ] **Legacy Z&F equipment grid pages** (stripping/crimping + ~50 EOL products) still resolve by direct URL — decide: redirect to the Z&F landing or hide (`HIDDEN_CATEGORY_IDS`).
 
 ---
 
