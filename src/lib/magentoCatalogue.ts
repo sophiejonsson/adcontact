@@ -103,10 +103,15 @@ export function webshopPathFromSegments(segments: string[]): string {
 
 export function resolveCatalogueRoute(path: string): CatalogueRoute | undefined {
   const normalizedPath = normalizeCataloguePath(path);
-  // Canonical URL overrides (e.g. a renamed product) resolve to their product.
+  // Canonical URL overrides (renamed product / category) resolve to their target.
   for (const [id, canonical] of Object.entries(PRODUCT_CANONICAL_ROUTES)) {
     if (normalizeCataloguePath(canonical) === normalizedPath) {
       return { type: "product", id: Number(id) };
+    }
+  }
+  for (const [id, canonical] of Object.entries(CATEGORY_CANONICAL_ROUTES)) {
+    if (normalizeCataloguePath(canonical) === normalizedPath) {
+      return { type: "category", id: Number(id) };
     }
   }
   return (
@@ -156,6 +161,11 @@ export const HIDDEN_PRODUCT_IDS = new Set<number>([22941, 22942, 22943, 22945]);
 const GMX_W1_ROUTE = "/webshop/production-equipment/ultrasonic-welding/branson-gmx-w1.html";
 const ULTRASEAL20_ROUTE =
   "/webshop/production-equipment/ultrasonic-welding/branson-ultraseal20-metal-tube-sealer.html";
+const CRIMP = "/webshop/production-equipment/crimping-equipment";
+const WEZAG_ROUTE = `${CRIMP}/wezag.html`;
+const WZ_30_ROUTE = `${CRIMP}/wezag/handtang-wz-30.html`;
+const WZ_100_ROUTE = `${CRIMP}/wezag/handtang-wz-100.html`;
+const WZ_130_ROUTE = `${CRIMP}/wezag/presshuvud-wz-130.html`;
 
 // Canonical URL per product: the product page 301-redirects any other route
 // that resolves to this product to the canonical one, and resolveCatalogueRoute
@@ -163,6 +173,16 @@ const ULTRASEAL20_ROUTE =
 export const PRODUCT_CANONICAL_ROUTES: Record<number, string> = {
   22940: GMX_W1_ROUTE,
   22944: ULTRASEAL20_ROUTE, // consolidate the /branson/ duplicate slug
+  1817: WZ_30_ROUTE, // Wezag WZ tools moved out of the legacy /stocko/ path
+  1818: WZ_100_ROUTE,
+  1819: WZ_130_ROUTE,
+};
+
+// Same idea for a renamed CATEGORY hub: resolveCatalogueRoute makes the new path
+// resolve, getCatalogueCategory serves the category with its route rewritten, and
+// the page 301-redirects the old path. To rename a category URL, add it here.
+export const CATEGORY_CANONICAL_ROUTES: Record<number, string> = {
+  110: WEZAG_ROUTE, // legacy "Stocko" crimping hub -> Wezag
 };
 
 type ProductOverride = Partial<
@@ -187,6 +207,10 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
     shortDescription:
       "Ultraseal ultrasonic systems hermetically seal copper and aluminum tubes. A one-step operation crimps, seals and cuts off charged tubes in under one second. Systems are suited to automation for high levels of efficiency and productivity.",
   },
+  // Wezag WZ hand tools — link under the renamed /wezag/ path.
+  1817: { route: WZ_30_ROUTE, routes: [WZ_30_ROUTE] },
+  1818: { route: WZ_100_ROUTE, routes: [WZ_100_ROUTE] },
+  1819: { route: WZ_130_ROUTE, routes: [WZ_130_ROUTE] },
 };
 
 // Structured Features + Specifications for the product page, shown as two
@@ -294,7 +318,10 @@ export function findCatalogueProductByReference(reference: string): CataloguePro
 
 export function getCatalogueCategory(id: number | string): CatalogueCategory | undefined {
   if (HIDDEN_CATEGORY_IDS.has(Number(id))) return undefined;
-  return categories[String(id)];
+  const category = categories[String(id)];
+  if (!category) return undefined;
+  const canonical = CATEGORY_CANONICAL_ROUTES[Number(id)];
+  return canonical ? { ...category, route: canonical } : category;
 }
 
 export function getWebshopRootCategory(): CatalogueCategory | undefined {

@@ -95,7 +95,7 @@ const productionEquipmentGroup: NavGroup = {
         { label: "Mecal", href: "/webshop/production-equipment/crimping-equipment/mecal.html" },
         { label: "Zoller & Fröhlich", href: "/products/zoller-frohlich/wire-processing" },
         // "Stocko" crimping tools are Wezag's (WZ hand tools) — labelled Wezag.
-        { label: "Wezag", href: "/webshop/production-equipment/crimping-equipment/stocko.html" },
+        { label: "Wezag", href: "/webshop/production-equipment/crimping-equipment/wezag.html" },
       ],
     },
     {
