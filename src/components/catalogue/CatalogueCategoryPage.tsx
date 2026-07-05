@@ -123,7 +123,10 @@ function getSeriesFacets(category: CatalogueCategory | undefined, exclude?: RegE
 // a brand's own landing page. Mirrored into our R2 (see [[cloudflare-r2-media]]).
 // `fit`: "cover" fills the frame (product/application photos); "contain"
 // letterboxes on the dark frame (portrait or self-framed graphics).
-const BRAND_HEADER_IMAGES: Record<string, { src: string; fit: "cover" | "contain" }> = {
+// `bg`: the card is white by default; "black" for graphics that ship on a black
+// background so the letterbox is seamless.
+type HeaderImage = { src: string; fit: "cover" | "contain"; bg?: "black" };
+const BRAND_HEADER_IMAGES: Record<string, HeaderImage> = {
   deutsch: { src: "/media/brand-headers/deutsch.webp", fit: "cover" },
   vogt: { src: "/media/brand-headers/vogt.webp", fit: "cover" },
   hongshang: { src: "/media/brand-headers/hongshang.webp", fit: "cover" },
@@ -152,9 +155,11 @@ const SUBCATEGORY_HREF_OVERRIDES: Record<number, string> = {
 
 // Header photo for hubs that don't resolve to a single brand (keyed by category
 // id). Rendered in the hero's right column, same frame as BRAND_HEADER_IMAGES.
-const CATEGORY_HEADER_IMAGES: Record<number, { src: string; fit: "cover" | "contain" }> = {
+const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   77: { src: "/media/branson/hub-header.jpg", fit: "cover" }, // Branson welding hub
   115: { src: "/media/branson/hub-header.jpg", fit: "cover" }, // Branson sub-page
+  // Wezag hand-crimper graphic ships on a black background — frame it black.
+  110: { src: "/media/wezag/hub-header.png", fit: "contain", bg: "black" },
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
@@ -199,7 +204,13 @@ type CategoryLinkBox = {
   ctaLabel: string;
   fit?: "cover" | "contain"; // "cover" fills the frame; "contain" for graphics
 };
-type CategoryLinkSection = { eyebrow: string; boxes: CategoryLinkBox[] };
+type CategoryLinkSection = {
+  eyebrow: string;
+  boxes: CategoryLinkBox[];
+  // "horizontal" (default): compact image-left card. "stacked": full-width image
+  // on top — better for wide marketing graphics with baked-in text.
+  layout?: "horizontal" | "stacked";
+};
 
 // Branson: the listed machines are mostly EOL and are disregarded; both options
 // point to Branson's catalogue while the final Branson presentation is decided.
@@ -235,12 +246,12 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
   {
     label: "Hand crimping tools",
     href: "https://www.private-label-tools.de/en/tools/",
-    image: "/media/wezag/tools.png",
+    image: "/media/wezag/tools-deutsch.png",
     ctaLabel: "View at Private Label Tools",
     fit: "contain",
     description: [
-      "Private Label Tools is Wezag's hand-tool brand — professional crimping, cutting and stripping tools, from wire-end ferrules to insulated and uninsulated terminals.",
-      "Interchangeable die sets deliver repeatable, high-quality crimps across every terminal type.",
+      "Private Label Tools is Wezag's hand-tool brand — professional crimping tools with interchangeable die sets for repeatable, high-quality crimps.",
+      "Dies available for Deutsch DT & DTM and many other connector systems (CSV10 shown).",
     ],
   },
   {
@@ -259,7 +270,7 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
-  110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
+  110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES, layout: "stacked" },
 };
 
 // "Browse by series" configuration for the brand hubs whose products carry a
@@ -1120,7 +1131,7 @@ export default function CatalogueCategoryPage({
                 the wider dark 4:3 frame. */}
             {headerImage ? (
               <div className="w-full lg:w-[420px] lg:flex-shrink-0">
-                <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
+                <div className={`overflow-hidden rounded-2xl shadow-lg ${headerImage.bg === "black" ? "bg-black" : "bg-white"}`}>
                   <div className="relative aspect-[3/2] w-full">
                     <Image
                       src={headerImage.src}
@@ -1173,25 +1184,10 @@ export default function CatalogueCategoryPage({
               {categoryLinkSection.eyebrow}
             </p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              {categoryLinkSection.boxes.map((w) => (
-                <a
-                  key={w.label}
-                  href={w.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
-                >
-                  <div className={`relative w-28 flex-none sm:w-40 ${w.fit === "contain" ? "bg-white" : "bg-[#f8fafc]"}`}>
-                    <Image
-                      src={w.image}
-                      alt={w.label}
-                      fill
-                      unoptimized
-                      sizes="(max-width: 640px) 112px, 160px"
-                      className={`transition-transform duration-300 group-hover:scale-[1.04] ${w.fit === "contain" ? "object-contain p-2" : "object-cover"}`}
-                    />
-                  </div>
-                  <div className="flex min-w-0 flex-1 flex-col p-4">
+              {categoryLinkSection.boxes.map((w) => {
+                const stacked = categoryLinkSection.layout === "stacked";
+                const body = (
+                  <div className={`flex min-w-0 flex-1 flex-col p-4 ${stacked ? "border-t border-[#eef2f7]" : ""}`}>
                     <h3 className="text-sm font-bold text-[#0a1628] group-hover:text-[#2563eb] sm:text-base">
                       {w.label}
                     </h3>
@@ -1205,8 +1201,42 @@ export default function CatalogueCategoryPage({
                       <ArrowUpRight size={13} />
                     </span>
                   </div>
-                </a>
-              ))}
+                );
+                return (
+                  <a
+                    key={w.label}
+                    href={w.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`group flex overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)] ${stacked ? "flex-col" : ""}`}
+                  >
+                    {stacked ? (
+                      <div className="relative aspect-video w-full bg-white">
+                        <Image
+                          src={w.image}
+                          alt={w.label}
+                          fill
+                          unoptimized
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 620px"
+                          className="object-contain transition-transform duration-300 group-hover:scale-[1.02]"
+                        />
+                      </div>
+                    ) : (
+                      <div className={`relative w-28 flex-none sm:w-40 ${w.fit === "contain" ? "bg-white" : "bg-[#f8fafc]"}`}>
+                        <Image
+                          src={w.image}
+                          alt={w.label}
+                          fill
+                          unoptimized
+                          sizes="(max-width: 640px) 112px, 160px"
+                          className={`transition-transform duration-300 group-hover:scale-[1.04] ${w.fit === "contain" ? "object-contain p-2" : "object-cover"}`}
+                        />
+                      </div>
+                    )}
+                    {body}
+                  </a>
+                );
+              })}
             </div>
           </section>
         )}

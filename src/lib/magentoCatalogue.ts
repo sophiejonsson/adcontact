@@ -187,7 +187,7 @@ export const CATEGORY_CANONICAL_ROUTES: Record<number, string> = {
 
 type ProductOverride = Partial<
   Pick<CatalogueProduct, "name" | "sku" | "shortDescription" | "description" | "route" | "routes">
-> & { image?: string };
+> & { image?: string; attributes?: Record<string, string> };
 export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
   // The Branson 2032S slot is presented as the current Branson GMX-W1 wire splicer.
   22940: {
@@ -207,10 +207,12 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
     shortDescription:
       "Ultraseal ultrasonic systems hermetically seal copper and aluminum tubes. A one-step operation crimps, seals and cuts off charged tubes in under one second. Systems are suited to automation for high levels of efficiency and productivity.",
   },
-  // Wezag WZ hand tools — link under the renamed /wezag/ path.
-  1817: { route: WZ_30_ROUTE, routes: [WZ_30_ROUTE] },
-  1818: { route: WZ_100_ROUTE, routes: [WZ_100_ROUTE] },
-  1819: { route: WZ_130_ROUTE, routes: [WZ_130_ROUTE] },
+  // Wezag WZ hand tools — link under the renamed /wezag/ path. The legacy
+  // "Crimping equipment Brands" attribute reads "Stocko"; re-label it "Wezag" so
+  // the brand-page filter box shows "Wezag" (it's hidden on the parent hub).
+  1817: { route: WZ_30_ROUTE, routes: [WZ_30_ROUTE], attributes: { "Crimping equipment Brands": "Wezag" } },
+  1818: { route: WZ_100_ROUTE, routes: [WZ_100_ROUTE], attributes: { "Crimping equipment Brands": "Wezag" } },
+  1819: { route: WZ_130_ROUTE, routes: [WZ_130_ROUTE], attributes: { "Crimping equipment Brands": "Wezag" } },
 };
 
 // Structured Features + Specifications for the product page, shown as two
@@ -274,6 +276,10 @@ export function getCatalogueProduct(id: number | string): CatalogueProduct | und
   const override = PRODUCT_OVERRIDES[Number(product.id)];
   if (override) {
     const merged = { ...product, ...override };
+    if (override.attributes) {
+      // Merge (not replace) so only the named attributes are overridden.
+      merged.attributes = { ...product.attributes, ...override.attributes };
+    }
     if (override.image) {
       merged.image = override.image;
       merged.smallImage = override.image;

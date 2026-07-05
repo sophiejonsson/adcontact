@@ -54,6 +54,9 @@ function filterParamFor(label: string) {
 // shown to the user changes.
 const FACET_LABEL_OVERRIDES: Record<string, string> = {
   "Miscellaneous Products": "Branson products",
+  // On a brand page this facet is the (hidden-but-active) pre-filter; show a
+  // clean "Brand" heading instead of the raw Magento attribute name.
+  "Crimping equipment Brands": "Brand",
 };
 function facetDisplayLabel(label: string): string {
   return FACET_LABEL_OVERRIDES[label] ?? label;
@@ -216,6 +219,14 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
           { value: activeValue, count: counts.get(activeValue) ?? 0, active: true },
           ...values,
         ].slice(0, 10);
+      }
+
+      // A hidden-but-active facet is shown only because it IS the current filter
+      // (e.g. a brand page pre-filtered on "Crimping equipment Brands"). Surface
+      // just the active value as a clearable chip — not the sibling brands
+      // borrowed from the parent hub pool.
+      if (HIDDEN_FILTER_ATTRIBUTES.has(label) && activeValue) {
+        values = values.filter((item) => item.value === activeValue);
       }
 
       const totalProducts = [...baseTokens.values()].reduce((sum, n) => sum + n, 0);
