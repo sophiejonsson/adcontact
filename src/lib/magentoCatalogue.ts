@@ -136,10 +136,41 @@ export const HIDDEN_CATEGORY_IDS = new Set<number>([75, 49, 54, 55, 112, 113, 17
 // Wire Splicer (22940) and the Ultraseal20 Metal Tube Sealer (22944).
 export const HIDDEN_PRODUCT_IDS = new Set<number>([22941, 22942, 22943, 22945]);
 
-// Replace a product's imagery with a curated picture (reversible). Applied in
-// getCatalogueProduct so it flows to the grid card, detail page and search.
-export const PRODUCT_IMAGE_OVERRIDES: Record<number, string> = {
-  22940: "/media/branson/wire-splicer.webp", // Branson 2032S Wire Splicer
+// Curated per-product overrides (reversible). Applied in getCatalogueProduct so
+// they flow to the grid card, detail page and search. `image` also updates
+// smallImage/thumbnail/gallery.
+type ProductOverride = Partial<
+  Pick<CatalogueProduct, "name" | "sku" | "shortDescription" | "description">
+> & { image?: string };
+export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
+  // The Branson 2032S slot is presented as the current Branson GMX-W1 wire splicer.
+  22940: {
+    name: "Branson GMX-W1 Wire Splicer",
+    sku: "Branson GMX-W1",
+    image: "/media/branson/wire-splicer.webp",
+    shortDescription:
+      "The Branson GMX-W1 joins wires reliably and quickly while providing maximum maneuverability. Its user-friendly controls and portable design suit both in-line and tabletop installation, and it is optimized for copper wire harness joining.",
+    description: `<h3>Features</h3>
+<ul>
+<li>User-friendly HMI with 22" capacitive touch screen</li>
+<li>Portable, ergonomic design for flexible deployment</li>
+<li>Integrated cutter module for comprehensive wire processing</li>
+<li>Dual data connectivity (USB and Ethernet)</li>
+<li>Pneumatic actuation and air cooling</li>
+</ul>
+<h3>Specifications</h3>
+<table><tbody>
+<tr><td>Frequency</td><td>20 kHz</td></tr>
+<tr><td>Output power</td><td>4000 W</td></tr>
+<tr><td>Actuation</td><td>Pneumatic</td></tr>
+<tr><td>Cooling</td><td>Air</td></tr>
+<tr><td>Air supply</td><td>5.5 bar (80 psi), clean dry air</td></tr>
+<tr><td>User interface</td><td>22" capacitive touch screen</td></tr>
+<tr><td>Data interfaces</td><td>USB, Ethernet</td></tr>
+<tr><td>Input power</td><td>200–230 V, single phase, 25 A max</td></tr>
+<tr><td>Dimensions (W × H × D)</td><td>6.7" × 7.9" × 19.9"</td></tr>
+</tbody></table>`,
+  },
 };
 
 // A product is hidden only when EVERY category it belongs to is hidden, so a
@@ -159,15 +190,16 @@ export function getCatalogueProduct(id: number | string): CatalogueProduct | und
   if (!product || product.status !== "enabled") return undefined;
   if (HIDDEN_PRODUCT_IDS.has(Number(product.id))) return undefined;
   if (productIsInHiddenTreeOnly(product)) return undefined;
-  const imageOverride = PRODUCT_IMAGE_OVERRIDES[Number(product.id)];
-  if (imageOverride) {
-    return {
-      ...product,
-      image: imageOverride,
-      smallImage: imageOverride,
-      thumbnail: imageOverride,
-      gallery: [imageOverride],
-    };
+  const override = PRODUCT_OVERRIDES[Number(product.id)];
+  if (override) {
+    const merged = { ...product, ...override };
+    if (override.image) {
+      merged.image = override.image;
+      merged.smallImage = override.image;
+      merged.thumbnail = override.image;
+      merged.gallery = [override.image];
+    }
+    return merged;
   }
   return product;
 }

@@ -135,6 +135,9 @@ export default function CatalogueProductPage({
   const additionalInfo = attributes.filter(([label]) => !RELATIONSHIP_ATTRIBUTES.has(label));
   const highlights = attributes.slice(0, 6);
   const breadcrumbs = getProductBreadcrumbs(product);
+  // Production-equipment products: no lead-time badge, no "Additional
+  // information" table, and the description section reads "Specification".
+  const isProductionEquipment = breadcrumbs.some((c) => c.route?.includes("/production-equipment"));
   const primaryImage = magentoImageSrc(product.image ?? product.gallery[0] ?? product.thumbnail);
   const title = titleForProduct(product);
   const showSkuEyebrow = sku !== title && sku !== product.name;
@@ -219,13 +222,15 @@ export default function CatalogueProductPage({
               </p>
             )}
 
-            {/* Lead time */}
-            <div className="mt-5 flex w-fit items-center gap-2 rounded-lg border border-[#dcfce7] bg-[#f0fdf4] p-3">
-              <Clock size={14} className="text-emerald-600" />
-              <span className="text-sm font-semibold text-emerald-700">
-                Generally high availability — ask for current lead time
-              </span>
-            </div>
+            {/* Lead time (hidden for production equipment) */}
+            {!isProductionEquipment && (
+              <div className="mt-5 flex w-fit items-center gap-2 rounded-lg border border-[#dcfce7] bg-[#f0fdf4] p-3">
+                <Clock size={14} className="text-emerald-600" />
+                <span className="text-sm font-semibold text-emerald-700">
+                  Generally high availability — ask for current lead time
+                </span>
+              </div>
+            )}
 
             {highlights.length > 0 && (
               <div className="mt-8 grid grid-cols-2 gap-3">
@@ -270,7 +275,7 @@ export default function CatalogueProductPage({
 
         <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
           <div className="space-y-6">
-            {additionalInfo.length > 0 && (
+            {additionalInfo.length > 0 && !isProductionEquipment && (
               <section>
                 <h2 className="mb-3 text-base font-bold text-[#0a1628]">Additional information</h2>
                 <div className="overflow-hidden rounded-xl border border-[#e5e7eb] bg-white">
@@ -306,7 +311,9 @@ export default function CatalogueProductPage({
 
             {description && (
               <section>
-                <h2 className="mb-4 text-lg font-bold text-[#0a1628]">Description</h2>
+                <h2 className="mb-4 text-lg font-bold text-[#0a1628]">
+                  {isProductionEquipment ? "Specification" : "Description"}
+                </h2>
                 <div
                   className="prose prose-sm max-w-none rounded-xl border border-[#e5e7eb] bg-white px-5 py-4 text-[#374151]"
                   dangerouslySetInnerHTML={{ __html: description }}

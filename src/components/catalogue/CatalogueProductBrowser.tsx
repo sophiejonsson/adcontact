@@ -42,6 +42,16 @@ function filterParamFor(label: string) {
     .replace(/^_+|_+$/g, "")}`;
 }
 
+// Prettier display names for a few raw Magento attribute names used as facet
+// titles. The param/matching still use the original label — only the label
+// shown to the user changes.
+const FACET_LABEL_OVERRIDES: Record<string, string> = {
+  "Miscellaneous Products": "Branson products",
+};
+function facetDisplayLabel(label: string): string {
+  return FACET_LABEL_OVERRIDES[label] ?? label;
+}
+
 function searchableText(product: CatalogueProduct) {
   return [
     product.name,
@@ -315,7 +325,9 @@ function ProductCard({
         <p className="mt-1 font-mono text-[10px] font-semibold text-[#94a3b8]">
           {productDisplaySku(product)}
         </p>
-        <p className="mt-2 text-[11px] leading-snug text-[#64748b]">High availability · lead time on request</p>
+        {!categoryRoute?.includes("/production-equipment") && (
+          <p className="mt-2 text-[11px] leading-snug text-[#64748b]">High availability · lead time on request</p>
+        )}
       </div>
 
       {/* Quote CTA */}
@@ -560,7 +572,7 @@ export default function CatalogueProductBrowser({
         {activePartnerSlot?.facet && activePartnerSlot.facet.options.length > 1 && (
           <div className={`${hasSubcategoryFilter ? "mt-5 border-t border-[#eef2f7] pt-5" : "mt-5"}`}>
             <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
-              {activePartnerSlot.facet.label}
+              {facetDisplayLabel(activePartnerSlot.facet.label)}
             </h3>
             <div className="mt-2 space-y-1.5">
               <button
@@ -604,7 +616,7 @@ export default function CatalogueProductBrowser({
             {facets.map((facet) => (
               <div key={facet.param}>
                 <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
-                  {facet.label}
+                  {facetDisplayLabel(facet.label)}
                 </h3>
                 <div className="mt-2 space-y-1.5">
                   {facet.values.map((item) => (
