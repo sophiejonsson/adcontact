@@ -146,12 +146,15 @@ export const HIDDEN_PRODUCT_IDS = new Set<number>([22941, 22942, 22943, 22945]);
 // they flow to the grid card, detail page and search. `image` also updates
 // smallImage/thumbnail/gallery.
 const GMX_W1_ROUTE = "/webshop/production-equipment/ultrasonic-welding/branson-gmx-w1.html";
+const ULTRASEAL20_ROUTE =
+  "/webshop/production-equipment/ultrasonic-welding/branson-ultraseal20-metal-tube-sealer.html";
 
 // Canonical URL per product: the product page 301-redirects any other route
 // that resolves to this product to the canonical one, and resolveCatalogueRoute
 // makes the canonical path resolve.
 export const PRODUCT_CANONICAL_ROUTES: Record<number, string> = {
   22940: GMX_W1_ROUTE,
+  22944: ULTRASEAL20_ROUTE, // consolidate the /branson/ duplicate slug
 };
 
 type ProductOverride = Partial<
@@ -167,6 +170,14 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
     routes: [GMX_W1_ROUTE],
     shortDescription:
       "The Branson GMX-W1 joins wires reliably and quickly while providing maximum maneuverability. A user-friendly HMI and portable, ergonomic design make it easy to use as either an in-line or tabletop system. This product is designed for copper wire harness, although other materials may be possible upon testing and qualification.",
+  },
+  // Ultraseal20 keeps its name (still a current Branson product); we only
+  // consolidate its URL and give it the clean overview.
+  22944: {
+    route: ULTRASEAL20_ROUTE,
+    routes: [ULTRASEAL20_ROUTE],
+    shortDescription:
+      "Ultraseal ultrasonic systems hermetically seal copper and aluminum tubes. A one-step operation crimps, seals and cuts off charged tubes in under one second. Systems are suited to automation for high levels of efficiency and productivity.",
   },
 };
 
@@ -197,6 +208,17 @@ export const PRODUCT_PRESENTATIONS: Record<
       { label: "Input power", value: "200~230V single phase, 25A max" },
       { label: "Overall dimensions", value: '6.7" (W) x 7.9" (H) x 19.9" (L)' },
     ],
+  },
+  22944: {
+    // Branson publishes no public spec table for the Ultraseal20 (datasheet
+    // only) — features drawn from their description; specifications on request.
+    features: [
+      "Hermetically seals copper and aluminum tubes",
+      "One-step operation — crimps, seals and cuts off charged tubes",
+      "Completes each seal in under one second",
+      "Suited to automation for high efficiency and productivity",
+    ],
+    specifications: [],
   },
 };
 

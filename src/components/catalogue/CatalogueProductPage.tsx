@@ -313,7 +313,7 @@ export default function CatalogueProductPage({
             ))}
 
             {presentation ? (
-              <div className="grid gap-6 md:grid-cols-2">
+              <div className={presentation.specifications.length > 0 ? "grid gap-6 md:grid-cols-2" : ""}>
                 <section className="rounded-xl border border-[#e5e7eb] bg-white p-5">
                   <h2 className="mb-3 text-base font-bold text-[#0a1628]">Features</h2>
                   <ul className="space-y-2.5">
@@ -325,17 +325,19 @@ export default function CatalogueProductPage({
                     ))}
                   </ul>
                 </section>
-                <section className="rounded-xl border border-[#e5e7eb] bg-white p-5">
-                  <h2 className="mb-3 text-base font-bold text-[#0a1628]">Specifications</h2>
-                  <dl className="divide-y divide-[#f1f5f9] text-sm">
-                    {presentation.specifications.map((spec) => (
-                      <div key={spec.label} className="flex justify-between gap-4 py-2">
-                        <dt className="flex-none text-[#64748b]">{spec.label}</dt>
-                        <dd className="text-right font-semibold text-[#0a1628]">{spec.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </section>
+                {presentation.specifications.length > 0 && (
+                  <section className="rounded-xl border border-[#e5e7eb] bg-white p-5">
+                    <h2 className="mb-3 text-base font-bold text-[#0a1628]">Specifications</h2>
+                    <dl className="divide-y divide-[#f1f5f9] text-sm">
+                      {presentation.specifications.map((spec) => (
+                        <div key={spec.label} className="flex justify-between gap-4 py-2">
+                          <dt className="flex-none text-[#64748b]">{spec.label}</dt>
+                          <dd className="text-right font-semibold text-[#0a1628]">{spec.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </section>
+                )}
               </div>
             ) : (
               description && (
