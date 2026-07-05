@@ -19,6 +19,13 @@ const HIDDEN_FILTER_ATTRIBUTES = new Set([
   "Enable Recurring Profile",
   "Finishing Ni",
   "Purchase currency",
+  // Image metadata — never a real product filter.
+  "Image Label",
+  "Small Image Label",
+  "Thumbnail Label",
+  // Redundant with the subcategory "Category" filter, whose brand chips link to
+  // the brand hubs; the raw attribute also still reads "Stocko" (now Wezag).
+  "Crimping equipment Brands",
 ]);
 
 function firstParamValue(value: string | string[] | undefined) {
