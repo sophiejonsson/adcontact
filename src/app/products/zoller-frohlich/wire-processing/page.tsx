@@ -1,13 +1,13 @@
 import Image from "next/image";
 import type { Metadata } from "next";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 
 // Zoller & Fröhlich production-equipment (stripping & crimping) landing. Their
 // equipment catalogue is legacy/EOL and they maintain a current site, so this is
 // a lean reference: header + one link box redirecting to zofre.de. Reuses the
 // same application photo as the components Z&F hub.
-const ZOFRE = "https://www.zofre.de/";
+const ZOFRE = "https://www.zofre.de/en/wire-processing";
 const HEADER_IMAGE = "/media/zoller-frohlich/ferrules-application.jpg";
 
 export const metadata: Metadata = {
@@ -111,6 +111,36 @@ export default function ZFWireProcessingPage() {
             </span>
           </div>
         </a>
+
+        {/* Sourcing CTA — on every production-equipment brand page */}
+        <section className="mt-10 rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] px-6 py-7 sm:px-8">
+          <h2 className="text-lg font-bold text-[#0a1628] sm:text-xl">
+            Can&apos;t find the exact machine for your application?
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-[#475569]">
+            We represent the complete Zoller &amp; Fröhlich wire-processing programme. Tell us about
+            your application and we&apos;ll help you find the right machine — or browse Z+F&apos;s
+            full catalogue.
+          </p>
+          <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <a
+              href="mailto:info@adcontact.se?subject=Sourcing%20request%3A%20Zoller%20%26%20Fr%C3%B6hlich%20wire%20processing"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
+            >
+              Send us your application
+              <ArrowRight size={15} />
+            </a>
+            <a
+              href={ZOFRE}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] transition-colors hover:text-[#2563eb]"
+            >
+              View Zoller &amp; Fröhlich catalogue
+              <ArrowUpRight size={14} />
+            </a>
+          </div>
+        </section>
       </main>
     </div>
   );
