@@ -141,6 +141,11 @@ export default function CatalogueProductPage({
   const isProductionEquipment = breadcrumbs.some((c) => c.route?.includes("/production-equipment"));
   // Curated Features + Specifications boxes (replaces the free-text description).
   const presentation = PRODUCT_PRESENTATIONS[product.id];
+  // For production equipment full specs are supplied with the quotation, so the
+  // quote CTA doubles as the "full specification on request" ask.
+  const quoteLabel = isProductionEquipment
+    ? "Request full specification and a quote"
+    : "Request a quote";
   const primaryImage = magentoImageSrc(product.image ?? product.gallery[0] ?? product.thumbnail);
   const title = titleForProduct(product);
   const showSkuEyebrow = sku !== title && sku !== product.name;
@@ -253,10 +258,10 @@ export default function CatalogueProductPage({
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#quote"
-                className="btn-elevate btn-elevate-amber inline-flex items-center justify-center gap-2 rounded-lg bg-[#f59e0b] px-6 py-3.5 font-semibold text-[#0a1628] hover:bg-[#d97706]"
+                className="btn-elevate btn-elevate-amber inline-flex items-center justify-center gap-2 rounded-lg bg-[#f59e0b] px-6 py-3.5 text-center font-semibold text-[#0a1628] hover:bg-[#d97706]"
               >
-                Request a quote
-                <ArrowRight size={15} />
+                {quoteLabel}
+                <ArrowRight size={15} className="flex-none" />
               </a>
               <a
                 href="/contact"
@@ -390,7 +395,7 @@ export default function CatalogueProductPage({
             <div className="lg:sticky lg:top-[168px]">
               <QuoteForm
                 defaultPartNumber={sku}
-                title={`Request a quote for ${sku}`}
+                title={`${quoteLabel} for ${sku}`}
               />
             </div>
           </aside>
