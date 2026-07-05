@@ -66,7 +66,18 @@ function brandNameSlug(brand: (typeof brands)[number]) {
 // brand category should carry that brand's logo, so we walk the route from the
 // deepest segment outward and return the closest brand ancestor — matching a
 // segment against either the brand slug or its name-derived slug.
+// A few categories are mislabelled in the legacy data — map them to the real
+// manufacturer so the page shows the right brand (logo + name).
+const CATEGORY_BRAND_OVERRIDES: Record<number, string> = {
+  110: "wezag", // "Stocko" crimping category actually holds Wezag WZ hand tools
+};
+
 function brandForCategory(category: CatalogueCategory) {
+  const overrideSlug = CATEGORY_BRAND_OVERRIDES[category.id];
+  if (overrideSlug) {
+    const overridden = brands.find((b) => b.slug === overrideSlug);
+    if (overridden) return overridden;
+  }
   const segments =
     category.route
       ?.split("/")
@@ -128,6 +139,7 @@ const BRAND_HEADER_IMAGES: Record<string, { src: string; fit: "cover" | "contain
 // from what we want to show (menu + page H1).
 const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
   77: "Plastic- and Metal Welding", // "Ultrasonic Welding"
+  110: "Wezag", // legacy "Stocko" crimping category — actually Wezag WZ tools
 };
 
 // Header photo for hubs that don't resolve to a single brand (keyed by category
