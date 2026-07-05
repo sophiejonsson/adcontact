@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Archive, Clock, Download, FileImage, FileText, Mail, Package, Phone } from "lucide-react";
+import { ArrowRight, Archive, Check, Clock, Download, FileImage, FileText, Mail, Package, Phone } from "lucide-react";
 import QuoteForm from "@/components/QuoteForm";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { brands } from "@/data/brands";
@@ -12,6 +12,7 @@ import {
   getProductBreadcrumbs,
   productDisplaySku,
   titleForProduct,
+  PRODUCT_PRESENTATIONS,
   type CatalogueProduct,
 } from "@/lib/magentoCatalogue";
 
@@ -136,8 +137,10 @@ export default function CatalogueProductPage({
   const highlights = attributes.slice(0, 6);
   const breadcrumbs = getProductBreadcrumbs(product);
   // Production-equipment products: no lead-time badge, no "Additional
-  // information" table, and the description section reads "Specification".
+  // information" table, no attribute highlight boxes.
   const isProductionEquipment = breadcrumbs.some((c) => c.route?.includes("/production-equipment"));
+  // Curated Features + Specifications boxes (replaces the free-text description).
+  const presentation = PRODUCT_PRESENTATIONS[product.id];
   const primaryImage = magentoImageSrc(product.image ?? product.gallery[0] ?? product.thumbnail);
   const title = titleForProduct(product);
   const showSkuEyebrow = sku !== title && sku !== product.name;
@@ -232,7 +235,7 @@ export default function CatalogueProductPage({
               </div>
             )}
 
-            {highlights.length > 0 && (
+            {highlights.length > 0 && !isProductionEquipment && (
               <div className="mt-8 grid grid-cols-2 gap-3">
                 {highlights.map(([label, value]) => (
                   <div key={label} className="rounded-lg border border-[#e5e7eb] bg-white p-3">
@@ -309,16 +312,43 @@ export default function CatalogueProductPage({
               />
             ))}
 
-            {description && (
-              <section>
-                <h2 className="mb-4 text-lg font-bold text-[#0a1628]">
-                  {isProductionEquipment ? "Specification" : "Description"}
-                </h2>
-                <div
-                  className="prose prose-sm max-w-none rounded-xl border border-[#e5e7eb] bg-white px-5 py-4 text-[#374151]"
-                  dangerouslySetInnerHTML={{ __html: description }}
-                />
-              </section>
+            {presentation ? (
+              <div className="grid gap-6 md:grid-cols-2">
+                <section className="rounded-xl border border-[#e5e7eb] bg-white p-5">
+                  <h2 className="mb-3 text-base font-bold text-[#0a1628]">Features</h2>
+                  <ul className="space-y-2.5">
+                    {presentation.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2 text-sm leading-6 text-[#374151]">
+                        <Check size={15} className="mt-0.5 flex-none text-[#2563eb]" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+                <section className="rounded-xl border border-[#e5e7eb] bg-white p-5">
+                  <h2 className="mb-3 text-base font-bold text-[#0a1628]">Specifications</h2>
+                  <dl className="divide-y divide-[#f1f5f9] text-sm">
+                    {presentation.specifications.map((spec) => (
+                      <div key={spec.label} className="flex justify-between gap-4 py-2">
+                        <dt className="flex-none text-[#64748b]">{spec.label}</dt>
+                        <dd className="text-right font-semibold text-[#0a1628]">{spec.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              </div>
+            ) : (
+              description && (
+                <section>
+                  <h2 className="mb-4 text-lg font-bold text-[#0a1628]">
+                    {isProductionEquipment ? "Specification" : "Description"}
+                  </h2>
+                  <div
+                    className="prose prose-sm max-w-none rounded-xl border border-[#e5e7eb] bg-white px-5 py-4 text-[#374151]"
+                    dangerouslySetInnerHTML={{ __html: description }}
+                  />
+                </section>
+              )
             )}
 
             {product.files.length > 0 && (

@@ -140,7 +140,7 @@ export const HIDDEN_PRODUCT_IDS = new Set<number>([22941, 22942, 22943, 22945]);
 // they flow to the grid card, detail page and search. `image` also updates
 // smallImage/thumbnail/gallery.
 type ProductOverride = Partial<
-  Pick<CatalogueProduct, "name" | "sku" | "shortDescription" | "description">
+  Pick<CatalogueProduct, "name" | "sku" | "shortDescription" | "description" | "route" | "routes">
 > & { image?: string };
 export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
   // The Branson 2032S slot is presented as the current Branson GMX-W1 wire splicer.
@@ -149,27 +149,37 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
     sku: "Branson GMX-W1",
     image: "/media/branson/wire-splicer.webp",
     shortDescription:
-      "The Branson GMX-W1 joins wires reliably and quickly while providing maximum maneuverability. Its user-friendly controls and portable design suit both in-line and tabletop installation, and it is optimized for copper wire harness joining.",
-    description: `<h3>Features</h3>
-<ul>
-<li>User-friendly HMI with 22" capacitive touch screen</li>
-<li>Portable, ergonomic design for flexible deployment</li>
-<li>Integrated cutter module for comprehensive wire processing</li>
-<li>Dual data connectivity (USB and Ethernet)</li>
-<li>Pneumatic actuation and air cooling</li>
-</ul>
-<h3>Specifications</h3>
-<table><tbody>
-<tr><td>Frequency</td><td>20 kHz</td></tr>
-<tr><td>Output power</td><td>4000 W</td></tr>
-<tr><td>Actuation</td><td>Pneumatic</td></tr>
-<tr><td>Cooling</td><td>Air</td></tr>
-<tr><td>Air supply</td><td>5.5 bar (80 psi), clean dry air</td></tr>
-<tr><td>User interface</td><td>22" capacitive touch screen</td></tr>
-<tr><td>Data interfaces</td><td>USB, Ethernet</td></tr>
-<tr><td>Input power</td><td>200–230 V, single phase, 25 A max</td></tr>
-<tr><td>Dimensions (W × H × D)</td><td>6.7" × 7.9" × 19.9"</td></tr>
-</tbody></table>`,
+      "The Branson GMX-W1 joins wires reliably and quickly while providing maximum maneuverability. A user-friendly HMI and portable, ergonomic design make it easy to use as either an in-line or tabletop system. This product is designed for copper wire harness, although other materials may be possible upon testing and qualification.",
+  },
+};
+
+// Structured Features + Specifications for the product page, shown as two
+// side-by-side boxes. Specifications mirror the manufacturer verbatim; features
+// are drawn only from the manufacturer's description/spec facts.
+export const PRODUCT_PRESENTATIONS: Record<
+  number,
+  { features: string[]; specifications: { label: string; value: string }[] }
+> = {
+  22940: {
+    features: [
+      'User-friendly HMI with 22" capacitive touch screen',
+      "Portable, ergonomic design — use in-line or as a tabletop system",
+      "Integrated Cutter Module",
+      "USB and Ethernet data interfaces",
+      "Designed for copper wire harness joining",
+    ],
+    specifications: [
+      { label: "Frequency", value: "20 kHz" },
+      { label: "Output power", value: "4000 W" },
+      { label: "Actuation", value: "Pneumatic" },
+      { label: "Cooling system", value: "Air" },
+      { label: "Pneumatics type", value: "5.5 bar (80 psi) clean, dry air" },
+      { label: "Special feature", value: "Cutter Module" },
+      { label: "User interface", value: '22" capacitive touch screen' },
+      { label: "Data interface", value: "USB, Ethernet" },
+      { label: "Input power", value: "200~230V single phase, 25A max" },
+      { label: "Overall dimensions", value: '6.7" (W) x 7.9" (H) x 19.9" (L)' },
+    ],
   },
 };
 
