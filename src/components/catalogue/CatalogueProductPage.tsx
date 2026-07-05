@@ -351,7 +351,7 @@ export default function CatalogueProductPage({
               )
             )}
 
-            {product.files.length > 0 && (
+            {product.files.length > 0 && !isProductionEquipment && (
               <section>
                 <h2 className="mb-3 text-base font-bold text-[#0a1628]">Drawings</h2>
                 <div className="space-y-2">
