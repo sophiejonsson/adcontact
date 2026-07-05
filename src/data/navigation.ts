@@ -84,7 +84,6 @@ const productionEquipmentGroup: NavGroup = {
       label: "Stripping Machines",
       href: "/webshop/production-equipment/stripping-machines.html",
       children: [
-        { label: "Zoller & Fröhlich", href: "/webshop/production-equipment/stripping-machines/zoller-frohlich.html" },
         { label: "Feintechnik Rittmyer", href: "/webshop/production-equipment/stripping-machines/feintechnik-rittmyer.html" },
       ],
     },
@@ -93,8 +92,16 @@ const productionEquipmentGroup: NavGroup = {
       href: "/webshop/production-equipment/crimping-equipment.html",
       children: [
         { label: "Mecal", href: "/webshop/production-equipment/crimping-equipment/mecal.html" },
-        { label: "Zoller & Fröhlich", href: "/webshop/production-equipment/crimping-equipment/zoller-frohlich.html" },
         { label: "Stocko", href: "/webshop/production-equipment/crimping-equipment/stocko.html" },
+      ],
+    },
+    {
+      // Z+F does both stripping and crimping; consolidated into a lean reference
+      // landing that redirects to zofre.de (their equipment catalogue is legacy).
+      label: "Stripping and crimping machines",
+      href: "/products/zoller-frohlich/wire-processing",
+      children: [
+        { label: "Zoller & Fröhlich", href: "/products/zoller-frohlich/wire-processing" },
       ],
     },
     // Temporarily removed from the live site (kept for a potential future
