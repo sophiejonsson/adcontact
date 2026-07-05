@@ -103,6 +103,12 @@ export function webshopPathFromSegments(segments: string[]): string {
 
 export function resolveCatalogueRoute(path: string): CatalogueRoute | undefined {
   const normalizedPath = normalizeCataloguePath(path);
+  // Canonical URL overrides (e.g. a renamed product) resolve to their product.
+  for (const [id, canonical] of Object.entries(PRODUCT_CANONICAL_ROUTES)) {
+    if (normalizeCataloguePath(canonical) === normalizedPath) {
+      return { type: "product", id: Number(id) };
+    }
+  }
   return (
     routes[normalizedPath] ??
     routes[LEGACY_ROUTE_ALIASES[normalizedPath]] ??
@@ -139,6 +145,15 @@ export const HIDDEN_PRODUCT_IDS = new Set<number>([22941, 22942, 22943, 22945]);
 // Curated per-product overrides (reversible). Applied in getCatalogueProduct so
 // they flow to the grid card, detail page and search. `image` also updates
 // smallImage/thumbnail/gallery.
+const GMX_W1_ROUTE = "/webshop/production-equipment/ultrasonic-welding/branson-gmx-w1.html";
+
+// Canonical URL per product: the product page 301-redirects any other route
+// that resolves to this product to the canonical one, and resolveCatalogueRoute
+// makes the canonical path resolve.
+export const PRODUCT_CANONICAL_ROUTES: Record<number, string> = {
+  22940: GMX_W1_ROUTE,
+};
+
 type ProductOverride = Partial<
   Pick<CatalogueProduct, "name" | "sku" | "shortDescription" | "description" | "route" | "routes">
 > & { image?: string };
@@ -148,6 +163,8 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
     name: "Branson GMX-W1 Wire Splicer",
     sku: "Branson GMX-W1",
     image: "/media/branson/wire-splicer.webp",
+    route: GMX_W1_ROUTE,
+    routes: [GMX_W1_ROUTE],
     shortDescription:
       "The Branson GMX-W1 joins wires reliably and quickly while providing maximum maneuverability. A user-friendly HMI and portable, ergonomic design make it easy to use as either an in-line or tabletop system. This product is designed for copper wire harness, although other materials may be possible upon testing and qualification.",
   },
