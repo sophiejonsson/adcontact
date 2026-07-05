@@ -353,6 +353,9 @@ export type SubcategoryOption = {
   /** All category IDs in this subcategory's tree — used for product filtering.
    *  Empty array for non-product (partner content) categories. */
   allCategoryIds: number[];
+  /** When set, the chip navigates to this URL (a brand's own hub page) instead
+   *  of filtering the grid in place. */
+  href?: string;
 };
 
 export default function CatalogueProductBrowser({
@@ -541,6 +544,27 @@ export default function CatalogueProductBrowser({
             <div className="mt-2 space-y-1.5">
               {subcategoryOptions!.map((option) => {
                 const active = effectiveSubcategoryId === option.id;
+                const cls = `flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
+                  active
+                    ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
+                    : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
+                }`;
+                const inner = (
+                  <>
+                    <span>{option.name}</span>
+                    <span className="flex-none text-[#94a3b8]">
+                      {option.countLabel ?? option.count.toLocaleString()}
+                    </span>
+                  </>
+                );
+                // Brand subcategories navigate to the brand's own hub page.
+                if (option.href) {
+                  return (
+                    <Link key={option.id} href={option.href} className={cls}>
+                      {inner}
+                    </Link>
+                  );
+                }
                 return (
                   <button
                     key={option.id}
@@ -550,16 +574,9 @@ export default function CatalogueProductBrowser({
                       setPartnerFacetValue(null);
                       setPage(1);
                     }}
-                    className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
-                      active
-                        ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
-                        : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
-                    }`}
+                    className={cls}
                   >
-                    <span>{option.name}</span>
-                    <span className="flex-none text-[#94a3b8]">
-                      {option.countLabel ?? option.count.toLocaleString()}
-                    </span>
+                    {inner}
                   </button>
                 );
               })}

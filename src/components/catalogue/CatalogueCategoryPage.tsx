@@ -142,6 +142,13 @@ const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
   110: "Wezag", // legacy "Stocko" crimping category — actually Wezag WZ tools
 };
 
+// Subcategory filter chips that should navigate to a brand's own hub page
+// instead of filtering the grid in place (equipment brands with dedicated pages).
+const SUBCATEGORY_HREF_OVERRIDES: Record<number, string> = {
+  109: "/products/zoller-frohlich/wire-processing", // Z+F crimping → wire-processing landing
+  111: "/webshop/production-equipment/crimping-equipment/mecal.html", // Mecal → its hub (WIP)
+};
+
 // Header photo for hubs that don't resolve to a single brand (keyed by category
 // id). Rendered in the hero's right column, same frame as BRAND_HEADER_IMAGES.
 const CATEGORY_HEADER_IMAGES: Record<number, { src: string; fit: "cover" | "contain" }> = {
@@ -846,9 +853,10 @@ export default function CatalogueCategoryPage({
           }
           return {
             id: c.id,
-            name: c.name ?? "Category",
+            name: CATEGORY_TITLE_OVERRIDES[c.id] ?? c.name ?? "Category",
             count: getCategoryProductCount(c),
             allCategoryIds: getAllDescendantCategoryIds(c),
+            href: SUBCATEGORY_HREF_OVERRIDES[c.id],
           };
         })
     : [];
@@ -1186,7 +1194,10 @@ export default function CatalogueCategoryPage({
 
         {showProductBrowser && (
           <div id="products">
-            {(showSeries || isLeafOfFlatHub) && (
+            {/* Production-equipment flat hubs have no "series" section, so the
+                leaf "Browse by series" link would point at a non-existent
+                #series anchor — suppress it there. */}
+            {(showSeries || (isLeafOfFlatHub && !category.route?.includes("/production-equipment"))) && (
               <div className="mb-6 flex justify-end">
                 <a
                   href={isLeafOfFlatHub && parentCategory?.route ? `${parentCategory.route}#series` : "#series"}

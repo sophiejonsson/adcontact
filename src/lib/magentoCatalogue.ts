@@ -131,10 +131,18 @@ function legacyNumberedCategoryAlias(path: string) {
 // category later, just remove its ids here and restore its menu entry in
 // navigation.ts; nothing else needs rebuilding.
 //
-// Currently hidden: the "Misc. Equipment" tree (hub 75) — Shrink Tunnel (49),
-// Twist Equipment (54), Taping (55), Komax (112), DSG Canusa (113),
-// Bundling/Insulating/Marking (1724) — plus every product that lives ONLY there.
-export const HIDDEN_CATEGORY_IDS = new Set<number>([75, 49, 54, 55, 112, 113, 1724]);
+// Currently hidden:
+// - the "Misc. Equipment" tree (hub 75) — Shrink Tunnel (49), Twist Equipment
+//   (54), Taping (55), Komax (112), DSG Canusa (113), Bundling/Insulating/
+//   Marking (1724) — plus every product that lives ONLY there.
+// - Komax (supplier we no longer represent): its equipment category hubs
+//   crimping (108), stripping (1678), full-automatic (99), marking (103), and
+//   the two Komax machine categories under Stocko terminating technology
+//   (Komax Alpha 356 = 222, Komax ZETA 633 = 223). All have 0 enabled products.
+export const HIDDEN_CATEGORY_IDS = new Set<number>([
+  75, 49, 54, 55, 112, 113, 1724,
+  99, 103, 108, 1678, 222, 223,
+]);
 
 // Individual products hidden from the live site but kept in the data (reversible
 // — remove the id to bring one back). Currently: the EOL Branson welding
