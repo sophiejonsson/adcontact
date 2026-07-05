@@ -1104,35 +1104,31 @@ export default function CatalogueCategoryPage({
                   href={w.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex flex-col overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+                  className="group flex overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
                 >
-                  <div className="relative aspect-[16/9] bg-[#f8fafc]">
+                  <div className="relative w-28 flex-none bg-[#f8fafc] sm:w-40">
                     <Image
                       src={w.image}
                       alt={w.label}
                       fill
                       unoptimized
-                      sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 620px"
+                      sizes="(max-width: 640px) 112px, 160px"
                       className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <h3 className="text-base font-bold text-[#0a1628] group-hover:text-[#2563eb]">
+                  <div className="flex min-w-0 flex-1 flex-col p-4">
+                    <h3 className="text-sm font-bold text-[#0a1628] group-hover:text-[#2563eb] sm:text-base">
                       {w.label}
                     </h3>
-                    <div className="mt-2 flex-1 space-y-2.5">
+                    <div className="mt-1.5 space-y-1.5 text-[13px] leading-5 text-[#475569]">
                       {w.description.map((p) => (
-                        <p key={p} className="text-sm leading-6 text-[#475569]">
-                          {p}
-                        </p>
+                        <p key={p}>{p}</p>
                       ))}
                     </div>
-                    <div className="mt-4 border-t border-[#eef2f7] pt-3">
-                      <span className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#64748b] transition-colors group-hover:text-[#2563eb]">
-                        View at Branson
-                        <ArrowUpRight size={14} />
-                      </span>
-                    </div>
+                    <span className="mt-2.5 inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#64748b] transition-colors group-hover:text-[#2563eb]">
+                      View at Branson
+                      <ArrowUpRight size={13} />
+                    </span>
                   </div>
                 </a>
               ))}
