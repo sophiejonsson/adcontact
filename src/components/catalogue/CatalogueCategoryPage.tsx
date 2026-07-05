@@ -169,12 +169,22 @@ const BRANSON_WELDING_CTA = {
   catalogueUrl: "https://www.branson.emerson.com/en",
 } as const;
 
+const WEZAG_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Wezag's complete crimping-tool and machine programme — hand tools, dies, presses and automation. Tell us about your application and we'll help you find the right tool or press, or browse Wezag's full range.",
+  mailtoSubject: "Wezag crimping — application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Wezag range",
+  catalogueUrl: "https://www.wezag.de/en/",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
 > = {
   77: BRANSON_WELDING_CTA, // Plastic- and Metal Welding hub
   115: BRANSON_WELDING_CTA, // Branson sub-page
+  110: WEZAG_SOURCING_CTA, // Wezag crimping brand page
 };
 
 // Presentational "link boxes" shown at the top of a hub — an image + short
