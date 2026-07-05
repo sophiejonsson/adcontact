@@ -176,14 +176,29 @@ const CATEGORY_SOURCING_CTA: Record<
   115: BRANSON_WELDING_CTA, // Branson sub-page
 };
 
-// "Filter by welding type" — presentational split for the Branson welding hub.
-// The listed machines are mostly EOL and are disregarded; both options point to
-// Branson's catalogue while the final Branson presentation is decided.
-const BRANSON_WELDING_TYPES = [
+// Presentational "link boxes" shown at the top of a hub — an image + short
+// description + an outbound link to the manufacturer. Used for the Branson
+// welding hub (a split by welding type) and the Wezag hub (its tool and
+// machine sister-brands, which live on their own sites).
+type CategoryLinkBox = {
+  label: string;
+  href: string;
+  image: string;
+  description: string[];
+  ctaLabel: string;
+  fit?: "cover" | "contain"; // "cover" fills the frame; "contain" for graphics
+};
+type CategoryLinkSection = { eyebrow: string; boxes: CategoryLinkBox[] };
+
+// Branson: the listed machines are mostly EOL and are disregarded; both options
+// point to Branson's catalogue while the final Branson presentation is decided.
+const BRANSON_WELDING_TYPES: CategoryLinkBox[] = [
   {
     label: "Ultrasonic Metal welding",
     href: "https://www.branson.emerson.com/en/metal-welding",
     image: "/media/branson/metal-welding.webp",
+    ctaLabel: "View at Branson",
+    fit: "cover",
     description: [
       "Ultrasonic energy has been used to join metal materials for decades. In ultrasonic metal welding, dissimilar materials are joined together without the use of applied heat or electric current passing through components.",
       "Ultrasonic energy can weld through contaminants to create a clean seal while providing increased quality and control.",
@@ -193,18 +208,47 @@ const BRANSON_WELDING_TYPES = [
     label: "Ultrasonic Plastic welding",
     href: "https://www.branson.emerson.com/en/ultrasonic-plastic-welding",
     image: "/media/branson/plastic-welding.webp",
+    ctaLabel: "View at Branson",
+    fit: "cover",
     description: [
       "Ultrasonic energy has been used to join thermoplastics for over 70 years. It is frequently chosen when parts are too complex or expensive to be molded in one piece.",
       "In ultrasonic plastic welding, a vibratory motion at the horn face (amplitude) is transferred to the part. The vibrations move through the part and create friction at the interface between the parts — creating heat, then melting. When cooled, a weld is formed.",
     ],
   },
 ];
-const CATEGORY_WELDING_TYPES: Record<
-  number,
-  { label: string; href: string; image: string; description: string[] }[]
-> = {
-  77: BRANSON_WELDING_TYPES,
-  115: BRANSON_WELDING_TYPES,
+
+// Wezag: the "Stocko" crimping category actually holds Wezag WZ hand tools. Its
+// wider tool and machine ranges live on Wezag's sister-brand sites — Private
+// Label Tools (hand tools) and WDT Machines (presses/automation).
+const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Hand crimping tools",
+    href: "https://www.private-label-tools.de/en/tools/",
+    image: "/media/wezag/tools.png",
+    ctaLabel: "View at Private Label Tools",
+    fit: "contain",
+    description: [
+      "Private Label Tools is Wezag's hand-tool brand — professional crimping, cutting and stripping tools, from wire-end ferrules to insulated and uninsulated terminals.",
+      "Interchangeable die sets deliver repeatable, high-quality crimps across every terminal type.",
+    ],
+  },
+  {
+    label: "Crimping presses & machines",
+    href: "https://www.wdt-machines.de/en/wdt-crimping-machines/",
+    image: "/media/wezag/presses.png",
+    ctaLabel: "View at WDT Machines",
+    fit: "contain",
+    description: [
+      "WDT Machines is Wezag's machine brand — pneumatic and electro-pneumatic crimping presses and automation for cable assembly.",
+      "Optimised for small to medium series in low- and high-voltage production, with the same Wezag crimp quality.",
+    ],
+  },
+];
+
+const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
+  77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
+  115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
+  110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
 };
 
 // "Browse by series" configuration for the brand hubs whose products carry a
@@ -765,7 +809,7 @@ export default function CatalogueCategoryPage({
   const breadcrumbs = getCategoryBreadcrumbs(category.id);
   const title = CATEGORY_TITLE_OVERRIDES[category.id] ?? category.name ?? "Catalogue";
   const categorySourcingCta = CATEGORY_SOURCING_CTA[category.id];
-  const categoryWeldingTypes = CATEGORY_WELDING_TYPES[category.id];
+  const categoryLinkSection = CATEGORY_LINK_SECTIONS[category.id];
   const description = category.metaDescription;
   const productCount = getCategoryProductCount(category);
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
@@ -1112,13 +1156,13 @@ export default function CatalogueCategoryPage({
       </section>
 
       <main className="mx-auto max-w-[1440px] px-6 py-6">
-        {categoryWeldingTypes && (
+        {categoryLinkSection && (
           <section className="mb-12">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
-              Browse by welding type
+              {categoryLinkSection.eyebrow}
             </p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              {categoryWeldingTypes.map((w) => (
+              {categoryLinkSection.boxes.map((w) => (
                 <a
                   key={w.label}
                   href={w.href}
@@ -1126,14 +1170,14 @@ export default function CatalogueCategoryPage({
                   rel="noopener noreferrer"
                   className="group flex overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
                 >
-                  <div className="relative w-28 flex-none bg-[#f8fafc] sm:w-40">
+                  <div className={`relative w-28 flex-none sm:w-40 ${w.fit === "contain" ? "bg-white" : "bg-[#f8fafc]"}`}>
                     <Image
                       src={w.image}
                       alt={w.label}
                       fill
                       unoptimized
                       sizes="(max-width: 640px) 112px, 160px"
-                      className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+                      className={`transition-transform duration-300 group-hover:scale-[1.04] ${w.fit === "contain" ? "object-contain p-2" : "object-cover"}`}
                     />
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col p-4">
@@ -1146,7 +1190,7 @@ export default function CatalogueCategoryPage({
                       ))}
                     </div>
                     <span className="mt-2.5 inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#64748b] transition-colors group-hover:text-[#2563eb]">
-                      View at Branson
+                      {w.ctaLabel}
                       <ArrowUpRight size={13} />
                     </span>
                   </div>
