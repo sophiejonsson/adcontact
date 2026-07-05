@@ -391,6 +391,7 @@ export default function CatalogueProductBrowser({
   sectionTitle,
   deutschImageMap,
   subcategoryOptions,
+  lockedFilterParams,
   partnerSlots,
 }: {
   products: CatalogueProduct[];
@@ -401,6 +402,10 @@ export default function CatalogueProductBrowser({
   sectionTitle: string;
   deutschImageMap?: Record<string, string>;
   subcategoryOptions?: SubcategoryOption[];
+  /** Filter params that are fixed for this page (e.g. a brand page's own-brand
+   *  pre-filter) — shown but not clearable/toggleable, so they can't be removed
+   *  to expand the borrowed parent-hub pool. */
+  lockedFilterParams?: string[];
   /** When a non-product subcategory is active, render this content instead of
    *  the product grid. searchNames is the list of item names to match against
    *  the main search query for auto-activation (when no products match).
@@ -519,7 +524,12 @@ export default function CatalogueProductBrowser({
     setPage(1);
   }
 
+  const lockedParams = useMemo(() => new Set(lockedFilterParams ?? []), [lockedFilterParams]);
+
   function toggleFilter(param: string, value: string) {
+    // Locked filters (a brand page's own pre-filter) can't be toggled off —
+    // clearing them would expand the borrowed parent-hub pool.
+    if (lockedParams.has(param)) return;
     setActiveFilters((current) => {
       const next = { ...current };
       if (next[param] === value) delete next[param];
@@ -531,13 +541,19 @@ export default function CatalogueProductBrowser({
 
   function clearAll() {
     setQuery("");
-    setActiveFilters({});
+    // Preserve any locked filters — only user-added filters are cleared.
+    setActiveFilters((current) => {
+      const kept: Record<string, string> = {};
+      for (const param of lockedParams) if (current[param]) kept[param] = current[param];
+      return kept;
+    });
     setActiveSubcategoryId(null);
     setPartnerFacetValue(null);
     setPage(1);
   }
 
-  const activeFilterCount = Object.keys(activeFilters).length + (effectiveSubcategoryId ? 1 : 0);
+  const clearableFilters = Object.keys(activeFilters).filter((p) => !lockedParams.has(p));
+  const activeFilterCount = clearableFilters.length + (effectiveSubcategoryId ? 1 : 0);
   const hasSubcategoryFilter = (subcategoryOptions?.length ?? 0) > 1;
   const showFilters = !isWebshopRoot && (facets.length > 0 || hasSubcategoryFilter);
 
@@ -660,21 +676,36 @@ export default function CatalogueProductBrowser({
                   {facetDisplayLabel(facet.label)}
                 </h3>
                 <div className="mt-2 space-y-1.5">
-                  {facet.values.map((item) => (
-                    <button
-                      key={item.value}
-                      type="button"
-                      onClick={() => toggleFilter(facet.param, item.value)}
-                      className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
-                        item.active
-                          ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
-                          : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
-                      }`}
-                    >
-                      <span>{item.value}</span>
-                      <span className="flex-none text-[#94a3b8]">{item.count}</span>
-                    </button>
-                  ))}
+                  {facet.values.map((item) => {
+                    // A locked facet (a brand page's own pre-filter) is shown as a
+                    // static, non-clickable chip — it can't be toggled off.
+                    if (lockedParams.has(facet.param)) {
+                      return (
+                        <div
+                          key={item.value}
+                          className="flex w-full items-start justify-between gap-3 rounded-md bg-[#eaf2ff] px-2 py-1.5 text-left text-xs font-bold leading-snug text-[#1d4ed8]"
+                        >
+                          <span>{item.value}</span>
+                          <span className="flex-none text-[#94a3b8]">{item.count}</span>
+                        </div>
+                      );
+                    }
+                    return (
+                      <button
+                        key={item.value}
+                        type="button"
+                        onClick={() => toggleFilter(facet.param, item.value)}
+                        className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
+                          item.active
+                            ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
+                            : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
+                        }`}
+                      >
+                        <span>{item.value}</span>
+                        <span className="flex-none text-[#94a3b8]">{item.count}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -744,14 +775,14 @@ export default function CatalogueProductBrowser({
             </button>
             {activeFilterCount > 0 && (
               <div className="flex flex-wrap gap-1.5">
-                {Object.entries(activeFilters).map(([param, value]) => (
+                {clearableFilters.map((param) => (
                   <button
                     key={param}
                     type="button"
-                    onClick={() => toggleFilter(param, value)}
+                    onClick={() => toggleFilter(param, activeFilters[param])}
                     className="flex items-center gap-1 rounded-full bg-[#eaf2ff] px-2.5 py-1 text-xs font-bold text-[#1d4ed8]"
                   >
-                    {value}
+                    {activeFilters[param]}
                     <X size={10} />
                   </button>
                 ))}
@@ -788,21 +819,21 @@ export default function CatalogueProductBrowser({
             )}
           </div>
 
-          {(query || Object.keys(activeFilters).length > 0) && (
+          {(query || clearableFilters.length > 0) && (
             <div className="mt-3 flex flex-wrap gap-2">
               {query && (
                 <span className="rounded-md bg-[#eff6ff] px-2 py-1 text-xs font-bold text-[#1d4ed8]">
                   Search: {query}
                 </span>
               )}
-              {Object.entries(activeFilters).map(([param, value]) => (
+              {clearableFilters.map((param) => (
                 <button
                   key={param}
                   type="button"
-                  onClick={() => toggleFilter(param, value)}
+                  onClick={() => toggleFilter(param, activeFilters[param])}
                   className="rounded-md bg-[#f1f5f9] px-2 py-1 text-xs font-bold text-[#475569] hover:bg-[#e2e8f0]"
                 >
-                  {value} x
+                  {activeFilters[param]} x
                 </button>
               ))}
             </div>

@@ -203,6 +203,9 @@ type CategoryLinkBox = {
   description: string[];
   ctaLabel: string;
   fit?: "cover" | "contain"; // "cover" fills the frame; "contain" for graphics
+  // With "cover", anchor the crop: "left" keeps a wide graphic's left content
+  // (e.g. the Deutsch headline + tool) instead of centre-cropping it away.
+  position?: "left" | "center";
 };
 type CategoryLinkSection = { eyebrow: string; boxes: CategoryLinkBox[] };
 
@@ -242,7 +245,8 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
     href: "https://www.private-label-tools.de/en/tools/",
     image: "/media/wezag/tools-deutsch.png",
     ctaLabel: "View at Private Label Tools",
-    fit: "contain",
+    fit: "cover",
+    position: "left",
     description: [
       "Private Label Tools is Wezag's hand-tool brand — professional crimping tools with interchangeable die sets for repeatable, high-quality crimps.",
       "Dies available for Deutsch DT & DTM and many other connector systems (CSV10 shown).",
@@ -253,7 +257,7 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
     href: "https://www.wdt-machines.de/en/wdt-crimping-machines/",
     image: "/media/wezag/presses.png",
     ctaLabel: "View at WDT Machines",
-    fit: "contain",
+    fit: "cover",
     description: [
       "WDT Machines is Wezag's machine brand — pneumatic and electro-pneumatic crimping presses and automation for cable assembly.",
       "Optimised for small to medium series in low- and high-voltage production, with the same Wezag crimp quality.",
@@ -1195,7 +1199,11 @@ export default function CatalogueCategoryPage({
                       fill
                       unoptimized
                       sizes="(max-width: 640px) 112px, 160px"
-                      className={`transition-transform duration-300 group-hover:scale-[1.04] ${w.fit === "contain" ? "object-contain p-2" : "object-cover"}`}
+                      className={`transition-transform duration-300 group-hover:scale-[1.04] ${
+                        w.fit === "contain"
+                          ? "object-contain p-2"
+                          : `object-cover ${w.position === "left" ? "object-left" : ""}`
+                      }`}
                     />
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col p-4">
@@ -1303,6 +1311,7 @@ export default function CatalogueCategoryPage({
               sectionTitle={productSectionTitle}
               deutschImageMap={buildDeutschImageMap(productPool)}
               subcategoryOptions={subcategoryOptions.length > 0 ? subcategoryOptions : undefined}
+              lockedFilterParams={isLeafOfFlatHub ? Object.keys(leafPreFilter) : undefined}
               partnerSlots={[
                 {
                   categoryId: STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
