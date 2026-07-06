@@ -75,7 +75,8 @@ Context (from the catalogue):
 ### Per-brand recipe & status
 - [x] **Branson** — Tier A (welding hub + GMX-W1 / Ultraseal20 product pages).
 - [x] **Zoller & Fröhlich** — Tier B (wire-processing landing; listed under Stripping Machines, Crimping machines & a combined header).
-- [ ] **Mecal, Metzner, Ramatech, Wezag, Tekuwa, Mav Prüftechnik, Ulmer** — for each: inventory → pick Tier A/B → header photo (user supplies) + ranges/curated products or link box + sourcing box.
+- [x] **Wezag** — Tier B lean landing (cat 110, `…/crimping-equipment/wezag.html`): black-framed header photo + two link boxes to the sister brands **Private Label Tools** (hand tools) & **WDT Machines** (presses) + sourcing box; NO product grid (`HIDE_PRODUCT_GRID_CATEGORY_IDS`). WZ products outdated/low-volume — grid dropped, detail pages left orphaned (not hidden). LOCKED.
+- [ ] **Mecal, Metzner, Ramatech, Tekuwa, Mav Prüftechnik, Ulmer** — for each: inventory → pick Tier A/B → header photo (user supplies) + ranges/curated products or link box + sourcing box.
 - [ ] **Legacy Z&F equipment grid pages** (stripping/crimping + ~50 EOL products) still resolve by direct URL — decide: redirect to the Z&F landing or hide (`HIDDEN_CATEGORY_IDS`).
 
 ---
