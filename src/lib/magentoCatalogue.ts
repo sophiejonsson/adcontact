@@ -153,7 +153,13 @@ export const HIDDEN_CATEGORY_IDS = new Set<number>([
 // — remove the id to bring one back). Currently: the EOL Branson welding
 // machines we no longer feature; the Branson welding hub keeps only the 2032S
 // Wire Splicer (22940) and the Ultraseal20 Metal Tube Sealer (22944).
-export const HIDDEN_PRODUCT_IDS = new Set<number>([22941, 22942, 22943, 22945]);
+export const HIDDEN_PRODUCT_IDS = new Set<number>([
+  22941, 22942, 22943, 22945,
+  // Ulmer machines no longer on their live cutting catalogue
+  // (ulmer-gmbh.net/produkte-loesungen/schneiden/) — kept only the 6 current
+  // "touch" models: SM 15 2PT, SG400, SG400 V, WSM 30 E, WSM 60 E, SSM 60.
+  21522, 21523, 22878, 22925, 22920, 22922, 22923, 22924,
+]);
 
 // Curated per-product overrides (reversible). Applied in getCatalogueProduct so
 // they flow to the grid card, detail page and search. `image` also updates

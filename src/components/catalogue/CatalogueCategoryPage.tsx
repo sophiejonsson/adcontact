@@ -152,6 +152,8 @@ const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
 const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
   106:
     "We supply the complete range of Feintechnik Rittmeyer wire stripping machines, marketed under the be-ri brand, for industrial cable processing. Whether you need a pneumatic, rotating or electric stripping machine, or high-precision processing of coaxial cables, we'll help you find the right solution.",
+  100:
+    "We supply Ulmer's precision cutting and cable-processing machines. Ulmer GmbH develops cutting, feeding, winding and material-handling systems for flexible materials across the cable, wire and tubing industries, from multi-core cables to corrugated conduits, hoses and heat-shrink tubing.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
@@ -171,6 +173,8 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   110: { src: "/media/wezag/hub-header.png", fit: "contain", bg: "black" },
   // Feintechnik Rittmeyer (be-ri) — AM.ALL.ROUND machine render, contained.
   106: { src: "/media/feintechnik/hub-header.jpg", fit: "contain" },
+  // Ulmer — cutting-machine mechanism close-up (fills the frame).
+  100: { src: "/media/ulmer/hub-header.jpg", fit: "cover" },
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
@@ -203,6 +207,15 @@ const FEINTECHNIK_SOURCING_CTA = {
   catalogueUrl: "https://rittmeyer-beri.de/en/cable-processing/",
 } as const;
 
+const ULMER_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Ulmer's complete range of cutting and cable-processing machines. Tell us about your application and we'll help you find the right machine, or browse Ulmer's full range.",
+  mailtoSubject: "Ulmer cutting machines: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Ulmer range",
+  catalogueUrl: "https://www.ulmer-gmbh.net/produkte-loesungen/schneiden/",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
@@ -211,6 +224,7 @@ const CATEGORY_SOURCING_CTA: Record<
   115: BRANSON_WELDING_CTA, // Branson sub-page
   110: WEZAG_SOURCING_CTA, // Wezag crimping brand page
   106: FEINTECHNIK_SOURCING_CTA, // Feintechnik Rittmeyer (be-ri) stripping page
+  100: ULMER_SOURCING_CTA, // Ulmer cutting brand page
 };
 
 // Presentational "link boxes" shown at the top of a hub — an image + short
@@ -301,11 +315,28 @@ const FEINTECHNIK_LINK_BOXES: CategoryLinkBox[] = [
   },
 ];
 
+// Ulmer — a single link box on their cutting machines. Copy supplied by the
+// customer (Ulmer's own description).
+const ULMER_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "High-precision cutting machines",
+    href: "https://www.ulmer-gmbh.net/produkte-loesungen/schneiden/",
+    image: "/media/ulmer/cutting.jpg",
+    ctaLabel: "View at Ulmer",
+    fit: "cover",
+    description: [
+      "Our high-precision cutting machines offer maximum versatility and efficiency for a wide variety of materials, from multi-core cables and stranded wires to heat shrink tubing and hoses, and even corrugated conduits.",
+      "Our systems guarantee clean cut edges, consistently reproducible lengths, and a smooth production process. Thanks to their modular design, our machines can be quickly adapted to new material types and cross-sections.",
+    ],
+  },
+];
+
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
   106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES },
+  100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +

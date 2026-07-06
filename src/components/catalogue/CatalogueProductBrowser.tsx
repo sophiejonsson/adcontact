@@ -29,6 +29,8 @@ const HIDDEN_FILTER_ATTRIBUTES = new Set([
   // Same pattern for the stripping-machine hub / Feintechnik Rittmeyer leaf —
   // shown as the locked "Brand" pre-filter on the brand page, hidden on the hub.
   "Stripping machine Brands",
+  // Cutting-machine hub / Ulmer leaf — same locked "Brand" pre-filter pattern.
+  "Cutting machine Brands",
 ]);
 
 function firstParamValue(value: string | string[] | undefined) {
@@ -61,6 +63,7 @@ const FACET_LABEL_OVERRIDES: Record<string, string> = {
   // clean "Brand" heading instead of the raw Magento attribute name.
   "Crimping equipment Brands": "Brand",
   "Stripping machine Brands": "Brand",
+  "Cutting machine Brands": "Brand",
 };
 function facetDisplayLabel(label: string): string {
   return FACET_LABEL_OVERRIDES[label] ?? label;
