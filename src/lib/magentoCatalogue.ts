@@ -166,6 +166,13 @@ const WEZAG_ROUTE = `${CRIMP}/wezag.html`;
 const WZ_30_ROUTE = `${CRIMP}/wezag/handtang-wz-30.html`;
 const WZ_100_ROUTE = `${CRIMP}/wezag/handtang-wz-100.html`;
 const WZ_130_ROUTE = `${CRIMP}/wezag/presshuvud-wz-130.html`;
+// Feintechnik Rittmeyer (be-ri) — clean English slugs (old Swedish
+// "avmantlingsmaskin-…" slugs 301-redirect here).
+const FR_STRIP = "/webshop/production-equipment/stripping-machines/feintechnik-rittmyer";
+const AM_ALL_ROUND_ROUTE = `${FR_STRIP}/am-all-round.html`;
+const AM_STRIP_1_ROUTE = `${FR_STRIP}/am-strip-1.html`;
+const AM_STRIP_2_ROUTE = `${FR_STRIP}/am-strip-2.html`;
+const AM_STRIP_500_ROUTE = `${FR_STRIP}/am-strip-500-750-1000.html`;
 
 // Canonical URL per product: the product page 301-redirects any other route
 // that resolves to this product to the canonical one, and resolveCatalogueRoute
@@ -176,6 +183,10 @@ export const PRODUCT_CANONICAL_ROUTES: Record<number, string> = {
   1817: WZ_30_ROUTE, // Wezag WZ tools moved out of the legacy /stocko/ path
   1818: WZ_100_ROUTE,
   1819: WZ_130_ROUTE,
+  1780: AM_ALL_ROUND_ROUTE, // be-ri: Swedish slugs -> clean English
+  1781: AM_STRIP_1_ROUTE,
+  1782: AM_STRIP_2_ROUTE,
+  1783: AM_STRIP_500_ROUTE,
 };
 
 // Same idea for a renamed CATEGORY hub: resolveCatalogueRoute makes the new path
@@ -218,24 +229,32 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
   // the corrected page title; translate the 3 Swedish names ("Avmantlingsmaskin"
   // = stripping machine) so the grid reads consistently in English.
   1780: {
+    route: AM_ALL_ROUND_ROUTE,
+    routes: [AM_ALL_ROUND_ROUTE],
     shortDescription:
       "AM.ALL.ROUND is a semi-automatic, electro-pneumatic rotating wire stripping machine for high-precision industrial cable processing. Its rotating blade head strips round cables from 2 to 24 mm outer diameter, with stripping lengths up to 160 mm — and up to 1000 mm in the 400 / 750 / 1000 variants.",
     attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
   },
   1781: {
     name: "Stripping Machine AM.STRIP.1",
+    route: AM_STRIP_1_ROUTE,
+    routes: [AM_STRIP_1_ROUTE],
     shortDescription:
       "AM.STRIP.1 is a pneumatic, semi-automatic wire stripping machine for industrial cable processing. It strips round cables up to 12.5 mm outer diameter and flat cables up to 20 mm wide, with full-stroke stripping lengths up to 65 mm. AM.STRIP.1 and AM.STRIP.2 differ only in stripping diameter and length.",
     attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
   },
   1782: {
     name: "Stripping Machine AM.STRIP.2",
+    route: AM_STRIP_2_ROUTE,
+    routes: [AM_STRIP_2_ROUTE],
     shortDescription:
       "AM.STRIP.2 is a pneumatic, semi-automatic wire stripping machine for industrial cable processing. It strips round cables up to 25 mm outer diameter and flat cables up to 35 mm wide, with full-stroke stripping lengths up to 120 mm.",
     attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
   },
   1783: {
     name: "Stripping Machine AM.STRIP.500/.750/.1000",
+    route: AM_STRIP_500_ROUTE,
+    routes: [AM_STRIP_500_ROUTE],
     shortDescription:
       "AM.STRIP.500 / .750 / .1000 are powerful pneumatic, semi-automatic bench machines for industrial stripping of cables up to 30 mm outer diameter and flat cables up to 32 mm wide. Full stripping lengths reach 500, 750 or 1000 mm depending on the model.",
     attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
