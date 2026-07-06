@@ -290,7 +290,7 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
 const FEINTECHNIK_LINK_BOXES: CategoryLinkBox[] = [
   {
     label: "Pneumatic stripping machines",
-    href: "https://rittmeyer-beri.de/en/cable-processing/pneumatic-stripping-machines/",
+    href: "https://rittmeyer-beri.de/en/cable-processing/",
     image: "/media/feintechnik/pneumatic.jpg",
     ctaLabel: "View at be-ri",
     fit: "cover",

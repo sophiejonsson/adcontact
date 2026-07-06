@@ -76,6 +76,7 @@ Context (from the catalogue):
 - [x] **Branson** — Tier A (welding hub + GMX-W1 / Ultraseal20 product pages).
 - [x] **Zoller & Fröhlich** — Tier B (wire-processing landing; listed under Stripping Machines, Crimping machines & a combined header).
 - [x] **Wezag** — Tier B lean landing (cat 110, `…/crimping-equipment/wezag.html`): black-framed header photo + two link boxes to the sister brands **Private Label Tools** (hand tools) & **WDT Machines** (presses) + sourcing box; NO product grid (`HIDE_PRODUCT_GRID_CATEGORY_IDS`). WZ products outdated/low-volume — grid dropped, detail pages left orphaned (not hidden). LOCKED.
+- [x] **Feintechnik Rittmeyer (be-ri)** — Tier A (cat 106, leaf-of-flat-hub under Stripping Machines). New brand `feintechnik-rittmeyer` (be-ri logo badge). Header photo (AM.ALL.ROUND render from their site) + rewritten intro + single pneumatic link box → rittmeyer-beri.de + grid KEPT (4 machines) + cleaned "Brand" filter + sourcing box. Swedish product names translated. LOCKED.
 - [ ] **Mecal, Metzner, Ramatech, Tekuwa, Mav Prüftechnik, Ulmer** — for each: inventory → pick Tier A/B → header photo (user supplies) + ranges/curated products or link box + sourcing box.
 - [ ] **Legacy Z&F equipment grid pages** (stripping/crimping + ~50 EOL products) still resolve by direct URL — decide: redirect to the Z&F landing or hide (`HIDDEN_CATEGORY_IDS`).
 
