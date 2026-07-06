@@ -242,13 +242,9 @@ type CategoryLinkBox = {
   // (e.g. the Deutsch headline + tool) instead of centre-cropping it away.
   position?: "left" | "center";
 };
-type CategoryLinkSection = {
-  eyebrow: string;
-  boxes: CategoryLinkBox[];
-  // "banner": full-width Zoller & Fröhlich-style cards (large image left, text
-  // right, stacked). Default: the compact Branson image-left grid card.
-  variant?: "banner";
-};
+// Rendered by box count: ONE box → full-width Zoller & Fröhlich-style banner;
+// two or more → the compact side-by-side Branson grid.
+type CategoryLinkSection = { eyebrow: string; boxes: CategoryLinkBox[] };
 
 // Branson: the listed machines are mostly EOL and are disregarded; both options
 // point to Branson's catalogue while the final Branson presentation is decided.
@@ -340,9 +336,9 @@ const ULMER_LINK_BOXES: CategoryLinkBox[] = [
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
-  110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES, variant: "banner" },
-  106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES, variant: "banner" },
-  100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES, variant: "banner" },
+  110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
+  106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES },
+  100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
@@ -1268,10 +1264,11 @@ export default function CatalogueCategoryPage({
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
               {categoryLinkSection.eyebrow}
             </p>
-            {categoryLinkSection.variant === "banner" ? (
-              /* Full-width Zoller & Fröhlich-style banners: large image LEFT
-                 (sm:w-72 lg:w-96), text RIGHT, stacked one per row. */
-              <div className="mt-4 space-y-4">
+            {categoryLinkSection.boxes.length === 1 ? (
+              /* ONE box → full-width Zoller & Fröhlich-style banner: large image
+                 LEFT (sm:w-72 lg:w-96), text RIGHT. Two or more → the compact
+                 side-by-side Branson grid below. */
+              <div className="mt-4">
                 {categoryLinkSection.boxes.map((w) => (
                   <a
                     key={w.label}
@@ -1312,7 +1309,7 @@ export default function CatalogueCategoryPage({
                 ))}
               </div>
             ) : (
-            <div className={`mt-4 grid gap-4 ${categoryLinkSection.boxes.length > 1 ? "sm:grid-cols-2" : "sm:max-w-2xl"}`}>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
               {categoryLinkSection.boxes.map((w) => (
                 <a
                   key={w.label}
