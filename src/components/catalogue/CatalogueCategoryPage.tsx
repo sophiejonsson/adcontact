@@ -243,13 +243,12 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
   {
     label: "Hand crimping tools",
     href: "https://www.private-label-tools.de/en/tools/",
-    image: "/media/wezag/tools-deutsch.png",
+    image: "/media/wezag/tools-crimp.png",
     ctaLabel: "View at Private Label Tools",
     fit: "cover",
-    position: "left",
     description: [
       "Private Label Tools is Wezag's hand-tool brand — professional crimping tools with interchangeable die sets for repeatable, high-quality crimps.",
-      "Dies available for Deutsch DT & DTM and many other connector systems (CSV10 shown).",
+      "Dies available for Deutsch DT & DTM and many other connector systems.",
     ],
   },
   {
@@ -270,6 +269,12 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
 };
+
+// Brand pages presented as a lean partner landing (header + link boxes +
+// sourcing box) with NO product grid/filter — mirrors the Zoller & Fröhlich
+// approach. Wezag (110): its catalogue products are outdated / low-volume, so we
+// surface only the trusted-partner brand page.
+const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110]);
 
 // "Browse by series" configuration for the brand hubs whose products carry a
 // "Series" attribute. Each hub defines where its series live and how to
@@ -845,7 +850,10 @@ export default function CatalogueCategoryPage({
     getCategoryChildren(children[0]).length === 0 &&
     getCategoryProductCount(children[0]) > 0;
 
-  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub || isLeafOfFlatHub);
+  // Lean partner landing (e.g. Wezag): no product grid/filter, just header +
+  // link boxes + sourcing box.
+  const hideProductGrid = HIDE_PRODUCT_GRID_CATEGORY_IDS.has(category.id);
+  const showProductBrowser = !hideProductGrid && productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub || isLeafOfFlatHub);
   // Suppress visual link cards on descendant hubs — the product browser with brand
   // filters replaces them, just like isFlatHub pages show no category cards.
   const showVisualLinks = content.visualLinks.length > 0 && !isDescendantHub;
@@ -926,6 +934,8 @@ export default function CatalogueCategoryPage({
     : [];
 
   const heroStatText = (() => {
+    // Lean partner landing has no grid — don't advertise a catalogue-item count.
+    if (hideProductGrid) return null;
     const itemsPart = `${productCount.toLocaleString()} catalogue items`;
     if (showSeries) {
       return `${seriesFacets.length} series · ${itemsPart}`;
@@ -1101,9 +1111,11 @@ export default function CatalogueCategoryPage({
                     : brand?.description
                 ) ?? categoryIntro(category)}
               </p>
-              <p className="mt-4 text-sm font-semibold text-blue-200">
-                {heroStatText}
-              </p>
+              {heroStatText && (
+                <p className="mt-4 text-sm font-semibold text-blue-200">
+                  {heroStatText}
+                </p>
+              )}
 
               {brand?.shopUrl && !showSourcingCta && (
                 <div className="mt-5 inline-flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3">
@@ -1361,35 +1373,38 @@ export default function CatalogueCategoryPage({
               </section>
             )}
 
-            {categorySourcingCta && (
-              <section className="mt-10 rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] px-6 py-7 sm:px-8">
-                <h2 className="text-lg font-bold text-[#0a1628] sm:text-xl">
-                  {categorySourcingCta.heading}
-                </h2>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-[#475569]">
-                  {categorySourcingCta.body}
-                </p>
-                <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
-                  <a
-                    href={`mailto:info@adcontact.se?subject=${encodeURIComponent(categorySourcingCta.mailtoSubject)}`}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
-                  >
-                    {categorySourcingCta.primaryLabel}
-                    <ArrowRight size={15} />
-                  </a>
-                  <a
-                    href={categorySourcingCta.catalogueUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] transition-colors hover:text-[#2563eb]"
-                  >
-                    {categorySourcingCta.catalogueLabel}
-                    <ArrowUpRight size={14} />
-                  </a>
-                </div>
-              </section>
-            )}
           </div>
+        )}
+
+        {/* Category sourcing box — after the grid, or standalone on a lean
+            partner landing page that has no grid (e.g. Wezag). */}
+        {categorySourcingCta && (
+          <section className="mt-10 rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] px-6 py-7 sm:px-8">
+            <h2 className="text-lg font-bold text-[#0a1628] sm:text-xl">
+              {categorySourcingCta.heading}
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#475569]">
+              {categorySourcingCta.body}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <a
+                href={`mailto:info@adcontact.se?subject=${encodeURIComponent(categorySourcingCta.mailtoSubject)}`}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
+              >
+                {categorySourcingCta.primaryLabel}
+                <ArrowRight size={15} />
+              </a>
+              <a
+                href={categorySourcingCta.catalogueUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] transition-colors hover:text-[#2563eb]"
+              >
+                {categorySourcingCta.catalogueLabel}
+                <ArrowUpRight size={14} />
+              </a>
+            </div>
+          </section>
         )}
 
         {/* Hongshang trial: subcategory cards below the product grid. Only on
