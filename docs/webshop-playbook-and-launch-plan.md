@@ -1,5 +1,7 @@
 # Webshop playbook & launch plan
 
+> **✍️ Copy style rule (all customer-facing text):** never use em-dashes (—) or en-dashes (–). Use a comma or restructure the sentence; write numeric ranges as "1.0 to 12.5 mm" (not "1.0–12.5 mm"). Hyphens in compound words are fine (high-precision, semi-automatic, be-ri). Applies to every hero/link-box/sourcing blurb, product overview, and Features/Specifications value.
+
 Living document. Two purposes:
 
 1. **Best practice** — how we turned Zoller & Fröhlich into a self-contained brand section (so we can repeat it).

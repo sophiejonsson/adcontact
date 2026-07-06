@@ -151,7 +151,7 @@ const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
 // Magento metaDescription is empty/unsuitable — e.g. a rewritten partner blurb.
 const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
   106:
-    "We supply the complete range of Feintechnik Rittmeyer wire stripping machines — marketed under the be-ri brand — for industrial cable processing. Whether you need a pneumatic, rotating or electric stripping machine, or high-precision processing of coaxial cables, we'll help you find the right solution.",
+    "We supply the complete range of Feintechnik Rittmeyer wire stripping machines, marketed under the be-ri brand, for industrial cable processing. Whether you need a pneumatic, rotating or electric stripping machine, or high-precision processing of coaxial cables, we'll help you find the right solution.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
@@ -178,8 +178,8 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
 // Mirrors the brand "Can't find the exact part?" box.
 const BRANSON_WELDING_CTA = {
   heading: "Can't find the exact machine for your application?",
-  body: "We represent Branson's complete ultrasonic metal- and plastic-welding programme. Tell us about your application and we'll help you find the right machine — or browse Branson's full catalogue.",
-  mailtoSubject: "Branson welding — application enquiry",
+  body: "We represent Branson's complete ultrasonic metal- and plastic-welding programme. Tell us about your application and we'll help you find the right machine, or browse Branson's full catalogue.",
+  mailtoSubject: "Branson welding: application enquiry",
   primaryLabel: "Send us your application",
   catalogueLabel: "View Branson catalogue",
   catalogueUrl: "https://www.branson.emerson.com/en",
@@ -187,8 +187,8 @@ const BRANSON_WELDING_CTA = {
 
 const WEZAG_SOURCING_CTA = {
   heading: "Can't find the exact machine for your application?",
-  body: "We represent Wezag's complete crimping-tool and machine programme — hand tools, dies, presses and automation. Tell us about your application and we'll help you find the right tool or press, or browse Wezag's full range.",
-  mailtoSubject: "Wezag crimping — application enquiry",
+  body: "We represent Wezag's complete crimping-tool and machine programme, including hand tools, dies, presses and automation. Tell us about your application and we'll help you find the right tool or press, or browse Wezag's full range.",
+  mailtoSubject: "Wezag crimping: application enquiry",
   primaryLabel: "Send us your application",
   catalogueLabel: "View Wezag range",
   catalogueUrl: "https://www.wezag.de/en/",
@@ -196,8 +196,8 @@ const WEZAG_SOURCING_CTA = {
 
 const FEINTECHNIK_SOURCING_CTA = {
   heading: "Can't find the exact machine for your application?",
-  body: "We represent Feintechnik Rittmeyer's complete be-ri wire-stripping programme — pneumatic, rotating and electric machines. Tell us about your application and we'll help you find the right machine, or browse their full range.",
-  mailtoSubject: "Feintechnik Rittmeyer (be-ri) — application enquiry",
+  body: "We represent Feintechnik Rittmeyer's complete be-ri wire-stripping programme, including pneumatic, rotating and electric machines. Tell us about your application and we'll help you find the right machine, or browse their full range.",
+  mailtoSubject: "Feintechnik Rittmeyer (be-ri): application enquiry",
   primaryLabel: "Send us your application",
   catalogueLabel: "View be-ri range",
   catalogueUrl: "https://rittmeyer-beri.de/en/cable-processing/",
@@ -252,7 +252,7 @@ const BRANSON_WELDING_TYPES: CategoryLinkBox[] = [
     fit: "cover",
     description: [
       "Ultrasonic energy has been used to join thermoplastics for over 70 years. It is frequently chosen when parts are too complex or expensive to be molded in one piece.",
-      "In ultrasonic plastic welding, a vibratory motion at the horn face (amplitude) is transferred to the part. The vibrations move through the part and create friction at the interface between the parts — creating heat, then melting. When cooled, a weld is formed.",
+      "In ultrasonic plastic welding, a vibratory motion at the horn face (amplitude) is transferred to the part. The vibrations move through the part and create friction at the interface between the parts, creating heat, then melting. When cooled, a weld is formed.",
     ],
   },
 ];
@@ -268,7 +268,7 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
     ctaLabel: "View at Private Label Tools",
     fit: "cover",
     description: [
-      "Private Label Tools is Wezag's hand-tool brand — professional crimping tools with interchangeable die sets for repeatable, high-quality crimps.",
+      "Private Label Tools is Wezag's hand-tool brand, offering professional crimping tools with interchangeable die sets for repeatable, high-quality crimps.",
       "Dies available for Deutsch DT & DTM and many other connector systems.",
     ],
   },
@@ -279,7 +279,7 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
     ctaLabel: "View at WDT Machines",
     fit: "cover",
     description: [
-      "WDT Machines is Wezag's machine brand — pneumatic and electro-pneumatic crimping presses and automation for cable assembly.",
+      "WDT Machines is Wezag's machine brand, offering pneumatic and electro-pneumatic crimping presses and automation for cable assembly.",
       "Optimised for small to medium series in low- and high-voltage production, with the same Wezag crimp quality.",
     ],
   },

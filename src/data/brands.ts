@@ -35,7 +35,7 @@ export const brands: Brand[] = [
     slug: "deutsch",
     logo: "/images/partners/te-connectivity.svg",
     description:
-      "DEUTSCH is TE Connectivity's family of sealed connectors — the global benchmark for harsh-environment electrical connections. The DT, DTM, DTP, and AT series are specified in agriculture, construction, military, marine, and heavy automotive applications where vibration, moisture, and contamination resistance are critical.",
+      "DEUTSCH is TE Connectivity's family of sealed connectors, the global benchmark for harsh-environment electrical connections. The DT, DTM, DTP, and AT series are specified in agriculture, construction, military, marine, and heavy automotive applications where vibration, moisture, and contamination resistance are critical.",
     shortDescription: "DEUTSCH sealed connectors for harsh-environment and off-highway applications.",
     categories: ["connectors"],
     linecardSection: "components",
@@ -49,7 +49,7 @@ export const brands: Brand[] = [
     slug: "te-connectivity",
     logo: "/images/partners/te-connectivity.svg",
     description:
-      "For more than 80 years, TE has partnered with engineers worldwide to develop connectivity and sensing solutions that make a connected world possible. Their unmatched product portfolio — including the AMPSEAL sealed connector family — enables companies of any size to turn ideas into technologies that transform how the world connects, works, and lives.",
+      "For more than 80 years, TE has partnered with engineers worldwide to develop connectivity and sensing solutions that make a connected world possible. Their unmatched product portfolio, including the AMPSEAL sealed connector family, enables companies of any size to turn ideas into technologies that transform how the world connects, works, and lives.",
     shortDescription: "TE Connectivity sealed connectors including AMPSEAL for harsh-environment applications.",
     categories: ["connectors"],
     linecardSection: "components",
@@ -354,7 +354,7 @@ export const brands: Brand[] = [
     // Promoted under the "be-ri" brand mark.
     logo: "/images/partners/beri.png",
     description:
-      "Feintechnik R. Rittmeyer manufactures wire stripping machines for industrial cable processing under the be-ri brand — pneumatic, rotating and electric strippers, plus high-precision solutions for coaxial cables.",
+      "Feintechnik R. Rittmeyer manufactures wire stripping machines for industrial cable processing under the be-ri brand, including pneumatic, rotating and electric strippers, plus high-precision solutions for coaxial cables.",
     shortDescription: "Pneumatic, rotating and electric wire stripping machines (be-ri) for industrial cable processing.",
     categories: ["production-equipment"],
     linecardSection: "equipment",

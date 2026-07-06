@@ -232,7 +232,7 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
     route: AM_ALL_ROUND_ROUTE,
     routes: [AM_ALL_ROUND_ROUTE],
     shortDescription:
-      "AM.ALL.ROUND is a semi-automatic, electro-pneumatic rotating wire stripping machine for high-precision industrial cable processing. Its rotating blade head strips round cables from 2 to 24 mm outer diameter, with stripping lengths up to 160 mm — and up to 1000 mm in the 400 / 750 / 1000 variants.",
+      "AM.ALL.ROUND is a semi-automatic, electro-pneumatic rotating wire stripping machine for high-precision industrial cable processing. Its rotating blade head strips round cables from 2 to 24 mm outer diameter, with stripping lengths up to 160 mm, and up to 1000 mm in the 400 / 750 / 1000 variants.",
     attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
   },
   1781: {
@@ -271,7 +271,7 @@ export const PRODUCT_PRESENTATIONS: Record<
   22940: {
     features: [
       'User-friendly HMI with 22" capacitive touch screen',
-      "Portable, ergonomic design — use in-line or as a tabletop system",
+      "Portable, ergonomic design for in-line or tabletop use",
       "Integrated Cutter Module",
       "USB and Ethernet data interfaces",
       "Designed for copper wire harness joining",
@@ -294,7 +294,7 @@ export const PRODUCT_PRESENTATIONS: Record<
     // only) — features drawn from their description; specifications on request.
     features: [
       "Hermetically seals copper and aluminum tubes",
-      "One-step operation — crimps, seals and cuts off charged tubes",
+      "One-step operation that crimps, seals and cuts off charged tubes",
       "Completes each seal in under one second",
       "Suited to automation for high efficiency and productivity",
     ],
@@ -313,9 +313,9 @@ export const PRODUCT_PRESENTATIONS: Record<
       'Optional "Cutting-only" and "Automatic reset" modules',
     ],
     specifications: [
-      { label: "Outer diameter", value: "2.0–24.0 mm (0.08–0.95 in)" },
-      { label: "Stripping length (rotating blades)", value: "5.0–160.0 mm (0.2–6.3 in)" },
-      { label: "Partial stroke", value: "5.0–160.0 mm (0.2–6.3 in)" },
+      { label: "Outer diameter", value: "2.0 to 24.0 mm (0.08 to 0.95 in)" },
+      { label: "Stripping length (rotating blades)", value: "5.0 to 160.0 mm (0.2 to 6.3 in)" },
+      { label: "Partial stroke", value: "5.0 to 160.0 mm (0.2 to 6.3 in)" },
       { label: "Drive", value: "Electro-pneumatic" },
       { label: "Blade head", value: "Rotating" },
       { label: "Variants", value: "AM.ALL.ROUND 400 / 750 / 1000 (up to 400 / 750 / 1000 mm)" },
@@ -332,7 +332,7 @@ export const PRODUCT_PRESENTATIONS: Record<
       "Optional pneumatic sensor",
     ],
     specifications: [
-      { label: "Outer diameter", value: "1.0–12.5 mm (0.04–0.46 in)" },
+      { label: "Outer diameter", value: "1.0 to 12.5 mm (0.04 to 0.46 in)" },
       { label: "Flat cable", value: "up to 20.0 mm (0.79 in) wide" },
       { label: "Stripping length (full stroke)", value: "up to 65.0 mm (2.56 in)" },
       { label: "Partial stroke", value: "up to 250 mm (9.84 in)" },
@@ -350,7 +350,7 @@ export const PRODUCT_PRESENTATIONS: Record<
       "Optional pneumatic sensor and emergency stop",
     ],
     specifications: [
-      { label: "Outer diameter", value: "1.0–25.0 mm (0.04–0.99 in)" },
+      { label: "Outer diameter", value: "1.0 to 25.0 mm (0.04 to 0.99 in)" },
       { label: "Flat cable", value: "up to 35.0 mm (1.38 in) wide" },
       { label: "Stripping length (full stroke)", value: "up to 120.0 mm (4.73 in)" },
       { label: "Drive", value: "Pneumatic" },
@@ -359,7 +359,7 @@ export const PRODUCT_PRESENTATIONS: Record<
   1783: {
     features: [
       "Powerful pneumatic, semi-automatic bench machine",
-      "Long stripping lengths — 500 / 750 / 1000 mm depending on model",
+      "Long stripping lengths of 500 / 750 / 1000 mm depending on model",
       "Strips round cables and flat cables",
       "Optional stroke limit for faster work with short stripping lengths",
     ],
