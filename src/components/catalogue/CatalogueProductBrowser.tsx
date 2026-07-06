@@ -26,6 +26,9 @@ const HIDDEN_FILTER_ATTRIBUTES = new Set([
   // Redundant with the subcategory "Category" filter, whose brand chips link to
   // the brand hubs; the raw attribute also still reads "Stocko" (now Wezag).
   "Crimping equipment Brands",
+  // Same pattern for the stripping-machine hub / Feintechnik Rittmeyer leaf —
+  // shown as the locked "Brand" pre-filter on the brand page, hidden on the hub.
+  "Stripping machine Brands",
 ]);
 
 function firstParamValue(value: string | string[] | undefined) {
@@ -57,6 +60,7 @@ const FACET_LABEL_OVERRIDES: Record<string, string> = {
   // On a brand page this facet is the (hidden-but-active) pre-filter; show a
   // clean "Brand" heading instead of the raw Magento attribute name.
   "Crimping equipment Brands": "Brand",
+  "Stripping machine Brands": "Brand",
 };
 function facetDisplayLabel(label: string): string {
   return FACET_LABEL_OVERRIDES[label] ?? label;

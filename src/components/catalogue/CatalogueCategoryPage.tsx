@@ -70,6 +70,7 @@ function brandNameSlug(brand: (typeof brands)[number]) {
 // manufacturer so the page shows the right brand (logo + name).
 const CATEGORY_BRAND_OVERRIDES: Record<number, string> = {
   110: "wezag", // "Stocko" crimping category actually holds Wezag WZ hand tools
+  106: "feintechnik-rittmeyer", // stripping-machine brand promoted as "be-ri"
 };
 
 function brandForCategory(category: CatalogueCategory) {
@@ -143,6 +144,14 @@ const BRAND_HEADER_IMAGES: Record<string, HeaderImage> = {
 const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
   77: "Plastic- and Metal Welding", // "Ultrasonic Welding"
   110: "Wezag", // legacy "Stocko" crimping category — actually Wezag WZ tools
+  106: "Feintechnik Rittmeyer", // fix the data's "Rittmyer" spelling
+};
+
+// Header/intro text override (the hero paragraph). Used when a category's
+// Magento metaDescription is empty/unsuitable — e.g. a rewritten partner blurb.
+const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
+  106:
+    "We supply the complete range of Feintechnik Rittmeyer wire stripping machines — marketed under the be-ri brand — for industrial cable processing. Whether you need a pneumatic, rotating or electric stripping machine, or high-precision processing of coaxial cables, we'll help you find the right solution.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
@@ -160,6 +169,8 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   115: { src: "/media/branson/hub-header.jpg", fit: "cover" }, // Branson sub-page
   // Wezag hand-crimper graphic ships on a black background — frame it black.
   110: { src: "/media/wezag/hub-header.png", fit: "contain", bg: "black" },
+  // Feintechnik Rittmeyer (be-ri) — AM.ALL.ROUND machine render, contained.
+  106: { src: "/media/feintechnik/hub-header.jpg", fit: "contain" },
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
@@ -183,6 +194,15 @@ const WEZAG_SOURCING_CTA = {
   catalogueUrl: "https://www.wezag.de/en/",
 } as const;
 
+const FEINTECHNIK_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Feintechnik Rittmeyer's complete be-ri wire-stripping programme — pneumatic, rotating and electric machines. Tell us about your application and we'll help you find the right machine, or browse their full range.",
+  mailtoSubject: "Feintechnik Rittmeyer (be-ri) — application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View be-ri range",
+  catalogueUrl: "https://rittmeyer-beri.de/en/cable-processing/",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
@@ -190,6 +210,7 @@ const CATEGORY_SOURCING_CTA: Record<
   77: BRANSON_WELDING_CTA, // Plastic- and Metal Welding hub
   115: BRANSON_WELDING_CTA, // Branson sub-page
   110: WEZAG_SOURCING_CTA, // Wezag crimping brand page
+  106: FEINTECHNIK_SOURCING_CTA, // Feintechnik Rittmeyer (be-ri) stripping page
 };
 
 // Presentational "link boxes" shown at the top of a hub — an image + short
@@ -264,10 +285,27 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
   },
 ];
 
+// Feintechnik Rittmeyer (be-ri) — a single link box on pneumatic stripping,
+// linking to be-ri's own catalogue. Copy supplied by the customer.
+const FEINTECHNIK_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Pneumatic stripping machines",
+    href: "https://rittmeyer-beri.de/en/cable-processing/pneumatic-stripping-machines/",
+    image: "/media/feintechnik/pneumatic.jpg",
+    ctaLabel: "View at be-ri",
+    fit: "cover",
+    description: [
+      "The first wire stripping machines worked pneumatically. This had and still has a lot of advantages.",
+      "Apart from low operating and production costs, pneumatically driven machines can generate considerable forces, so that thicker lines with very hard insulating layers can be stripped.",
+    ],
+  },
+];
+
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
+  106: { eyebrow: "be-ri stripping machines", boxes: FEINTECHNIK_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
@@ -835,7 +873,7 @@ export default function CatalogueCategoryPage({
   const title = CATEGORY_TITLE_OVERRIDES[category.id] ?? category.name ?? "Catalogue";
   const categorySourcingCta = CATEGORY_SOURCING_CTA[category.id];
   const categoryLinkSection = CATEGORY_LINK_SECTIONS[category.id];
-  const description = category.metaDescription;
+  const description = CATEGORY_DESCRIPTION_OVERRIDES[category.id] ?? category.metaDescription;
   const productCount = getCategoryProductCount(category);
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
   const productSectionTitle = isWebshopRoot ? "Featured product selection" : "Catalogue items";
@@ -1193,7 +1231,7 @@ export default function CatalogueCategoryPage({
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
               {categoryLinkSection.eyebrow}
             </p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className={`mt-4 grid gap-4 ${categoryLinkSection.boxes.length > 1 ? "sm:grid-cols-2" : "sm:max-w-2xl"}`}>
               {categoryLinkSection.boxes.map((w) => (
                 <a
                   key={w.label}

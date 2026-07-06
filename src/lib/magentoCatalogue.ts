@@ -213,6 +213,14 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
   1817: { route: WZ_30_ROUTE, routes: [WZ_30_ROUTE], attributes: { "Crimping equipment Brands": "Wezag" } },
   1818: { route: WZ_100_ROUTE, routes: [WZ_100_ROUTE], attributes: { "Crimping equipment Brands": "Wezag" } },
   1819: { route: WZ_130_ROUTE, routes: [WZ_130_ROUTE], attributes: { "Crimping equipment Brands": "Wezag" } },
+  // Feintechnik Rittmeyer stripping machines — fix the data's "Rittmyer"
+  // spelling in the brand attribute so the brand-page "Brand" filter matches
+  // the corrected page title; translate the 3 Swedish names ("Avmantlingsmaskin"
+  // = stripping machine) so the grid reads consistently in English.
+  1780: { attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" } },
+  1781: { name: "Stripping Machine AM.STRIP.1", attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" } },
+  1782: { name: "Stripping Machine AM.STRIP.2", attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" } },
+  1783: { name: "Stripping Machine AM.STRIP.500/.750/.1000", attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" } },
 };
 
 // Structured Features + Specifications for the product page, shown as two

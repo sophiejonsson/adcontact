@@ -347,6 +347,20 @@ export const brands: Brand[] = [
     website: "https://www.branson.emerson.com/en",
     featured: false,
   },
+  {
+    id: "feintechnik-rittmeyer",
+    name: "Feintechnik Rittmeyer",
+    slug: "feintechnik-rittmeyer",
+    // Promoted under the "be-ri" brand mark.
+    logo: "/images/partners/beri.png",
+    description:
+      "Feintechnik R. Rittmeyer manufactures wire stripping machines for industrial cable processing under the be-ri brand — pneumatic, rotating and electric strippers, plus high-precision solutions for coaxial cables.",
+    shortDescription: "Pneumatic, rotating and electric wire stripping machines (be-ri) for industrial cable processing.",
+    categories: ["production-equipment"],
+    linecardSection: "equipment",
+    website: "https://rittmeyer-beri.de/en/",
+    featured: false,
+  },
 ];
 
 export function getBrandBySlug(slug: string): Brand | undefined { // v2
