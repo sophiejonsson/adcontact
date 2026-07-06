@@ -75,7 +75,7 @@ export function categoryMetaDescription(category: CatalogueCategory): string {
   if (productCount > 0) {
     const noun = productCount === 1 ? "product" : "products";
     return truncate(
-      `${name}${context ? ` —${context}` : ""} at Adcontact. Browse ${productCount.toLocaleString()} ${noun} and request a quote with expert technical support and fast Nordic delivery.`,
+      `${name}${context ? `,${context}` : ""} at Adcontact. Browse ${productCount.toLocaleString()} ${noun} and request a quote with expert technical support and fast Nordic delivery.`,
     );
   }
 
@@ -139,6 +139,6 @@ export function productMetaDescription(product: CatalogueProduct): string {
   const detail = detailText ? ` ${detailText}.` : "";
 
   return truncate(
-    `${subject || part}${partClause}.${detail} Request a quote from Adcontact — specialist Nordic supplier with technical support and reliable delivery.`,
+    `${subject || part}${partClause}.${detail} Request a quote from Adcontact, your specialist Nordic supplier with technical support and reliable delivery.`,
   );
 }
