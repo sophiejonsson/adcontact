@@ -1,0 +1,69 @@
+========================================================================
+21524 SM15 2PT
+LIST:
+   - Cutting range - width: 150 mm
+   - Cutting range – height: 15 mm
+   - Centre cutting range – height:30 mm
+   - Length: 670 mm
+   - Width: 430 mm
+   - Heighl: 570 mm
+   - Weight: 60kg
+   - Power supply: 230V/50-60Hz/16A
+   - Air supply: 6 bar / 87 psi
+   - Air consumption: 3.35l / stroke
+   - Drive: 350 Servo
+   - Feed speed: 1 m/sec
+   - Adjustable number of pieces: 99999
+   - Length input: up to 999999 mm
+   - Accuracy: 0.1 mm
+   - Feed unit: Upper and lower toothed belts
+   - Belt synchronisation: 100% both belts
+   - Upper belt adjustment: pneumatic
+   - Pulling force: up to 20kg, depending on material
+LIST:
+   - at length: 10mm: 9360 items
+   - at length: 50mm: 6240 items
+   - at length: 100mm: 5580 items
+   - at length: 1000mm: 2280 items
+PARAGRAPHS:
+   * The cutting machine SM15 2PT enables the user to save product data and offers the convenient and secure reproduction of items. The wide scope of options allows the universal application in all areas. Medical products can be processed as well as products for the automotive sector. Special applications can also be supplied.
+   * The optionally available multi-lane infeed guide and the synchronised belt drive assure the exact positioning of the material up to the cutting blade. Various foil, shrinking tubes, fabric, insulation, wires and round cables are just to name some of the wide range of materials which can be processed.Different cutting blades are available which allow a perfect application to the customers demands. The effectively designed cutting unit enables to process wire up to 70 mm² in perfect cuts.
+   * The SM15 2PT is driven by a powerful servo Motor and allows an exact positioning.
+   * The touchscreen of the machine is designed for the industrial use and easy to operate. The SM15 2PT can be extended by various additionally available monitoring and cutting units in order to optimize the customers production process.
+   * By additional equipment of our extensive product range, the SM15 2PT is – like all machines of the SM15 and SM30 series – extendable up to a full product line.
+========================================================================
+22916 SG400
+PARAGRAPHS:
+   * The SG 400 and SG 400 V have especially been designed for the cutting of large-sized cables or lateral cuts respectively. Processable are multi-conductor cables of an outer diameter of up to 26 mm and lateral cuts of up to 150 mm².
+   * The strong and powerful feeder (as applied in the ZG 400 B2) assures an exact positioning of the material to cut.
+   * Alternatively, hose materials can be cut to length by use of the appropiate hose cutting blade. The upper belt limit of the SG 400 and SG 400 V regulates the contact pressure of the upper belt mechnically. This is especially useful when processing pressure-sensitive products.
+   * The machine parameters can be set and scanned by means of the well accessable control panel, installed on the machines’ top.
+   * For maintenance, the cutting head can be pulled out of the machine.
+========================================================================
+22917 SG400 V
+PARAGRAPHS:
+   * The SG400 and SG400 V cutters have been specially developed for the requirements for cutting large-format cables or cross sections. With their power potential, they are able to cut dimensionally stable hoses up to an outer diameter of 30 mm and cables up to a cross-section of 200 mm² (Cu stranded in SG400 V).
+   * The material feed is implemented by two belts, the coatings of which can be selected specifically for the product in order to generate a reliable friction fit for precise positioning. The required power is provided by a powerful and efficient servo drive. For the processing of pressure sensitive materials, the feed path of the belt can be mechanically limited.
+   * Through the extendable cutting head, knives and guides, for service purposes and product change, can be exchanged quickly. This enables a productive production of even small series.
+   * The built in control makes it possible to start simple productions by entering the length and number of pieces, but also to make product specific adjustments to the system parameters. Furthermore, the PLC offers the capability of controlling printing units, the connection of error detection and other options.
+   * Optionally, it is also possible to connect a PC which is equipped with a cable assembly software in which orders or lists can be created, stored and processed individually. The software of the cutters also supports the input of jobs by a barcode scanner.
+========================================================================
+22918 WSM30 E
+PARAGRAPHS:
+   * The corrugated tube cutting machine WSM 30 E is suitable to cut non-slitted corrugated tubes of 7 to 32 mm outer diameter. The cut is carried out in rotation mode, where the cutting blades turn continuously round the product to cut the material at the precise position of the specified length.
+   * Optionally, the WSM 30 E can be fitted with a slitting unit, which slits the corrugated tube longitudinally. This allows to build up stocks of non-slitted corrugated tubes which can be finally processed as slitted or non-slitted material.
+   * Equipment: telescopic cutting head, laser light barrier for positioning, guide nozzles and cutting blade sets for the diameter of 3 corrugated tubes made to customer specification.
+   * To process special forms with the WSM 30 E, supplementary accessories are available.
+========================================================================
+22919 WSM60 E
+PARAGRAPHS:
+   * The corrugated tube cutting machine WSM 60 E is suitable to cut non-slitted corrugated tubes of 7 to 60 mm outer diameter. The cut is carried out in rotation mode, where the cutting blades turn continuously round the product to cut the material at the precise position of the specified length.
+   * Optionally, the WSM 60 E can be fitted with a slitting unit, which slits the corrugated tube longitudinally. This allows to build up stocks of non-slitted corrugated tubes which can be finally processed as slitted or non-slitted material.
+   * Equipment: telescopic cutting head, laser light barrier for positioning, guide nozzles and cutting blade sets for the diameter of 3 corrugated tubes made to customer specification.
+   * To process special forms with the WSM 60 E, supplementary accessories are available.
+========================================================================
+22921 SSM60
+PARAGRAPHS:
+   * The hose cutting machine SSM 60 is suitable to cut closed and slitted corrugated tube, PVC, rubber hose as well as further types of hoses with an outer diameter of up to 60 mm. Due to the applied guillotine-cut ( blade is fixed in a 45°-angle), a precise cutting angle as well as a high cutting quality is achieved.
+   * The machine is controlled by means of a compact control unit, which monitors all relevant machinery data.
+   * Via the strong and powerful feeding process, the material is positioned and cut when the required length is reached.

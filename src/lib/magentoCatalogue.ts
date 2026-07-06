@@ -265,6 +265,31 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
       "AM.STRIP.500 / .750 / .1000 are powerful pneumatic, semi-automatic bench machines for industrial stripping of cables up to 30 mm outer diameter and flat cables up to 32 mm wide. Full stripping lengths reach 500, 750 or 1000 mm depending on the model.",
     attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
   },
+  // Ulmer cutting machines — English overview drawn from our own product copy.
+  21524: {
+    shortDescription:
+      "The SM 15 2PT is a universal, servo-driven cutting machine with an industrial touchscreen that stores product data for secure, reproducible cutting. It processes a wide range of materials, from foils, shrink tubing and fabric to insulation, wires and round cables, and is extendable up to a full production line.",
+  },
+  22916: {
+    shortDescription:
+      "The SG 400 is a belt-fed cutting machine designed for large cables and lateral cuts. It processes multi-conductor cables up to 26 mm outer diameter and lateral cuts up to 150 mm², and can also cut hose to length with the appropriate blade.",
+  },
+  22917: {
+    shortDescription:
+      "The SG 400 V is a servo-driven cutting machine for large cables and cross-sections. It cuts dimensionally stable hoses up to 30 mm outer diameter and cables up to 200 mm² (Cu stranded), with a PLC control and optional PC cable-assembly software.",
+  },
+  22918: {
+    shortDescription:
+      "The WSM 30 E is a rotary corrugated-tube cutting machine for non-slitted corrugated tubes from 7 to 32 mm outer diameter. The blades rotate continuously around the tube to cut cleanly at the specified length, with an optional longitudinal slitting unit.",
+  },
+  22919: {
+    shortDescription:
+      "The WSM 60 E is a rotary corrugated-tube cutting machine for non-slitted corrugated tubes from 7 to 60 mm outer diameter. The blades rotate continuously around the tube to cut cleanly at the specified length, with an optional longitudinal slitting unit.",
+  },
+  22921: {
+    shortDescription:
+      "The SSM 60 is a guillotine hose cutting machine for closed and slitted corrugated tube, PVC, rubber and other hoses up to 60 mm outer diameter. Its 45° fixed blade delivers a precise cutting angle and high cut quality.",
+  },
 };
 
 // Structured Features + Specifications for the product page, shown as two
@@ -375,6 +400,116 @@ export const PRODUCT_PRESENTATIONS: Record<
       { label: "Stripping length (full stroke)", value: "up to 500 / 750 / 1000 mm (.500 / .750 / .1000)" },
       { label: "Partial stroke", value: "up to 500 mm (19.7 in)" },
       { label: "Drive", value: "Pneumatic" },
+    ],
+  },
+  // Ulmer cutting machines — features + specs extracted from our own English
+  // product copy (specs from the SM 15 2PT spec table and each machine's text).
+  21524: {
+    features: [
+      "Stores product data for reproducible cutting",
+      "Industrial touchscreen, easy to operate",
+      "Powerful servo drive for exact positioning",
+      "Processes foil, shrink tubing, fabric, insulation, wires and round cables",
+      "Cuts wire up to 70 mm²",
+      "Synchronised upper and lower toothed-belt feed",
+      "Optional multi-lane infeed guide and monitoring / cutting units",
+      "Extendable up to a full production line (SM15 / SM30 series)",
+    ],
+    specifications: [
+      { label: "Cutting range width", value: "150 mm" },
+      { label: "Cutting range height", value: "15 mm (30 mm centre)" },
+      { label: "Max wire cross-section", value: "70 mm²" },
+      { label: "Accuracy", value: "0.1 mm" },
+      { label: "Feed speed", value: "1 m/sec" },
+      { label: "Pulling force", value: "up to 20 kg" },
+      { label: "Drive", value: "Servo" },
+      { label: "Power supply", value: "230 V / 50 to 60 Hz / 16 A" },
+      { label: "Air supply", value: "6 bar (87 psi)" },
+      { label: "Dimensions (L / W / H)", value: "670 / 430 / 570 mm" },
+      { label: "Weight", value: "60 kg" },
+    ],
+  },
+  22916: {
+    features: [
+      "Designed for large cables and lateral cuts",
+      "Powerful belt feeder for exact positioning",
+      "Optional hose cutting blade to cut hose to length",
+      "Mechanical upper-belt limit for pressure-sensitive products",
+      "Control panel mounted on top for easy access",
+      "Cutting head pulls out for maintenance",
+    ],
+    specifications: [
+      { label: "Max cable outer diameter", value: "26 mm" },
+      { label: "Max lateral cut", value: "150 mm²" },
+      { label: "Feed", value: "Belt" },
+      { label: "Materials", value: "Multi-conductor cable, hose (optional)" },
+    ],
+  },
+  22917: {
+    features: [
+      "Developed for large cables and cross-sections",
+      "Two-belt feed with product-specific belt coatings",
+      "Powerful, efficient servo drive",
+      "Mechanical feed-path limit for pressure-sensitive materials",
+      "Extendable cutting head for quick knife and guide changes",
+      "PLC control: length and quantity, product-specific parameters, printing units, error detection",
+      "Optional PC with cable-assembly software and barcode input",
+    ],
+    specifications: [
+      { label: "Max hose outer diameter", value: "30 mm" },
+      { label: "Max cable cross-section", value: "200 mm² (Cu stranded)" },
+      { label: "Drive", value: "Servo" },
+      { label: "Control", value: "PLC (optional PC software)" },
+      { label: "Feed", value: "Two-belt" },
+    ],
+  },
+  22918: {
+    features: [
+      "Cuts non-slitted corrugated tubes in rotation mode",
+      "Optional slitting unit for longitudinal slitting",
+      "Telescopic cutting head",
+      "Laser light barrier for positioning",
+      "Guide nozzles and blade sets for 3 tube diameters (customer-specified)",
+      "Supplementary accessories for special forms",
+    ],
+    specifications: [
+      { label: "Corrugated tube outer diameter", value: "7 to 32 mm" },
+      { label: "Material", value: "Non-slitted corrugated tube" },
+      { label: "Cutting mode", value: "Rotary" },
+      { label: "Positioning", value: "Laser light barrier" },
+      { label: "Cutting head", value: "Telescopic" },
+    ],
+  },
+  22919: {
+    features: [
+      "Cuts non-slitted corrugated tubes in rotation mode",
+      "Optional slitting unit for longitudinal slitting",
+      "Telescopic cutting head",
+      "Laser light barrier for positioning",
+      "Guide nozzles and blade sets for 3 tube diameters (customer-specified)",
+      "Supplementary accessories for special forms",
+    ],
+    specifications: [
+      { label: "Corrugated tube outer diameter", value: "7 to 60 mm" },
+      { label: "Material", value: "Non-slitted corrugated tube" },
+      { label: "Cutting mode", value: "Rotary" },
+      { label: "Positioning", value: "Laser light barrier" },
+      { label: "Cutting head", value: "Telescopic" },
+    ],
+  },
+  22921: {
+    features: [
+      "Cuts closed and slitted corrugated tube, PVC, rubber and other hoses",
+      "Guillotine cut with blade fixed at 45° for a precise angle",
+      "High cut quality",
+      "Compact control unit monitoring all relevant machine data",
+      "Powerful feed for accurate positioning",
+    ],
+    specifications: [
+      { label: "Max hose outer diameter", value: "60 mm" },
+      { label: "Cut type", value: "Guillotine (45° fixed blade)" },
+      { label: "Materials", value: "Corrugated tube, PVC, rubber hose" },
+      { label: "Control", value: "Compact control unit" },
     ],
   },
 };
