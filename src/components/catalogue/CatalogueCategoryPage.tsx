@@ -289,14 +289,14 @@ const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
 // linking to be-ri's own catalogue. Copy supplied by the customer.
 const FEINTECHNIK_LINK_BOXES: CategoryLinkBox[] = [
   {
-    label: "Pneumatic stripping machines",
+    label: "Wire stripping machines",
     href: "https://rittmeyer-beri.de/en/cable-processing/",
     image: "/media/feintechnik/pneumatic.jpg",
     ctaLabel: "View at be-ri",
     fit: "cover",
     description: [
-      "The first wire stripping machines worked pneumatically. This had and still has a lot of advantages.",
-      "Apart from low operating and production costs, pneumatically driven machines can generate considerable forces, so that thicker lines with very hard insulating layers can be stripped.",
+      "Wire stripping machines for industrial purposes.",
+      "Whether you are looking for a pneumatic wire stripping machine, a rotating wire stripping machine, an electric wire stripping machine, or you are interested in high-precision processing of coaxial cables.",
     ],
   },
 ];
@@ -305,7 +305,7 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
-  106: { eyebrow: "be-ri stripping machines", boxes: FEINTECHNIK_LINK_BOXES },
+  106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
