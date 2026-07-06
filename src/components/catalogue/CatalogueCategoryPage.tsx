@@ -242,7 +242,13 @@ type CategoryLinkBox = {
   // (e.g. the Deutsch headline + tool) instead of centre-cropping it away.
   position?: "left" | "center";
 };
-type CategoryLinkSection = { eyebrow: string; boxes: CategoryLinkBox[] };
+type CategoryLinkSection = {
+  eyebrow: string;
+  boxes: CategoryLinkBox[];
+  // "banner": full-width Zoller & Fröhlich-style cards (large image left, text
+  // right, stacked). Default: the compact Branson image-left grid card.
+  variant?: "banner";
+};
 
 // Branson: the listed machines are mostly EOL and are disregarded; both options
 // point to Branson's catalogue while the final Branson presentation is decided.
@@ -334,9 +340,9 @@ const ULMER_LINK_BOXES: CategoryLinkBox[] = [
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
-  110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
-  106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES },
-  100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES },
+  110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES, variant: "banner" },
+  106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES, variant: "banner" },
+  100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES, variant: "banner" },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
@@ -1262,6 +1268,50 @@ export default function CatalogueCategoryPage({
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
               {categoryLinkSection.eyebrow}
             </p>
+            {categoryLinkSection.variant === "banner" ? (
+              /* Full-width Zoller & Fröhlich-style banners: large image LEFT
+                 (sm:w-72 lg:w-96), text RIGHT, stacked one per row. */
+              <div className="mt-4 space-y-4">
+                {categoryLinkSection.boxes.map((w) => (
+                  <a
+                    key={w.label}
+                    href={w.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)] sm:flex-row"
+                  >
+                    <div className={`relative aspect-[16/10] w-full flex-none sm:aspect-auto sm:w-72 lg:w-96 ${w.fit === "contain" ? "bg-white" : "bg-[#f8fafc]"}`}>
+                      <Image
+                        src={w.image}
+                        alt={w.label}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 640px) 100vw, 384px"
+                        className={`transition-transform duration-300 group-hover:scale-[1.03] ${
+                          w.fit === "contain"
+                            ? "object-contain p-4"
+                            : `object-cover ${w.position === "left" ? "object-left" : ""}`
+                        }`}
+                      />
+                    </div>
+                    <div className="flex min-w-0 flex-1 flex-col justify-center p-6 sm:p-8">
+                      <h3 className="text-base font-bold text-[#0a1628] group-hover:text-[#2563eb] sm:text-lg">
+                        {w.label}
+                      </h3>
+                      <div className="mt-2 space-y-2 text-sm leading-6 text-[#475569]">
+                        {w.description.map((p) => (
+                          <p key={p}>{p}</p>
+                        ))}
+                      </div>
+                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#2563eb] transition-colors group-hover:text-[#1d4ed8]">
+                        {w.ctaLabel}
+                        <ArrowUpRight size={15} />
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            ) : (
             <div className={`mt-4 grid gap-4 ${categoryLinkSection.boxes.length > 1 ? "sm:grid-cols-2" : "sm:max-w-2xl"}`}>
               {categoryLinkSection.boxes.map((w) => (
                 <a
@@ -1304,6 +1354,7 @@ export default function CatalogueCategoryPage({
                 </a>
               ))}
             </div>
+            )}
           </section>
         )}
 
