@@ -217,10 +217,29 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
   // spelling in the brand attribute so the brand-page "Brand" filter matches
   // the corrected page title; translate the 3 Swedish names ("Avmantlingsmaskin"
   // = stripping machine) so the grid reads consistently in English.
-  1780: { attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" } },
-  1781: { name: "Stripping Machine AM.STRIP.1", attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" } },
-  1782: { name: "Stripping Machine AM.STRIP.2", attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" } },
-  1783: { name: "Stripping Machine AM.STRIP.500/.750/.1000", attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" } },
+  1780: {
+    shortDescription:
+      "AM.ALL.ROUND is a semi-automatic, electro-pneumatic rotating wire stripping machine for high-precision industrial cable processing. Its rotating blade head strips round cables from 2 to 24 mm outer diameter, with stripping lengths up to 160 mm — and up to 1000 mm in the 400 / 750 / 1000 variants.",
+    attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
+  },
+  1781: {
+    name: "Stripping Machine AM.STRIP.1",
+    shortDescription:
+      "AM.STRIP.1 is a pneumatic, semi-automatic wire stripping machine for industrial cable processing. It strips round cables up to 12.5 mm outer diameter and flat cables up to 20 mm wide, with full-stroke stripping lengths up to 65 mm. AM.STRIP.1 and AM.STRIP.2 differ only in stripping diameter and length.",
+    attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
+  },
+  1782: {
+    name: "Stripping Machine AM.STRIP.2",
+    shortDescription:
+      "AM.STRIP.2 is a pneumatic, semi-automatic wire stripping machine for industrial cable processing. It strips round cables up to 25 mm outer diameter and flat cables up to 35 mm wide, with full-stroke stripping lengths up to 120 mm.",
+    attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
+  },
+  1783: {
+    name: "Stripping Machine AM.STRIP.500/.750/.1000",
+    shortDescription:
+      "AM.STRIP.500 / .750 / .1000 are powerful pneumatic, semi-automatic bench machines for industrial stripping of cables up to 30 mm outer diameter and flat cables up to 32 mm wide. Full stripping lengths reach 500, 750 or 1000 mm depending on the model.",
+    attributes: { "Stripping machine Brands": "Feintechnik Rittmeyer" },
+  },
 };
 
 // Structured Features + Specifications for the product page, shown as two
@@ -261,6 +280,77 @@ export const PRODUCT_PRESENTATIONS: Record<
       "Suited to automation for high efficiency and productivity",
     ],
     specifications: [],
+  },
+  // Feintechnik Rittmeyer (be-ri) — features + specs verified against each
+  // product's page on rittmeyer-beri.de (no invented values).
+  1780: {
+    features: [
+      "Rotating blade head",
+      "No blade change needed when using flat blades",
+      "Brief setup times",
+      "Sensor triggering",
+      "Progressively adjustable cable diameter and clamping force",
+      "Die blades and prismatic (special) blades",
+      'Optional "Cutting-only" and "Automatic reset" modules',
+    ],
+    specifications: [
+      { label: "Outer diameter", value: "2.0–24.0 mm (0.08–0.95 in)" },
+      { label: "Stripping length (rotating blades)", value: "5.0–160.0 mm (0.2–6.3 in)" },
+      { label: "Partial stroke", value: "5.0–160.0 mm (0.2–6.3 in)" },
+      { label: "Drive", value: "Electro-pneumatic" },
+      { label: "Blade head", value: "Rotating" },
+      { label: "Variants", value: "AM.ALL.ROUND 400 / 750 / 1000 (up to 400 / 750 / 1000 mm)" },
+    ],
+  },
+  1781: {
+    features: [
+      "Pneumatic, semi-automatic operation",
+      "Strips round cables and flat cables",
+      "Full-stroke and partial-stroke stripping",
+      "Optional slitting device for flat cables",
+      "Optional special blade heads for graduated / 2-step processing",
+      "Optional stripping stop rod and stroke limitation for partial stripping",
+      "Optional pneumatic sensor",
+    ],
+    specifications: [
+      { label: "Outer diameter", value: "1.0–12.5 mm (0.04–0.46 in)" },
+      { label: "Flat cable", value: "up to 20.0 mm (0.79 in) wide" },
+      { label: "Stripping length (full stroke)", value: "up to 65.0 mm (2.56 in)" },
+      { label: "Partial stroke", value: "up to 250 mm (9.84 in)" },
+      { label: "Drive", value: "Pneumatic" },
+    ],
+  },
+  1782: {
+    features: [
+      "Pneumatic, semi-automatic operation",
+      "Strips round cables and flat cables",
+      "Full-stroke and partial-stroke stripping",
+      "Optional slitting device for flat cables",
+      "Optional special blade heads for graduated / 2-step processing",
+      "Optional stripping stop rod and stroke limitation for partial stripping",
+      "Optional pneumatic sensor and emergency stop",
+    ],
+    specifications: [
+      { label: "Outer diameter", value: "1.0–25.0 mm (0.04–0.99 in)" },
+      { label: "Flat cable", value: "up to 35.0 mm (1.38 in) wide" },
+      { label: "Stripping length (full stroke)", value: "up to 120.0 mm (4.73 in)" },
+      { label: "Drive", value: "Pneumatic" },
+    ],
+  },
+  1783: {
+    features: [
+      "Powerful pneumatic, semi-automatic bench machine",
+      "Long stripping lengths — 500 / 750 / 1000 mm depending on model",
+      "Strips round cables and flat cables",
+      "Optional stroke limit for faster work with short stripping lengths",
+    ],
+    specifications: [
+      { label: "Stripping Ø", value: "up to 30.0 mm (1.18 in)" },
+      { label: "Flat cable", value: "up to 32.0 mm (1.26 in)" },
+      { label: "Stripping length (full stroke)", value: "up to 500 / 750 / 1000 mm (.500 / .750 / .1000)" },
+      { label: "Partial stroke", value: "up to 500 mm (19.7 in)" },
+      { label: "Drive", value: "Pneumatic" },
+    ],
   },
 };
 
