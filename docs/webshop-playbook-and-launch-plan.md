@@ -2,6 +2,10 @@
 
 > **✍️ Copy style rule (all customer-facing text):** never use em-dashes (—) or en-dashes (–). Use a comma or restructure the sentence; write numeric ranges as "1.0 to 12.5 mm" (not "1.0–12.5 mm"). Hyphens in compound words are fine (high-precision, semi-automatic, be-ri). Applies to every hero/link-box/sourcing blurb, product overview, and Features/Specifications value.
 
+> **🧭 Navigation & footer are TWO separate hardcoded sources — keep them in sync.** When you add / rename / remove a Production-Equipment section you MUST update BOTH: (1) the mega-menu `src/data/navigation.ts` (`productionEquipmentGroup.items` — each item = a section with brand `children`), and (2) the footer `src/components/layout/Footer.tsx` (`footerLinks["Production Equipment"]` — section links only, no brands). Current PE sections (order): Cutting Machines · Stripping Machines · Crimping machines and tools · Stripping and crimping machines (menu only) · Plastic- and Metal Welding · Test equipment (Mav) · Used machines. A brand can appear under several menu sections (e.g. Tekuwa under Cutting AND Stripping; Z&F under several).
+>
+> **♻️ "Leak" cleanup — unrepresented suppliers:** dropped-supplier categories often have all products `disabled` (so listings/search/detail-pages are clean) BUT their **category-hub URLs still resolve** (empty pages) until added to `HIDDEN_CATEGORY_IDS` in `src/lib/magentoCatalogue.ts`. That's the "leak". When we stop representing a supplier, hide its category id(s) there. Done for: Komax, and the Test & Quality sub-brands Electrical Testers (78) / Cirris (114) / TSK (1674) / Mechanical Pull Testers (79) — parent Test & Quality (76) kept and repurposed as the Mav Prüftechnik "Test equipment" page.
+
 Living document. Two purposes:
 
 1. **Best practice** — how we turned Zoller & Fröhlich into a self-contained brand section (so we can repeat it).

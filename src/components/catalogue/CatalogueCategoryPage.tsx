@@ -71,6 +71,7 @@ function brandNameSlug(brand: (typeof brands)[number]) {
 const CATEGORY_BRAND_OVERRIDES: Record<number, string> = {
   110: "wezag", // "Stocko" crimping category actually holds Wezag WZ hand tools
   106: "feintechnik-rittmeyer", // stripping-machine brand promoted as "be-ri"
+  76: "mav", // "Test & Quality" hub repurposed as the Mav Prüftechnik page
 };
 
 function brandForCategory(category: CatalogueCategory) {
@@ -145,6 +146,7 @@ const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
   77: "Plastic- and Metal Welding", // "Ultrasonic Welding"
   110: "Wezag", // legacy "Stocko" crimping category — actually Wezag WZ tools
   106: "Feintechnik Rittmeyer", // fix the data's "Rittmyer" spelling
+  76: "Mav Prüftechnik", // "Test & Quality" hub repurposed for Mav
 };
 
 // Header/intro text override (the hero paragraph). Used when a category's
@@ -156,6 +158,8 @@ const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
     "We supply Ulmer's precision cutting and cable-processing machines. Ulmer GmbH develops cutting, feeding, winding and material-handling systems for flexible materials across the cable, wire and tubing industries, from multi-core cables to corrugated conduits, hoses and heat-shrink tubing.",
   101:
     "Tekuwa develops and manufactures high-precision cutting and cable processing machines suitable for almost any material. Their range includes cutting-to-length machines, combined cutting and stripping systems, jacket removal equipment, automatic feeding and rewinding units, and complete production line configurations.",
+  76:
+    "We supply Mav Prüftechnik's pull-force and compression testing machines for quality assurance in cable and harness manufacturing. Since 1962, Mav has built manual and motorised test stations measuring tensile and compressive forces up to 10,000 N, the standard for crimp pull-force verification, all developed and produced in Germany with calibration software.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
@@ -229,6 +233,15 @@ const TEKUWA_SOURCING_CTA = {
   catalogueUrl: "https://tekuwa.de/en/machines/",
 } as const;
 
+const MAV_SOURCING_CTA = {
+  heading: "Can't find the exact test station for your application?",
+  body: "We represent Mav Prüftechnik's complete range of pull-force and compression testing machines. Tell us about your application and we'll help you find the right test station, or browse Mav's full range.",
+  mailtoSubject: "Mav Prüftechnik test equipment: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Mav range",
+  catalogueUrl: "https://www.mav-germany.de/",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
@@ -239,6 +252,7 @@ const CATEGORY_SOURCING_CTA: Record<
   106: FEINTECHNIK_SOURCING_CTA, // Feintechnik Rittmeyer (be-ri) stripping page
   100: ULMER_SOURCING_CTA, // Ulmer cutting brand page
   101: TEKUWA_SOURCING_CTA, // Tekuwa cutting & stripping brand page
+  76: MAV_SOURCING_CTA, // Mav Prüftechnik test-equipment page
 };
 
 // Presentational "link boxes" shown at the top of a hub — an image + short
@@ -385,7 +399,7 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
 // sourcing box) with NO product grid/filter — mirrors the Zoller & Fröhlich
 // approach. Wezag (110): its catalogue products are outdated / low-volume, so we
 // surface only the trusted-partner brand page.
-const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101]);
+const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 76]);
 
 // "Browse by series" configuration for the brand hubs whose products carry a
 // "Series" attribute. Each hub defines where its series live and how to

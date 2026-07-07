@@ -14,8 +14,10 @@ const footerLinks = {
   "Production Equipment": [
     { label: "Cutting Machines", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials.html" },
     { label: "Stripping Machines", href: "/webshop/production-equipment/stripping-machines.html" },
-    { label: "Crimping Equipment", href: "/webshop/production-equipment/crimping-equipment.html" },
+    { label: "Crimping machines and tools", href: "/webshop/production-equipment/crimping-equipment.html" },
     { label: "Plastic- and Metal Welding", href: "/webshop/production-equipment/ultrasonic-welding.html" },
+    { label: "Test equipment", href: "/webshop/production-equipment/test-quality.html" },
+    { label: "Used machines", href: "/used-machines" },
   ],
   Brands: [
     { label: "Deutsch", href: "/brands" },

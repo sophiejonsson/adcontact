@@ -144,9 +144,14 @@ function legacyNumberedCategoryAlias(path: string) {
 //   crimping (108), stripping (1678), full-automatic (99), marking (103), and
 //   the two Komax machine categories under Stocko terminating technology
 //   (Komax Alpha 356 = 222, Komax ZETA 633 = 223). All have 0 enabled products.
+// - Test & Quality sub-brands we no longer represent (all products disabled, but
+//   their hub URLs were still reachable): Electrical Testers (78), Cirris (114),
+//   TSK (1674) and the empty Mechanical Pull Testers (79). The parent Test &
+//   Quality hub (76) is KEPT and repurposed as the "Test equipment" / Mav page.
 export const HIDDEN_CATEGORY_IDS = new Set<number>([
   75, 49, 54, 55, 112, 113, 1724,
   99, 103, 108, 1678, 222, 223,
+  78, 79, 114, 1674,
 ]);
 
 // Individual products hidden from the live site but kept in the data (reversible

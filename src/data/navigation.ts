@@ -127,6 +127,21 @@ const productionEquipmentGroup: NavGroup = {
         { label: "Branson", href: "/webshop/production-equipment/ultrasonic-welding/branson.html" },
       ],
     },
+    {
+      // "Test & Quality" hub repurposed as the Mav Prüftechnik test-equipment
+      // page; the other test sub-brands (Cirris etc.) are no longer represented.
+      label: "Test equipment",
+      href: "/webshop/production-equipment/test-quality.html",
+      children: [
+        { label: "Mav Prüftechnik", href: "/webshop/production-equipment/test-quality.html" },
+      ],
+    },
+    {
+      // Second-hand machines — placeholder landing until the offering is built.
+      label: "Used machines",
+      href: "/used-machines",
+      children: [],
+    },
   ],
 };
 
