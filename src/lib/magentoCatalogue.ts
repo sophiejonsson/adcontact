@@ -295,6 +295,12 @@ export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
     shortDescription:
       "The SSM 60 is a guillotine hose cutting machine for closed and slitted corrugated tube, PVC, rubber and other hoses up to 60 mm outer diameter. Its 45° fixed blade delivers a precise cutting angle and high cut quality.",
   },
+  // Junquan JQ-6100 digital cutting machine — overview + name from its own copy.
+  1831: {
+    name: "JQ-6100 Digital Cutting Machine",
+    shortDescription:
+      "The Junquan JQ-6100 is a compact digital cutting machine for fast, high-precision cutting to length, suitable for a wide range of flexible and metallic materials.",
+  },
 };
 
 // Structured Features + Specifications for the product page, shown as two
@@ -515,6 +521,24 @@ export const PRODUCT_PRESENTATIONS: Record<
       { label: "Cut type", value: "Guillotine (45° fixed blade)" },
       { label: "Materials", value: "Corrugated tube, PVC, rubber hose" },
       { label: "Control", value: "Compact control unit" },
+    ],
+  },
+  // Junquan JQ-6100 — from the product's own description/spec table.
+  1831: {
+    features: [
+      "High speed with precise digital control for cutting a wide range of materials, including vinyl, hose, shrink tube, wire, film, copper and tinplate.",
+      "Accepts an external signal input, with various warning messages and alarm functions.",
+      "Maximum cutting width of 100 mm.",
+      "CE approved.",
+    ],
+    specifications: [
+      { label: "Model", value: "JQ-6100" },
+      { label: "Dimensions", value: "W 350 x D 250 x H 320 mm" },
+      { label: "Weight", value: "25 kg" },
+      { label: "Power supply", value: "AC 220 V" },
+      { label: "Max. cutting width", value: "100 mm" },
+      { label: "Cutting length", value: "1 to 99,999 mm" },
+      { label: "Cutting speed", value: "100 pcs/min at L=100 mm" },
     ],
   },
 };

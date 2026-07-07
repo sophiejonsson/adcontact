@@ -361,6 +361,19 @@ export const brands: Brand[] = [
     website: "https://rittmeyer-beri.de/en/",
     featured: false,
   },
+  {
+    id: "junquan",
+    name: "Junquan",
+    slug: "junquan",
+    logo: "/images/partners/junquan.gif",
+    description:
+      "Junquan Automation designs and manufactures computerized wire cutting and stripping machines, fully automatic terminal crimping machines, numerical-control precision presses, and digital cutting machines. With over twenty years of experience, their high-precision, high-speed equipment is widely used in the electronics and electrical appliance industries.",
+    shortDescription: "Computerized wire cutting, stripping, crimping and digital cutting machines for wire processing.",
+    categories: ["production-equipment"],
+    linecardSection: "equipment",
+    website: "https://www.cuttingstripping-machine.com/",
+    featured: false,
+  },
 ];
 
 export function getBrandBySlug(slug: string): Brand | undefined { // v2

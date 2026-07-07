@@ -162,6 +162,8 @@ const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
     "We supply Mav Prüftechnik's pull-force and compression testing machines for quality assurance in cable and harness manufacturing. Since 1962, Mav has built manual and motorised test stations measuring tensile and compressive forces up to 10,000 N, the standard for crimp pull-force verification, all developed and produced in Germany with calibration software.",
   111:
     "Mecal, with a leading market position serving a wide range of industries, designs and manufactures applicators, bench-top presses and strip- and crimp machines. Their semi-automatic systems integrate easily into fully automatic lines or manual workstations, and are used for high-volume wire harness production, with integrated quality monitoring, applicator change systems, and pull-force testing options.",
+  102:
+    "We supply the complete range of Junquan fully Automatic Terminal Crimp Machines, Computerized Wire Stripping and Cutting Machines, Numerical Control Precision Press, and Digital Cutting Machines.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
@@ -189,6 +191,8 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   76: { src: "/media/mav/hub-header.jpg", fit: "contain" },
   // Mecal — facility photo (wide, fills the frame).
   111: { src: "/media/mecal/hub-header.jpg", fit: "cover" },
+  // Junquan — facility photo (wide, fills the frame).
+  102: { src: "/media/junquan/hub-header.webp", fit: "cover" },
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
@@ -257,6 +261,15 @@ const MECAL_SOURCING_CTA = {
   catalogueUrl: "https://mecal.net/en/products/",
 } as const;
 
+const JUNQUAN_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Junquan's complete range of cutting, stripping, crimping and digital cutting machines. Tell us about your application and we'll help you find the right machine, or browse Junquan's full range.",
+  mailtoSubject: "Junquan machines: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Junquan range",
+  catalogueUrl: "https://www.cuttingstripping-machine.com/products.html",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
@@ -269,6 +282,7 @@ const CATEGORY_SOURCING_CTA: Record<
   101: TEKUWA_SOURCING_CTA, // Tekuwa cutting & stripping brand page
   76: MAV_SOURCING_CTA, // Mav Prüftechnik test-equipment page
   111: MECAL_SOURCING_CTA, // Mecal crimping equipment brand page
+  102: JUNQUAN_SOURCING_CTA, // Junquan cutting/stripping brand page
 };
 
 // Presentational "link boxes" shown at the top of a hub — an image + short
@@ -463,6 +477,21 @@ const MECAL_LINK_BOXES: CategoryLinkBox[] = [
   },
 ];
 
+// Junquan — a single link box (renders as the full-width banner). Copy supplied
+// by the customer (Junquan's own description; "Juanquan" typo corrected).
+const JUNQUAN_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Wire cutting and stripping machines",
+    href: "https://www.cuttingstripping-machine.com/products.html",
+    image: "/media/junquan/machines.webp",
+    ctaLabel: "View at Junquan",
+    fit: "cover",
+    description: [
+      "Junquan Automation has been working on exploring computerized wire cutting and stripping machines for twenty years. With high precision and working speed and comprehensive in functions, the products are widely used in wire processing Industry, such as the electronics and electrical appliance Industry.",
+    ],
+  },
+];
+
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
@@ -472,6 +501,7 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   101: { eyebrow: "Tekuwa cutting & stripping machines", boxes: TEKUWA_LINK_BOXES },
   76: { eyebrow: "Mav force testers", boxes: MAV_LINK_BOXES },
   111: { eyebrow: "Mecal crimping equipment", boxes: MECAL_LINK_BOXES },
+  102: { eyebrow: "Junquan machines", boxes: JUNQUAN_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
