@@ -154,6 +154,8 @@ const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
     "We supply the complete range of Feintechnik Rittmeyer wire stripping machines, marketed under the be-ri brand, for industrial cable processing. Whether you need a pneumatic, rotating or electric stripping machine, or high-precision processing of coaxial cables, we'll help you find the right solution.",
   100:
     "We supply Ulmer's precision cutting and cable-processing machines. Ulmer GmbH develops cutting, feeding, winding and material-handling systems for flexible materials across the cable, wire and tubing industries, from multi-core cables to corrugated conduits, hoses and heat-shrink tubing.",
+  101:
+    "Tekuwa develops and manufactures high-precision cutting and cable processing machines suitable for almost any material. Their range includes cutting-to-length machines, combined cutting and stripping systems, jacket removal equipment, automatic feeding and rewinding units, and complete production line configurations.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
@@ -175,6 +177,8 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   106: { src: "/media/feintechnik/hub-header.jpg", fit: "contain" },
   // Ulmer — cutting-machine mechanism close-up (fills the frame).
   100: { src: "/media/ulmer/hub-header.jpg", fit: "cover" },
+  // Tekuwa — engineering/craftsmanship photo (3:2, fills the frame).
+  101: { src: "/media/tekuwa/hub-header.jpg", fit: "cover" },
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
@@ -216,6 +220,15 @@ const ULMER_SOURCING_CTA = {
   catalogueUrl: "https://www.ulmer-gmbh.net/produkte-loesungen/schneiden/",
 } as const;
 
+const TEKUWA_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Tekuwa's complete range of cutting, stripping and cable-processing machines. Tell us about your application and we'll help you find the right machine, or browse Tekuwa's full range.",
+  mailtoSubject: "Tekuwa cutting & stripping: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Tekuwa range",
+  catalogueUrl: "https://tekuwa.de/en/",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
@@ -225,6 +238,7 @@ const CATEGORY_SOURCING_CTA: Record<
   110: WEZAG_SOURCING_CTA, // Wezag crimping brand page
   106: FEINTECHNIK_SOURCING_CTA, // Feintechnik Rittmeyer (be-ri) stripping page
   100: ULMER_SOURCING_CTA, // Ulmer cutting brand page
+  101: TEKUWA_SOURCING_CTA, // Tekuwa cutting & stripping brand page
 };
 
 // Presentational "link boxes" shown at the top of a hub — an image + short
@@ -333,19 +347,45 @@ const ULMER_LINK_BOXES: CategoryLinkBox[] = [
   },
 ];
 
+// Tekuwa — a lean page with two boxes (cutting + stripping). Copy supplied by
+// the customer (Tekuwa's own descriptions).
+const TEKUWA_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Cutting & length-cutting machines",
+    href: "https://tekuwa.de/en/cutting-lengthing/",
+    image: "/media/tekuwa/cutting.webp",
+    ctaLabel: "View at Tekuwa",
+    fit: "cover",
+    description: [
+      "As standard, Tekuwa's cable cutting and length-cutting machines already meet a wide range of requirements. They cut simple cables, multi-core cables, data cables or flat cables as well as wires, hoses, tubes, ropes made of silicone, rubber, plastic, metal or textile.",
+    ],
+  },
+  {
+    label: "Stripping machines",
+    href: "https://tekuwa.de/en/lengthing-and-stripping/",
+    image: "/media/tekuwa/stripping.jpg",
+    ctaLabel: "View at Tekuwa",
+    fit: "cover",
+    description: [
+      "Tekuwa's electropneumatic stripping machines provide and ensures that the fine inner conductors are never damaged, whether the jacket is robust, thick, flexible, smooth or flat.",
+    ],
+  },
+];
+
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
   106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES },
   100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES },
+  101: { eyebrow: "Tekuwa cutting & stripping machines", boxes: TEKUWA_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
 // sourcing box) with NO product grid/filter — mirrors the Zoller & Fröhlich
 // approach. Wezag (110): its catalogue products are outdated / low-volume, so we
 // surface only the trusted-partner brand page.
-const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110]);
+const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101]);
 
 // "Browse by series" configuration for the brand hubs whose products carry a
 // "Series" attribute. Each hub defines where its series live and how to

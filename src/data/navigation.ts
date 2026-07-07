@@ -86,6 +86,9 @@ const productionEquipmentGroup: NavGroup = {
       children: [
         { label: "Zoller & Fröhlich", href: "/products/zoller-frohlich/wire-processing" },
         { label: "Feintechnik Rittmyer", href: "/webshop/production-equipment/stripping-machines/feintechnik-rittmyer.html" },
+        // Tekuwa does cutting AND stripping; its combined lean page lives under
+        // Cutting Machines but is also surfaced here.
+        { label: "Tekuwa", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/tekuwa.html" },
       ],
     },
     {
