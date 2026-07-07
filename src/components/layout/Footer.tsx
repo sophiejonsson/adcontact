@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
+import { productionEquipmentGroup } from "@/data/navigation";
 
 const footerLinks = {
   "Industrial Components": [
@@ -11,13 +12,13 @@ const footerLinks = {
     { label: "Tools", href: "/webshop/components/tools.html" },
     { label: "Wire Ferrules", href: "/webshop/components/sealed-connectors/zoller-frohlich.html" },
   ],
-  "Production Equipment": [
-    { label: "Cutting Machines", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials.html" },
-    { label: "Stripping Machines", href: "/webshop/production-equipment/stripping-machines.html" },
-    { label: "Crimping Equipment", href: "/webshop/production-equipment/crimping-equipment.html" },
-    { label: "Misc. Equipment", href: "/webshop/production-equipment/misc-equipment.html" },
-    { label: "Ultrasonic Welding", href: "/webshop/production-equipment/ultrasonic-welding.html" },
-  ],
+  // Derived from the mega-menu's single source of truth so the two can never
+  // drift out of sync. To change a Production-Equipment section, edit ONLY
+  // productionEquipmentGroup.items in src/data/navigation.ts.
+  "Production Equipment": productionEquipmentGroup.items.map((item) => ({
+    label: item.label,
+    href: item.href,
+  })),
   Brands: [
     { label: "Deutsch", href: "/brands" },
     { label: "TE Connectivity", href: "/brands" },

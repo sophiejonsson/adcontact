@@ -35,7 +35,7 @@ export const brands: Brand[] = [
     slug: "deutsch",
     logo: "/images/partners/te-connectivity.svg",
     description:
-      "DEUTSCH is TE Connectivity's family of sealed connectors — the global benchmark for harsh-environment electrical connections. The DT, DTM, DTP, and AT series are specified in agriculture, construction, military, marine, and heavy automotive applications where vibration, moisture, and contamination resistance are critical.",
+      "DEUTSCH is TE Connectivity's family of sealed connectors, the global benchmark for harsh-environment electrical connections. The DT, DTM, DTP, and AT series are specified in agriculture, construction, military, marine, and heavy automotive applications where vibration, moisture, and contamination resistance are critical.",
     shortDescription: "DEUTSCH sealed connectors for harsh-environment and off-highway applications.",
     categories: ["connectors"],
     linecardSection: "components",
@@ -49,7 +49,7 @@ export const brands: Brand[] = [
     slug: "te-connectivity",
     logo: "/images/partners/te-connectivity.svg",
     description:
-      "For more than 80 years, TE has partnered with engineers worldwide to develop connectivity and sensing solutions that make a connected world possible. Their unmatched product portfolio — including the AMPSEAL sealed connector family — enables companies of any size to turn ideas into technologies that transform how the world connects, works, and lives.",
+      "For more than 80 years, TE has partnered with engineers worldwide to develop connectivity and sensing solutions that make a connected world possible. Their unmatched product portfolio, including the AMPSEAL sealed connector family, enables companies of any size to turn ideas into technologies that transform how the world connects, works, and lives.",
     shortDescription: "TE Connectivity sealed connectors including AMPSEAL for harsh-environment applications.",
     categories: ["connectors"],
     linecardSection: "components",
@@ -331,6 +331,47 @@ export const brands: Brand[] = [
     categories: ["production-equipment"],
     linecardSection: "equipment",
     website: "https://www.ulmer-gmbh.net/",
+    featured: false,
+  },
+  {
+    id: "branson",
+    name: "Branson",
+    slug: "branson",
+    // Branson is part of the Emerson group and carries the Emerson brand mark.
+    logo: "/images/partners/branson.webp",
+    description:
+      "Delivering proven performance, unequaled expertise and the broadest technology portfolio for plastic and metal welding and cleaning solutions.",
+    shortDescription: "Ultrasonic, laser and vibration welding plus precision cleaning for plastics and metals.",
+    categories: ["production-equipment"],
+    linecardSection: "equipment",
+    website: "https://www.branson.emerson.com/en",
+    featured: false,
+  },
+  {
+    id: "feintechnik-rittmeyer",
+    name: "Feintechnik Rittmeyer",
+    slug: "feintechnik-rittmeyer",
+    // Promoted under the "be-ri" brand mark.
+    logo: "/images/partners/beri.png",
+    description:
+      "Feintechnik R. Rittmeyer manufactures wire stripping machines for industrial cable processing under the be-ri brand, including pneumatic, rotating and electric strippers, plus high-precision solutions for coaxial cables.",
+    shortDescription: "Pneumatic, rotating and electric wire stripping machines (be-ri) for industrial cable processing.",
+    categories: ["production-equipment"],
+    linecardSection: "equipment",
+    website: "https://rittmeyer-beri.de/en/",
+    featured: false,
+  },
+  {
+    id: "junquan",
+    name: "Junquan",
+    slug: "junquan",
+    logo: "/images/partners/junquan.gif",
+    description:
+      "Junquan Automation designs and manufactures computerized wire cutting and stripping machines, fully automatic terminal crimping machines, numerical-control precision presses, and digital cutting machines. With over twenty years of experience, their high-precision, high-speed equipment is widely used in the electronics and electrical appliance industries.",
+    shortDescription: "Computerized wire cutting, stripping, crimping and digital cutting machines for wire processing.",
+    categories: ["production-equipment"],
+    linecardSection: "equipment",
+    website: "https://www.cuttingstripping-machine.com/",
     featured: false,
   },
 ];

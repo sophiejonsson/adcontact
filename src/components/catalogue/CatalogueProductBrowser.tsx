@@ -9,7 +9,6 @@ import type {
   CatalogueProduct,
   CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
-import { brands } from "@/data/brands";
 
 const DEFAULT_PAGE_SIZE = 25;
 const PAGE_SIZE_OPTIONS = [25, 50, 100];
@@ -20,6 +19,18 @@ const HIDDEN_FILTER_ATTRIBUTES = new Set([
   "Enable Recurring Profile",
   "Finishing Ni",
   "Purchase currency",
+  // Image metadata — never a real product filter.
+  "Image Label",
+  "Small Image Label",
+  "Thumbnail Label",
+  // Redundant with the subcategory "Category" filter, whose brand chips link to
+  // the brand hubs; the raw attribute also still reads "Stocko" (now Wezag).
+  "Crimping equipment Brands",
+  // Same pattern for the stripping-machine hub / Feintechnik Rittmeyer leaf —
+  // shown as the locked "Brand" pre-filter on the brand page, hidden on the hub.
+  "Stripping machine Brands",
+  // Cutting-machine hub / Ulmer leaf — same locked "Brand" pre-filter pattern.
+  "Cutting machine Brands",
 ]);
 
 function firstParamValue(value: string | string[] | undefined) {
@@ -41,6 +52,21 @@ function filterParamFor(label: string) {
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "_")
     .replace(/^_+|_+$/g, "")}`;
+}
+
+// Prettier display names for a few raw Magento attribute names used as facet
+// titles. The param/matching still use the original label — only the label
+// shown to the user changes.
+const FACET_LABEL_OVERRIDES: Record<string, string> = {
+  "Miscellaneous Products": "Branson products",
+  // On a brand page this facet is the (hidden-but-active) pre-filter; show a
+  // clean "Brand" heading instead of the raw Magento attribute name.
+  "Crimping equipment Brands": "Brand",
+  "Stripping machine Brands": "Brand",
+  "Cutting machine Brands": "Brand",
+};
+function facetDisplayLabel(label: string): string {
+  return FACET_LABEL_OVERRIDES[label] ?? label;
 }
 
 function searchableText(product: CatalogueProduct) {
@@ -154,7 +180,13 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
   const universe = new Map<string, Map<string, number>>();
   for (const product of products) {
     for (const [label, value] of Object.entries(product.attributes)) {
-      if (!value || HIDDEN_FILTER_ATTRIBUTES.has(label) || value.length > 80) continue;
+      if (!value || value.length > 80) continue;
+      // Hidden attributes stay hidden UNLESS they're the active filter. A
+      // leaf-of-flat-hub page (e.g. the Wezag brand page) pre-filters on
+      // "Crimping equipment Brands", so that facet must stay visible and
+      // clearable there — even though it's hidden as a redundant facet on the
+      // parent crimping hub, where it's never active.
+      if (HIDDEN_FILTER_ATTRIBUTES.has(label) && !activeFilters[filterParamFor(label)]) continue;
       if (!isFacetableValue(value)) continue;
       if (!universe.has(label)) universe.set(label, new Map());
       const counts = universe.get(label)!;
@@ -196,6 +228,14 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
         ].slice(0, 10);
       }
 
+      // A hidden-but-active facet is shown only because it IS the current filter
+      // (e.g. a brand page pre-filtered on "Crimping equipment Brands"). Surface
+      // just the active value as a clearable chip — not the sibling brands
+      // borrowed from the parent hub pool.
+      if (HIDDEN_FILTER_ATTRIBUTES.has(label) && activeValue) {
+        values = values.filter((item) => item.value === activeValue);
+      }
+
       const totalProducts = [...baseTokens.values()].reduce((sum, n) => sum + n, 0);
       return { label, param, values, totalProducts };
     })
@@ -212,6 +252,9 @@ function buildFacets(products: CatalogueProduct[], activeFilters: Record<string,
 
 function magentoImageSrc(path: string | null | undefined): string | null {
   if (!path) return null;
+  // Magento's "no photo" placeholder → treat as no image so the clean
+  // "No image available" fallback shows instead of the dated graphic.
+  if (/no_photo|placeholder/i.test(path)) return null;
   // Serve via our /media proxy (handles uppercase/lowercase dir variants and
   // fetches from ORDERLAND_MEDIA_ORIGIN) rather than hardcoding adcontact.se,
   // which 404s on uppercase subdirectories like /D/T/.
@@ -229,10 +272,6 @@ function productHref(product: CatalogueProduct, categoryRoute: string | null) {
   return product.route ?? product.routes[0] ?? "#";
 }
 
-function brandLogoForProduct(product: CatalogueProduct): string | undefined {
-  const name = (product.brand ?? product.manufacturer ?? "").toLowerCase();
-  return brands.find((b) => b.logo && b.name.toLowerCase() === name)?.logo ?? undefined;
-}
 
 function ProductCard({
   product,
@@ -245,12 +284,10 @@ function ProductCard({
   deutschImageMap?: Record<string, string>;
   compact?: boolean;
 }) {
-  const realImageUrl =
+  const imageUrl =
     deutschImageMap?.[String(product.id)] ??
     magentoImageSrc(product.thumbnail ?? product.image) ??
     null;
-  const hasRealImage = Boolean(realImageUrl);
-  const imageUrl = realImageUrl ?? brandLogoForProduct(product) ?? null;
 
   if (compact) {
     return (
@@ -266,11 +303,12 @@ function ProductCard({
               fill
               unoptimized
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 200px"
-              className={`object-contain transition-transform duration-300 group-hover:scale-[1.05] ${hasRealImage ? "p-3" : "p-6 opacity-30"}`}
+              className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.05]"
             />
           ) : (
-            <div className="flex h-full items-center justify-center">
-              <Package size={22} className="text-[#d1d5db]" />
+            <div className="flex h-full flex-col items-center justify-center gap-1.5">
+              <Package size={20} strokeWidth={1.5} className="text-[#cbd5e1]" />
+              <span className="text-[9px] font-medium text-[#94a3b8]">No image</span>
             </div>
           )}
         </div>
@@ -300,11 +338,12 @@ function ProductCard({
             fill
             unoptimized
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 240px"
-            className={`object-contain transition-transform duration-300 group-hover:scale-[1.04] ${hasRealImage ? "p-4" : "p-8 opacity-25"}`}
+            className="object-contain p-4 transition-transform duration-300 group-hover:scale-[1.04]"
           />
         ) : (
-          <div className="flex h-full items-center justify-center">
-            <Package size={28} className="text-[#d1d5db]" />
+          <div className="flex h-full flex-col items-center justify-center gap-2">
+            <Package size={28} strokeWidth={1.4} className="text-[#cbd5e1]" />
+            <span className="text-xs font-medium text-[#94a3b8]">No image available</span>
           </div>
         )}
       </div>
@@ -317,7 +356,9 @@ function ProductCard({
         <p className="mt-1 font-mono text-[10px] font-semibold text-[#94a3b8]">
           {productDisplaySku(product)}
         </p>
-        <p className="mt-2 text-[11px] leading-snug text-[#64748b]">High availability · lead time on request</p>
+        {!categoryRoute?.includes("/production-equipment") && (
+          <p className="mt-2 text-[11px] leading-snug text-[#64748b]">High availability · lead time on request</p>
+        )}
       </div>
 
       {/* Quote CTA */}
@@ -343,6 +384,9 @@ export type SubcategoryOption = {
   /** All category IDs in this subcategory's tree — used for product filtering.
    *  Empty array for non-product (partner content) categories. */
   allCategoryIds: number[];
+  /** When set, the chip navigates to this URL (a brand's own hub page) instead
+   *  of filtering the grid in place. */
+  href?: string;
 };
 
 export default function CatalogueProductBrowser({
@@ -354,6 +398,7 @@ export default function CatalogueProductBrowser({
   sectionTitle,
   deutschImageMap,
   subcategoryOptions,
+  lockedFilterParams,
   partnerSlots,
 }: {
   products: CatalogueProduct[];
@@ -364,6 +409,10 @@ export default function CatalogueProductBrowser({
   sectionTitle: string;
   deutschImageMap?: Record<string, string>;
   subcategoryOptions?: SubcategoryOption[];
+  /** Filter params that are fixed for this page (e.g. a brand page's own-brand
+   *  pre-filter) — shown but not clearable/toggleable, so they can't be removed
+   *  to expand the borrowed parent-hub pool. */
+  lockedFilterParams?: string[];
   /** When a non-product subcategory is active, render this content instead of
    *  the product grid. searchNames is the list of item names to match against
    *  the main search query for auto-activation (when no products match).
@@ -482,7 +531,12 @@ export default function CatalogueProductBrowser({
     setPage(1);
   }
 
+  const lockedParams = useMemo(() => new Set(lockedFilterParams ?? []), [lockedFilterParams]);
+
   function toggleFilter(param: string, value: string) {
+    // Locked filters (a brand page's own pre-filter) can't be toggled off —
+    // clearing them would expand the borrowed parent-hub pool.
+    if (lockedParams.has(param)) return;
     setActiveFilters((current) => {
       const next = { ...current };
       if (next[param] === value) delete next[param];
@@ -494,13 +548,19 @@ export default function CatalogueProductBrowser({
 
   function clearAll() {
     setQuery("");
-    setActiveFilters({});
+    // Preserve any locked filters — only user-added filters are cleared.
+    setActiveFilters((current) => {
+      const kept: Record<string, string> = {};
+      for (const param of lockedParams) if (current[param]) kept[param] = current[param];
+      return kept;
+    });
     setActiveSubcategoryId(null);
     setPartnerFacetValue(null);
     setPage(1);
   }
 
-  const activeFilterCount = Object.keys(activeFilters).length + (effectiveSubcategoryId ? 1 : 0);
+  const clearableFilters = Object.keys(activeFilters).filter((p) => !lockedParams.has(p));
+  const activeFilterCount = clearableFilters.length + (effectiveSubcategoryId ? 1 : 0);
   const hasSubcategoryFilter = (subcategoryOptions?.length ?? 0) > 1;
   const showFilters = !isWebshopRoot && (facets.length > 0 || hasSubcategoryFilter);
 
@@ -531,6 +591,27 @@ export default function CatalogueProductBrowser({
             <div className="mt-2 space-y-1.5">
               {subcategoryOptions!.map((option) => {
                 const active = effectiveSubcategoryId === option.id;
+                const cls = `flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
+                  active
+                    ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
+                    : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
+                }`;
+                const inner = (
+                  <>
+                    <span>{option.name}</span>
+                    <span className="flex-none text-[#94a3b8]">
+                      {option.countLabel ?? option.count.toLocaleString()}
+                    </span>
+                  </>
+                );
+                // Brand subcategories navigate to the brand's own hub page.
+                if (option.href) {
+                  return (
+                    <Link key={option.id} href={option.href} className={cls}>
+                      {inner}
+                    </Link>
+                  );
+                }
                 return (
                   <button
                     key={option.id}
@@ -540,16 +621,9 @@ export default function CatalogueProductBrowser({
                       setPartnerFacetValue(null);
                       setPage(1);
                     }}
-                    className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
-                      active
-                        ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
-                        : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
-                    }`}
+                    className={cls}
                   >
-                    <span>{option.name}</span>
-                    <span className="flex-none text-[#94a3b8]">
-                      {option.countLabel ?? option.count.toLocaleString()}
-                    </span>
+                    {inner}
                   </button>
                 );
               })}
@@ -562,7 +636,7 @@ export default function CatalogueProductBrowser({
         {activePartnerSlot?.facet && activePartnerSlot.facet.options.length > 1 && (
           <div className={`${hasSubcategoryFilter ? "mt-5 border-t border-[#eef2f7] pt-5" : "mt-5"}`}>
             <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
-              {activePartnerSlot.facet.label}
+              {facetDisplayLabel(activePartnerSlot.facet.label)}
             </h3>
             <div className="mt-2 space-y-1.5">
               <button
@@ -606,24 +680,39 @@ export default function CatalogueProductBrowser({
             {facets.map((facet) => (
               <div key={facet.param}>
                 <h3 className="text-xs font-bold uppercase tracking-[0.12em] text-[#64748b]">
-                  {facet.label}
+                  {facetDisplayLabel(facet.label)}
                 </h3>
                 <div className="mt-2 space-y-1.5">
-                  {facet.values.map((item) => (
-                    <button
-                      key={item.value}
-                      type="button"
-                      onClick={() => toggleFilter(facet.param, item.value)}
-                      className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
-                        item.active
-                          ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
-                          : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
-                      }`}
-                    >
-                      <span>{item.value}</span>
-                      <span className="flex-none text-[#94a3b8]">{item.count}</span>
-                    </button>
-                  ))}
+                  {facet.values.map((item) => {
+                    // A locked facet (a brand page's own pre-filter) is shown as a
+                    // static, non-clickable chip — it can't be toggled off.
+                    if (lockedParams.has(facet.param)) {
+                      return (
+                        <div
+                          key={item.value}
+                          className="flex w-full items-start justify-between gap-3 rounded-md bg-[#eaf2ff] px-2 py-1.5 text-left text-xs font-bold leading-snug text-[#1d4ed8]"
+                        >
+                          <span>{item.value}</span>
+                          <span className="flex-none text-[#94a3b8]">{item.count}</span>
+                        </div>
+                      );
+                    }
+                    return (
+                      <button
+                        key={item.value}
+                        type="button"
+                        onClick={() => toggleFilter(facet.param, item.value)}
+                        className={`flex w-full items-start justify-between gap-3 rounded-md px-2 py-1.5 text-left text-xs leading-snug ${
+                          item.active
+                            ? "bg-[#eaf2ff] font-bold text-[#1d4ed8]"
+                            : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#2563eb]"
+                        }`}
+                      >
+                        <span>{item.value}</span>
+                        <span className="flex-none text-[#94a3b8]">{item.count}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -693,14 +782,14 @@ export default function CatalogueProductBrowser({
             </button>
             {activeFilterCount > 0 && (
               <div className="flex flex-wrap gap-1.5">
-                {Object.entries(activeFilters).map(([param, value]) => (
+                {clearableFilters.map((param) => (
                   <button
                     key={param}
                     type="button"
-                    onClick={() => toggleFilter(param, value)}
+                    onClick={() => toggleFilter(param, activeFilters[param])}
                     className="flex items-center gap-1 rounded-full bg-[#eaf2ff] px-2.5 py-1 text-xs font-bold text-[#1d4ed8]"
                   >
-                    {value}
+                    {activeFilters[param]}
                     <X size={10} />
                   </button>
                 ))}
@@ -737,21 +826,21 @@ export default function CatalogueProductBrowser({
             )}
           </div>
 
-          {(query || Object.keys(activeFilters).length > 0) && (
+          {(query || clearableFilters.length > 0) && (
             <div className="mt-3 flex flex-wrap gap-2">
               {query && (
                 <span className="rounded-md bg-[#eff6ff] px-2 py-1 text-xs font-bold text-[#1d4ed8]">
                   Search: {query}
                 </span>
               )}
-              {Object.entries(activeFilters).map(([param, value]) => (
+              {clearableFilters.map((param) => (
                 <button
                   key={param}
                   type="button"
-                  onClick={() => toggleFilter(param, value)}
+                  onClick={() => toggleFilter(param, activeFilters[param])}
                   className="rounded-md bg-[#f1f5f9] px-2 py-1 text-xs font-bold text-[#475569] hover:bg-[#e2e8f0]"
                 >
-                  {value} x
+                  {activeFilters[param]} x
                 </button>
               ))}
             </div>

@@ -42,7 +42,11 @@ function buildDeutschImageMap(products: CatalogueProduct[]): Record<string, stri
   for (const product of products) {
     const sku = (product.sku ?? product.name ?? "").toUpperCase();
     const deutsch = deutschProducts.find((d) => d.partNumber.toUpperCase() === sku);
-    if (deutsch?.imageUrl) map[String(product.id)] = deutsch.imageUrl;
+    // Skip Magento no_photo/placeholder images so the card falls through to the
+    // clean "No image available" placeholder instead of "image coming soon".
+    if (deutsch?.imageUrl && !/no_photo|placeholder/i.test(deutsch.imageUrl)) {
+      map[String(product.id)] = deutsch.imageUrl;
+    }
   }
   return map;
 }
@@ -62,7 +66,20 @@ function brandNameSlug(brand: (typeof brands)[number]) {
 // brand category should carry that brand's logo, so we walk the route from the
 // deepest segment outward and return the closest brand ancestor — matching a
 // segment against either the brand slug or its name-derived slug.
+// A few categories are mislabelled in the legacy data — map them to the real
+// manufacturer so the page shows the right brand (logo + name).
+const CATEGORY_BRAND_OVERRIDES: Record<number, string> = {
+  110: "wezag", // "Stocko" crimping category actually holds Wezag WZ hand tools
+  106: "feintechnik-rittmeyer", // stripping-machine brand promoted as "be-ri"
+  76: "mav", // "Test & Quality" hub repurposed as the Mav Prüftechnik page
+};
+
 function brandForCategory(category: CatalogueCategory) {
+  const overrideSlug = CATEGORY_BRAND_OVERRIDES[category.id];
+  if (overrideSlug) {
+    const overridden = brands.find((b) => b.slug === overrideSlug);
+    if (overridden) return overridden;
+  }
   const segments =
     category.route
       ?.split("/")
@@ -103,6 +120,395 @@ function getSeriesFacets(category: CatalogueCategory | undefined, exclude?: RegE
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
     .map(([label, count]) => ({ label, count }));
 }
+
+// Application/brand header photos shown in the hub hero's right column — only on
+// a brand's own landing page. Mirrored into our R2 (see [[cloudflare-r2-media]]).
+// `fit`: "cover" fills the frame (product/application photos); "contain"
+// letterboxes on the dark frame (portrait or self-framed graphics).
+// `bg`: the card is white by default; "black" for graphics that ship on a black
+// background so the letterbox is seamless.
+type HeaderImage = { src: string; fit: "cover" | "contain"; bg?: "black" };
+const BRAND_HEADER_IMAGES: Record<string, HeaderImage> = {
+  deutsch: { src: "/media/brand-headers/deutsch.webp", fit: "cover" },
+  vogt: { src: "/media/brand-headers/vogt.webp", fit: "cover" },
+  hongshang: { src: "/media/brand-headers/hongshang.webp", fit: "cover" },
+  cvilux: { src: "/media/brand-headers/cvilux.webp", fit: "cover" },
+  htp: { src: "/media/brand-headers/htp.webp", fit: "contain" },
+  stocko: { src: "/media/brand-headers/stocko.jpg", fit: "cover" },
+  // TE's existing header art is a wide AMPSEAL info-banner, so it fits inside
+  // the frame rather than filling it (swap for a product photo if one arrives).
+  "te-connectivity": { src: "/media/brand-headers/te-connectivity.png", fit: "contain" },
+};
+
+// Display-title overrides for a few categories whose stored Magento name differs
+// from what we want to show (menu + page H1).
+const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
+  77: "Plastic- and Metal Welding", // "Ultrasonic Welding"
+  110: "Wezag", // legacy "Stocko" crimping category — actually Wezag WZ tools
+  106: "Feintechnik Rittmeyer", // fix the data's "Rittmyer" spelling
+  76: "Mav Prüftechnik", // "Test & Quality" hub repurposed for Mav
+};
+
+// Header/intro text override (the hero paragraph). Used when a category's
+// Magento metaDescription is empty/unsuitable — e.g. a rewritten partner blurb.
+const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
+  106:
+    "We supply the complete range of Feintechnik Rittmeyer wire stripping machines, marketed under the be-ri brand, for industrial cable processing. Whether you need a pneumatic, rotating or electric stripping machine, or high-precision processing of coaxial cables, we'll help you find the right solution.",
+  100:
+    "We supply Ulmer's precision cutting and cable-processing machines. Ulmer GmbH develops cutting, feeding, winding and material-handling systems for flexible materials across the cable, wire and tubing industries, from multi-core cables to corrugated conduits, hoses and heat-shrink tubing.",
+  101:
+    "Tekuwa develops and manufactures high-precision cutting and cable processing machines suitable for almost any material. Their range includes cutting-to-length machines, combined cutting and stripping systems, jacket removal equipment, automatic feeding and rewinding units, and complete production line configurations.",
+  76:
+    "We supply Mav Prüftechnik's pull-force and compression testing machines for quality assurance in cable and harness manufacturing. Since 1962, Mav has built manual and motorised test stations measuring tensile and compressive forces up to 10,000 N, the standard for crimp pull-force verification, all developed and produced in Germany with calibration software.",
+  111:
+    "Mecal, with a leading market position serving a wide range of industries, designs and manufactures applicators, bench-top presses and strip- and crimp machines. Their semi-automatic systems integrate easily into fully automatic lines or manual workstations, and are used for high-volume wire harness production, with integrated quality monitoring, applicator change systems, and pull-force testing options.",
+  102:
+    "We supply the complete range of Junquan fully Automatic Terminal Crimp Machines, Computerized Wire Stripping and Cutting Machines, Numerical Control Precision Press, and Digital Cutting Machines.",
+};
+
+// Subcategory filter chips that should navigate to a brand's own hub page
+// instead of filtering the grid in place (equipment brands with dedicated pages).
+const SUBCATEGORY_HREF_OVERRIDES: Record<number, string> = {
+  109: "/products/zoller-frohlich/wire-processing", // Z+F crimping → wire-processing landing
+  110: "/webshop/production-equipment/crimping-equipment/wezag.html", // Wezag → its brand page (tools + presses boxes)
+  111: "/webshop/production-equipment/crimping-equipment/mecal.html", // Mecal → its hub (WIP)
+};
+
+// Header photo for hubs that don't resolve to a single brand (keyed by category
+// id). Rendered in the hero's right column, same frame as BRAND_HEADER_IMAGES.
+const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
+  77: { src: "/media/branson/hub-header.jpg", fit: "cover" }, // Branson welding hub
+  115: { src: "/media/branson/hub-header.jpg", fit: "cover" }, // Branson sub-page
+  // Wezag hand-crimper graphic ships on a black background — frame it black.
+  110: { src: "/media/wezag/hub-header.png", fit: "contain", bg: "black" },
+  // Feintechnik Rittmeyer (be-ri) — AM.ALL.ROUND machine render, contained.
+  106: { src: "/media/feintechnik/hub-header.jpg", fit: "contain" },
+  // Ulmer — cutting-machine mechanism close-up (fills the frame).
+  100: { src: "/media/ulmer/hub-header.jpg", fit: "cover" },
+  // Tekuwa — engineering/craftsmanship photo (3:2, fills the frame).
+  101: { src: "/media/tekuwa/hub-header.jpg", fit: "cover" },
+  // Mav Prüftechnik — KMG force-tester display (contained on the white card).
+  76: { src: "/media/mav/hub-header.jpg", fit: "contain" },
+  // Mecal — facility photo (wide, fills the frame).
+  111: { src: "/media/mecal/hub-header.jpg", fit: "cover" },
+  // Junquan — facility photo (wide, fills the frame).
+  102: { src: "/media/junquan/hub-header.webp", fit: "cover" },
+};
+
+// Category-level sourcing CTA for hubs that don't resolve to a single `brand`
+// (e.g. the Branson welding hub, where we redirect to the supplier's catalogue).
+// Mirrors the brand "Can't find the exact part?" box.
+const BRANSON_WELDING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Branson's complete ultrasonic metal- and plastic-welding programme. Tell us about your application and we'll help you find the right machine, or browse Branson's full catalogue.",
+  mailtoSubject: "Branson welding: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Branson catalogue",
+  catalogueUrl: "https://www.branson.emerson.com/en",
+} as const;
+
+const WEZAG_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Wezag's complete crimping-tool and machine programme, including hand tools, dies, presses and automation. Tell us about your application and we'll help you find the right tool or press, or browse Wezag's full range.",
+  mailtoSubject: "Wezag crimping: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Wezag range",
+  catalogueUrl: "https://www.wezag.de/en/",
+} as const;
+
+const FEINTECHNIK_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Feintechnik Rittmeyer's complete be-ri wire-stripping programme, including pneumatic, rotating and electric machines. Tell us about your application and we'll help you find the right machine, or browse their full range.",
+  mailtoSubject: "Feintechnik Rittmeyer (be-ri): application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View be-ri range",
+  catalogueUrl: "https://rittmeyer-beri.de/en/cable-processing/",
+} as const;
+
+const ULMER_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Ulmer's complete range of cutting and cable-processing machines. Tell us about your application and we'll help you find the right machine, or browse Ulmer's full range.",
+  mailtoSubject: "Ulmer cutting machines: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Ulmer range",
+  catalogueUrl: "https://www.ulmer-gmbh.net/produkte-loesungen/schneiden/",
+} as const;
+
+const TEKUWA_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Tekuwa's complete range of cutting, stripping and cable-processing machines. Tell us about your application and we'll help you find the right machine, or browse Tekuwa's full range.",
+  mailtoSubject: "Tekuwa cutting & stripping: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Tekuwa range",
+  catalogueUrl: "https://tekuwa.de/en/machines/",
+} as const;
+
+const MAV_SOURCING_CTA = {
+  heading: "Can't find the exact test station for your application?",
+  body: "We represent Mav Prüftechnik's complete range of pull-force and compression testing machines. Tell us about your application and we'll help you find the right test station, or browse Mav's full range.",
+  mailtoSubject: "Mav Prüftechnik test equipment: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Mav range",
+  catalogueUrl: "https://www.mav-germany.de/home.html",
+} as const;
+
+const MECAL_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Mecal's complete range of applicators, crimping presses and strip-and-crimp machines. Tell us about your application and we'll help you find the right solution, or browse Mecal's full range.",
+  mailtoSubject: "Mecal crimping equipment: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Mecal range",
+  catalogueUrl: "https://mecal.net/en/products/",
+} as const;
+
+const JUNQUAN_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Junquan's complete range of cutting, stripping, crimping and digital cutting machines. Tell us about your application and we'll help you find the right machine, or browse Junquan's full range.",
+  mailtoSubject: "Junquan machines: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Junquan range",
+  catalogueUrl: "https://www.cuttingstripping-machine.com/products.html",
+} as const;
+
+const CATEGORY_SOURCING_CTA: Record<
+  number,
+  { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
+> = {
+  77: BRANSON_WELDING_CTA, // Plastic- and Metal Welding hub
+  115: BRANSON_WELDING_CTA, // Branson sub-page
+  110: WEZAG_SOURCING_CTA, // Wezag crimping brand page
+  106: FEINTECHNIK_SOURCING_CTA, // Feintechnik Rittmeyer (be-ri) stripping page
+  100: ULMER_SOURCING_CTA, // Ulmer cutting brand page
+  101: TEKUWA_SOURCING_CTA, // Tekuwa cutting & stripping brand page
+  76: MAV_SOURCING_CTA, // Mav Prüftechnik test-equipment page
+  111: MECAL_SOURCING_CTA, // Mecal crimping equipment brand page
+  102: JUNQUAN_SOURCING_CTA, // Junquan cutting/stripping brand page
+};
+
+// Presentational "link boxes" shown at the top of a hub — an image + short
+// description + an outbound link to the manufacturer. Used for the Branson
+// welding hub (a split by welding type) and the Wezag hub (its tool and
+// machine sister-brands, which live on their own sites).
+type CategoryLinkBox = {
+  label: string;
+  href: string;
+  image: string;
+  description: string[];
+  ctaLabel: string;
+  fit?: "cover" | "contain"; // "cover" fills the frame; "contain" for graphics
+  // With "cover", anchor the crop: "left" keeps a wide graphic's left content
+  // (e.g. the Deutsch headline + tool) instead of centre-cropping it away.
+  position?: "left" | "center";
+};
+// Rendered by box count: ONE box → full-width Zoller & Fröhlich-style banner;
+// two or more → the compact side-by-side Branson grid.
+type CategoryLinkSection = { eyebrow: string; boxes: CategoryLinkBox[] };
+
+// Branson: the listed machines are mostly EOL and are disregarded; both options
+// point to Branson's catalogue while the final Branson presentation is decided.
+const BRANSON_WELDING_TYPES: CategoryLinkBox[] = [
+  {
+    label: "Ultrasonic Metal welding",
+    href: "https://www.branson.emerson.com/en/metal-welding",
+    image: "/media/branson/metal-welding.webp",
+    ctaLabel: "View at Branson",
+    fit: "cover",
+    description: [
+      "Ultrasonic energy has been used to join metal materials for decades. In ultrasonic metal welding, dissimilar materials are joined together without the use of applied heat or electric current passing through components.",
+      "Ultrasonic energy can weld through contaminants to create a clean seal while providing increased quality and control.",
+    ],
+  },
+  {
+    label: "Ultrasonic Plastic welding",
+    href: "https://www.branson.emerson.com/en/ultrasonic-plastic-welding",
+    image: "/media/branson/plastic-welding.webp",
+    ctaLabel: "View at Branson",
+    fit: "cover",
+    description: [
+      "Ultrasonic energy has been used to join thermoplastics for over 70 years. It is frequently chosen when parts are too complex or expensive to be molded in one piece.",
+      "In ultrasonic plastic welding, a vibratory motion at the horn face (amplitude) is transferred to the part. The vibrations move through the part and create friction at the interface between the parts, creating heat, then melting. When cooled, a weld is formed.",
+    ],
+  },
+];
+
+// Wezag: the "Stocko" crimping category actually holds Wezag WZ hand tools. Its
+// wider tool and machine ranges live on Wezag's sister-brand sites — Private
+// Label Tools (hand tools) and WDT Machines (presses/automation).
+const WEZAG_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Hand crimping tools",
+    href: "https://www.private-label-tools.de/en/tools/",
+    image: "/media/wezag/tools-crimp.png",
+    ctaLabel: "View at Private Label Tools",
+    fit: "cover",
+    description: [
+      "Private Label Tools is Wezag's hand-tool brand, offering professional crimping tools with interchangeable die sets for repeatable, high-quality crimps.",
+      "Dies available for Deutsch DT & DTM and many other connector systems.",
+    ],
+  },
+  {
+    label: "Crimping presses & machines",
+    href: "https://www.wdt-machines.de/en/wdt-crimping-machines/",
+    image: "/media/wezag/presses.png",
+    ctaLabel: "View at WDT Machines",
+    fit: "cover",
+    description: [
+      "WDT Machines is Wezag's machine brand, offering pneumatic and electro-pneumatic crimping presses and automation for cable assembly.",
+      "Optimised for small to medium series in low- and high-voltage production, with the same Wezag crimp quality.",
+    ],
+  },
+];
+
+// Feintechnik Rittmeyer (be-ri) — a single link box on pneumatic stripping,
+// linking to be-ri's own catalogue. Copy supplied by the customer.
+const FEINTECHNIK_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Wire stripping machines",
+    href: "https://rittmeyer-beri.de/en/cable-processing/",
+    image: "/media/feintechnik/pneumatic.jpg",
+    ctaLabel: "View at be-ri",
+    fit: "cover",
+    description: [
+      "Wire stripping machines for industrial purposes.",
+      "Whether you are looking for a pneumatic wire stripping machine, a rotating wire stripping machine, an electric wire stripping machine, or you are interested in high-precision processing of coaxial cables.",
+    ],
+  },
+];
+
+// Ulmer — a single link box on their cutting machines. Copy supplied by the
+// customer (Ulmer's own description).
+const ULMER_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "High-precision cutting machines",
+    href: "https://www.ulmer-gmbh.net/produkte-loesungen/schneiden/",
+    image: "/media/ulmer/cutting.jpg",
+    ctaLabel: "View at Ulmer",
+    fit: "cover",
+    description: [
+      "Our high-precision cutting machines offer maximum versatility and efficiency for a wide variety of materials, from multi-core cables and stranded wires to heat shrink tubing and hoses, and even corrugated conduits.",
+      "Our systems guarantee clean cut edges, consistently reproducible lengths, and a smooth production process. Thanks to their modular design, our machines can be quickly adapted to new material types and cross-sections.",
+    ],
+  },
+];
+
+// Tekuwa — a lean page with two boxes (cutting + stripping). Copy supplied by
+// the customer (Tekuwa's own descriptions).
+const TEKUWA_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Cutting & length-cutting machines",
+    href: "https://tekuwa.de/en/cutting-lengthing/",
+    image: "/media/tekuwa/cutting.webp",
+    ctaLabel: "View at Tekuwa",
+    fit: "cover",
+    description: [
+      "As standard, Tekuwa's cable cutting and length-cutting machines already meet a wide range of requirements. They cut simple cables, multi-core cables, data cables or flat cables as well as wires, hoses, tubes, ropes made of silicone, rubber, plastic, metal or textile.",
+    ],
+  },
+  {
+    label: "Stripping machines",
+    href: "https://tekuwa.de/en/lengthing-and-stripping/",
+    image: "/media/tekuwa/stripping.jpg",
+    ctaLabel: "View at Tekuwa",
+    fit: "cover",
+    description: [
+      "Tekuwa's electropneumatic stripping machines provide and ensures that the fine inner conductors are never damaged, whether the jacket is robust, thick, flexible, smooth or flat.",
+    ],
+  },
+];
+
+// Mav Prüftechnik — two boxes (manual + motorized force testers). Copy supplied
+// by the customer (Mav's own descriptions).
+const MAV_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Manual force testers",
+    href: "https://www.mav-germany.de/Products/Manual-Devices/manual-devices.html",
+    image: "/media/mav/manual.jpg",
+    ctaLabel: "View at Mav",
+    fit: "cover",
+    description: [
+      "Manually operated MAV-testers provide a fast and inexpensive option to carry out pull-off force tests with loads up to 1,000 N.",
+    ],
+  },
+  {
+    label: "Motorized force testers",
+    href: "https://www.mav-germany.de/Products/Motorized-Devices/motorized-devices.html",
+    image: "/media/mav/motorized.jpg",
+    ctaLabel: "View at Mav",
+    fit: "cover",
+    description: [
+      "Motorized MAV-force testers are a reliable way to determine tensile and compressive forces up to 10,000 N due to their constant testing speeds.",
+    ],
+  },
+];
+
+// Mecal — a lean page with three boxes (applicators, crimping machines, strip &
+// crimp). Copy supplied by the customer (Mecal's own descriptions). Square
+// product shots on white → "contain" so the whole machine shows.
+const MECAL_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Applicators",
+    href: "https://mecal.net/en/products/applicators/",
+    image: "/media/mecal/applicators.jpg",
+    ctaLabel: "View at Mecal",
+    fit: "contain",
+    description: [
+      "We supply their complete range of applicators for linked terminals on a reel. It can be supplied either with a continuous or a fourpad regulating head and it's fitted with a non-resettable 7-digit cycle counter, and with both cams either for terminal feeding on upstroke or downstroke. An applicator from Mecal can be fitted to any stand alone crimping bench-top press or a fully automatic machine configuration.",
+    ],
+  },
+  {
+    label: "Crimping machines",
+    href: "https://mecal.net/en/products/crimping-machines/",
+    image: "/media/mecal/crimping.jpg",
+    ctaLabel: "View at Mecal",
+    fit: "contain",
+    description: [
+      "We supply their complete range of crimping machine for manufacturers seeking reliability and simplicity in production. It ensures precise and consistent crimps on electrical terminals, even in high-intensity cycles. It's compact and robust, and integrates easily into automatic lines or manual workstations, offering safety and excellent visibility. Its versatility allows customization and the use of numerous accessories to meet diverse production requirements.",
+    ],
+  },
+  {
+    label: "Stripping and crimping machines",
+    href: "https://mecal.net/en/products/strip-and-crimp/",
+    image: "/media/mecal/strip-crimp.jpg",
+    ctaLabel: "View at Mecal",
+    fit: "contain",
+    description: [
+      "We supply their complete range of Stripping and crimping machines. Ideal solution for precise single-wire processing. It integrates linear stripping and crimping in a fully programmable cycle, ensuring high repeatability and maximum flexibility. Perfect for versatile production, multi-core cables and applications requiring fast changeovers and full process control.",
+    ],
+  },
+];
+
+// Junquan — a single link box (renders as the full-width banner). Copy supplied
+// by the customer (Junquan's own description; "Juanquan" typo corrected).
+const JUNQUAN_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Wire cutting and stripping machines",
+    href: "https://www.cuttingstripping-machine.com/products.html",
+    image: "/media/junquan/machines.webp",
+    ctaLabel: "View at Junquan",
+    fit: "cover",
+    description: [
+      "Junquan Automation has been working on exploring computerized wire cutting and stripping machines for twenty years. With high precision and working speed and comprehensive in functions, the products are widely used in wire processing Industry, such as the electronics and electrical appliance Industry.",
+    ],
+  },
+];
+
+const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
+  77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
+  115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
+  110: { eyebrow: "Wezag crimping tools & presses", boxes: WEZAG_LINK_BOXES },
+  106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES },
+  100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES },
+  101: { eyebrow: "Tekuwa cutting & stripping machines", boxes: TEKUWA_LINK_BOXES },
+  76: { eyebrow: "Mav force testers", boxes: MAV_LINK_BOXES },
+  111: { eyebrow: "Mecal crimping equipment", boxes: MECAL_LINK_BOXES },
+  102: { eyebrow: "Junquan machines", boxes: JUNQUAN_LINK_BOXES },
+};
+
+// Brand pages presented as a lean partner landing (header + link boxes +
+// sourcing box) with NO product grid/filter — mirrors the Zoller & Fröhlich
+// approach. Wezag (110): its catalogue products are outdated / low-volume, so we
+// surface only the trusted-partner brand page.
+const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 76, 111]);
 
 // "Browse by series" configuration for the brand hubs whose products carry a
 // "Series" attribute. Each hub defines where its series live and how to
@@ -357,8 +763,19 @@ function descriptionContent(description: string | null): DescriptionContent {
     })
     .filter(Boolean);
 
-  const textWithoutLinksOrImages = stripTags(htmlWithoutLinks.replace(/<img\b[^>]*>/gi, ""));
-  const shouldRenderHtml = visualLinks.length === 0 && standaloneImages.length === 0 && textWithoutLinksOrImages;
+  const textWithoutLinksOrImages = stripTags(htmlWithoutLinks.replace(/<img\b[^>]*>/gi, "")).trim();
+  // Some Magento category descriptions are junk — a bare part number / code with
+  // no spaces (e.g. "DT04-2P", "HBG", "H-2(LS)"). Those must not render as a
+  // description box; a real description is prose with spaces.
+  const isJunkDescription =
+    textWithoutLinksOrImages.length > 0 &&
+    textWithoutLinksOrImages.length < 30 &&
+    !/\s/.test(textWithoutLinksOrImages);
+  const shouldRenderHtml =
+    visualLinks.length === 0 &&
+    standaloneImages.length === 0 &&
+    Boolean(textWithoutLinksOrImages) &&
+    !isJunkDescription;
 
   return {
     html: shouldRenderHtml ? withoutIframe : null,
@@ -371,9 +788,11 @@ function descriptionContent(description: string | null): DescriptionContent {
 function CategoryVisualLinkCard({
   item,
   category,
+  compact = false,
 }: {
   item: VisualLink;
   category: CatalogueCategory | undefined;
+  compact?: boolean;
 }) {
   const productCount = category ? getCategoryProductCount(category) : null;
   const childCount = category ? getCategoryChildren(category).length : 0;
@@ -383,34 +802,34 @@ function CategoryVisualLinkCard({
   return (
     <Link
       href={item.href}
-      className="group grid min-h-[210px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+      className={`group grid overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)] ${compact ? "min-h-[180px]" : "min-h-[210px]"}`}
     >
-      <div className={`relative flex min-h-32 items-center justify-center border-b border-[#eef2f7] ${brand ? "bg-white" : "bg-[#f8fafc]"}`}>
+      <div className={`relative flex items-center justify-center border-b border-[#eef2f7] ${compact ? "min-h-28" : "min-h-32"} ${brand ? "bg-white" : "bg-[#f8fafc]"}`}>
         {imageSrc ? (
           <Image
             src={imageSrc}
             alt={item.title}
             fill
             unoptimized
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 280px"
-            className={`object-contain transition-transform group-hover:scale-105 ${brand ? "p-6" : "p-4"}`}
+            sizes={compact ? "(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 240px" : "(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 280px"}
+            className={`object-contain transition-transform group-hover:scale-105 ${brand ? (compact ? "p-5" : "p-6") : (compact ? "p-3" : "p-4")}`}
           />
         ) : (
-          <Boxes size={34} strokeWidth={1.6} className="text-[#2563eb]" />
+          <Boxes size={compact ? 28 : 34} strokeWidth={1.6} className="text-[#2563eb]" />
         )}
       </div>
-      <div className="flex min-w-0 flex-col p-4">
-        <h3 className="min-h-11 text-base font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
+      <div className={`flex min-w-0 flex-col ${compact ? "p-3.5" : "p-4"}`}>
+        <h3 className={`font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb] ${compact ? "min-h-10 text-sm" : "min-h-11 text-base"}`}>
           {item.title}
         </h3>
-        <div className="mt-3 flex items-center justify-between gap-3 border-t border-[#eef2f7] pt-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#64748b]">
+        <div className={`flex items-center justify-between gap-3 border-t border-[#eef2f7] ${compact ? "mt-2.5 pt-2.5" : "mt-3 pt-3"}`}>
+          <span className={`font-semibold uppercase text-[#64748b] ${compact ? "text-[11px] tracking-[0.1em]" : "text-xs tracking-[0.12em]"}`}>
             {productCount !== null
               ? `${productCount.toLocaleString()} items`
               : "Open category"}
             {childCount > 0 ? ` · ${childCount} areas` : ""}
           </span>
-          <ArrowRight size={15} className="flex-none text-[#2563eb]" />
+          <ArrowRight size={compact ? 14 : 15} className="flex-none text-[#2563eb]" />
         </div>
       </div>
     </Link>
@@ -647,8 +1066,10 @@ export default function CatalogueCategoryPage({
 
   const content = descriptionContent(category.description);
   const breadcrumbs = getCategoryBreadcrumbs(category.id);
-  const title = category.name ?? "Catalogue";
-  const description = category.metaDescription;
+  const title = CATEGORY_TITLE_OVERRIDES[category.id] ?? category.name ?? "Catalogue";
+  const categorySourcingCta = CATEGORY_SOURCING_CTA[category.id];
+  const categoryLinkSection = CATEGORY_LINK_SECTIONS[category.id];
+  const description = CATEGORY_DESCRIPTION_OVERRIDES[category.id] ?? category.metaDescription;
   const productCount = getCategoryProductCount(category);
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
   const productSectionTitle = isWebshopRoot ? "Featured product selection" : "Catalogue items";
@@ -663,7 +1084,10 @@ export default function CatalogueCategoryPage({
     getCategoryChildren(children[0]).length === 0 &&
     getCategoryProductCount(children[0]) > 0;
 
-  const showProductBrowser = productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub || isLeafOfFlatHub);
+  // Lean partner landing (e.g. Wezag): no product grid/filter, just header +
+  // link boxes + sourcing box.
+  const hideProductGrid = HIDE_PRODUCT_GRID_CATEGORY_IDS.has(category.id);
+  const showProductBrowser = !hideProductGrid && productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub || isLeafOfFlatHub);
   // Suppress visual link cards on descendant hubs — the product browser with brand
   // filters replaces them, just like isFlatHub pages show no category cards.
   const showVisualLinks = content.visualLinks.length > 0 && !isDescendantHub;
@@ -735,14 +1159,17 @@ export default function CatalogueCategoryPage({
           }
           return {
             id: c.id,
-            name: c.name ?? "Category",
+            name: CATEGORY_TITLE_OVERRIDES[c.id] ?? c.name ?? "Category",
             count: getCategoryProductCount(c),
             allCategoryIds: getAllDescendantCategoryIds(c),
+            href: SUBCATEGORY_HREF_OVERRIDES[c.id],
           };
         })
     : [];
 
   const heroStatText = (() => {
+    // Lean partner landing has no grid — don't advertise a catalogue-item count.
+    if (hideProductGrid) return null;
     const itemsPart = `${productCount.toLocaleString()} catalogue items`;
     if (showSeries) {
       return `${seriesFacets.length} series · ${itemsPart}`;
@@ -783,11 +1210,22 @@ export default function CatalogueCategoryPage({
   // below the products depending on this flag.
   const CATEGORIES_BELOW_PRODUCTS_BRANDS = new Set(["hongshang", "htp"]);
   const categoriesBelowProducts = !!brand && CATEGORIES_BELOW_PRODUCTS_BRANDS.has(brand.slug);
+  // Trial (HTP): show 4 category cards per row on large screens instead of 3,
+  // so each card is a bit smaller and the grid takes less vertical space.
+  const fourColumnCategories = brand?.slug === "htp";
   // Is this the brand's own landing page (e.g. Hongshang), vs a descendant
   // subcategory (Thin Wall Tubing, etc.)? On the landing page the jump button
   // scrolls down to the categories; on a descendant it links back UP to the
   // landing page's category list so a visitor can "start over".
   const isBrandHome = isBrandOwnCategory(category)?.slug === brand?.slug && !!brand;
+  // Brand application photo for the hero right column — only on the brand's own
+  // landing page, and only if a video isn't already taking that slot.
+  const brandHeaderImage =
+    isBrandHome && brand && !videoEmbedSrc ? BRAND_HEADER_IMAGES[brand.slug] : undefined;
+  // Brand image wins; otherwise a category-level header photo (hubs with no
+  // brand). A configured category header photo is an explicit editorial choice,
+  // so it also takes precedence over any auto-detected description video.
+  const headerImage = brandHeaderImage ?? CATEGORY_HEADER_IMAGES[category.id];
   const brandHomeRoute =
     categoriesBelowProducts && !isBrandHome
       ? breadcrumbs.find((crumb) => {
@@ -812,12 +1250,13 @@ export default function CatalogueCategoryPage({
               {content.visualLinks.length.toLocaleString()} categories
             </span>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className={`grid gap-4 sm:grid-cols-2 ${fourColumnCategories ? "md:grid-cols-3 lg:grid-cols-4" : "lg:grid-cols-3"}`}>
             {content.visualLinks.map((item) => (
               <CategoryVisualLinkCard
                 key={`${item.href}-${item.title}`}
                 item={item}
                 category={visualCategoryByHref.get(item.href)}
+                compact={fourColumnCategories}
               />
             ))}
           </div>
@@ -906,9 +1345,11 @@ export default function CatalogueCategoryPage({
                     : brand?.description
                 ) ?? categoryIntro(category)}
               </p>
-              <p className="mt-4 text-sm font-semibold text-blue-200">
-                {heroStatText}
-              </p>
+              {heroStatText && (
+                <p className="mt-4 text-sm font-semibold text-blue-200">
+                  {heroStatText}
+                </p>
+              )}
 
               {brand?.shopUrl && !showSourcingCta && (
                 <div className="mt-5 inline-flex flex-wrap items-center gap-3 rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3">
@@ -928,39 +1369,157 @@ export default function CatalogueCategoryPage({
               )}
             </div>
 
-            {/* Right: video or image promoted from category description */}
-            {(videoEmbedSrc || heroImageSrc) && (
-              <div className="w-full lg:w-[420px] lg:flex-shrink-0 xl:w-[480px]">
-                <div
-                  className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]"
-                  style={{ aspectRatio: videoEmbedSrc ? "16/9" : "4/3" }}
-                >
-                  {videoEmbedSrc ? (
-                    <iframe
-                      src={videoEmbedSrc}
-                      title={title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute inset-0 h-full w-full"
-                    />
-                  ) : (
+            {/* Right column. Brand application photo uses the SAME frame as the
+                Zoller & Fröhlich hub (w-420, 3/2, white card + shadow) so every
+                brand header is a consistent size. Video / description images keep
+                the wider dark 4:3 frame. */}
+            {headerImage ? (
+              <div className="w-full lg:w-[420px] lg:flex-shrink-0">
+                <div className={`overflow-hidden rounded-2xl shadow-lg ${headerImage.bg === "black" ? "bg-black" : "bg-white"}`}>
+                  <div className="relative aspect-[3/2] w-full">
                     <Image
-                      src={heroImageSrc!}
+                      src={headerImage.src}
                       alt={title}
                       fill
                       unoptimized
-                      sizes="(max-width: 1024px) 100vw, 480px"
-                      className="object-contain p-4"
+                      sizes="(max-width: 1024px) 100vw, 420px"
+                      className={headerImage.fit === "cover" ? "object-cover" : "object-contain p-4"}
                     />
-                  )}
+                  </div>
                 </div>
               </div>
+            ) : (
+              (videoEmbedSrc || heroImageSrc) && (
+                <div className="w-full lg:w-[420px] lg:flex-shrink-0 xl:w-[480px]">
+                  <div
+                    className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]"
+                    style={{ aspectRatio: videoEmbedSrc ? "16/9" : "4/3" }}
+                  >
+                    {videoEmbedSrc ? (
+                      <iframe
+                        src={videoEmbedSrc}
+                        title={title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="absolute inset-0 h-full w-full"
+                      />
+                    ) : (
+                      <Image
+                        src={heroImageSrc!}
+                        alt={title}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 1024px) 100vw, 480px"
+                        className="object-contain p-4"
+                      />
+                    )}
+                  </div>
+                </div>
+              )
             )}
           </div>
         </div>
       </section>
 
       <main className="mx-auto max-w-[1440px] px-6 py-6">
+        {categoryLinkSection && (
+          <section className="mb-12">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
+              {categoryLinkSection.eyebrow}
+            </p>
+            {categoryLinkSection.boxes.length === 1 ? (
+              /* ONE box → full-width Zoller & Fröhlich-style banner: large image
+                 LEFT (sm:w-72 lg:w-96), text RIGHT. Two or more → the compact
+                 side-by-side Branson grid below. */
+              <div className="mt-4">
+                {categoryLinkSection.boxes.map((w) => (
+                  <a
+                    key={w.label}
+                    href={w.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)] sm:flex-row"
+                  >
+                    <div className={`relative aspect-[16/10] w-full flex-none sm:aspect-auto sm:w-72 lg:w-96 ${w.fit === "contain" ? "bg-white" : "bg-[#f8fafc]"}`}>
+                      <Image
+                        src={w.image}
+                        alt={w.label}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 640px) 100vw, 384px"
+                        className={`transition-transform duration-300 group-hover:scale-[1.03] ${
+                          w.fit === "contain"
+                            ? "object-contain p-4"
+                            : `object-cover ${w.position === "left" ? "object-left" : ""}`
+                        }`}
+                      />
+                    </div>
+                    <div className="flex min-w-0 flex-1 flex-col justify-center p-6 sm:p-8">
+                      <h3 className="text-base font-bold text-[#0a1628] group-hover:text-[#2563eb] sm:text-lg">
+                        {w.label}
+                      </h3>
+                      <div className="mt-2 space-y-2 text-sm leading-6 text-[#475569]">
+                        {w.description.map((p) => (
+                          <p key={p}>{p}</p>
+                        ))}
+                      </div>
+                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#2563eb] transition-colors group-hover:text-[#1d4ed8]">
+                        {w.ctaLabel}
+                        <ArrowUpRight size={15} />
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            ) : (
+            <div className={`mt-4 grid gap-4 sm:grid-cols-2 ${categoryLinkSection.boxes.length >= 3 ? "lg:grid-cols-3" : ""}`}>
+              {categoryLinkSection.boxes.map((w) => (
+                <a
+                  key={w.label}
+                  href={w.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex min-h-[176px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+                >
+                  {/* Branson template: picture LEFT (w-28 / sm:w-40, fills the
+                      card height), text RIGHT. A shared min-height keeps every
+                      2-box page the same size (Wezag baseline); pages with more
+                      copy, e.g. Branson, grow a touch taller. */}
+                  <div className={`relative w-28 flex-none sm:w-40 ${w.fit === "contain" ? "bg-white" : "bg-[#f8fafc]"}`}>
+                    <Image
+                      src={w.image}
+                      alt={w.label}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 640px) 112px, 160px"
+                      className={`transition-transform duration-300 group-hover:scale-[1.04] ${
+                        w.fit === "contain"
+                          ? "object-contain p-2"
+                          : `object-cover ${w.position === "left" ? "object-left" : ""}`
+                      }`}
+                    />
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col justify-center p-4">
+                    <h3 className="text-sm font-bold text-[#0a1628] group-hover:text-[#2563eb] sm:text-base">
+                      {w.label}
+                    </h3>
+                    <div className="mt-1.5 space-y-1.5 text-[13px] leading-5 text-[#475569]">
+                      {w.description.map((p) => (
+                        <p key={p}>{p}</p>
+                      ))}
+                    </div>
+                    <span className="mt-2.5 inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#64748b] transition-colors group-hover:text-[#2563eb]">
+                      {w.ctaLabel}
+                      <ArrowUpRight size={13} />
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+            )}
+          </section>
+        )}
+
         {/* The brand badge in the hero now represents brand-named categories,
             so the legacy category banner (often a stale brand logo) is hidden
             for them. */}
@@ -999,7 +1558,10 @@ export default function CatalogueCategoryPage({
 
         {showProductBrowser && (
           <div id="products">
-            {(showSeries || isLeafOfFlatHub) && (
+            {/* Production-equipment flat hubs have no "series" section, so the
+                leaf "Browse by series" link would point at a non-existent
+                #series anchor — suppress it there. */}
+            {(showSeries || (isLeafOfFlatHub && !category.route?.includes("/production-equipment"))) && (
               <div className="mb-6 flex justify-end">
                 <a
                   href={isLeafOfFlatHub && parentCategory?.route ? `${parentCategory.route}#series` : "#series"}
@@ -1031,6 +1593,10 @@ export default function CatalogueCategoryPage({
               </div>
             )}
             <CatalogueProductBrowser
+              // Re-mount when the URL's filters/query change so a same-page
+              // "Browse by series" link (e.g. TE Connectivity) re-applies the
+              // filter — the browser's filter state is seeded from these params.
+              key={JSON.stringify(isLeafOfFlatHub ? { ...leafPreFilter, ...searchParams } : searchParams)}
               products={browserProducts}
               route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
               searchParams={isLeafOfFlatHub ? { ...leafPreFilter, ...searchParams } : searchParams}
@@ -1039,6 +1605,7 @@ export default function CatalogueCategoryPage({
               sectionTitle={productSectionTitle}
               deutschImageMap={buildDeutschImageMap(productPool)}
               subcategoryOptions={subcategoryOptions.length > 0 ? subcategoryOptions : undefined}
+              lockedFilterParams={isLeafOfFlatHub ? Object.keys(leafPreFilter) : undefined}
               partnerSlots={[
                 {
                   categoryId: STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
@@ -1087,7 +1654,39 @@ export default function CatalogueCategoryPage({
                 </div>
               </section>
             )}
+
           </div>
+        )}
+
+        {/* Category sourcing box — after the grid, or standalone on a lean
+            partner landing page that has no grid (e.g. Wezag). */}
+        {categorySourcingCta && (
+          <section className="mt-10 rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] px-6 py-7 sm:px-8">
+            <h2 className="text-lg font-bold text-[#0a1628] sm:text-xl">
+              {categorySourcingCta.heading}
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[#475569]">
+              {categorySourcingCta.body}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <a
+                href={`mailto:info@adcontact.se?subject=${encodeURIComponent(categorySourcingCta.mailtoSubject)}`}
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
+              >
+                {categorySourcingCta.primaryLabel}
+                <ArrowRight size={15} />
+              </a>
+              <a
+                href={categorySourcingCta.catalogueUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] transition-colors hover:text-[#2563eb]"
+              >
+                {categorySourcingCta.catalogueLabel}
+                <ArrowUpRight size={14} />
+              </a>
+            </div>
+          </section>
         )}
 
         {/* Hongshang trial: subcategory cards below the product grid. Only on

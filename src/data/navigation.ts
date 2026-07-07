@@ -67,7 +67,7 @@ const industrialComponentsGroup: NavGroup = {
   ],
 };
 
-const productionEquipmentGroup: NavGroup = {
+export const productionEquipmentGroup: NavGroup = {
   label: "Production Equipment",
   href: "/webshop/production-equipment.html",
   items: [
@@ -84,32 +84,66 @@ const productionEquipmentGroup: NavGroup = {
       label: "Stripping Machines",
       href: "/webshop/production-equipment/stripping-machines.html",
       children: [
-        { label: "Zoller & Fröhlich", href: "/webshop/production-equipment/stripping-machines/zoller-frohlich.html" },
+        { label: "Zoller & Fröhlich", href: "/products/zoller-frohlich/wire-processing" },
         { label: "Feintechnik Rittmyer", href: "/webshop/production-equipment/stripping-machines/feintechnik-rittmyer.html" },
+        // Tekuwa does cutting AND stripping; its combined lean page lives under
+        // Cutting Machines but is also surfaced here.
+        { label: "Tekuwa", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/tekuwa.html" },
       ],
     },
     {
-      label: "Crimping equipment",
+      label: "Crimping machines and tools",
       href: "/webshop/production-equipment/crimping-equipment.html",
       children: [
         { label: "Mecal", href: "/webshop/production-equipment/crimping-equipment/mecal.html" },
-        { label: "Zoller & Fröhlich", href: "/webshop/production-equipment/crimping-equipment/zoller-frohlich.html" },
-        { label: "Stocko", href: "/webshop/production-equipment/crimping-equipment/stocko.html" },
+        { label: "Zoller & Fröhlich", href: "/products/zoller-frohlich/wire-processing" },
+        // "Stocko" crimping tools are Wezag's (WZ hand tools) — labelled Wezag.
+        { label: "Wezag", href: "/webshop/production-equipment/crimping-equipment/wezag.html" },
       ],
     },
     {
-      label: "Misc. Equipment",
-      href: "/webshop/production-equipment/misc-equipment.html",
+      // Z+F does both stripping and crimping; also listed under a combined header.
+      // All Z+F equipment links point to the lean wire-processing landing.
+      label: "Stripping and crimping machines",
+      href: "/products/zoller-frohlich/wire-processing",
       children: [
-        { label: "DSG Canusa", href: "/webshop/production-equipment/misc-equipment/dsg-canusa.html" },
+        // Mecal's strip-and-crimp machines; its hub also covers applicators and
+        // crimping presses, so it is listed under Crimping machines and tools too.
+        { label: "Mecal", href: "/webshop/production-equipment/crimping-equipment/mecal.html" },
+        { label: "Zoller & Fröhlich", href: "/products/zoller-frohlich/wire-processing" },
       ],
     },
+    // Temporarily removed from the live site (kept for a potential future
+    // re-post). Also hidden at the data layer via HIDDEN_CATEGORY_IDS in
+    // src/lib/magentoCatalogue.ts — restore both to bring it back.
+    // {
+    //   label: "Misc. Equipment",
+    //   href: "/webshop/production-equipment/misc-equipment.html",
+    //   children: [
+    //     { label: "DSG Canusa", href: "/webshop/production-equipment/misc-equipment/dsg-canusa.html" },
+    //   ],
+    // },
     {
-      label: "Ultrasonic Welding",
+      label: "Plastic- and Metal Welding",
       href: "/webshop/production-equipment/ultrasonic-welding.html",
       children: [
         { label: "Branson", href: "/webshop/production-equipment/ultrasonic-welding/branson.html" },
       ],
+    },
+    {
+      // "Test & Quality" hub repurposed as the Mav Prüftechnik test-equipment
+      // page; the other test sub-brands (Cirris etc.) are no longer represented.
+      label: "Test equipment",
+      href: "/webshop/production-equipment/test-quality.html",
+      children: [
+        { label: "Mav Prüftechnik", href: "/webshop/production-equipment/test-quality.html" },
+      ],
+    },
+    {
+      // Second-hand machines — placeholder landing until the offering is built.
+      label: "Used machines",
+      href: "/used-machines",
+      children: [],
     },
   ],
 };

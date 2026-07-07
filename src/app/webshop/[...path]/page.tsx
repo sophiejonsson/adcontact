@@ -9,6 +9,8 @@ import {
   getCatalogueCategory,
   getCatalogueProduct,
   resolveCatalogueRoute,
+  PRODUCT_CANONICAL_ROUTES,
+  CATEGORY_CANONICAL_ROUTES,
   type CatalogueSearchParams,
   webshopPathFromSegments,
 } from "@/lib/magentoCatalogue";
@@ -98,6 +100,13 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
     const product = getCatalogueProduct(route.id);
     if (!product || product.status !== "enabled") notFound();
 
+    // 301 any non-canonical URL for this product to its canonical one.
+    const canonicalRoute = PRODUCT_CANONICAL_ROUTES[route.id];
+    if (canonicalRoute) {
+      const strip = (p: string) => p.replace(/^\/+|\/+$/g, "").toLowerCase();
+      if (strip(routePath) !== strip(canonicalRoute)) permanentRedirect(canonicalRoute);
+    }
+
     // Deutsch connector products have a richer dedicated page — redirect there.
     // Match by SKU first; fall back to product name (some Magento entries use a
     // numeric TE part number as the SKU rather than the Deutsch part number).
@@ -115,6 +124,13 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
 
   const category = getCatalogueCategory(route.id);
   if (!category) notFound();
+
+  // 301 a renamed category's old URL to its canonical one.
+  const canonicalCategoryRoute = CATEGORY_CANONICAL_ROUTES[route.id];
+  if (canonicalCategoryRoute) {
+    const strip = (p: string) => p.replace(/^\/+|\/+$/g, "").toLowerCase();
+    if (strip(routePath) !== strip(canonicalCategoryRoute)) permanentRedirect(canonicalCategoryRoute);
+  }
 
   // Z+F Wire Ferrules hub — dedicated visual layout with partner link
   if (category.id === 1711) {

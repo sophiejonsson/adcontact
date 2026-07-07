@@ -3,10 +3,18 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Search, X } from "lucide-react";
+import { ArrowRight, Package, Search, X } from "lucide-react";
 import type { WebshopProduct } from "@/data/webshopBrands";
 
 const PAGE_SIZE = 32;
+
+// Treat Magento's "no photo"/placeholder graphic as no image, so the clean
+// fallback shows instead of the dated "image coming soon" placeholder.
+function cleanImage(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (/no_photo|placeholder/i.test(path)) return null;
+  return path;
+}
 
 export default function ProductCatalogue({ products }: { products: WebshopProduct[] }) {
   const [query, setQuery] = useState("");
@@ -69,14 +77,21 @@ export default function ProductCatalogue({ products }: { products: WebshopProduc
                   className="surface-card group overflow-hidden rounded-2xl flex flex-col min-w-0"
                 >
                   <div className="relative aspect-[4/3] bg-[#f8fafc] border-b border-[#edf1f5]">
-                    <Image
-                      src={product.image}
-                      alt={product.partNumber}
-                      fill
-                      unoptimized
-                      sizes="(max-width: 768px) 50vw, (max-width: 1100px) 33vw, 25vw"
-                      className="object-contain p-4 sm:p-6 transition-transform duration-300 group-hover:scale-105"
-                    />
+                    {cleanImage(product.image) ? (
+                      <Image
+                        src={cleanImage(product.image)!}
+                        alt={product.partNumber}
+                        fill
+                        unoptimized
+                        sizes="(max-width: 768px) 50vw, (max-width: 1100px) 33vw, 25vw"
+                        className="object-contain p-4 sm:p-6 transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                        <Package size={26} strokeWidth={1.4} className="text-[#cbd5e1]" />
+                        <span className="text-[11px] font-medium text-[#94a3b8]">No image available</span>
+                      </div>
+                    )}
                   </div>
                   <div className="p-4 sm:p-5 flex flex-col flex-1">
                     <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#64748b]">

@@ -12,8 +12,10 @@ const equipmentCatalogueRoutes: Record<string, string> = {
   "stripping-machines": "/webshop/production-equipment/stripping-machines.html",
   "crimping-equipment": "/webshop/production-equipment/crimping-equipment.html",
   "ultrasonic-welding": "/webshop/production-equipment/ultrasonic-welding.html",
-  "quality-assurance": "/webshop/production-equipment/misc-equipment.html",
-  "test-systems": "/webshop/production-equipment/misc-equipment.html",
+  // Previously pointed into Misc. Equipment (now hidden); fall back to the
+  // production-equipment root until these have a dedicated hub.
+  "quality-assurance": "/webshop/production-equipment.html",
+  "test-systems": "/webshop/production-equipment.html",
 };
 
 export async function generateStaticParams() {

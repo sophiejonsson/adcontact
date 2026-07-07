@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Archive, Clock, Download, FileImage, FileText, Mail, Package, Phone } from "lucide-react";
+import { ArrowRight, Archive, Check, Clock, Download, FileImage, FileText, Mail, Package, Phone } from "lucide-react";
 import QuoteForm from "@/components/QuoteForm";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { brands } from "@/data/brands";
@@ -12,6 +12,7 @@ import {
   getProductBreadcrumbs,
   productDisplaySku,
   titleForProduct,
+  PRODUCT_PRESENTATIONS,
   type CatalogueProduct,
 } from "@/lib/magentoCatalogue";
 
@@ -30,6 +31,9 @@ const RELATIONSHIP_ATTRIBUTES = new Set(
 
 function magentoImageSrc(path: string | null | undefined): string | null {
   if (!path) return null;
+  // Treat Magento's "no photo" placeholder as no image, so the clean fallback
+  // shows instead of the dated placeholder graphic.
+  if (/no_photo|placeholder/i.test(path)) return null;
   if (path.startsWith("/")) return path;
   return path;
 }
@@ -132,6 +136,16 @@ export default function CatalogueProductPage({
   const additionalInfo = attributes.filter(([label]) => !RELATIONSHIP_ATTRIBUTES.has(label));
   const highlights = attributes.slice(0, 6);
   const breadcrumbs = getProductBreadcrumbs(product);
+  // Production-equipment products: no lead-time badge, no "Additional
+  // information" table, no attribute highlight boxes.
+  const isProductionEquipment = breadcrumbs.some((c) => c.route?.includes("/production-equipment"));
+  // Curated Features + Specifications boxes (replaces the free-text description).
+  const presentation = PRODUCT_PRESENTATIONS[product.id];
+  // For production equipment full specs are supplied with the quotation, so the
+  // quote CTA doubles as the "full specification on request" ask.
+  const quoteLabel = isProductionEquipment
+    ? "Request full specification and a quote"
+    : "Request a quote";
   const primaryImage = magentoImageSrc(product.image ?? product.gallery[0] ?? product.thumbnail);
   const title = titleForProduct(product);
   const showSkuEyebrow = sku !== title && sku !== product.name;
@@ -183,8 +197,9 @@ export default function CatalogueProductPage({
                 className="object-contain p-8"
               />
             ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Package size={64} className="text-[#d1d5db]" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 bg-[#f8fafc]">
+                <Package size={52} strokeWidth={1.4} className="text-[#cbd5e1]" />
+                <span className="text-xs font-medium text-[#94a3b8]">No image available</span>
               </div>
             )}
           </div>
@@ -215,15 +230,17 @@ export default function CatalogueProductPage({
               </p>
             )}
 
-            {/* Lead time */}
-            <div className="mt-5 flex w-fit items-center gap-2 rounded-lg border border-[#dcfce7] bg-[#f0fdf4] p-3">
-              <Clock size={14} className="text-emerald-600" />
-              <span className="text-sm font-semibold text-emerald-700">
-                Generally high availability — ask for current lead time
-              </span>
-            </div>
+            {/* Lead time (hidden for production equipment) */}
+            {!isProductionEquipment && (
+              <div className="mt-5 flex w-fit items-center gap-2 rounded-lg border border-[#dcfce7] bg-[#f0fdf4] p-3">
+                <Clock size={14} className="text-emerald-600" />
+                <span className="text-sm font-semibold text-emerald-700">
+                  Generally high availability — ask for current lead time
+                </span>
+              </div>
+            )}
 
-            {highlights.length > 0 && (
+            {highlights.length > 0 && !isProductionEquipment && (
               <div className="mt-8 grid grid-cols-2 gap-3">
                 {highlights.map(([label, value]) => (
                   <div key={label} className="rounded-lg border border-[#e5e7eb] bg-white p-3">
@@ -241,10 +258,10 @@ export default function CatalogueProductPage({
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 href="#quote"
-                className="btn-elevate btn-elevate-amber inline-flex items-center justify-center gap-2 rounded-lg bg-[#f59e0b] px-6 py-3.5 font-semibold text-[#0a1628] hover:bg-[#d97706]"
+                className="btn-elevate btn-elevate-amber inline-flex items-center justify-center gap-2 rounded-lg bg-[#f59e0b] px-6 py-3.5 text-center font-semibold text-[#0a1628] hover:bg-[#d97706]"
               >
-                Request a quote
-                <ArrowRight size={15} />
+                {quoteLabel}
+                <ArrowRight size={15} className="flex-none" />
               </a>
               <a
                 href="/contact"
@@ -266,7 +283,7 @@ export default function CatalogueProductPage({
 
         <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
           <div className="space-y-6">
-            {additionalInfo.length > 0 && (
+            {additionalInfo.length > 0 && !isProductionEquipment && (
               <section>
                 <h2 className="mb-3 text-base font-bold text-[#0a1628]">Additional information</h2>
                 <div className="overflow-hidden rounded-xl border border-[#e5e7eb] bg-white">
@@ -300,17 +317,48 @@ export default function CatalogueProductPage({
               />
             ))}
 
-            {description && (
-              <section>
-                <h2 className="mb-4 text-lg font-bold text-[#0a1628]">Description</h2>
-                <div
-                  className="prose prose-sm max-w-none rounded-xl border border-[#e5e7eb] bg-white px-5 py-4 text-[#374151]"
-                  dangerouslySetInnerHTML={{ __html: description }}
-                />
-              </section>
+            {presentation ? (
+              <div className={presentation.specifications.length > 0 ? "grid gap-6 md:grid-cols-2" : ""}>
+                <section className="rounded-xl border border-[#e5e7eb] bg-white p-5">
+                  <h2 className="mb-3 text-base font-bold text-[#0a1628]">Features</h2>
+                  <ul className="space-y-2.5">
+                    {presentation.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2 text-sm leading-6 text-[#374151]">
+                        <Check size={15} className="mt-0.5 flex-none text-[#2563eb]" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+                {presentation.specifications.length > 0 && (
+                  <section className="rounded-xl border border-[#e5e7eb] bg-white p-5">
+                    <h2 className="mb-3 text-base font-bold text-[#0a1628]">Specifications</h2>
+                    <dl className="divide-y divide-[#f1f5f9] text-sm">
+                      {presentation.specifications.map((spec) => (
+                        <div key={spec.label} className="flex justify-between gap-4 py-2">
+                          <dt className="flex-none text-[#64748b]">{spec.label}</dt>
+                          <dd className="text-right font-semibold text-[#0a1628]">{spec.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </section>
+                )}
+              </div>
+            ) : (
+              description && (
+                <section>
+                  <h2 className="mb-4 text-lg font-bold text-[#0a1628]">
+                    {isProductionEquipment ? "Specification" : "Description"}
+                  </h2>
+                  <div
+                    className="prose prose-sm max-w-none rounded-xl border border-[#e5e7eb] bg-white px-5 py-4 text-[#374151]"
+                    dangerouslySetInnerHTML={{ __html: description }}
+                  />
+                </section>
+              )
             )}
 
-            {product.files.length > 0 && (
+            {product.files.length > 0 && !isProductionEquipment && (
               <section>
                 <h2 className="mb-3 text-base font-bold text-[#0a1628]">Drawings</h2>
                 <div className="space-y-2">
@@ -347,7 +395,7 @@ export default function CatalogueProductPage({
             <div className="lg:sticky lg:top-[168px]">
               <QuoteForm
                 defaultPartNumber={sku}
-                title={`Request a quote for ${sku}`}
+                title={`${quoteLabel} for ${sku}`}
               />
             </div>
           </aside>

@@ -5,6 +5,14 @@ import Image from "next/image";
 import { Search, X, ChevronDown, Filter, ArrowRight, Package, Layers } from "lucide-react";
 import { productDetailHref } from "@/lib/productHref";
 
+// Treat Magento's "no photo"/placeholder graphic as no image, so the clean
+// fallback shows instead of the dated "image coming soon" placeholder.
+function cleanImage(path: string | null | undefined): string | null {
+  if (!path) return null;
+  if (/no_photo|placeholder/i.test(path)) return null;
+  return path;
+}
+
 export type CatalogueProduct = {
   partNumber: string;
   href: string;
@@ -235,9 +243,9 @@ export default function BrandCatalogue({
                 className="group flex flex-col overflow-hidden rounded-xl border border-[#e5e7eb] bg-white text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#bfdbfe] hover:shadow-[0_16px_30px_-16px_rgba(15,23,42,0.2)]"
               >
                 <div className="relative aspect-[4/3] w-full bg-white">
-                  {c.image ? (
+                  {cleanImage(c.image) ? (
                     <Image
-                      src={c.image}
+                      src={cleanImage(c.image)!}
                       alt={c.label}
                       fill
                       className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
@@ -396,9 +404,9 @@ export default function BrandCatalogue({
                         className="group bg-white border border-[#e5e7eb] rounded-xl overflow-hidden hover:border-[#2563eb] hover:shadow-[0_4px_16px_rgba(37,99,235,0.12)] transition-all duration-200 flex flex-col"
                       >
                         <div className="relative h-40 bg-[#f8fafc] overflow-hidden flex-shrink-0">
-                          {product.image ? (
+                          {cleanImage(product.image) ? (
                             <Image
-                              src={product.image}
+                              src={cleanImage(product.image)!}
                               alt={product.partNumber}
                               fill
                               className="object-contain p-3 group-hover:scale-105 transition-transform duration-300"
@@ -406,8 +414,9 @@ export default function BrandCatalogue({
                               unoptimized
                             />
                           ) : (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <Package size={22} className="text-[#d1d5db]" />
+                            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                              <Package size={26} strokeWidth={1.4} className="text-[#cbd5e1]" />
+                              <span className="text-[11px] font-medium text-[#94a3b8]">No image available</span>
                             </div>
                           )}
                         </div>
