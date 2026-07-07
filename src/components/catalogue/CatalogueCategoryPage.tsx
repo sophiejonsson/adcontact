@@ -1398,10 +1398,12 @@ export default function CatalogueCategoryPage({
                   href={w.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+                  className="group flex min-h-[176px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
                 >
                   {/* Branson template: picture LEFT (w-28 / sm:w-40, fills the
-                      card height), text RIGHT — identical on every brand page. */}
+                      card height), text RIGHT. A shared min-height keeps every
+                      2-box page the same size (Wezag baseline); pages with more
+                      copy, e.g. Branson, grow a touch taller. */}
                   <div className={`relative w-28 flex-none sm:w-40 ${w.fit === "contain" ? "bg-white" : "bg-[#f8fafc]"}`}>
                     <Image
                       src={w.image}
@@ -1416,7 +1418,7 @@ export default function CatalogueCategoryPage({
                       }`}
                     />
                   </div>
-                  <div className="flex min-w-0 flex-1 flex-col p-4">
+                  <div className="flex min-w-0 flex-1 flex-col justify-center p-4">
                     <h3 className="text-sm font-bold text-[#0a1628] group-hover:text-[#2563eb] sm:text-base">
                       {w.label}
                     </h3>
