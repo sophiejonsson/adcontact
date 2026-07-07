@@ -226,7 +226,7 @@ const TEKUWA_SOURCING_CTA = {
   mailtoSubject: "Tekuwa cutting & stripping: application enquiry",
   primaryLabel: "Send us your application",
   catalogueLabel: "View Tekuwa range",
-  catalogueUrl: "https://tekuwa.de/en/",
+  catalogueUrl: "https://tekuwa.de/en/machines/",
 } as const;
 
 const CATEGORY_SOURCING_CTA: Record<
