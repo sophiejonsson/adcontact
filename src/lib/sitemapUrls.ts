@@ -1,6 +1,9 @@
-import categoriesJson from "@/data/generated/magento-catalogue/categories.json";
-import productsJson from "@/data/generated/magento-catalogue/products.json";
 import routesJson from "@/data/generated/magento-catalogue/routes.json";
+import {
+  getCatalogueCategory,
+  getCatalogueProduct,
+  PRODUCT_CANONICAL_ROUTES,
+} from "@/lib/magentoCatalogue";
 import { deutschProducts } from "@/data/deutschConnectors";
 import { resources } from "@/data/resources";
 import { brands } from "@/data/brands";
@@ -10,12 +13,7 @@ import { brands } from "@/data/brands";
 export const SITEMAP_CHUNK_SIZE = 45000;
 
 type Route = { type: "product" | "category"; id: number };
-type MinimalCategory = { isActive: boolean };
-type MinimalProduct = { status: string; sku: string | null; name: string };
-
 const routes = routesJson as unknown as Record<string, Route>;
-const categories = categoriesJson as unknown as Record<string, MinimalCategory>;
-const products = productsJson as unknown as Record<string, MinimalProduct>;
 
 export type SitemapEntry = {
   path: string;
@@ -69,7 +67,13 @@ let cached: SitemapEntry[] | null = null;
 /** Builds the full, deduplicated set of canonical URLs the site should expose
  *  to search engines, computed once per server process and cached — the
  *  underlying JSON is large (products.json alone is ~33MB) so this must not
- *  be recomputed per sitemap chunk request. */
+ *  be recomputed per sitemap chunk request.
+ *
+ *  Deliberately goes through getCatalogueCategory()/getCatalogueProduct()
+ *  rather than reading the generated JSON directly, so it automatically stays
+ *  in sync with HIDDEN_CATEGORY_IDS, HIDDEN_PRODUCT_IDS, PRODUCT_OVERRIDES and
+ *  CATEGORY_CANONICAL_ROUTES (all applied inside those accessors) without
+ *  duplicating that logic here. */
 export function getAllSitemapEntries(): SitemapEntry[] {
   if (cached) return cached;
 
@@ -84,13 +88,28 @@ export function getAllSitemapEntries(): SitemapEntry[] {
 
   for (const [path, route] of Object.entries(routes)) {
     if (route.type === "category") {
-      const category = categories[String(route.id)];
-      if (category?.isActive) add({ path, priority: 0.7, changeFrequency: "weekly" });
+      // getCatalogueCategory() returns undefined for HIDDEN_CATEGORY_IDS, and
+      // rewrites .route to the CATEGORY_CANONICAL_ROUTES target when the
+      // category was renamed — so every legacy path variant for a renamed
+      // category collapses onto its one canonical URL here.
+      const category = getCatalogueCategory(route.id);
+      if (category?.route) add({ path: category.route, priority: 0.7, changeFrequency: "weekly" });
       continue;
     }
 
-    const product = products[String(route.id)];
-    if (!product || product.status !== "enabled") continue;
+    // getCatalogueProduct() returns undefined for disabled products,
+    // HIDDEN_PRODUCT_IDS, and products living only in a hidden category tree.
+    const product = getCatalogueProduct(route.id);
+    if (!product) continue;
+
+    // A handful of products were given a single canonical URL (renamed brand
+    // path, deduped duplicate slug) — the product page 301-redirects every
+    // other route to it, so list only the canonical one.
+    const canonicalRoute = PRODUCT_CANONICAL_ROUTES[route.id];
+    if (canonicalRoute) {
+      add({ path: canonicalRoute, priority: 0.5, changeFrequency: "monthly" });
+      continue;
+    }
 
     if (path.startsWith("/webshop/")) {
       const redirectTarget = deutschRedirectTarget(product.sku, product.name);
