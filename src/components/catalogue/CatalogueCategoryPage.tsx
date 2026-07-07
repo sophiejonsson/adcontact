@@ -160,6 +160,8 @@ const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
     "Tekuwa develops and manufactures high-precision cutting and cable processing machines suitable for almost any material. Their range includes cutting-to-length machines, combined cutting and stripping systems, jacket removal equipment, automatic feeding and rewinding units, and complete production line configurations.",
   76:
     "We supply Mav Prüftechnik's pull-force and compression testing machines for quality assurance in cable and harness manufacturing. Since 1962, Mav has built manual and motorised test stations measuring tensile and compressive forces up to 10,000 N, the standard for crimp pull-force verification, all developed and produced in Germany with calibration software.",
+  111:
+    "Mecal, with a leading market position serving a wide range of industries, designs and manufactures applicators, bench-top presses and strip- and crimp machines. Their semi-automatic systems integrate easily into fully automatic lines or manual workstations, and are used for high-volume wire harness production, with integrated quality monitoring, applicator change systems, and pull-force testing options.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
@@ -185,6 +187,8 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   101: { src: "/media/tekuwa/hub-header.jpg", fit: "cover" },
   // Mav Prüftechnik — KMG force-tester display (contained on the white card).
   76: { src: "/media/mav/hub-header.jpg", fit: "contain" },
+  // Mecal — facility photo (wide, fills the frame).
+  111: { src: "/media/mecal/hub-header.jpg", fit: "cover" },
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
@@ -244,6 +248,15 @@ const MAV_SOURCING_CTA = {
   catalogueUrl: "https://www.mav-germany.de/home.html",
 } as const;
 
+const MECAL_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Mecal's complete range of applicators, crimping presses and strip-and-crimp machines. Tell us about your application and we'll help you find the right solution, or browse Mecal's full range.",
+  mailtoSubject: "Mecal crimping equipment: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Mecal range",
+  catalogueUrl: "https://mecal.net/en/products/",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
@@ -255,6 +268,7 @@ const CATEGORY_SOURCING_CTA: Record<
   100: ULMER_SOURCING_CTA, // Ulmer cutting brand page
   101: TEKUWA_SOURCING_CTA, // Tekuwa cutting & stripping brand page
   76: MAV_SOURCING_CTA, // Mav Prüftechnik test-equipment page
+  111: MECAL_SOURCING_CTA, // Mecal crimping equipment brand page
 };
 
 // Presentational "link boxes" shown at the top of a hub — an image + short
@@ -413,6 +427,42 @@ const MAV_LINK_BOXES: CategoryLinkBox[] = [
   },
 ];
 
+// Mecal — a lean page with three boxes (applicators, crimping machines, strip &
+// crimp). Copy supplied by the customer (Mecal's own descriptions). Square
+// product shots on white → "contain" so the whole machine shows.
+const MECAL_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Applicators",
+    href: "https://mecal.net/en/products/applicators/",
+    image: "/media/mecal/applicators.jpg",
+    ctaLabel: "View at Mecal",
+    fit: "contain",
+    description: [
+      "We supply their complete range of applicators for linked terminals on a reel. It can be supplied either with a continuous or a fourpad regulating head and it's fitted with a non-resettable 7-digit cycle counter, and with both cams either for terminal feeding on upstroke or downstroke. An applicator from Mecal can be fitted to any stand alone crimping bench-top press or a fully automatic machine configuration.",
+    ],
+  },
+  {
+    label: "Crimping machines",
+    href: "https://mecal.net/en/products/crimping-machines/",
+    image: "/media/mecal/crimping.jpg",
+    ctaLabel: "View at Mecal",
+    fit: "contain",
+    description: [
+      "We supply their complete range of crimping machine for manufacturers seeking reliability and simplicity in production. It ensures precise and consistent crimps on electrical terminals, even in high-intensity cycles. It's compact and robust, and integrates easily into automatic lines or manual workstations, offering safety and excellent visibility. Its versatility allows customization and the use of numerous accessories to meet diverse production requirements.",
+    ],
+  },
+  {
+    label: "Stripping and crimping machines",
+    href: "https://mecal.net/en/products/strip-and-crimp/",
+    image: "/media/mecal/strip-crimp.jpg",
+    ctaLabel: "View at Mecal",
+    fit: "contain",
+    description: [
+      "We supply their complete range of Stripping and crimping machines. Ideal solution for precise single-wire processing. It integrates linear stripping and crimping in a fully programmable cycle, ensuring high repeatability and maximum flexibility. Perfect for versatile production, multi-core cables and applications requiring fast changeovers and full process control.",
+    ],
+  },
+];
+
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
@@ -421,13 +471,14 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES },
   101: { eyebrow: "Tekuwa cutting & stripping machines", boxes: TEKUWA_LINK_BOXES },
   76: { eyebrow: "Mav force testers", boxes: MAV_LINK_BOXES },
+  111: { eyebrow: "Mecal crimping equipment", boxes: MECAL_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
 // sourcing box) with NO product grid/filter — mirrors the Zoller & Fröhlich
 // approach. Wezag (110): its catalogue products are outdated / low-volume, so we
 // surface only the trusted-partner brand page.
-const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 76]);
+const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 76, 111]);
 
 // "Browse by series" configuration for the brand hubs whose products carry a
 // "Series" attribute. Each hub defines where its series live and how to
@@ -1391,7 +1442,7 @@ export default function CatalogueCategoryPage({
                 ))}
               </div>
             ) : (
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className={`mt-4 grid gap-4 sm:grid-cols-2 ${categoryLinkSection.boxes.length >= 3 ? "lg:grid-cols-3" : ""}`}>
               {categoryLinkSection.boxes.map((w) => (
                 <a
                   key={w.label}

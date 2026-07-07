@@ -107,6 +107,9 @@ export const productionEquipmentGroup: NavGroup = {
       label: "Stripping and crimping machines",
       href: "/products/zoller-frohlich/wire-processing",
       children: [
+        // Mecal's strip-and-crimp machines; its hub also covers applicators and
+        // crimping presses, so it is listed under Crimping machines and tools too.
+        { label: "Mecal", href: "/webshop/production-equipment/crimping-equipment/mecal.html" },
         { label: "Zoller & Fröhlich", href: "/products/zoller-frohlich/wire-processing" },
       ],
     },
