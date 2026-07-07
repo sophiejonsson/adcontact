@@ -183,6 +183,8 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   100: { src: "/media/ulmer/hub-header.jpg", fit: "cover" },
   // Tekuwa — engineering/craftsmanship photo (3:2, fills the frame).
   101: { src: "/media/tekuwa/hub-header.jpg", fit: "cover" },
+  // Mav Prüftechnik — KMG force-tester display (contained on the white card).
+  76: { src: "/media/mav/hub-header.jpg", fit: "contain" },
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
@@ -239,7 +241,7 @@ const MAV_SOURCING_CTA = {
   mailtoSubject: "Mav Prüftechnik test equipment: application enquiry",
   primaryLabel: "Send us your application",
   catalogueLabel: "View Mav range",
-  catalogueUrl: "https://www.mav-germany.de/",
+  catalogueUrl: "https://www.mav-germany.de/home.html",
 } as const;
 
 const CATEGORY_SOURCING_CTA: Record<
@@ -386,6 +388,31 @@ const TEKUWA_LINK_BOXES: CategoryLinkBox[] = [
   },
 ];
 
+// Mav Prüftechnik — two boxes (manual + motorized force testers). Copy supplied
+// by the customer (Mav's own descriptions).
+const MAV_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Manual force testers",
+    href: "https://www.mav-germany.de/Products/Manual-Devices/manual-devices.html",
+    image: "/media/mav/manual.jpg",
+    ctaLabel: "View at Mav",
+    fit: "cover",
+    description: [
+      "Manually operated MAV-testers provide a fast and inexpensive option to carry out pull-off force tests with loads up to 1,000 N.",
+    ],
+  },
+  {
+    label: "Motorized force testers",
+    href: "https://www.mav-germany.de/Products/Motorized-Devices/motorized-devices.html",
+    image: "/media/mav/motorized.jpg",
+    ctaLabel: "View at Mav",
+    fit: "cover",
+    description: [
+      "Motorized MAV-force testers are a reliable way to determine tensile and compressive forces up to 10,000 N due to their constant testing speeds.",
+    ],
+  },
+];
+
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
@@ -393,6 +420,7 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES },
   100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES },
   101: { eyebrow: "Tekuwa cutting & stripping machines", boxes: TEKUWA_LINK_BOXES },
+  76: { eyebrow: "Mav force testers", boxes: MAV_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
