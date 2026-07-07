@@ -67,7 +67,7 @@ const industrialComponentsGroup: NavGroup = {
   ],
 };
 
-const productionEquipmentGroup: NavGroup = {
+export const productionEquipmentGroup: NavGroup = {
   label: "Production Equipment",
   href: "/webshop/production-equipment.html",
   items: [
