@@ -871,7 +871,9 @@ function BrandBoxCard({
   const external = /^https?:\/\//.test(href);
   const meta =
     count != null
-      ? `${count.toLocaleString()} items${areas > 0 ? ` · ${areas} areas` : ""}`
+      ? `${count.toLocaleString()} item${count === 1 ? "" : "s"}${
+          areas > 0 ? ` · ${areas} area${areas === 1 ? "" : "s"}` : ""
+        }`
       : "View brand";
   const inner = (
     <>
