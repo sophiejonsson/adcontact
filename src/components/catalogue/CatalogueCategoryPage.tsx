@@ -16,6 +16,7 @@ import {
 import { normalizeLegacyHtml } from "@/lib/legacyHtml";
 import { categoryIntro } from "@/lib/seo";
 import { brands } from "@/data/brands";
+import { getMenuBrandHub, type BrandBox } from "@/data/navigation";
 import { deutschProducts } from "@/data/deutschConnectors";
 import {
   DEUTSCH_SERIES_CATEGORY_ROUTE,
@@ -510,6 +511,23 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
 // surface only the trusted-partner brand page.
 const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 76, 111]);
 
+// Categories/section-roots that render the menu-derived brand-box landing
+// (see getMenuBrandHub) instead of a product grid. Rolling out one at a time:
+// Connectors (43) is the reference. Widen this set to convert more hubs.
+const BRAND_HUB_CATEGORY_IDS = new Set([43]);
+
+// Per-page logo overrides for individual brand boxes, keyed by category id then
+// by the brand box's slug (last URL segment). Used where a box needs a
+// different logo than the brand's global brands.ts logo, scoped to one page.
+// Connectors (43): the customer supplied a fresh TE tile (swap here only), and
+// Deutsch must keep its existing correct mark (its global logo is wrong).
+const BRAND_BOX_LOGO_OVERRIDES: Record<number, Record<string, string>> = {
+  43: {
+    "te-connectivity": "/media/brand-logos/te-connectivity.jpg",
+    deutsch: "/media/wysiwyg/infortis/ultimo/category_images/Deutsch.jpg",
+  },
+};
+
 // "Browse by series" configuration for the brand hubs whose products carry a
 // "Series" attribute. Each hub defines where its series live and how to
 // present them.
@@ -836,6 +854,47 @@ function CategoryVisualLinkCard({
   );
 }
 
+// A single brand box on a menu-derived hub landing: brand logo on a white
+// panel + label + arrow, linking to that brand's page.
+function BrandBoxCard({ label, href, logo }: { label: string; href: string; logo?: string }) {
+  const external = /^https?:\/\//.test(href);
+  const inner = (
+    <>
+      <div className="relative flex min-h-32 items-center justify-center border-b border-[#eef2f7] bg-white">
+        {logo ? (
+          <Image
+            src={logo}
+            alt={label}
+            fill
+            unoptimized
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 280px"
+            className="object-contain p-6 transition-transform group-hover:scale-105"
+          />
+        ) : (
+          <Boxes size={34} strokeWidth={1.6} className="text-[#2563eb]" />
+        )}
+      </div>
+      <div className="flex items-center justify-between gap-3 p-4">
+        <h3 className="text-base font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
+          {label}
+        </h3>
+        <ArrowRight size={15} className="flex-none text-[#2563eb]" />
+      </div>
+    </>
+  );
+  const className =
+    "group grid min-h-[188px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]";
+  return external ? (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      {inner}
+    </a>
+  ) : (
+    <Link href={href} className={className}>
+      {inner}
+    </Link>
+  );
+}
+
 function ImageShowcase({ images, title }: { images: string[]; title: string }) {
   if (images.length === 0) return null;
 
@@ -1087,10 +1146,17 @@ export default function CatalogueCategoryPage({
   // Lean partner landing (e.g. Wezag): no product grid/filter, just header +
   // link boxes + sourcing box.
   const hideProductGrid = HIDE_PRODUCT_GRID_CATEGORY_IDS.has(category.id);
-  const showProductBrowser = !hideProductGrid && productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub || isLeafOfFlatHub);
+  // Menu-derived brand-box landing (see getMenuBrandHub): a category shows one
+  // box per brand under it; a section root shows brands grouped by category.
+  // When active it replaces the product grid, category cards and visual links.
+  const brandHub = BRAND_HUB_CATEGORY_IDS.has(category.id)
+    ? getMenuBrandHub(category.route)
+    : undefined;
+  const brandHubActive = Boolean(brandHub);
+  const showProductBrowser = !brandHubActive && !hideProductGrid && productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub || isLeafOfFlatHub);
   // Suppress visual link cards on descendant hubs — the product browser with brand
   // filters replaces them, just like isFlatHub pages show no category cards.
-  const showVisualLinks = content.visualLinks.length > 0 && !isDescendantHub;
+  const showVisualLinks = !brandHubActive && content.visualLinks.length > 0 && !isDescendantHub;
 
   // When the category has exactly one child that carries no direct products but
   // itself has sub-categories, flatten one level so those sub-categories appear
@@ -1122,7 +1188,7 @@ export default function CatalogueCategoryPage({
   // product browser directly with subcategory options injected as a "Category"
   // filter facet — Zalando-style: grid first, filters on the left.
   const showGenericCategoryCards =
-    !showVisualLinks && !isFlatHub && !isDescendantHub && !isSingleLeafPassthrough &&
+    !brandHubActive && !showVisualLinks && !isFlatHub && !isDescendantHub && !isSingleLeafPassthrough &&
     displayChildren.length > 0;
 
   // For descendant hubs: build subcategory filter options. Product-bearing
@@ -1291,6 +1357,46 @@ export default function CatalogueCategoryPage({
       )}
     </>
   );
+
+  // Menu-derived brand-box landing. A per-page logo override (BRAND_BOX_LOGO_
+  // OVERRIDES) wins over the brand's global logo, scoped to this category.
+  const resolveBrandBox = (b: BrandBox) => ({
+    label: b.label,
+    href: b.href,
+    logo: BRAND_BOX_LOGO_OVERRIDES[category.id]?.[b.slug] ?? b.logo,
+  });
+  const brandHubBlock = brandHub ? (
+    <section className="mb-14">
+      {brandHub.type === "category" ? (
+        <>
+          <div className="mb-6">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
+              Brands
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">{`Browse ${title}`}</h2>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {brandHub.brands.map((b) => (
+              <BrandBoxCard key={`${b.href}-${b.label}`} {...resolveBrandBox(b)} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="space-y-10">
+          {brandHub.groups.map((g) => (
+            <div key={g.label}>
+              <h2 className="mb-4 text-lg font-bold text-[#0a1628]">{g.label}</h2>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {g.brands.map((b) => (
+                  <BrandBoxCard key={`${b.href}-${b.label}`} {...resolveBrandBox(b)} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  ) : null;
 
   // "Browse by series" — on brand hubs (DEUTSCH, TE Connectivity) whose products
   const breadcrumbCrumbs =
@@ -1538,8 +1644,11 @@ export default function CatalogueCategoryPage({
           </section>
         )}
 
+        {/* Menu-derived brand-box landing (replaces the grid/cards on hub pages). */}
+        {brandHubBlock}
+
         {/* Decorative series banner images shown only when there is no series section */}
-        {remainingImages.length > 0 && !showSeries && (
+        {!brandHubActive && remainingImages.length > 0 && !showSeries && (
           <ImageShowcase images={remainingImages} title={title} />
         )}
 
@@ -1547,7 +1656,7 @@ export default function CatalogueCategoryPage({
             below the product grid (see categoriesBelowProducts). */}
         {!categoriesBelowProducts && categoryCardsBlock}
 
-        {content.html && (
+        {!brandHubActive && content.html && (
           <section className="mb-12">
             <div
               className="prose prose-sm max-w-none rounded-lg border border-[#e5e7eb] bg-white px-6 py-5 text-[#374151]"

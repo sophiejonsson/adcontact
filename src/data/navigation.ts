@@ -1,3 +1,5 @@
+import { brands, type Brand } from "./brands";
+
 export type NavItem = {
   label: string;
   href: string;
@@ -160,6 +162,79 @@ export const megaMenuSections: MegaMenuSection[] = [
     variant: "catalogue-tree",
   },
 ];
+
+// ── Menu-derived brand-box landings ────────────────────────────────────
+// Every clickable dropdown entry should render a consistent "brand-box"
+// landing (one box per brand under it), NOT a raw product grid. The boxes are
+// derived from the menu tree here + each brand's logo from brands.ts, so they
+// stay complete and correct automatically (single source of truth, like the
+// footer). A category -> its brand boxes; a section root -> its brands grouped
+// by category. Consumed by CatalogueCategoryPage.
+
+// Nav-child href/label -> brand slug, for the few whose URL segment doesn't
+// match a brands.ts slug (misspelled route, repurposed hub).
+const NAV_BRAND_ALIASES: Record<string, string> = {
+  "feintechnik-rittmyer": "feintechnik-rittmeyer", // route keeps the data's misspelling
+  "test-quality": "mav", // Test & Quality hub repurposed as the Mav page
+  "wire-processing": "zoller-frohlich", // Z+F lean landing under /products
+};
+
+function brandForNavItem(item: NavItem): Brand | undefined {
+  const segments = item.href
+    .split("/")
+    .filter(Boolean)
+    .map((s) => s.replace(/\.html$/, ""));
+  for (let i = segments.length - 1; i >= 0; i--) {
+    const key = NAV_BRAND_ALIASES[segments[i]] ?? segments[i];
+    const brand = brands.find((b) => b.slug === key && b.logo);
+    if (brand) return brand;
+  }
+  return brands.find((b) => b.name === item.label);
+}
+
+export type BrandBox = { label: string; href: string; slug: string; logo?: string };
+export type BrandHub =
+  | { type: "category"; label: string; brands: BrandBox[] }
+  | { type: "section"; groups: { label: string; brands: BrandBox[] }[] };
+
+function toBrandBox(item: NavItem): BrandBox {
+  const slug = item.href.split("/").filter(Boolean).pop()?.replace(/\.html$/, "") ?? "";
+  return { label: item.label, href: item.href, slug, logo: brandForNavItem(item)?.logo };
+}
+
+const normalizeRoute = (route: string) => route.replace(/\/+$/, "").toLowerCase();
+
+// Given a page route, return the brand-box landing it should render (or
+// undefined if this route isn't a menu section/category).
+export function getMenuBrandHub(route: string | null | undefined): BrandHub | undefined {
+  if (!route) return undefined;
+  const target = normalizeRoute(route);
+  const sections = [industrialComponentsGroup, productionEquipmentGroup];
+  // Section root (Industrial Components / Production Equipment) -> grouped.
+  for (const section of sections) {
+    if (section.href && normalizeRoute(section.href) === target) {
+      return {
+        type: "section",
+        groups: section.items
+          .filter((item) => (item.children?.length ?? 0) > 0)
+          .map((item) => ({ label: item.label, brands: item.children!.map(toBrandBox) })),
+      };
+    }
+  }
+  // A category (Connectors, Cutting Machines, ...) -> its brand boxes. Skip a
+  // single-brand category whose only child is the category's own page (e.g. the
+  // Mav/test-quality hub), which would just self-link.
+  for (const section of sections) {
+    for (const item of section.items) {
+      if (normalizeRoute(item.href) === target && (item.children?.length ?? 0) > 0) {
+        const kids = item.children!.filter((c) => normalizeRoute(c.href) !== target);
+        if (kids.length === 0) return undefined;
+        return { type: "category", label: item.label, brands: kids.map(toBrandBox) };
+      }
+    }
+  }
+  return undefined;
+}
 
 export const topNavItems: NavItem[] = [
   { label: "Trusted Partners", href: "/brands" },
