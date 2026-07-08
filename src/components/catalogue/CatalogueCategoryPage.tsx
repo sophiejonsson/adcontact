@@ -10,6 +10,7 @@ import {
   getCategoryProducts,
   getCategoryAllProducts,
   getCatalogueCategory,
+  resolveCatalogueRoute,
   type CatalogueCategory,
   type CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
@@ -511,21 +512,19 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
 // surface only the trusted-partner brand page.
 const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 76, 111]);
 
-// Categories/section-roots that render the menu-derived brand-box landing
-// (see getMenuBrandHub) instead of a product grid. Rolling out one at a time:
-// Connectors (43) is the reference. Widen this set to convert more hubs.
-const BRAND_HUB_CATEGORY_IDS = new Set([43]);
-
 // Per-page logo overrides for individual brand boxes, keyed by category id then
-// by the brand box's slug (last URL segment). Used where a box needs a
-// different logo than the brand's global brands.ts logo, scoped to one page.
-// Connectors (43): the customer supplied a fresh TE tile (swap here only), and
-// Deutsch must keep its existing correct mark (its global logo is wrong).
+// by the brand box's slug (last URL segment). Scoped to one page. Connectors
+// (43): the customer supplied a fresh TE tile — swap it here only, per request.
 const BRAND_BOX_LOGO_OVERRIDES: Record<number, Record<string, string>> = {
-  43: {
-    "te-connectivity": "/media/brand-logos/te-connectivity.jpg",
-    deutsch: "/media/wysiwyg/infortis/ultimo/category_images/Deutsch.jpg",
-  },
+  43: { "te-connectivity": "/media/brand-logos/te-connectivity.jpg" },
+};
+
+// Logo fixes applied to a brand box wherever it appears (NOT the global
+// brands.ts logo). Deutsch's brands.ts logo is the shared TE mark (a latent
+// bug) — show Deutsch's correct mark in every brand box so it never renders a
+// TE logo. brands.ts itself is left untouched per the user.
+const BRAND_BOX_LOGO_GLOBAL: Record<string, string> = {
+  deutsch: "/media/wysiwyg/infortis/ultimo/category_images/Deutsch.jpg",
 };
 
 // "Browse by series" configuration for the brand hubs whose products carry a
@@ -855,9 +854,25 @@ function CategoryVisualLinkCard({
 }
 
 // A single brand box on a menu-derived hub landing: brand logo on a white
-// panel + label + arrow, linking to that brand's page.
-function BrandBoxCard({ label, href, logo }: { label: string; href: string; logo?: string }) {
+// panel + label + a footer showing the brand's catalogue-item count + arrow.
+function BrandBoxCard({
+  label,
+  href,
+  logo,
+  count,
+  areas = 0,
+}: {
+  label: string;
+  href: string;
+  logo?: string;
+  count?: number | null;
+  areas?: number;
+}) {
   const external = /^https?:\/\//.test(href);
+  const meta =
+    count != null
+      ? `${count.toLocaleString()} items${areas > 0 ? ` · ${areas} areas` : ""}`
+      : "View brand";
   const inner = (
     <>
       <div className="relative flex min-h-32 items-center justify-center border-b border-[#eef2f7] bg-white">
@@ -874,11 +889,16 @@ function BrandBoxCard({ label, href, logo }: { label: string; href: string; logo
           <Boxes size={34} strokeWidth={1.6} className="text-[#2563eb]" />
         )}
       </div>
-      <div className="flex items-center justify-between gap-3 p-4">
-        <h3 className="text-base font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
+      <div className="flex min-w-0 flex-col p-4">
+        <h3 className="min-h-11 text-base font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
           {label}
         </h3>
-        <ArrowRight size={15} className="flex-none text-[#2563eb]" />
+        <div className="mt-3 flex items-center justify-between gap-3 border-t border-[#eef2f7] pt-3">
+          <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#64748b]">
+            {meta}
+          </span>
+          <ArrowRight size={15} className="flex-none text-[#2563eb]" />
+        </div>
       </div>
     </>
   );
@@ -1149,9 +1169,10 @@ export default function CatalogueCategoryPage({
   // Menu-derived brand-box landing (see getMenuBrandHub): a category shows one
   // box per brand under it; a section root shows brands grouped by category.
   // When active it replaces the product grid, category cards and visual links.
-  const brandHub = BRAND_HUB_CATEGORY_IDS.has(category.id)
-    ? getMenuBrandHub(category.route)
-    : undefined;
+  // Activates on every menu section/category hub; brand leaf pages keep the grid.
+  // A category with its own curated link-section (e.g. the welding hub's
+  // welding-type split) keeps that instead of a generic brand box.
+  const brandHub = categoryLinkSection ? undefined : getMenuBrandHub(category.route);
   const brandHubActive = Boolean(brandHub);
   const showProductBrowser = !brandHubActive && !hideProductGrid && productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub || isLeafOfFlatHub);
   // Suppress visual link cards on descendant hubs — the product browser with brand
@@ -1367,12 +1388,29 @@ export default function CatalogueCategoryPage({
     </>
   );
 
-  // Menu-derived brand-box landing. A per-page logo override (BRAND_BOX_LOGO_
-  // OVERRIDES) wins over the brand's global logo, scoped to this category.
+  // Resolve a brand box's catalogue-item count (and subcategory "areas") from
+  // its target category. Lean partner pages (no grid) and non-catalogue links
+  // (e.g. the Z+F /products landing) show no count -> a "View brand" label.
+  const brandBoxMeta = (href: string): { count: number | null; areas: number } => {
+    const resolved = resolveCatalogueRoute(href);
+    if (resolved?.type !== "category") return { count: null, areas: 0 };
+    const cat = getCatalogueCategory(resolved.id);
+    if (!cat) return { count: null, areas: 0 };
+    const areas = getCategoryChildren(cat).length;
+    if (HIDE_PRODUCT_GRID_CATEGORY_IDS.has(resolved.id)) return { count: null, areas };
+    const count = getCategoryProductCount(cat);
+    return { count: count > 0 ? count : null, areas };
+  };
+  // Menu-derived brand-box landing. A per-page logo override wins over the
+  // brand-box global fix (Deutsch), which wins over the brand's brands.ts logo.
   const resolveBrandBox = (b: BrandBox) => ({
     label: b.label,
     href: b.href,
-    logo: BRAND_BOX_LOGO_OVERRIDES[category.id]?.[b.slug] ?? b.logo,
+    logo:
+      BRAND_BOX_LOGO_OVERRIDES[category.id]?.[b.slug] ??
+      BRAND_BOX_LOGO_GLOBAL[b.slug] ??
+      b.logo,
+    ...brandBoxMeta(b.href),
   });
   const brandHubBlock = brandHub ? (
     <section className="mb-14">
