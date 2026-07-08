@@ -1236,6 +1236,15 @@ export default function CatalogueCategoryPage({
   const heroStatText = (() => {
     // Lean partner landing has no grid — don't advertise a catalogue-item count.
     if (hideProductGrid) return null;
+    // Menu-derived brand-box landing: count brands, not products.
+    if (brandHubActive && brandHub) {
+      const slugs =
+        brandHub.type === "category"
+          ? brandHub.brands.map((b) => b.slug)
+          : brandHub.groups.flatMap((g) => g.brands.map((b) => b.slug));
+      const n = new Set(slugs).size;
+      return `${n} ${n === 1 ? "brand" : "brands"}`;
+    }
     const itemsPart = `${productCount.toLocaleString()} catalogue items`;
     if (showSeries) {
       return `${seriesFacets.length} series · ${itemsPart}`;
