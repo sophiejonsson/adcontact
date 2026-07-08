@@ -5,7 +5,7 @@ connect GitHub + Cloudflare, point the Loopia domain, and go live. Written to be
 followed top to bottom. Tick each box as you go.
 
 > **How deploys work (unchanged after migration):** the site is a Next.js app in
-> the GitHub repo `sophiejonsson/adcontact`. Every push to the `main` branch makes
+> the GitHub repo `stefankolic/adcontact`. Every push to the `main` branch makes
 > Vercel automatically build and publish the new version (~3–5 min). You never
 > upload files by hand. Once your own Vercel project is connected to this repo,
 > that same automatic flow is yours.
@@ -14,7 +14,7 @@ followed top to bottom. Tick each box as you go.
 
 ## 1. Accounts you need
 
-- [ ] **GitHub** account with **admin/owner** access to `sophiejonsson/adcontact`
+- [ ] **GitHub** account with **admin/owner** access to `stefankolic/adcontact`
       (so Vercel is allowed to connect and auto-deploy). If the repo is under
       someone else's account, get transferred as owner or added as an admin first.
 - [ ] **Vercel** account (sign up with your GitHub login — simplest).
@@ -25,7 +25,7 @@ followed top to bottom. Tick each box as you go.
 
 ## 2. Create the Vercel project
 
-1. [ ] In Vercel: **Add New… → Project → Import** the `sophiejonsson/adcontact` repo.
+1. [ ] In Vercel: **Add New… → Project → Import** the `stefankolic/adcontact` repo.
 2. [ ] Framework preset auto-detects as **Next.js** — leave the build settings at
        their defaults (no changes needed).
 3. [ ] **Do not deploy yet** — first add the environment variables (next section),
