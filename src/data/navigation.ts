@@ -104,10 +104,10 @@ export const productionEquipmentGroup: NavGroup = {
       ],
     },
     {
-      // Z+F does both stripping and crimping; also listed under a combined header.
-      // All Z+F equipment links point to the lean wire-processing landing.
+      // Brand-box hub (hosted on the repurposed cat 48). Z+F does both stripping
+      // and crimping; Mecal makes strip-and-crimp machines.
       label: "Stripping and crimping machines",
-      href: "/products/zoller-frohlich/wire-processing",
+      href: "/webshop/production-equipment/stripping-and-crimping-machines.html",
       children: [
         // Mecal's strip-and-crimp machines; its hub also covers applicators and
         // crimping presses, so it is listed under Crimping machines and tools too.
@@ -133,12 +133,12 @@ export const productionEquipmentGroup: NavGroup = {
       ],
     },
     {
-      // "Test & Quality" hub repurposed as the Mav Prüftechnik test-equipment
-      // page; the other test sub-brands (Cirris etc.) are no longer represented.
+      // "Test & Quality" hub is now a brand-box landing; Mav Prüftechnik lives on
+      // its own leaf. The other test sub-brands (Cirris etc.) are not represented.
       label: "Test equipment",
       href: "/webshop/production-equipment/test-quality.html",
       children: [
-        { label: "Mav Prüftechnik", href: "/webshop/production-equipment/test-quality.html" },
+        { label: "Mav Prüftechnik", href: "/webshop/production-equipment/test-quality/mav.html" },
       ],
     },
     {

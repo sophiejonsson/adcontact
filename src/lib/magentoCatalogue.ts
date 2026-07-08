@@ -151,7 +151,9 @@ function legacyNumberedCategoryAlias(path: string) {
 export const HIDDEN_CATEGORY_IDS = new Set<number>([
   75, 49, 54, 55, 112, 113, 1724,
   99, 103, 108, 1678, 222, 223,
-  78, 79, 114, 1674,
+  // 79 (Mechanical Pull Testers) is repurposed as the Mav Prüftechnik leaf page
+  // under the Test equipment brand-box hub — kept visible.
+  78, 114, 1674,
 ]);
 
 // Individual products hidden from the live site but kept in the data (reversible
@@ -205,6 +207,12 @@ export const PRODUCT_CANONICAL_ROUTES: Record<number, string> = {
 // the page 301-redirects the old path. To rename a category URL, add it here.
 export const CATEGORY_CANONICAL_ROUTES: Record<number, string> = {
   110: WEZAG_ROUTE, // legacy "Stocko" crimping hub -> Wezag
+  // Test equipment brand-box hub (76) links to Mav's own leaf page; repurpose
+  // the empty "Mechanical Pull Testers" category (79) as that Mav leaf.
+  79: "/webshop/production-equipment/test-quality/mav.html",
+  // "Stripping and crimping machines" menu hub has no native category; host its
+  // Mecal + Z+F brand boxes on the repurposed "Stripper Crimper Units" cat (48).
+  48: "/webshop/production-equipment/stripping-and-crimping-machines.html",
 };
 
 type ProductOverride = Partial<

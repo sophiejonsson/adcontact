@@ -73,7 +73,7 @@ function brandNameSlug(brand: (typeof brands)[number]) {
 const CATEGORY_BRAND_OVERRIDES: Record<number, string> = {
   110: "wezag", // "Stocko" crimping category actually holds Wezag WZ hand tools
   106: "feintechnik-rittmeyer", // stripping-machine brand promoted as "be-ri"
-  76: "mav", // "Test & Quality" hub repurposed as the Mav Prüftechnik page
+  79: "mav", // "Mechanical Pull Testers" repurposed as the Mav Prüftechnik leaf
 };
 
 function brandForCategory(category: CatalogueCategory) {
@@ -148,7 +148,9 @@ const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
   77: "Plastic- and Metal Welding", // "Ultrasonic Welding"
   110: "Wezag", // legacy "Stocko" crimping category — actually Wezag WZ tools
   106: "Feintechnik Rittmeyer", // fix the data's "Rittmyer" spelling
-  76: "Mav Prüftechnik", // "Test & Quality" hub repurposed for Mav
+  76: "Test equipment", // "Test & Quality" hub -> brand-box landing
+  79: "Mav Prüftechnik", // Mav leaf (repurposed Mechanical Pull Testers)
+  48: "Stripping and crimping machines", // repurposed "Stripper Crimper Units" hub
 };
 
 // Header/intro text override (the hero paragraph). Used when a category's
@@ -160,7 +162,7 @@ const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
     "We supply Ulmer's precision cutting and cable-processing machines. Ulmer GmbH develops cutting, feeding, winding and material-handling systems for flexible materials across the cable, wire and tubing industries, from multi-core cables to corrugated conduits, hoses and heat-shrink tubing.",
   101:
     "Tekuwa develops and manufactures high-precision cutting and cable processing machines suitable for almost any material. Their range includes cutting-to-length machines, combined cutting and stripping systems, jacket removal equipment, automatic feeding and rewinding units, and complete production line configurations.",
-  76:
+  79:
     "We supply Mav Prüftechnik's pull-force and compression testing machines for quality assurance in cable and harness manufacturing. Since 1962, Mav has built manual and motorised test stations measuring tensile and compressive forces up to 10,000 N, the standard for crimp pull-force verification, all developed and produced in Germany with calibration software.",
   111:
     "Mecal, with a leading market position serving a wide range of industries, designs and manufactures applicators, bench-top presses and strip- and crimp machines. Their semi-automatic systems integrate easily into fully automatic lines or manual workstations, and are used for high-volume wire harness production, with integrated quality monitoring, applicator change systems, and pull-force testing options.",
@@ -190,7 +192,7 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   // Tekuwa — engineering/craftsmanship photo (3:2, fills the frame).
   101: { src: "/media/tekuwa/hub-header.jpg", fit: "cover" },
   // Mav Prüftechnik — KMG force-tester display (contained on the white card).
-  76: { src: "/media/mav/hub-header.jpg", fit: "contain" },
+  79: { src: "/media/mav/hub-header.jpg", fit: "contain" },
   // Mecal — facility photo (wide, fills the frame).
   111: { src: "/media/mecal/hub-header.jpg", fit: "cover" },
   // Junquan — facility photo (wide, fills the frame).
@@ -282,7 +284,7 @@ const CATEGORY_SOURCING_CTA: Record<
   106: FEINTECHNIK_SOURCING_CTA, // Feintechnik Rittmeyer (be-ri) stripping page
   100: ULMER_SOURCING_CTA, // Ulmer cutting brand page
   101: TEKUWA_SOURCING_CTA, // Tekuwa cutting & stripping brand page
-  76: MAV_SOURCING_CTA, // Mav Prüftechnik test-equipment page
+  79: MAV_SOURCING_CTA, // Mav Prüftechnik leaf page
   111: MECAL_SOURCING_CTA, // Mecal crimping equipment brand page
   102: JUNQUAN_SOURCING_CTA, // Junquan cutting/stripping brand page
 };
@@ -501,7 +503,7 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   106: { eyebrow: "be-ri cable processing machines", boxes: FEINTECHNIK_LINK_BOXES },
   100: { eyebrow: "Ulmer cutting machines", boxes: ULMER_LINK_BOXES },
   101: { eyebrow: "Tekuwa cutting & stripping machines", boxes: TEKUWA_LINK_BOXES },
-  76: { eyebrow: "Mav force testers", boxes: MAV_LINK_BOXES },
+  79: { eyebrow: "Mav force testers", boxes: MAV_LINK_BOXES },
   111: { eyebrow: "Mecal crimping equipment", boxes: MECAL_LINK_BOXES },
   102: { eyebrow: "Junquan machines", boxes: JUNQUAN_LINK_BOXES },
 };
@@ -510,7 +512,7 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
 // sourcing box) with NO product grid/filter — mirrors the Zoller & Fröhlich
 // approach. Wezag (110): its catalogue products are outdated / low-volume, so we
 // surface only the trusted-partner brand page.
-const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 76, 111]);
+const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 79, 111]);
 
 // Per-page logo overrides for individual brand boxes, keyed by category id then
 // by the brand box's slug (last URL segment). Scoped to one page. Connectors
@@ -1172,9 +1174,11 @@ export default function CatalogueCategoryPage({
   // box per brand under it; a section root shows brands grouped by category.
   // When active it replaces the product grid, category cards and visual links.
   // Activates on every menu section/category hub; brand leaf pages keep the grid.
-  // A category with its own curated link-section (e.g. the welding hub's
-  // welding-type split) keeps that instead of a generic brand box.
-  const brandHub = categoryLinkSection ? undefined : getMenuBrandHub(category.route);
+  // A brand hub takes precedence over a curated link-section/sourcing box on the
+  // same page (both are suppressed below when brandHubActive), so a menu hub like
+  // the welding category shows brand boxes while brand leaf pages keep their own
+  // link-section (getMenuBrandHub returns undefined for leaf routes).
+  const brandHub = getMenuBrandHub(category.route);
   const brandHubActive = Boolean(brandHub);
   const showProductBrowser = !brandHubActive && !hideProductGrid && productPool.length > 0 && (isWebshopRoot || children.length === 0 || isFlatHub || isSingleLeafPassthrough || isDescendantHub || isLeafOfFlatHub);
   // Suppress visual link cards on descendant hubs — the product browser with brand
@@ -1577,7 +1581,7 @@ export default function CatalogueCategoryPage({
       </section>
 
       <main className="mx-auto max-w-[1440px] px-6 py-6">
-        {categoryLinkSection && (
+        {!brandHubActive && categoryLinkSection && (
           <section className="mb-12">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
               {categoryLinkSection.eyebrow}
@@ -1818,7 +1822,7 @@ export default function CatalogueCategoryPage({
 
         {/* Category sourcing box — after the grid, or standalone on a lean
             partner landing page that has no grid (e.g. Wezag). */}
-        {categorySourcingCta && (
+        {!brandHubActive && categorySourcingCta && (
           <section className="mt-10 rounded-2xl border border-[#e2e8f0] bg-[#f8fafc] px-6 py-7 sm:px-8">
             <h2 className="text-lg font-bold text-[#0a1628] sm:text-xl">
               {categorySourcingCta.heading}
