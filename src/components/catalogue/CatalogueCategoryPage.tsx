@@ -879,35 +879,35 @@ function BrandBoxCard({
       : "View brand";
   const inner = (
     <>
-      <div className="relative flex min-h-32 items-center justify-center border-b border-[#eef2f7] bg-white">
+      <div className="relative flex min-h-24 items-center justify-center border-b border-[#eef2f7] bg-white">
         {logo ? (
           <Image
             src={logo}
             alt={label}
             fill
             unoptimized
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 33vw, 280px"
-            className="object-contain p-6 transition-transform group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 220px"
+            className="object-contain p-5 transition-transform group-hover:scale-105"
           />
         ) : (
-          <Boxes size={34} strokeWidth={1.6} className="text-[#2563eb]" />
+          <Boxes size={30} strokeWidth={1.6} className="text-[#2563eb]" />
         )}
       </div>
-      <div className="flex min-w-0 flex-col p-4">
-        <h3 className="min-h-11 text-base font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
+      <div className="flex min-w-0 flex-col p-3.5">
+        <h3 className="min-h-10 text-sm font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb] sm:text-base">
           {label}
         </h3>
-        <div className="mt-3 flex items-center justify-between gap-3 border-t border-[#eef2f7] pt-3">
-          <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#64748b]">
+        <div className="mt-2.5 flex items-center justify-between gap-2 border-t border-[#eef2f7] pt-2.5">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#64748b]">
             {meta}
           </span>
-          <ArrowRight size={15} className="flex-none text-[#2563eb]" />
+          <ArrowRight size={14} className="flex-none text-[#2563eb]" />
         </div>
       </div>
     </>
   );
   const className =
-    "group grid min-h-[188px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]";
+    "group grid min-h-[156px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]";
   return external ? (
     <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
       {inner}
@@ -1428,7 +1428,7 @@ export default function CatalogueCategoryPage({
             </p>
             <h2 className="mt-2 text-2xl font-bold text-[#0a1628]">{`Browse ${title}`}</h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {brandHub.brands.map((b) => (
               <BrandBoxCard key={`${b.href}-${b.label}`} {...resolveBrandBox(b)} />
             ))}
@@ -1439,7 +1439,7 @@ export default function CatalogueCategoryPage({
           {brandHub.groups.map((g) => (
             <div key={g.label}>
               <h2 className="mb-4 text-lg font-bold text-[#0a1628]">{g.label}</h2>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {g.brands.map((b) => (
                   <BrandBoxCard key={`${b.href}-${b.label}`} {...resolveBrandBox(b)} />
                 ))}
