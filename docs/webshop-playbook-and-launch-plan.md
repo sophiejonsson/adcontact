@@ -111,4 +111,19 @@ Context (from the catalogue):
 
 ---
 
+## Part 4 — Post-launch (live) technical follow-up
+
+**Went LIVE on https://www.adcontact.se (2026-07-08)** on Stefan's own stack: GitHub `stefankolic/adcontact` (transferred from `sophiejonsson`), Vercel project `adcontact-pi`, Cloudflare R2 for media, domain registered at Loopia (apex `adcontact.se` 308-redirects to `www`; Vercel apex A record `216.198.79.1`). Full runbook: `docs/go-live-checklist.md`.
+
+Technical follow-up ~24h after launch — all resolved, environment stable:
+- **Vercel plan → Pro (required).** Hobby forbids commercial use, and the media proxy blew Hobby's tiny caps (**4 hrs Active CPU**, 1M invocations) in ~24h. On Pro, usage is trivial (~$1.50/mo on top of the $20 base; the 1 TB transfer / 10 M edge-request allowances are barely touched).
+- **`NEXT_PUBLIC_SITE_URL` typo fixed.** It was set (as **"Sensitive"**) to `https://www.adcontactse` (missing dot) → canonical/OG pointed at a dead host. Fix = **delete the env var**; `src/lib/seo.ts` already defaults `SITE_URL` to the correct `https://www.adcontact.se`. ⚠️ **Never mark a `NEXT_PUBLIC_*` var "Sensitive"** — it's inlined into the client bundle (public anyway) and "Sensitive" hides the value so a typo slips through unseen. (Note: env-var changes need a redeploy; catalogue pages are edge-cached, so verify with a cache-buster or after a redeploy purge.)
+- **Email verified.** `adcontact.se` mail survived the Loopia pointer switch (tested `info@` + `stefan.kolic@`); `gammeter.ee` is a **separate domain we never touched** and its MX is intact (both domains use `mailanyone.net` / `mx25.net`).
+- **Image-serving cost.** Every image streams through the Vercel `/media` function, but responses ARE edge-cached (`X-Vercel-Cache: HIT` on repeat). Cache was only 24 h → **extended to 30 days** (commit 55c82f9) since product-image URLs are stable (changed image = fresh filename) → ~30× fewer repeat invocations/origin-transfer. Vercel image cost now negligible.
+- **R2-direct serving — DEFERRED (re-check usage ~1 week, mid-July 2026).** The ultimate clean/cheap setup: serve images straight from a Cloudflare R2 **custom domain** (`media.adcontact.se`), bypassing Vercel entirely (R2 egress is free). BUT it needs `adcontact.se` DNS moved to Cloudflare (nameservers Loopia→Cloudflare) — an **email-risk migration** (must copy MX + SPF/DKIM/DMARC into Cloudflare *before* switching). `r2.dev` is rate-limited (not for prod), so no shortcut. With the 30-day cache fix the cost is negligible, so R2-direct is now a "clean architecture" choice, not a cost need. **Decision: let the cache settle, re-read the Vercel Usage page in ~1 week; do the DNS migration only if/when Stefan wants the fully clean setup.**
+
+**Still open** (from the Part 3 checklist, now post-launch): web forms + captcha, cookie consent, sitemap, the 301/legacy-redirect map (incl. the `LEGACY_WEBSHOP_ORIGIN` self-loop on `/catalog/...` now that we're live on `www.adcontact.se`), and the **R2-vs-Oderland completeness audit** before decommissioning Oderland.
+
+---
+
 *Maintainer note:* deep implementation notes and gotchas also live in the agent memory (`webshop-catalogue-patterns`, `cloudflare-r2-media`, `deploy-push-workflow`, `multi-session-coordination`). Keep this file as the human-readable plan; update the checkboxes as items land.
