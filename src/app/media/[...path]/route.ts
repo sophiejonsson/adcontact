@@ -8,7 +8,11 @@ export const dynamic = "force-dynamic";
 const PUBLIC_MEDIA_ROOT = join(process.cwd(), "public", "media");
 const PUBLIC_IMAGES_ROOT = join(process.cwd(), "public", "images");
 const PLACEHOLDER_IMAGE = "placeholders_small_1.png";
-const CACHE_CONTROL = "public, max-age=86400, stale-while-revalidate=604800";
+// Product-image URLs are stable (a changed image gets a fresh filename), so
+// cache aggressively at the edge — 30 days — to minimise repeat function
+// invocations / origin transfer. The short FALLBACK_CACHE_CONTROL below still
+// lets a missing image self-heal quickly once it lands in R2.
+const CACHE_CONTROL = "public, max-age=2592000, stale-while-revalidate=604800";
 // Short cache for "not in primary store" responses (placeholder / public-images
 // fallback) so an image self-heals quickly once it's added to R2, instead of a
 // stale placeholder sticking around for a day.
