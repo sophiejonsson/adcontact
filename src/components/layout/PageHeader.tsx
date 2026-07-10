@@ -23,9 +23,12 @@ export default function PageHeader({
 }) {
   return (
     <div className="bg-[#0a1628]">
-      <div className="mx-auto max-w-[1440px] px-6 py-12">
+      <div className="mx-auto max-w-[1440px] px-6 py-10">
         <Breadcrumbs crumbs={crumbs} light />
-        <div className="mt-4 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+        {/* Fixed-height content row (vertically centred) so every menu page's
+            header is exactly the same size and the title stays put when you
+            switch pages. The optional aside must fit within min-h. */}
+        <div className="mt-6 flex min-h-[168px] flex-col justify-center gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
             <h1 className="text-4xl font-extrabold tracking-[-0.035em] text-white">{title}</h1>
             {intro ? (

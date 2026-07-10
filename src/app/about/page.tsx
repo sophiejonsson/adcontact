@@ -34,12 +34,13 @@ const offices = [
 ];
 
 // Condensed for the compact company-history card in the hub header.
+// Kept short (one line each) so the header card fits the standard header height.
 const milestones = [
-  { year: "1985", label: "Founded in Stockholm, specialist component distribution" },
-  { year: "1989", label: "Added wire-processing systems to the range" },
-  { year: "1999", label: "ISO 9001 quality management certified" },
-  { year: "2009", label: "Acquired Gammeter, expanding to Finland and Estonia" },
-  { year: "2017", label: "Estonia distribution centre became the group HQ" },
+  { year: "1985", label: "Founded in Stockholm" },
+  { year: "1989", label: "Added wire-processing systems" },
+  { year: "1999", label: "ISO 9001 certified" },
+  { year: "2009", label: "Acquired Gammeter (Finland, Estonia)" },
+  { year: "2017", label: "Estonia distribution centre, now HQ" },
 ];
 
 // "Why choose us" — the four-step process guide (from Business model_landscape.pdf).
@@ -93,11 +94,11 @@ export default function AboutPage() {
         title="About us"
         intro="Trusted supplier of cable assembly products, connectors, accessories, and cable processing equipment. ISO 9001:2015 certified. Active since 1985."
         aside={
-          <div className="rounded-2xl border border-[#1e3a6e] bg-[#0f2042] p-5 lg:w-[400px]">
+          <div className="rounded-2xl border border-[#1e3a6e] bg-[#0f2042] p-4 lg:w-[400px]">
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#60a5fa]">
               Company history
             </p>
-            <div className="mt-3 space-y-2">
+            <div className="mt-2.5 space-y-1.5">
               {milestones.map((m) => (
                 <div key={m.year} className="flex items-baseline gap-3">
                   <span className="w-9 flex-shrink-0 font-mono text-xs font-bold text-[#60a5fa]">
