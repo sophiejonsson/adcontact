@@ -1471,13 +1471,21 @@ export default function CatalogueCategoryPage({
     <div className="min-h-screen bg-[#f8fafc]">
       <section className="relative overflow-hidden bg-[#0a1628] text-white">
         <div className="absolute inset-0 tech-grid opacity-30" />
-        <div className="relative mx-auto max-w-[1440px] px-6 py-6">
+        <div className={`relative mx-auto max-w-[1440px] px-6 ${isWebshopRoot ? "py-9" : "py-6"}`}>
           <Breadcrumbs
             light
             crumbs={breadcrumbCrumbs}
           />
 
-          <div className="mt-5 flex flex-col gap-8 lg:flex-row lg:items-start">
+          {/* On the Webshop landing, mirror the shared PageHeader recipe
+              (mt-5 / min-h-[156px] / vertically centred) so its header is the
+              same height as About/Contact/Quality/Trusted Partners. Other
+              catalogue pages keep the default top-aligned hero. */}
+          <div
+            className={`mt-5 flex flex-col gap-8 lg:flex-row ${
+              isWebshopRoot ? "min-h-[156px] justify-center lg:items-center" : "lg:items-start"
+            }`}
+          >
             {/* Left: title, description, stats, CTA */}
             <div className="flex-1">
               {brand?.logo && (

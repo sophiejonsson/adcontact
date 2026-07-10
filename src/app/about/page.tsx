@@ -98,7 +98,7 @@ export default function AboutPage() {
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#60a5fa]">
               Company history
             </p>
-            <div className="mt-2.5 space-y-1.5">
+            <div className="mt-2.5 space-y-1">
               {milestones.map((m) => (
                 <div key={m.year} className="flex items-baseline gap-3">
                   <span className="w-9 flex-shrink-0 font-mono text-xs font-bold text-[#60a5fa]">
