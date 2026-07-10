@@ -135,6 +135,15 @@ async function sendToWeb3Forms(body: Partial<RFQPayload>, file: File | null): Pr
   }
 }
 
+// Read-only health/config check (no secrets — just whether each key is set).
+export function GET() {
+  return NextResponse.json({
+    ok: true,
+    web3forms: Boolean(process.env.WEB3FORMS_ACCESS_KEY),
+    turnstile: Boolean(process.env.TURNSTILE_SECRET_KEY),
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const contentType = request.headers.get("content-type") ?? "";
