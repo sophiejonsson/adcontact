@@ -35,6 +35,7 @@ import {
   stockoPitchOptions,
 } from "@/data/stockoConnectorSystems";
 import StockoSeriesBrowser from "@/components/catalogue/StockoSeriesBrowser";
+import ConsentedVideo from "@/components/ConsentedVideo";
 
 // Build a map of Magento product id → Deutsch CDN imageUrl for products that
 // have no Magento image, so the category listing can show the correct thumbnail.
@@ -1555,13 +1556,7 @@ export default function CatalogueCategoryPage({
                     style={{ aspectRatio: videoEmbedSrc ? "16/9" : "4/3" }}
                   >
                     {videoEmbedSrc ? (
-                      <iframe
-                        src={videoEmbedSrc}
-                        title={title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="absolute inset-0 h-full w-full"
-                      />
+                      <ConsentedVideo src={videoEmbedSrc} title={title} />
                     ) : (
                       <Image
                         src={heroImageSrc!}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, ArrowRight } from "lucide-react";
 import { productionEquipmentGroup } from "@/data/navigation";
+import CookieSettingsLink from "@/components/CookieSettingsLink";
 
 const footerLinks = {
   "Industrial Components": [
@@ -189,10 +190,11 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-[#0f2042]">
-        <div className="max-w-[1440px] mx-auto px-6 py-4">
+        <div className="max-w-[1440px] mx-auto px-6 py-4 flex flex-col items-center gap-1.5">
           <p className="text-center text-xs text-[#334155]">
             © {new Date().getFullYear()} Gammeter OÜ &amp; Adcontact AB. All rights reserved.
           </p>
+          <CookieSettingsLink className="text-[11px] text-[#334155] underline underline-offset-2 transition-colors hover:text-[#64748b]" />
         </div>
       </div>
     </footer>
