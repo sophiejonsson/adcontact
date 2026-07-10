@@ -114,16 +114,31 @@ async function sendToWeb3Forms(
 
   const forwardFile = file && !oversized ? file : null;
 
+  // Web3Forms' API is behind Cloudflare; a server-side request with no browser
+  // User-Agent gets a bot challenge ("Just a moment…" 403). Send browser-like
+  // headers so it's treated as a normal submission.
+  const baseHeaders: Record<string, string> = {
+    "user-agent":
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    accept: "application/json",
+    origin: "https://www.adcontact.se",
+    referer: "https://www.adcontact.se/",
+  };
+
   async function post(withFile: boolean): Promise<Response> {
     if (withFile && forwardFile) {
       const fd = new FormData();
       for (const [k, v] of Object.entries(fields)) fd.append(k, v);
       fd.append("attachment", forwardFile, forwardFile.name);
-      return fetch("https://api.web3forms.com/submit", { method: "POST", body: fd });
+      return fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: baseHeaders,
+        body: fd,
+      });
     }
     return fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "content-type": "application/json", accept: "application/json" },
+      headers: { ...baseHeaders, "content-type": "application/json" },
       body: JSON.stringify(fields),
     });
   }
