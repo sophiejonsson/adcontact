@@ -203,8 +203,10 @@ export default function AboutPage() {
                   >
                     <span className="text-lg font-extrabold">{step.n}</span>
                   </div>
-                  {/* Text box, keeping the general card theme */}
-                  <div className="mt-5 w-full rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-5 text-left">
+                  {/* Text box, keeping the general card theme. flex-1 + the
+                      grid's equal-height cells make every box the same height
+                      as the tallest (step 1). */}
+                  <div className="mt-5 flex w-full flex-1 flex-col rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-5 text-left">
                     <p
                       className="text-[11px] font-bold uppercase tracking-[0.16em]"
                       style={{ color: step.ring }}
