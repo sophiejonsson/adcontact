@@ -41,11 +41,11 @@ export default function CookiePolicyPage() {
         <h3 className="text-sm font-bold text-[#0a1628] mt-4 mb-1">Strictly necessary (always on)</h3>
         <ul className="list-disc pl-5 space-y-1">
           <li>
-            <strong>hCaptcha</strong> — when you use a form, our anti-spam provider may set cookies to
+            <strong>hCaptcha:</strong> when you use a form, our anti-spam provider may set cookies to
             distinguish humans from bots. Required to submit forms securely.
           </li>
           <li>
-            <strong>Hosting &amp; security</strong> — our hosting and security infrastructure may set
+            <strong>Hosting &amp; security:</strong> our hosting and security infrastructure may set
             short-lived cookies needed to serve pages safely.
           </li>
         </ul>
@@ -53,7 +53,7 @@ export default function CookiePolicyPage() {
         <h3 className="text-sm font-bold text-[#0a1628] mt-4 mb-1">Analytics (only after you accept)</h3>
         <ul className="list-disc pl-5 space-y-1">
           <li>
-            <strong>Google Analytics (GA4)</strong> — sets <code>_ga</code> / <code>_ga_*</code> cookies to
+            <strong>Google Analytics (GA4):</strong> sets <code>_ga</code> / <code>_ga_*</code> cookies to
             measure visits (pages viewed, approximate location, device type) so we can improve the site.
             IP addresses are anonymised. Loads only after you select &ldquo;Accept all.&rdquo;
           </li>
@@ -62,7 +62,7 @@ export default function CookiePolicyPage() {
         <h3 className="text-sm font-bold text-[#0a1628] mt-4 mb-1">Embedded video (only when loaded)</h3>
         <ul className="list-disc pl-5 space-y-1">
           <li>
-            <strong>YouTube</strong> — some pages can embed YouTube videos (in privacy-enhanced
+            <strong>YouTube:</strong> some pages can embed YouTube videos (in privacy-enhanced
             &ldquo;no-cookie&rdquo; mode). YouTube sets cookies only once you accept cookies or click to
             load a video.
           </li>
