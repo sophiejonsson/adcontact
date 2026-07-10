@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ArrowRight, Mail } from "lucide-react";
 import { componentPartners, equipmentPartners } from "@/data/brands";
 import type { Brand } from "@/data/brands";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import PageHeader from "@/components/layout/PageHeader";
 
 export const metadata: Metadata = {
   title: "Trusted Partners | Adcontact Linecard",
@@ -61,22 +61,11 @@ export default function BrandsPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Page header */}
-      <div className="bg-[#0a1628]">
-        <div className="max-w-[1440px] mx-auto px-6 py-12">
-          <Breadcrumbs
-            crumbs={[{ label: "Trusted Partners" }]}
-            light
-          />
-          <h1 className="text-4xl font-extrabold text-white mt-4 mb-3 tracking-[-0.035em]">
-            Trusted Partners
-          </h1>
-          <p className="text-[#94a3b8] text-sm max-w-2xl leading-relaxed">
-            Adcontact maintains direct relationships with leading manufacturers in electromechanical
-            components and wire-processing equipment. We provide application support, stock
-            management, and technical consultancy, not just logistics.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        crumbs={[{ label: "Trusted Partners" }]}
+        title="Trusted Partners"
+        intro="Adcontact maintains direct relationships with leading manufacturers in electromechanical components and wire-processing equipment. We provide application support, stock management, and technical consultancy, not just logistics."
+      />
 
       <div className="max-w-[1440px] mx-auto px-6 py-14">
         {/* Component Partners */}
