@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Send, Upload, CheckCircle, Loader2 } from "lucide-react";
-import Turnstile, { CAPTCHA_ENABLED } from "@/components/ui/Turnstile";
+import HCaptcha from "@/components/ui/HCaptcha";
+import { submitToWeb3Forms } from "@/lib/web3forms";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -43,7 +44,6 @@ export default function RFQForm({ subject }: { subject?: string }) {
   const [token, setToken] = useState("");
   const [fileName, setFileName] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const mountedAt = useRef(Date.now());
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -54,8 +54,8 @@ export default function RFQForm({ subject }: { subject?: string }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (CAPTCHA_ENABLED && !token) {
-      setErrorMsg("Please complete the verification below.");
+    if (!token) {
+      setErrorMsg("Please complete the captcha below.");
       setState("error");
       return;
     }
@@ -63,34 +63,30 @@ export default function RFQForm({ subject }: { subject?: string }) {
     setState("submitting");
     setErrorMsg("");
 
-    try {
-      const payload = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        payload.append(key, value);
-      });
-      payload.append("elapsedMs", String(Date.now() - mountedAt.current));
-      payload.append("turnstileToken", token);
-      if (selectedFile) payload.append("drawing", selectedFile);
-
-      const res = await fetch("/api/rfq", {
-        method: "POST",
-        body: payload,
-      });
-      if (res.ok) {
-        setState("success");
-      } else {
-        let msg = "Something went wrong. Please try again or email us directly at order@adcontact.se";
-        try {
-          const j = await res.json();
-          if (j?.error) msg = j.error;
-        } catch {
-          /* non-JSON error */
-        }
-        setErrorMsg(msg);
-        setState("error");
-      }
-    } catch {
-      setErrorMsg("Something went wrong. Please try again or email us directly at order@adcontact.se");
+    const result = await submitToWeb3Forms(
+      {
+        subject: `New RFQ from ${formData.company || formData.name || "the website"}`,
+        from_name: "Adcontact website",
+        replyto: formData.email,
+        name: formData.name,
+        company: formData.company,
+        email: formData.email,
+        phone: formData.phone,
+        country: formData.country,
+        "Looking for": formData.lookingFor,
+        "Part number": formData.partNumber,
+        message: formData.message,
+      },
+      token,
+      selectedFile,
+    );
+    if (result.ok) {
+      setState("success");
+    } else {
+      setErrorMsg(
+        result.message ||
+          "Something went wrong. Please try again or email us directly at order@adcontact.se",
+      );
       setState("error");
     }
   };
@@ -115,7 +111,6 @@ export default function RFQForm({ subject }: { subject?: string }) {
           setSelectedFile(null);
           setToken("");
           setErrorMsg("");
-          mountedAt.current = Date.now();
         }}
           className="text-sm text-[#2563eb] hover:underline"
         >
@@ -269,7 +264,7 @@ export default function RFQForm({ subject }: { subject?: string }) {
         </label>
       </div>
 
-      <Turnstile onToken={setToken} />
+      <HCaptcha onToken={setToken} />
 
       {state === "error" && (
         <p className="text-xs text-red-600 bg-red-50 border border-red-100 rounded-md px-3 py-2">

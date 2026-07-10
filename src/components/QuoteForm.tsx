@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
-import Turnstile, { CAPTCHA_ENABLED } from "@/components/ui/Turnstile";
+import HCaptcha from "@/components/ui/HCaptcha";
+import { submitToWeb3Forms } from "@/lib/web3forms";
 
 type Props = {
   defaultPartNumber?: string;
@@ -17,8 +18,6 @@ export default function QuoteForm({ defaultPartNumber, title, className }: Props
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [reference, setReference] = useState<string>("");
-  // Anti-spam: record mount time; bots submit near-instantly.
-  const mountedAt = useRef<number>(Date.now());
   const [token, setToken] = useState<string>("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -26,42 +25,47 @@ export default function QuoteForm({ defaultPartNumber, title, className }: Props
     const form = e.currentTarget;
     const data = new FormData(form);
 
-    if (CAPTCHA_ENABLED && !token) {
-      setErrorMsg("Please complete the verification below.");
+    // Honeypot — if a bot filled it, silently "succeed" without sending.
+    if (String(data.get("website") || "").trim()) {
+      setStatus("success");
+      form.reset();
+      return;
+    }
+
+    if (!token) {
+      setErrorMsg("Please complete the captcha below.");
       setStatus("error");
       return;
     }
 
-    const payload = {
-      name: String(data.get("name") || ""),
-      company: String(data.get("company") || ""),
-      email: String(data.get("email") || ""),
-      phone: String(data.get("phone") || ""),
-      country: String(data.get("country") || ""),
-      lookingFor: String(data.get("lookingFor") || ""),
-      partNumber: String(data.get("partNumber") || ""),
-      message: String(data.get("message") || ""),
-      turnstileToken: token,
-      // Spam controls
-      website: String(data.get("website") || ""), // honeypot (must stay empty)
-      elapsedMs: Date.now() - mountedAt.current,
-    };
+    const name = String(data.get("name") || "");
+    const company = String(data.get("company") || "");
+    const email = String(data.get("email") || "");
 
     setStatus("submitting");
     setErrorMsg("");
-    try {
-      const res = await fetch("/api/rfq", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Something went wrong");
-      setReference(json.referenceId || "");
+    const result = await submitToWeb3Forms(
+      {
+        subject: `New quote request from ${company || name || "the website"}`,
+        from_name: "Adcontact website",
+        replyto: email,
+        name,
+        company,
+        email,
+        phone: String(data.get("phone") || ""),
+        country: String(data.get("country") || ""),
+        "Looking for": String(data.get("lookingFor") || ""),
+        "Part number": String(data.get("partNumber") || ""),
+        message: String(data.get("message") || ""),
+      },
+      token,
+    );
+    if (result.ok) {
+      setReference(`RFQ-${Date.now()}`);
       setStatus("success");
       form.reset();
-    } catch (err) {
-      setErrorMsg(err instanceof Error ? err.message : "Something went wrong");
+    } else {
+      setErrorMsg(result.message || "Something went wrong. Please try again or email order@adcontact.se.");
       setStatus("error");
     }
   }
@@ -151,7 +155,7 @@ export default function QuoteForm({ defaultPartNumber, title, className }: Props
       </div>
 
       <div className="mt-4">
-        <Turnstile onToken={setToken} />
+        <HCaptcha onToken={setToken} />
       </div>
 
       {status === "error" && (
