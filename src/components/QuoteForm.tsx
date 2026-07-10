@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+import Turnstile, { CAPTCHA_ENABLED } from "@/components/ui/Turnstile";
 
 type Props = {
   defaultPartNumber?: string;
@@ -18,11 +19,18 @@ export default function QuoteForm({ defaultPartNumber, title, className }: Props
   const [reference, setReference] = useState<string>("");
   // Anti-spam: record mount time; bots submit near-instantly.
   const mountedAt = useRef<number>(Date.now());
+  const [token, setToken] = useState<string>("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
+
+    if (CAPTCHA_ENABLED && !token) {
+      setErrorMsg("Please complete the verification below.");
+      setStatus("error");
+      return;
+    }
 
     const payload = {
       name: String(data.get("name") || ""),
@@ -33,6 +41,7 @@ export default function QuoteForm({ defaultPartNumber, title, className }: Props
       lookingFor: String(data.get("lookingFor") || ""),
       partNumber: String(data.get("partNumber") || ""),
       message: String(data.get("message") || ""),
+      turnstileToken: token,
       // Spam controls
       website: String(data.get("website") || ""), // honeypot (must stay empty)
       elapsedMs: Date.now() - mountedAt.current,
@@ -139,6 +148,10 @@ export default function QuoteForm({ defaultPartNumber, title, className }: Props
           </label>
           <textarea name="lookingFor" required rows={4} className={inputCls} />
         </div>
+      </div>
+
+      <div className="mt-4">
+        <Turnstile onToken={setToken} />
       </div>
 
       {status === "error" && (
