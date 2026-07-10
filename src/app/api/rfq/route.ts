@@ -73,7 +73,10 @@ async function verifyTurnstile(token: string, request: NextRequest): Promise<boo
 }
 
 /** Forward the RFQ to Web3Forms (which emails it to the configured inbox). */
-async function sendToWeb3Forms(body: Partial<RFQPayload>, file: File | null): Promise<boolean> {
+async function sendToWeb3Forms(
+  body: Partial<RFQPayload>,
+  file: File | null,
+): Promise<{ ok: boolean; detail: string }> {
   const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
   if (!accessKey) {
     // Not wired up yet — log so nothing is lost during setup.
@@ -84,7 +87,7 @@ async function sendToWeb3Forms(body: Partial<RFQPayload>, file: File | null): Pr
       lookingFor: body.lookingFor,
       timestamp: new Date().toISOString(),
     });
-    return true;
+    return { ok: true, detail: "no key (logged)" };
   }
 
   const oversized = Boolean(file && file.size > MAX_FORWARD_ATTACHMENT_BYTES);
@@ -129,9 +132,17 @@ async function sendToWeb3Forms(body: Partial<RFQPayload>, file: File | null): Pr
     let res = await post(Boolean(forwardFile));
     // If the attachment tripped it up, retry text-only so the RFQ still lands.
     if (!res.ok && forwardFile) res = await post(false);
-    return res.ok;
-  } catch {
-    return false;
+    const text = await res.text().catch(() => "");
+    let ok = res.ok;
+    try {
+      const j = JSON.parse(text);
+      if (typeof j.success === "boolean") ok = j.success;
+    } catch {
+      /* non-JSON response */
+    }
+    return { ok, detail: `${res.status}: ${text.slice(0, 250)}` };
+  } catch (e) {
+    return { ok: false, detail: `fetch error: ${e instanceof Error ? e.message : String(e)}` };
   }
 }
 
@@ -199,9 +210,12 @@ export async function POST(request: NextRequest) {
     }
 
     const sent = await sendToWeb3Forms(body, file);
-    if (!sent) {
+    if (!sent.ok) {
       return NextResponse.json(
-        { error: "We couldn't send your request. Please try again or email order@adcontact.se." },
+        {
+          error: "We couldn't send your request. Please try again or email order@adcontact.se.",
+          _debug: sent.detail,
+        },
         { status: 502 },
       );
     }
