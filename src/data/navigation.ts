@@ -239,7 +239,7 @@ export function getMenuBrandHub(route: string | null | undefined): BrandHub | un
 export const topNavItems: NavItem[] = [
   { label: "Trusted Partners", href: "/brands" },
   { label: "Quality Management", href: "/quality" },
-  { label: "About", href: "/about" },
+  { label: "About us", href: "/about" },
   { label: "Contact", href: "/contact" },
   {
     label: "Policies",

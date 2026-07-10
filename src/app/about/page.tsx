@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Shield, Globe2, Users, Award, MapPin, Cable, Cpu, Wrench } from "lucide-react";
 import { industries } from "@/data/industries";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import PageHeader from "@/components/layout/PageHeader";
 
 export const metadata: Metadata = {
   title: "About Adcontact | Cable Assembly Components & Processing Equipment",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const offices = [
   {
-    country: "Estonia — Headquarters",
+    country: "Estonia · Headquarters",
     company: "Gammeter OÜ",
     address: "Keki tn 6/1",
     city: "76606 Keila, Estonia",
@@ -22,7 +22,7 @@ const offices = [
     topics: ["Admin", "Finance", "Company enquiries"],
   },
   {
-    country: "Sweden — Sales Office",
+    country: "Sweden · Sales Office",
     company: "Adcontact AB",
     address: "Ekbacksvägen 22",
     city: "SE-168 69 Bromma, Sweden",
@@ -33,12 +33,37 @@ const offices = [
   },
 ];
 
+// Condensed for the compact company-history card in the hub header.
 const milestones = [
-  { year: "1985", label: "Founded in Stockholm as a specialist distributor of industrial components" },
-  { year: "1989", label: "Added wire-processing systems to the product portfolio" },
-  { year: "1999", label: "ISO 9001 quality management system certified" },
-  { year: "2009", label: "Acquired Gammeter OY, expanding operations into Finland and Estonia" },
-  { year: "2017", label: "Established distribution centre in Estonia, which became the group headquarters" },
+  { year: "1985", label: "Founded in Stockholm, specialist component distribution" },
+  { year: "1989", label: "Added wire-processing systems to the range" },
+  { year: "1999", label: "ISO 9001 quality management certified" },
+  { year: "2009", label: "Acquired Gammeter, expanding to Finland and Estonia" },
+  { year: "2017", label: "Estonia distribution centre became the group HQ" },
+];
+
+// "Why choose us" — the four-step process guide (from Business model_landscape.pdf).
+const whySteps = [
+  {
+    n: "01",
+    title: "Define the components",
+    text: "It starts at the design phase. We select components built for lean production without compromising process reliability, however complex the application. Wherever possible, we favour standard components to open up more options and improve margins and cost efficiency.",
+  },
+  {
+    n: "02",
+    title: "Engineer production efficiency",
+    text: "Adaptable, flexible equipment lets us adjust production quickly as demand shifts. Our commitment to intelligent systems delivers fully automated production, a genuine competitive alternative to outsourcing.",
+  },
+  {
+    n: "03",
+    title: "Safeguard quality",
+    text: "Rising demands for cost efficiency, productivity and quality have driven our investment in automated testing and control. Our systems are unique in the market, safeguarding finished-product quality even under tight tolerances.",
+  },
+  {
+    n: "04",
+    title: "Raise quality, improve profitability",
+    text: "Quality isn't just about test equipment, it runs through the entire construction and production chain. Working closely with our engineers from the design phase onward ensures every product meets its specification.",
+  },
 ];
 
 const capabilities = [
@@ -62,16 +87,29 @@ const capabilities = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="bg-[#f8fafc] border-b border-[#e2e8f0]">
-        <div className="max-w-[1440px] mx-auto px-6 py-8">
-          <Breadcrumbs crumbs={[{ label: "About" }]} />
-          <h1 className="text-3xl font-bold text-[#0a1628] mt-4 mb-2">About Adcontact</h1>
-          <p className="text-[#6b7280] text-sm max-w-2xl">
-            Trusted supplier of cable assembly products, connectors, accessories, and cable processing equipment. ISO 9001:2015 certified. Active since 1985.
-          </p>
-        </div>
-      </div>
+      {/* Header — dark hub header with the company history moved in */}
+      <PageHeader
+        crumbs={[{ label: "About us" }]}
+        title="About us"
+        intro="Trusted supplier of cable assembly products, connectors, accessories, and cable processing equipment. ISO 9001:2015 certified. Active since 1985."
+        aside={
+          <div className="rounded-2xl border border-[#1e3a6e] bg-[#0f2042] p-5 lg:w-[400px]">
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#60a5fa]">
+              Company history
+            </p>
+            <div className="mt-3 space-y-2">
+              {milestones.map((m) => (
+                <div key={m.year} className="flex items-baseline gap-3">
+                  <span className="w-9 flex-shrink-0 font-mono text-xs font-bold text-[#60a5fa]">
+                    {m.year}
+                  </span>
+                  <span className="text-xs leading-snug text-[#cbd5e1]">{m.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        }
+      />
 
       {/* Main content */}
       <div className="max-w-[1440px] mx-auto px-6 py-12">
@@ -157,22 +195,22 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Timeline */}
+        {/* Why choose us — four-step process (from Business model_landscape.pdf) */}
         <div className="mb-16">
-          <h2 className="text-xl font-bold text-[#0a1628] mb-6">Company history</h2>
-          <div className="space-y-0">
-            {milestones.map((m, i) => (
-              <div key={m.year} className="flex gap-6 relative">
-                {i < milestones.length - 1 && (
-                  <div className="absolute left-[47px] top-10 bottom-0 w-px bg-[#e2e8f0]" />
-                )}
-                <div className="flex-shrink-0 text-right w-16">
-                  <span className="text-xs font-mono font-bold text-[#2563eb]">{m.year}</span>
-                </div>
-                <div className="w-3 h-3 bg-[#2563eb] rounded-full flex-shrink-0 mt-1 relative z-10" />
-                <div className="pb-6">
-                  <p className="text-sm text-[#374151] leading-relaxed">{m.label}</p>
-                </div>
+          <div className="mb-6">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
+              Why choose us
+            </p>
+            <h2 className="mt-2 text-xl font-bold text-[#0a1628]">
+              Four principle steps every choice of a connector should pass through
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {whySteps.map((step) => (
+              <div key={step.n} className="rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-6">
+                <span className="text-3xl font-extrabold leading-none text-[#dbeafe]">{step.n}</span>
+                <h3 className="mt-3 text-base font-bold text-[#0a1628]">{step.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#6b7280]">{step.text}</p>
               </div>
             ))}
           </div>

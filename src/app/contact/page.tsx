@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Phone, Mail, MapPin, ArrowRight, Clock } from "lucide-react";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import PageHeader from "@/components/layout/PageHeader";
 
 export const metadata: Metadata = {
   title: "Contact | Adcontact",
@@ -34,16 +34,11 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-[#f8fafc] border-b border-[#e2e8f0]">
-        <div className="max-w-[1440px] mx-auto px-6 py-8">
-          <Breadcrumbs crumbs={[{ label: "Contact" }]} />
-          <h1 className="text-3xl font-bold text-[#0a1628] mt-4 mb-2">Contact us</h1>
-          <p className="text-[#6b7280] text-sm max-w-xl">
-            Reach us by phone or email — or submit a quote request and we will get back to you
-            within one business day.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        crumbs={[{ label: "Contact" }]}
+        title="Contact us"
+        intro="Reach us by phone or email, or submit a quote request and we will get back to you within one business day."
+      />
 
       <div className="max-w-[1440px] mx-auto px-6 py-12">
 

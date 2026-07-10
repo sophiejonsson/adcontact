@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, RefreshCw, Mail } from "lucide-react";
 import TrustSection from "@/components/home/TrustSection";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import PageHeader from "@/components/layout/PageHeader";
 
 export const metadata: Metadata = {
   title: "Quality Management | ISO 9001:2015 | Adcontact",
@@ -14,15 +14,11 @@ export default function QualityPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-[#f8fafc] border-b border-[#e2e8f0]">
-        <div className="max-w-[1440px] mx-auto px-6 py-8">
-          <Breadcrumbs crumbs={[{ label: "Quality Management" }]} />
-          <h1 className="text-3xl font-bold text-[#0a1628] mt-4 mb-2">Quality Management</h1>
-          <p className="text-[#6b7280] text-sm max-w-2xl">
-            ISO 9001:2015 certified. Committed to continuous improvement across every process, product, and service.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        crumbs={[{ label: "Quality Management" }]}
+        title="Quality Management"
+        intro="ISO 9001:2015 certified. Committed to continuous improvement across every process, product, and service."
+      />
 
       {/* Content */}
       <div className="max-w-[1440px] mx-auto px-6 py-12">
