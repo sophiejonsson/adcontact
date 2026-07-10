@@ -224,15 +224,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // NOTE: Web3Forms' free tier rejects server-side submissions (browser-only),
+    // so this forwarding is being reworked (client-side Web3Forms, or Resend).
+    // Until then, don't block the customer — log any delivery failure so it's
+    // recoverable from the Vercel function logs.
     const sent = await sendToWeb3Forms(body, file);
     if (!sent.ok) {
-      return NextResponse.json(
-        {
-          error: "We couldn't send your request. Please try again or email order@adcontact.se.",
-          _debug: sent.detail,
-        },
-        { status: 502 },
-      );
+      console.error("[RFQ] delivery failed:", sent.detail, "|", {
+        name: body.name,
+        company: body.company,
+        email: body.email,
+        lookingFor: body.lookingFor,
+      });
     }
 
     return NextResponse.json({
