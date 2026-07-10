@@ -43,25 +43,36 @@ const milestones = [
   { year: "2017", label: "Estonia distribution centre, now HQ" },
 ];
 
-// "Why choose us" — the four-step process guide (from Business model_landscape.pdf).
+// "Why choose us" — the four-step process map (from Business model_landscape.pdf).
+// Each step carries its own colour, mirroring the process-map diagram:
+// Design = steel/blueprint blue, Production = brass/amber, Quality = signal red,
+// Outcome = green (landing on the positive result).
 const whySteps = [
   {
     n: "01",
+    phase: "Design",
+    ring: "#3b6ea5",
     title: "Define the components",
     text: "It starts at the design phase. We select components built for lean production without compromising process reliability, however complex the application. Wherever possible, we favour standard components to open up more options and improve margins and cost efficiency.",
   },
   {
     n: "02",
+    phase: "Production",
+    ring: "#d97706",
     title: "Engineer production efficiency",
     text: "Adaptable, flexible equipment lets us adjust production quickly as demand shifts. Our commitment to intelligent systems delivers fully automated production, a genuine competitive alternative to outsourcing.",
   },
   {
     n: "03",
+    phase: "Quality",
+    ring: "#dc2626",
     title: "Safeguard quality",
     text: "Rising demands for cost efficiency, productivity and quality have driven our investment in automated testing and control. Our systems are unique in the market, safeguarding finished-product quality even under tight tolerances.",
   },
   {
     n: "04",
+    phase: "Outcome",
+    ring: "#16a34a",
     title: "Raise quality, improve profitability",
     text: "Quality isn't just about test equipment, it runs through the entire construction and production chain. Working closely with our engineers from the design phase onward ensures every product meets its specification.",
   },
@@ -92,7 +103,7 @@ export default function AboutPage() {
       <PageHeader
         crumbs={[{ label: "About us" }]}
         title="About us"
-        intro="Trusted supplier of cable assembly products, connectors, accessories, and cable processing equipment. ISO 9001:2015 certified. Active since 1985."
+        intro="A trusted supplier over 4 decades providing our market cable assembly products, connectors, accessories and cable processing equipment."
         aside={
           <div className="rounded-2xl border border-[#1e3a6e] bg-[#0f2042] p-4 lg:w-[400px]">
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#60a5fa]">
@@ -122,7 +133,7 @@ export default function AboutPage() {
             </h2>
             <div className="prose prose-sm text-[#374151] leading-relaxed space-y-4">
               <p>
-                Adcontact is a trusted supplier in the cable assembly industry, providing a complete range of connectors, cable processing equipment, and accessories for manufacturers worldwide. With a strong focus on cable assemblies, PCB connectors, and wire harness solutions, we support both small- and large-scale production across different industries.
+                We are a trusted supplier in the cable assembly industry, providing a complete range of connectors, cable processing equipment, and accessories for manufacturers worldwide. With a strong focus on cable assemblies, PCB connectors, and wire harness solutions, we support both small- and large-scale production across different industries.
               </p>
               <p>
                 Our main market is Northern Europe, but with our partners and logistics network we ensure global coverage. We proudly represent leading brands such as Stocko, TE Connectivity Deutsch connectors, Cvilux, Vogt, Hongshang heat shrink tubing, and JDD Tech braided sleeves, all well-known names in cable manufacturing and PCB assembly.
@@ -162,6 +173,53 @@ export default function AboutPage() {
           </div>
         </div>
 
+        {/* Why choose us — four-step process map with colour-coded rings and a
+            left-to-right timeline (from Business model_landscape.pdf). */}
+        <div className="mb-16">
+          <div className="mb-8">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
+              Why choose us
+            </p>
+            <h2 className="mt-2 text-xl font-bold text-[#0a1628]">
+              Our principle - Four steps every choice of a connector should pass through
+            </h2>
+          </div>
+
+          <div className="relative">
+            {/* Left-to-right timeline line, colour-graded through the four steps,
+                running behind the rings (desktop only). */}
+            <div
+              aria-hidden
+              className="absolute left-[12%] right-[12%] top-7 hidden h-0.5 md:block"
+              style={{ background: "linear-gradient(to right, #3b6ea5, #d97706, #dc2626, #16a34a)" }}
+            />
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
+              {whySteps.map((step) => (
+                <div key={step.n} className="flex flex-col items-center text-center">
+                  {/* Colour-coded ring with the step number */}
+                  <div
+                    className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border-4 bg-white shadow-sm"
+                    style={{ borderColor: step.ring, color: step.ring }}
+                  >
+                    <span className="text-lg font-extrabold">{step.n}</span>
+                  </div>
+                  {/* Text box, keeping the general card theme */}
+                  <div className="mt-5 w-full rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-5 text-left">
+                    <p
+                      className="text-[11px] font-bold uppercase tracking-[0.16em]"
+                      style={{ color: step.ring }}
+                    >
+                      {step.phase}
+                    </p>
+                    <h3 className="mt-1 text-base font-bold text-[#0a1628]">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[#6b7280]">{step.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Capabilities */}
         <div className="mb-16">
           <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -193,27 +251,6 @@ export default function AboutPage() {
                 </div>
               );
             })}
-          </div>
-        </div>
-
-        {/* Why choose us — four-step process (from Business model_landscape.pdf) */}
-        <div className="mb-16">
-          <div className="mb-6">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#2563eb]">
-              Why choose us
-            </p>
-            <h2 className="mt-2 text-xl font-bold text-[#0a1628]">
-              Four principle steps every choice of a connector should pass through
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {whySteps.map((step) => (
-              <div key={step.n} className="rounded-xl border border-[#e2e8f0] bg-[#f8fafc] p-6">
-                <span className="text-3xl font-extrabold leading-none text-[#dbeafe]">{step.n}</span>
-                <h3 className="mt-3 text-base font-bold text-[#0a1628]">{step.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#6b7280]">{step.text}</p>
-              </div>
-            ))}
           </div>
         </div>
 
