@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Send, Upload, CheckCircle, Loader2 } from "lucide-react";
+import { Send, CheckCircle, Loader2 } from "lucide-react";
 import HCaptcha from "@/components/ui/HCaptcha";
 import { submitToWeb3Forms } from "@/lib/web3forms";
 
@@ -42,8 +42,6 @@ export default function RFQForm({ subject }: { subject?: string }) {
   const [state, setState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [token, setToken] = useState("");
-  const [fileName, setFileName] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -78,7 +76,6 @@ export default function RFQForm({ subject }: { subject?: string }) {
         message: formData.message,
       },
       token,
-      selectedFile,
     );
     if (result.ok) {
       setState("success");
@@ -107,8 +104,6 @@ export default function RFQForm({ subject }: { subject?: string }) {
         onClick={() => {
           setState("idle");
           setFormData(initialData);
-          setFileName(null);
-          setSelectedFile(null);
           setToken("");
           setErrorMsg("");
         }}
@@ -238,30 +233,6 @@ export default function RFQForm({ subject }: { subject?: string }) {
           placeholder="Application details, quantity, required standards, lead time expectations, or any other relevant information…"
           className="w-full px-3 py-2.5 text-sm bg-white border border-[#d1d5db] rounded-lg text-[#111827] placeholder:text-[#9ca3af] focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent resize-none"
         />
-      </div>
-
-      {/* File upload */}
-      <div>
-        <label className="block text-xs font-medium text-[#374151] mb-1.5">
-          Drawing / specification (optional)
-        </label>
-        <label className="flex items-center gap-3 px-4 py-3 bg-[#f8fafc] border border-dashed border-[#d1d5db] rounded-lg cursor-pointer hover:border-[#2563eb] hover:bg-[#eff6ff] transition-colors group">
-          <Upload size={16} className="text-[#9ca3af] group-hover:text-[#2563eb] transition-colors" />
-          <span className="text-xs text-[#6b7280] group-hover:text-[#2563eb] transition-colors">
-            {fileName ? fileName : "Upload PDF, DWG, or image, max 10MB"}
-          </span>
-          <input
-            type="file"
-            name="drawing"
-            className="sr-only"
-            accept=".pdf,.dwg,.dxf,.png,.jpg,.jpeg"
-            onChange={(e) => {
-              const file = e.target.files?.[0] ?? null;
-              setSelectedFile(file);
-              setFileName(file?.name ?? null);
-            }}
-          />
-        </label>
       </div>
 
       <HCaptcha onToken={setToken} />
