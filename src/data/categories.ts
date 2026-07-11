@@ -34,7 +34,7 @@ export const categories: Category[] = [
   },
   {
     id: "heat-shrink",
-    name: "Heat Shrink Tubing",
+    name: "Heat Shrink Tubing and Protective Sleeves",
     slug: "heat-shrink-tubing",
     webshopHref: "/webshop/components/heat-shrinkable.html",
     description:

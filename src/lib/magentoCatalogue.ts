@@ -82,10 +82,10 @@ const categories = categoriesJson as unknown as Record<string, CatalogueCategory
 // ── Synthetic brand landing: JDD Tech ──────────────────────────────────────
 // JDD Tech has no Magento products (like other lean partner landings), so it is
 // not in the imported catalogue data. Inject a product-less category under Heat
-// Shrink Tubing (id 4) so its menu box and page resolve. The hero logo comes
-// from the "jdd-tech" route segment (brands.ts); its sourcing CTA is set via
-// CATEGORY_SOURCING_CTA in CatalogueCategoryPage.tsx (keyed by this id, 90001).
-const JDD_TECH_CATEGORY_ID = 90001;
+// Shrink Tubing (id 4) so its menu box and breadcrumbs resolve. The page itself
+// is a dedicated component (JDDTechPage.tsx, mirroring ZFerrulesPage.tsx),
+// special-cased by this id in webshop/[...path]/page.tsx.
+export const JDD_TECH_CATEGORY_ID = 90001;
 const JDD_TECH_ROUTE = "/webshop/components/heat-shrinkable/jdd-tech.html";
 const jddHeatShrinkParent = categories["4"];
 categories[String(JDD_TECH_CATEGORY_ID)] = {
@@ -99,8 +99,9 @@ categories[String(JDD_TECH_CATEGORY_ID)] = {
   route: JDD_TECH_ROUTE,
   image: null,
   description: null,
-  metaTitle: null,
-  metaDescription: null,
+  metaTitle: "JDD Tech | Cable Protection, Sleeving & Conduit",
+  metaDescription:
+    "JDD Tech braided sleeving, spiral wrap, textile sleeve, conduit and heat-shrink products at Adcontact. Specialist Nordic distributor. Request a quote with expert technical support.",
   isActive: true,
   includeInMenu: true,
   productIds: [],

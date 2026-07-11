@@ -26,7 +26,7 @@ const industrialComponentsGroup: NavGroup = {
   href: "/webshop/components.html",
   items: [
     {
-      label: "Heat Shrink Tubing",
+      label: "Heat Shrink Tubing and Protective Sleeves",
       href: "/webshop/components/heat-shrinkable.html",
       children: [
         { label: "HongShang", href: "/webshop/components/heat-shrinkable/hongshang.html" },

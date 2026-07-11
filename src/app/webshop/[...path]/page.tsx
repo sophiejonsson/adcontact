@@ -3,6 +3,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import CatalogueCategoryPage from "@/components/catalogue/CatalogueCategoryPage";
 import CatalogueProductPage from "@/components/catalogue/CatalogueProductPage";
 import ZFerrulesPage from "@/components/catalogue/ZFerrulesPage";
+import JDDTechPage from "@/components/catalogue/JDDTechPage";
 import StockoConnectorSystemsPage from "@/components/catalogue/StockoConnectorSystemsPage";
 import StockoTerminatingTechnologyPage from "@/components/catalogue/StockoTerminatingTechnologyPage";
 import {
@@ -11,6 +12,7 @@ import {
   resolveCatalogueRoute,
   PRODUCT_CANONICAL_ROUTES,
   CATEGORY_CANONICAL_ROUTES,
+  JDD_TECH_CATEGORY_ID,
   type CatalogueSearchParams,
   webshopPathFromSegments,
 } from "@/lib/magentoCatalogue";
@@ -135,6 +137,11 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
   // Z+F Wire Ferrules hub — dedicated visual layout with partner link
   if (category.id === 1711) {
     return <ZFerrulesPage category={category} />;
+  }
+
+  // JDD Tech — dedicated visual layout (mirrors ZFerrulesPage), 6 product-category boxes
+  if (category.id === JDD_TECH_CATEGORY_ID) {
+    return <JDDTechPage category={category} />;
   }
 
   // Cvilux hub renders as a normal webshop descendant hub (dark hero + product

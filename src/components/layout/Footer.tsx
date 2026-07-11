@@ -7,7 +7,7 @@ import CookieSettingsLink from "@/components/CookieSettingsLink";
 const footerLinks = {
   "Industrial Components": [
     { label: "Connectors", href: "/webshop/components/sealed-connectors.html" },
-    { label: "Heat Shrink Tubing", href: "/webshop/components/heat-shrinkable.html" },
+    { label: "Heat Shrink Tubing and Protective Sleeves", href: "/webshop/components/heat-shrinkable.html" },
     { label: "Contacts & Terminals", href: "/webshop/components/contacts.html" },
     { label: "Accessories", href: "/webshop/components/accessories.html" },
     { label: "Tools", href: "/webshop/components/tools.html" },
