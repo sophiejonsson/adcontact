@@ -93,7 +93,7 @@ Context (from the catalogue):
 - [x] **Mecal** — Tier B lean landing (cat 111, `…/crimping-equipment/mecal.html`): facility header photo + **three** link boxes (Applicators / Crimping machines / Stripping and crimping machines, each → Mecal's own product pages, `fit:"contain"`) + sourcing box; NO product grid (`HIDE_PRODUCT_GRID_CATEGORY_IDS`, `sm:grid-cols-2 lg:grid-cols-3`). Brand badge auto-resolves from route segment `mecal` (no `CATEGORY_BRAND_OVERRIDES` needed). Listed in the menu under both **Crimping machines and tools** and **Stripping and crimping machines**. Header/box copy customer-supplied, dash-free (fixed two grammar slips). **↩️ Old grid preserved & reversible:** the 27 Mecal catalogue products are NOT hidden (not added to `HIDDEN_PRODUCT_IDS`/`HIDDEN_CATEGORY_IDS`), only the grid *rendering* is suppressed by the one `HIDE_PRODUCT_GRID_CATEGORY_IDS` flag — **remove `111` from that set to restore the exact original product grid** (no data lost, nothing to rebuild). Same reversible pattern as Wezag/Tekuwa/Mav. **LOCKED & DONE.**
 - [x] **Junquan** — Tier A (cat 102, `…/cutting-machines-for-a-variety-of-materials/junquan.html`, leaf-of-flat-hub under Cutting Machines). New brand `junquan` in brands.ts (local logo `/images/partners/junquan.gif`, badge auto-resolves from route segment; already in the Cutting Machines menu + `equipment.ts`). Facility header photo + intro (customer copy) + single link box (full-width banner) → cuttingstripping-machine.com/products.html + sourcing box (same URL). **Grid KEPT** (one product); `Cutting machine Brands` filter already hidden/relabelled (from Ulmer) → shows clean "Brand: Junquan". **Product page (JQ-6100, 1831):** renamed "JQ-6100 Digital Cutting Machine", overview + Features/Specifications boxes built from its own spec table, dash-free. Fixed source typos (Numercal→Numerical; Juanquan→Junquan). Box text left the customer's "Industry" capitalisations verbatim (flagged). ⚠️ *A live-page dash scan of this hub shows 5 en-dashes — these are **Ulmer's** raw product `description` fields riding along in the borrowed cutting-machine facet pool (never rendered; Ulmer uses Features/Specs boxes), NOT Junquan copy.* **LOCKED & DONE.**
 - [ ] **Metzner, Ramatech — ON HOLD** ⏸️ until the agent agreement is finalised and signed (we do not yet represent them). Do not build their pages until the user gives the go-ahead.
-- [ ] **JDD Tech (component side) — LATER** ⏸️ set up a brand page (in parallel with Metzner/Ramatech). Component brand, already in `brands.ts` (`jdd-tech`). Deferred at the user's request; revisit on their go-ahead.
+- [~] **JDD Tech (component side) — BUILT, in preview (2026-07-11)** on branch `jdd-tech`, not yet merged to `main`/live. Synthetic product-less category injected (id `90001`, `JDD_TECH_CATEGORY_ID` in `magentoCatalogue.ts`) as a child of Heat Shrink Tubing (4), since JDD Tech has no Magento products. Listed in the menu under **Heat Shrink Tubing → HongShang, JDD Tech**. Lean landing: hero (logo + description auto-pulled from `brands.ts`, already present pre-launch) + sourcing CTA (`JDD_TECH_SOURCING_CTA` in `CatalogueCategoryPage.tsx`) → jddsleeve.com. First draft — header image / box copy can still be refined on the preview. See Part 6 for the branch/preview workflow used. **Awaiting Stefan's review before merge.**
 - [ ] **Legacy Z&F equipment grid pages** (stripping/crimping + ~50 EOL products) still resolve by direct URL — decide: redirect to the Z&F landing or hide (`HIDDEN_CATEGORY_IDS`).
 
 ---
@@ -131,6 +131,27 @@ Technical follow-up ~24h after launch — all resolved, environment stable:
 - **About us** (`src/app/about/page.tsx`): the hub header's `aside` holds a compact **Company history** card (one-line milestones, tightened to fit the header height). Section order: **Why choose us → What we supply → Industries → Offices**. The opening paragraph uses the first-person **"We are…"** voice (not "Adcontact is…").
 - **"Why choose us" = the four-step process map** from `Business model_landscape.pdf`: colour-coded numbered **rings** on a **left-to-right colour-graded timeline**; cards keep the site theme and are **forced to equal height** (each card is `flex-1` inside an equal-height grid cell → all match the tallest, step 1 = the size reference). Step colours: **01 Design = steel/blueprint blue `#3b6ea5`**, **02 Production = brass/amber `#d97706`**, **03 Quality = signal red `#dc2626`**, **04 Outcome = green `#16a34a`**.
 - **Dash exception.** House style is em/en-dash-free customer copy (commas or "to"). The **one agreed exception** is the About us heading **"Our principle - Four steps every choice of a connector should pass through"** (deliberate hyphen). Don't "fix" it.
+
+---
+
+## Part 6 — Preview-before-live workflow (branches + Vercel Preview Deployments, 2026-07-11)
+
+**`adcontact-pi.vercel.app` IS production** — it's the same live site as `www.adcontact.se` (Vercel just also exposes production under its `.vercel.app` domain). It is NOT a staging area; anything visible there is already live to the public.
+
+**The real way to finalize a page before it goes live is Git branches + Vercel's automatic Preview Deployments:**
+- `main` branch = **production**. Any push/merge to `main` deploys straight to www.adcontact.se.
+- **Any other branch** gets its own **separate, isolated preview URL**, built automatically by Vercel on push — the live site is completely unaffected.
+- Preview URL pattern for this project (Vercel scope `adcgam`, project `adcontact`): **`https://adcontact-git-<branch-name>-adcgam.vercel.app`**.
+
+**Workflow going forward for any page/feature Stefan wants to review first:**
+1. Claude creates a feature branch (e.g. `git checkout -b jdd-tech origin/main`) and builds the change there.
+2. Push the branch → Vercel auto-builds a preview deployment (~2-3 min).
+3. Stefan reviews on the preview URL. Iterate on the same branch as needed (each push updates the same preview URL).
+4. Only once Stefan approves does Claude merge the branch into `main` → that push is what makes it go live.
+
+⚠️ **Vercel Deployment Protection (SSO) is ON for this project** — preview URLs redirect (`302` → `vercel.com/sso-api`) unless the viewer is logged into the Vercel account that owns the project. This is a good default (keeps unfinished work private) but it also means **Claude's automated `curl` checks cannot see preview-page content** — only Stefan can (logged into Vercel in his browser), or Claude if using a "Protection Bypass for Automation" token (not currently set up; would need creating in Vercel Project Settings → Deployment Protection if we want automated preview verification later).
+
+**First use (2026-07-11): JDD Tech brand landing**, built on branch `jdd-tech` — see Part 2 per-brand status for what was added. Verified production untouched (404 on `www.adcontact.se` for the new route, live menu unchanged) before Stefan reviewed the preview.
 
 ---
 
