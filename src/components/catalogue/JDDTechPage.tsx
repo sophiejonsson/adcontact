@@ -7,8 +7,9 @@ import type { CatalogueCategory } from "@/lib/magentoCatalogue";
 const JDD_TECH = "https://www.jddsleeve.com" as const;
 const brand = brands.find((b) => b.slug === "jdd-tech")!;
 
-// Featured product categories from jddsleeve.com. Proposed shortlist (2026-07-11)
-// pending Stefan's confirmation — swap any entry out, the layout supports any 6.
+// The complete range: all 15 product categories from jddsleeve.com's own
+// navigation menu, each linking to its real category page with its own
+// product photo (verified 2026-07-11).
 type CategoryCard = { title: string; href: string; image: string };
 const CATEGORIES: CategoryCard[] = [
   {
@@ -17,9 +18,9 @@ const CATEGORIES: CategoryCard[] = [
     image: `${JDD_TECH}/uploadfile/2024/0529/20240529042802107.jpg`,
   },
   {
-    title: "Spiral Wrap",
-    href: `${JDD_TECH}/spiral-wrap/`,
-    image: `${JDD_TECH}/uploadfile/2023/0314/20230314032433774.jpg`,
+    title: "Cable Management",
+    href: `${JDD_TECH}/cable-management/`,
+    image: `${JDD_TECH}/uploadfile/2018/0727/20180727112924332.jpg`,
   },
   {
     title: "Textile Sleeve",
@@ -27,9 +28,44 @@ const CATEGORIES: CategoryCard[] = [
     image: `${JDD_TECH}/uploadfile/2017/0531/20170531110242559.jpg`,
   },
   {
+    title: "Spiral Wrap",
+    href: `${JDD_TECH}/spiral-wrap/`,
+    image: `${JDD_TECH}/uploadfile/2023/0314/20230314032433774.jpg`,
+  },
+  {
     title: "Corrugated Flexible Conduit",
     href: `${JDD_TECH}/corrugated-flexible-conduit/`,
     image: `${JDD_TECH}/uploadfile/2017/0531/20170531110352932.jpg`,
+  },
+  {
+    title: "Wiring Duct",
+    href: `${JDD_TECH}/wiring-duct/`,
+    image: `${JDD_TECH}/uploadfile/2018/1025/20181025105139805.jpg`,
+  },
+  {
+    title: "High Temperature Tube",
+    href: `${JDD_TECH}/high-temperature-tube/`,
+    image: `${JDD_TECH}/uploadfile/2017/0531/20170531113800623.jpg`,
+  },
+  {
+    title: "Thermal Insulation Tube",
+    href: `${JDD_TECH}/thermal-insulation-tube/`,
+    image: `${JDD_TECH}/uploadfile/2017/0531/20170531113104893.jpg`,
+  },
+  {
+    title: "EMI Shielding Tube",
+    href: `${JDD_TECH}/emi-shielding-tube/`,
+    image: `${JDD_TECH}/uploadfile/2017/0531/20170531113703772.jpg`,
+  },
+  {
+    title: "Noisy Reduction Sleeve",
+    href: `${JDD_TECH}/noisy-reduction-sleeve/`,
+    image: `${JDD_TECH}/uploadfile/2017/0531/20170531112338942.jpg`,
+  },
+  {
+    title: "Fiberglass Sleeving",
+    href: `${JDD_TECH}/High%20Temperature%20Fiberglass%20sleeving/`,
+    image: `${JDD_TECH}/uploadfile/2017/0531/20170531114349323.jpg`,
   },
   {
     title: "Heat Shrinkable Tube",
@@ -37,9 +73,19 @@ const CATEGORIES: CategoryCard[] = [
     image: `${JDD_TECH}/uploadfile/2023/0217/20230217094953824.jpg`,
   },
   {
-    title: "Thermal Insulation Tube",
-    href: `${JDD_TECH}/thermal-insulation-tube/`,
-    image: `${JDD_TECH}/uploadfile/2017/0531/20170531113104893.jpg`,
+    title: "Monofilament Fiber & Multifilament Yarn",
+    href: `${JDD_TECH}/monofilament-fiber-and-multifilament-yarn/`,
+    image: `${JDD_TECH}/uploadfile/2021/0923/20210923022444645.jpg`,
+  },
+  {
+    title: "Conduit Fittings & Cable Gland",
+    href: `${JDD_TECH}/conduit-fittings-and-cable-gland/`,
+    image: `${JDD_TECH}/uploadfile/2022/0331/20220331022057834.png`,
+  },
+  {
+    title: "New Products",
+    href: `${JDD_TECH}/New%20product/`,
+    image: `${JDD_TECH}/uploadfile/2017/0531/20170531113156515.jpg`,
   },
 ];
 
@@ -74,7 +120,7 @@ export default function JDDTechPage({ category: _ }: { category: CatalogueCatego
               <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">JDD Tech</h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-[#94a3b8]">{brand.description}</p>
               <p className="mt-4 text-sm font-semibold text-blue-200">
-                {CATEGORIES.length} product categories
+                {CATEGORIES.length} product categories, the complete range
               </p>
             </div>
             <div className="lg:justify-self-end">
@@ -96,32 +142,38 @@ export default function JDDTechPage({ category: _ }: { category: CatalogueCatego
         </div>
       </section>
 
-      {/* Category grid */}
+      {/* Category grid — same compact card size as the HTP categories (4 per
+          row on large screens), so a 15-box page stays easy to scan. */}
       <main className="mx-auto max-w-[1440px] px-6 py-10">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {CATEGORIES.map((cat) => (
             <a
               key={cat.title}
               href={cat.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+              className="group grid min-h-[180px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
             >
-              <div className="relative aspect-[4/3] bg-[#f8fafc]">
+              <div className="relative flex min-h-28 items-center justify-center border-b border-[#eef2f7] bg-[#f8fafc]">
                 <Image
                   src={cat.image}
                   alt={cat.title}
                   fill
                   unoptimized
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-contain p-6 transition-transform duration-300 group-hover:scale-[1.04]"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 25vw, 240px"
+                  className="object-contain p-3 transition-transform group-hover:scale-105"
                 />
               </div>
-              <div className="flex items-center justify-between border-t border-[#eef2f7] px-4 py-3">
-                <span className="text-sm font-bold text-[#0a1628] group-hover:text-[#2563eb]">
+              <div className="flex min-w-0 flex-col p-3.5">
+                <h3 className="min-h-10 text-sm font-bold leading-snug text-[#0a1628] group-hover:text-[#2563eb]">
                   {cat.title}
-                </span>
-                <ArrowUpRight size={14} className="flex-none text-[#93c5fd] transition-transform duration-200 group-hover:text-[#2563eb]" />
+                </h3>
+                <div className="mt-2.5 flex items-center justify-between gap-3 border-t border-[#eef2f7] pt-2.5">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.1em] text-[#64748b]">
+                    View range
+                  </span>
+                  <ArrowUpRight size={14} className="flex-none text-[#2563eb]" />
+                </div>
               </div>
             </a>
           ))}
