@@ -65,7 +65,7 @@ export const brands: Brand[] = [
     description:
       "Vogt AG manufactures a comprehensive range of PCB terminals, soldering tags, turret terminals, and connecting elements for professional electronics assembly. Their products are specified in instrumentation, measurement equipment, audio electronics, and industrial control panels.",
     shortDescription: "High-quality PCB terminals, turret contacts, and soldering tags for professional electronics.",
-    categories: ["pcb-contacts", "contacts-terminals"],
+    categories: ["connectors", "pcb-contacts", "contacts-terminals"],
     linecardSection: "components",
     website: "https://www.vogt.ch/",
     shopUrl: "https://www.vogt.ch/en/shop",
