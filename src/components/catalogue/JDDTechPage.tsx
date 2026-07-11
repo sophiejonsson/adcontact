@@ -5,6 +5,9 @@ import { brands } from "@/data/brands";
 import type { CatalogueCategory } from "@/lib/magentoCatalogue";
 
 const JDD_TECH = "https://www.jddsleeve.com" as const;
+// Category photos are mirrored into R2 (jdd-tech/categories/…) rather than
+// hotlinked, so the page doesn't break if jddsleeve.com reorganises its site.
+const IMG = "/media/jdd-tech/categories" as const;
 const brand = brands.find((b) => b.slug === "jdd-tech")!;
 
 // The complete range: all 15 product categories from jddsleeve.com's own
@@ -15,77 +18,77 @@ const CATEGORIES: CategoryCard[] = [
   {
     title: "Expandable Braided Sleeving",
     href: `${JDD_TECH}/expandable-braided-sleeving/`,
-    image: `${JDD_TECH}/uploadfile/2024/0529/20240529042802107.jpg`,
+    image: `${IMG}/expandable-braided-sleeving.jpg`,
   },
   {
     title: "Cable Management",
     href: `${JDD_TECH}/cable-management/`,
-    image: `${JDD_TECH}/uploadfile/2018/0727/20180727112924332.jpg`,
+    image: `${IMG}/cable-management.jpg`,
   },
   {
     title: "Textile Sleeve",
     href: `${JDD_TECH}/textile-sleeve/`,
-    image: `${JDD_TECH}/uploadfile/2017/0531/20170531110242559.jpg`,
+    image: `${IMG}/textile-sleeve.jpg`,
   },
   {
     title: "Spiral Wrap",
     href: `${JDD_TECH}/spiral-wrap/`,
-    image: `${JDD_TECH}/uploadfile/2023/0314/20230314032433774.jpg`,
+    image: `${IMG}/spiral-wrap.jpg`,
   },
   {
     title: "Corrugated Flexible Conduit",
     href: `${JDD_TECH}/corrugated-flexible-conduit/`,
-    image: `${JDD_TECH}/uploadfile/2017/0531/20170531110352932.jpg`,
+    image: `${IMG}/corrugated-flexible-conduit.jpg`,
   },
   {
     title: "Wiring Duct",
     href: `${JDD_TECH}/wiring-duct/`,
-    image: `${JDD_TECH}/uploadfile/2018/1025/20181025105139805.jpg`,
+    image: `${IMG}/wiring-duct.jpg`,
   },
   {
     title: "High Temperature Tube",
     href: `${JDD_TECH}/high-temperature-tube/`,
-    image: `${JDD_TECH}/uploadfile/2017/0531/20170531113800623.jpg`,
+    image: `${IMG}/high-temperature-tube.jpg`,
   },
   {
     title: "Thermal Insulation Tube",
     href: `${JDD_TECH}/thermal-insulation-tube/`,
-    image: `${JDD_TECH}/uploadfile/2017/0531/20170531113104893.jpg`,
+    image: `${IMG}/thermal-insulation-tube.jpg`,
   },
   {
     title: "EMI Shielding Tube",
     href: `${JDD_TECH}/emi-shielding-tube/`,
-    image: `${JDD_TECH}/uploadfile/2017/0531/20170531113703772.jpg`,
+    image: `${IMG}/emi-shielding-tube.jpg`,
   },
   {
     title: "Noisy Reduction Sleeve",
     href: `${JDD_TECH}/noisy-reduction-sleeve/`,
-    image: `${JDD_TECH}/uploadfile/2017/0531/20170531112338942.jpg`,
+    image: `${IMG}/noisy-reduction-sleeve.jpg`,
   },
   {
     title: "Fiberglass Sleeving",
     href: `${JDD_TECH}/High%20Temperature%20Fiberglass%20sleeving/`,
-    image: `${JDD_TECH}/uploadfile/2017/0531/20170531114349323.jpg`,
+    image: `${IMG}/fiberglass-sleeving.jpg`,
   },
   {
     title: "Heat Shrinkable Tube",
     href: `${JDD_TECH}/heat-shrinkable-tube/`,
-    image: `${JDD_TECH}/uploadfile/2023/0217/20230217094953824.jpg`,
+    image: `${IMG}/heat-shrinkable-tube.jpg`,
   },
   {
     title: "Monofilament Fiber & Multifilament Yarn",
     href: `${JDD_TECH}/monofilament-fiber-and-multifilament-yarn/`,
-    image: `${JDD_TECH}/uploadfile/2021/0923/20210923022444645.jpg`,
+    image: `${IMG}/monofilament-fiber-yarn.jpg`,
   },
   {
     title: "Conduit Fittings & Cable Gland",
     href: `${JDD_TECH}/conduit-fittings-and-cable-gland/`,
-    image: `${JDD_TECH}/uploadfile/2022/0331/20220331022057834.png`,
+    image: `${IMG}/conduit-fittings-cable-gland.png`,
   },
   {
     title: "New Products",
     href: `${JDD_TECH}/New%20product/`,
-    image: `${JDD_TECH}/uploadfile/2017/0531/20170531113156515.jpg`,
+    image: `${IMG}/new-products.jpg`,
   },
 ];
 
@@ -194,7 +197,7 @@ export default function JDDTechPage({ category: _ }: { category: CatalogueCatego
               <ArrowUpRight size={15} />
             </a>
             <a
-              href={brand.website}
+              href="https://www.jddsleeve.com/Products%20&%20Application/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#475569] transition-colors hover:text-[#2563eb]"
