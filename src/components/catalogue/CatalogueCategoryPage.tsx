@@ -275,10 +275,20 @@ const JUNQUAN_SOURCING_CTA = {
   catalogueUrl: "https://www.cuttingstripping-machine.com/products.html",
 } as const;
 
+const JDD_TECH_SOURCING_CTA = {
+  heading: "Looking for a specific cable-protection product?",
+  body: "We supply JDD Tech's complete range of braided sleeving, self-closing wraps, textile sleeves, corrugated conduit, heat-shrink tubing and cable-management accessories. Tell us about your application and we'll help you find the right product, or browse JDD Tech's full range.",
+  mailtoSubject: "JDD Tech cable protection: product enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View JDD Tech range",
+  catalogueUrl: "https://www.jddsleeve.com/",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
 > = {
+  90001: JDD_TECH_SOURCING_CTA, // JDD Tech lean landing (Heat Shrink Tubing)
   77: BRANSON_WELDING_CTA, // Plastic- and Metal Welding hub
   115: BRANSON_WELDING_CTA, // Branson sub-page
   110: WEZAG_SOURCING_CTA, // Wezag crimping brand page
@@ -1874,7 +1884,7 @@ export default function CatalogueCategoryPage({
           </div>
         )}
 
-        {children.length === 0 && productPool.length === 0 && !content.html && content.standaloneImages.length === 0 && (
+        {children.length === 0 && productPool.length === 0 && !content.html && content.standaloneImages.length === 0 && !categorySourcingCta && (
           <div className="rounded-xl border border-[#e5e7eb] bg-white px-6 py-10 text-center">
             <Package className="mx-auto text-[#cbd5e1]" size={34} />
             <h2 className="mt-4 text-lg font-bold text-[#0a1628]">No catalogue items yet</h2>

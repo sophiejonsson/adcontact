@@ -30,6 +30,7 @@ const industrialComponentsGroup: NavGroup = {
       href: "/webshop/components/heat-shrinkable.html",
       children: [
         { label: "HongShang", href: "/webshop/components/heat-shrinkable/hongshang.html" },
+        { label: "JDD Tech", href: "/webshop/components/heat-shrinkable/jdd-tech.html" },
       ],
     },
     {

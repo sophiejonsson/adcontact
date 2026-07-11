@@ -78,6 +78,39 @@ export type CatalogueFilterFacet = {
 const routes = routesJson as unknown as Record<string, CatalogueRoute>;
 const products = productsJson as unknown as Record<string, CatalogueProduct>;
 const categories = categoriesJson as unknown as Record<string, CatalogueCategory>;
+
+// ── Synthetic brand landing: JDD Tech ──────────────────────────────────────
+// JDD Tech has no Magento products (like other lean partner landings), so it is
+// not in the imported catalogue data. Inject a product-less category under Heat
+// Shrink Tubing (id 4) so its menu box and page resolve. The hero logo comes
+// from the "jdd-tech" route segment (brands.ts); its sourcing CTA is set via
+// CATEGORY_SOURCING_CTA in CatalogueCategoryPage.tsx (keyed by this id, 90001).
+const JDD_TECH_CATEGORY_ID = 90001;
+const JDD_TECH_ROUTE = "/webshop/components/heat-shrinkable/jdd-tech.html";
+const jddHeatShrinkParent = categories["4"];
+categories[String(JDD_TECH_CATEGORY_ID)] = {
+  id: JDD_TECH_CATEGORY_ID,
+  parentId: 4,
+  path: jddHeatShrinkParent ? `${jddHeatShrinkParent.path}/${JDD_TECH_CATEGORY_ID}` : String(JDD_TECH_CATEGORY_ID),
+  position: 20,
+  level: jddHeatShrinkParent ? jddHeatShrinkParent.level + 1 : 3,
+  name: "JDD Tech",
+  urlPath: "components/heat-shrinkable/jdd-tech",
+  route: JDD_TECH_ROUTE,
+  image: null,
+  description: null,
+  metaTitle: null,
+  metaDescription: null,
+  isActive: true,
+  includeInMenu: true,
+  productIds: [],
+  children: [],
+};
+routes[JDD_TECH_ROUTE] = { type: "category", id: JDD_TECH_CATEGORY_ID };
+if (jddHeatShrinkParent && !jddHeatShrinkParent.children.includes(JDD_TECH_CATEGORY_ID)) {
+  jddHeatShrinkParent.children = [...jddHeatShrinkParent.children, JDD_TECH_CATEGORY_ID];
+}
+
 const LEGACY_ROUTE_ALIASES: Record<string, string> = {
   "/webshop/components/contact-pieces-for-pcb.html":
     "/webshop/components/sealed-connectors/vogt/contact-pieces-for-pcb-soldering-tags.html",
