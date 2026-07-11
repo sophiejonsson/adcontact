@@ -103,7 +103,7 @@ export default function AboutPage() {
       <PageHeader
         crumbs={[{ label: "About us" }]}
         title="About us"
-        intro="A trusted supplier over 4 decades providing our market cable assembly products, connectors, accessories and cable processing equipment."
+        intro="A trusted supplier over four decades providing our market cable assembly products, connectors, accessories and cable processing equipment."
         aside={
           <div className="rounded-2xl border border-[#1e3a6e] bg-[#0f2042] p-4 lg:w-[400px]">
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#60a5fa]">

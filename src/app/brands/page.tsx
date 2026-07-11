@@ -64,7 +64,7 @@ export default function BrandsPage() {
       <PageHeader
         crumbs={[{ label: "Trusted Partners" }]}
         title="Trusted Partners"
-        intro="Adcontact maintains direct relationships with leading manufacturers in electromechanical components and wire-processing equipment. We provide application support, stock management, and technical consultancy, not just logistics."
+        intro="We maintain direct relationships with leading manufacturers in electromechanical components and wire-processing equipment. We provide application support, stock management and technical consultancy, not just logistics."
       />
 
       <div className="max-w-[1440px] mx-auto px-6 py-14">

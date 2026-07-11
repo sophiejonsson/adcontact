@@ -17,7 +17,7 @@ export default function QualityPage() {
       <PageHeader
         crumbs={[{ label: "Quality Management" }]}
         title="Quality Management"
-        intro="ISO 9001:2015 certified. Committed to continuous improvement across every process, product, and service."
+        intro="We are committed to continuous improvement across every process, product and service."
       />
 
       {/* Content */}

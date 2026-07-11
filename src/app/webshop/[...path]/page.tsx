@@ -4,6 +4,7 @@ import CatalogueCategoryPage from "@/components/catalogue/CatalogueCategoryPage"
 import CatalogueProductPage from "@/components/catalogue/CatalogueProductPage";
 import ZFerrulesPage from "@/components/catalogue/ZFerrulesPage";
 import JDDTechPage from "@/components/catalogue/JDDTechPage";
+import { CATEGORY_DESCRIPTION_OVERRIDES } from "@/components/catalogue/CatalogueCategoryPage";
 import StockoConnectorSystemsPage from "@/components/catalogue/StockoConnectorSystemsPage";
 import StockoTerminatingTechnologyPage from "@/components/catalogue/StockoTerminatingTechnologyPage";
 import {
@@ -78,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = getCatalogueCategory(route.id);
   if (!category) return {};
   const title = categoryTitle(category);
-  const description = categoryMetaDescription(category);
+  const description = CATEGORY_DESCRIPTION_OVERRIDES[category.id] ?? categoryMetaDescription(category);
   return {
     title,
     description,

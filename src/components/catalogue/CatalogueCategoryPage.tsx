@@ -157,7 +157,13 @@ const CATEGORY_TITLE_OVERRIDES: Record<number, string> = {
 
 // Header/intro text override (the hero paragraph). Used when a category's
 // Magento metaDescription is empty/unsuitable — e.g. a rewritten partner blurb.
-const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
+// Exported so generateMetadata (webshop/[...path]/page.tsx) can reuse the same
+// text for the SEO <meta description>, keeping the on-page copy and the Google/
+// social preview consistent instead of the page showing new copy while search
+// snippets still show the old raw Magento metaDescription.
+export const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
+  3:
+    "In our webshop you can find Industrial Components & Production Equipment from leading brands in the industry. A wide range of connectors, contacts, cutting- and stripping machines, crimping- and welding equipment and more.",
   106:
     "We supply the complete range of Feintechnik Rittmeyer wire stripping machines, marketed under the be-ri brand, for industrial cable processing. Whether you need a pneumatic, rotating or electric stripping machine, or high-precision processing of coaxial cables, we'll help you find the right solution.",
   100:
