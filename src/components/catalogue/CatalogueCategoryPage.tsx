@@ -178,7 +178,7 @@ export const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
   102:
     "We supply the complete range of Junquan fully Automatic Terminal Crimp Machines, Computerized Wire Stripping and Cutting Machines, Numerical Control Precision Press, and Digital Cutting Machines.",
   [METZNER_CATEGORY_ID]:
-    "We supply Metzner's cable and wire cutting and stripping machines, along with their specialised range for cutting corrugated tubes. Metzner, whose group also includes Ulmer, develops, designs and manufactures innovative machine solutions for the efficient processing of cables, hoses, rubber, and plastics.",
+    "We supply Metzner's cable and wire cutting and stripping machines, along with their specialised range for cutting corrugated tubes. Metzner, whose group also includes Ulmer and Ramatech, develops, designs and manufactures innovative machine solutions for the efficient processing of cables, hoses, rubber, and plastics.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
