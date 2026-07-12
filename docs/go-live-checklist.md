@@ -47,7 +47,7 @@ project's settings (they are secrets, so they can only be read there, not from c
 | `RFQ_EMAIL_RECIPIENT` | The inbox that "Request a quote" form submissions are sent to. | Confirm it points at the right mailbox. |
 | `ORDERLAND_MEDIA_ORIGIN` | Fallback source for older images not yet copied into R2. | Keep the current value. |
 | `ORDERLAND_MEDIA_FALLBACK_ORIGIN` | Secondary image fallback. | Keep the current value (if set). |
-| `LEGACY_WEBSHOP_ORIGIN` | Legacy storefront origin used by a few links. | Keep the current value (if set). |
+| ~~`LEGACY_WEBSHOP_ORIGIN`~~ | No longer used (removed 2026-07-12) — `/catalog/...` legacy URLs now redirect by id instead of proxying to an origin. | Nothing to set. |
 
 - [ ] All variables above added to the new project (Production environment).
 - [ ] `NEXT_PUBLIC_SITE_URL` updated to the **final domain**.

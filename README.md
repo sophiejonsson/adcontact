@@ -159,9 +159,10 @@ Replace the imports from `src/data/*.ts` with API calls or ORM queries. The data
 
 Adcontact AB · Ekbacksvägen 22 · SE-168 69 Bromma, Sweden  
 +46 (0)8-445 36 00 · info@adcontact.se
-# Legacy webshop origin
+## Legacy Magento URLs
 
-The original `/webshop/...` URL structure is preserved. Fully migrated pages are
-served locally; remaining legacy pages are fetched from `LEGACY_WEBSHOP_ORIGIN`,
-which defaults to `https://www.adcontact.se`. Before switching production DNS to
-this app, set that variable to the legacy site's alternate origin hostname.
+The original `/webshop/...` URL structure is preserved and served locally. Old
+default Magento view URLs (`/catalog/product/view/id/<id>/...` and
+`/catalog/category/view/id/<id>/...`) 301-redirect to the matching page's
+canonical `/webshop/...` route (`src/app/catalog/[...path]/route.ts`), so old
+indexed/bookmarked links keep working without proxying to any external origin.
