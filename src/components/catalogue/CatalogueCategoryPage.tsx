@@ -177,6 +177,8 @@ export const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
     "Mecal, with a leading market position serving a wide range of industries, designs and manufactures applicators, bench-top presses and strip- and crimp machines. Their semi-automatic systems integrate easily into fully automatic lines or manual workstations, and are used for high-volume wire harness production, with integrated quality monitoring, applicator change systems, and pull-force testing options.",
   102:
     "We supply the complete range of Junquan fully Automatic Terminal Crimp Machines, Computerized Wire Stripping and Cutting Machines, Numerical Control Precision Press, and Digital Cutting Machines.",
+  [METZNER_CATEGORY_ID]:
+    "We supply Metzner's cable and wire cutting and stripping machines, along with their specialised range for cutting corrugated tubes. Metzner, whose group also includes Ulmer, develops, designs and manufactures innovative machine solutions for the efficient processing of cables, hoses, rubber, and plastics.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
@@ -206,6 +208,8 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   111: { src: "/media/mecal/hub-header.jpg", fit: "cover" },
   // Junquan — facility photo (wide, fills the frame).
   102: { src: "/media/junquan/hub-header.webp", fit: "cover" },
+  // Metzner — cable/wire stripping-outcome photo (fills the frame). NOT YET SIGNED.
+  [METZNER_CATEGORY_ID]: { src: "/media/metzner/hub-header.jpg", fit: "cover" },
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
@@ -1961,12 +1965,17 @@ export default function CatalogueCategoryPage({
           </div>
         )}
 
-        {children.length === 0 && productPool.length === 0 && !content.html && content.standaloneImages.length === 0 && (
+        {children.length === 0 &&
+          productPool.length === 0 &&
+          !content.html &&
+          content.standaloneImages.length === 0 &&
+          !categorySourcingCta &&
+          !categoryLinkSection && (
           <div className="rounded-xl border border-[#e5e7eb] bg-white px-6 py-10 text-center">
             <Package className="mx-auto text-[#cbd5e1]" size={34} />
             <h2 className="mt-4 text-lg font-bold text-[#0a1628]">No catalogue items yet</h2>
             <p className="mt-2 text-sm text-[#64748b]">
-              Contact Adcontact and we will help locate the right product.
+              Contact us and we will help locate the right product.
             </p>
           </div>
         )}
