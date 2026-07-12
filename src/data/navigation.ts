@@ -100,15 +100,6 @@ export const productionEquipmentGroup: NavGroup = {
       ],
     },
     {
-      // New section (2026-07-12): Ramatech's range (dereeling, coiling, stacking,
-      // reel racks, winding, rewinding) doesn't fit any existing category.
-      label: "Cable Handling Equipment",
-      href: "/webshop/production-equipment/cable-handling-equipment.html",
-      children: [
-        { label: "Ramatech", href: "/webshop/production-equipment/cable-handling-equipment/ramatech.html" },
-      ],
-    },
-    {
       label: "Crimping machines and tools",
       href: "/webshop/production-equipment/crimping-equipment.html",
       children: [
@@ -145,6 +136,15 @@ export const productionEquipmentGroup: NavGroup = {
       href: "/webshop/production-equipment/ultrasonic-welding.html",
       children: [
         { label: "Branson", href: "/webshop/production-equipment/ultrasonic-welding/branson.html" },
+      ],
+    },
+    {
+      // New section (2026-07-12): Ramatech's range (dereeling, coiling, stacking,
+      // reel racks, winding, rewinding) doesn't fit any existing category.
+      label: "Cable Handling Equipment",
+      href: "/webshop/production-equipment/cable-handling-equipment.html",
+      children: [
+        { label: "Ramatech", href: "/webshop/production-equipment/cable-handling-equipment/ramatech.html" },
       ],
     },
     {

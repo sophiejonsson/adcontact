@@ -1975,12 +1975,17 @@ export default function CatalogueCategoryPage({
           </div>
         )}
 
-        {children.length === 0 && productPool.length === 0 && !content.html && content.standaloneImages.length === 0 && (
+        {children.length === 0 &&
+          productPool.length === 0 &&
+          !content.html &&
+          content.standaloneImages.length === 0 &&
+          !categorySourcingCta &&
+          !categoryLinkSection && (
           <div className="rounded-xl border border-[#e5e7eb] bg-white px-6 py-10 text-center">
             <Package className="mx-auto text-[#cbd5e1]" size={34} />
             <h2 className="mt-4 text-lg font-bold text-[#0a1628]">No catalogue items yet</h2>
             <p className="mt-2 text-sm text-[#64748b]">
-              Contact Adcontact and we will help locate the right product.
+              Contact us and we will help locate the right product.
             </p>
           </div>
         )}
