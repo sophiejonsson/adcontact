@@ -11,6 +11,7 @@ import {
   getCategoryAllProducts,
   getCatalogueCategory,
   resolveCatalogueRoute,
+  RAMATECH_CATEGORY_ID,
   type CatalogueCategory,
   type CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
@@ -176,6 +177,8 @@ export const CATEGORY_DESCRIPTION_OVERRIDES: Record<number, string> = {
     "Mecal, with a leading market position serving a wide range of industries, designs and manufactures applicators, bench-top presses and strip- and crimp machines. Their semi-automatic systems integrate easily into fully automatic lines or manual workstations, and are used for high-volume wire harness production, with integrated quality monitoring, applicator change systems, and pull-force testing options.",
   102:
     "We supply the complete range of Junquan fully Automatic Terminal Crimp Machines, Computerized Wire Stripping and Cutting Machines, Numerical Control Precision Press, and Digital Cutting Machines.",
+  [RAMATECH_CATEGORY_ID]:
+    "Ramatech Systems is one of the leading manufacturers of machines and automation solutions for wire handling and wire processing. Complete solutions for everything to do with cable feeding, storage, rewinding, winding, cutting to length and stripping. All their machines for cable processing and cable handling are designed in such a way that they can be assembled into complete production lines. You can choose from the entire product portfolio of Ramatech and the associated Metzner Group.",
 };
 
 // Subcategory filter chips that should navigate to a brand's own hub page
@@ -205,6 +208,8 @@ const CATEGORY_HEADER_IMAGES: Record<number, HeaderImage> = {
   111: { src: "/media/mecal/hub-header.jpg", fit: "cover" },
   // Junquan — facility photo (wide, fills the frame).
   102: { src: "/media/junquan/hub-header.webp", fit: "cover" },
+  // Ramatech — branded signage photo (fills the frame).
+  [RAMATECH_CATEGORY_ID]: { src: "/media/ramatech/hub-header.jpg", fit: "cover" },
 };
 
 // Category-level sourcing CTA for hubs that don't resolve to a single `brand`
@@ -282,6 +287,15 @@ const JUNQUAN_SOURCING_CTA = {
   catalogueUrl: "https://www.cuttingstripping-machine.com/products.html",
 } as const;
 
+const RAMATECH_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Ramatech's complete range of cable handling and cable processing machines. Tell us about your application and we'll help you find the right machine, or browse Ramatech's full range.",
+  mailtoSubject: "Ramatech machines: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Ramatech range",
+  catalogueUrl: "https://www.ramatech.ch/en/products/",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
@@ -295,6 +309,7 @@ const CATEGORY_SOURCING_CTA: Record<
   79: MAV_SOURCING_CTA, // Mav Prüftechnik leaf page
   111: MECAL_SOURCING_CTA, // Mecal crimping equipment brand page
   102: JUNQUAN_SOURCING_CTA, // Junquan cutting/stripping brand page
+  [RAMATECH_CATEGORY_ID]: RAMATECH_SOURCING_CTA, // Ramatech cable handling brand page
 };
 
 // Presentational "link boxes" shown at the top of a hub — an image + short
@@ -504,6 +519,84 @@ const JUNQUAN_LINK_BOXES: CategoryLinkBox[] = [
   },
 ];
 
+// Ramatech — seven boxes, the core distinct machine lines from ramatech.ch's
+// own product menu (skips "Peripheral devices" and "Customized solutions",
+// which are catch-all/accessory pages, not distinct machine types). Images
+// mirrored to R2; card copy summarised from ramatech.ch's own product pages
+// (2026-07-12).
+const RAMATECH_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "Cable Cutting and Stripping Machines",
+    href: "https://www.ramatech.ch/en/products/cable-cutting-and-stripping-machines/",
+    image: "/media/ramatech/cutting-stripping.png",
+    ctaLabel: "View at Ramatech",
+    fit: "contain",
+    description: [
+      "Powerful, flexible and precise machines for cutting cables to length and stripping insulation, processing cables from 3 to 40 mm in diameter through user-friendly software.",
+    ],
+  },
+  {
+    label: "Cable Dereeler",
+    href: "https://www.ramatech.ch/en/products/cable-dereeler/",
+    image: "/media/ramatech/dereeler.jpg",
+    ctaLabel: "View at Ramatech",
+    fit: "contain",
+    description: [
+      "Automated feeding systems that unwind and feed cable into production lines, adapting unwinding speed to downstream processing for drums up to 1,600 mm diameter and 2 tonnes.",
+    ],
+  },
+  {
+    label: "Cable Coiling Machines",
+    href: "https://www.ramatech.ch/en/products/cable-coiling-machines/",
+    image: "/media/ramatech/coiling.png",
+    ctaLabel: "View at Ramatech",
+    fit: "contain",
+    description: [
+      "Ring coiling machines that automatically wind cut and stripped cable into compact rings up to 35 mm diameter, with versions that wind, bind and automatically eject the finished coil.",
+    ],
+  },
+  {
+    label: "Cable Stackers",
+    href: "https://www.ramatech.ch/en/products/cable-stackers/",
+    image: "/media/ramatech/stackers.jpg",
+    ctaLabel: "View at Ramatech",
+    fit: "contain",
+    description: [
+      "Deposit cut-to-length cable pieces precisely and sorted after processing, complementing automatic wire processing equipment for cable sections up to 12,000 mm.",
+    ],
+  },
+  {
+    label: "Cable Reel Rack Systems",
+    href: "https://www.ramatech.ch/en/products/cable-reel-rack-systems/",
+    image: "/media/ramatech/reel-rack-systems.jpg",
+    ctaLabel: "View at Ramatech",
+    fit: "contain",
+    description: [
+      "Storage systems ranging from passive frames to fully automated solutions, combining storage and production space and reducing material handling by up to 80 percent compared to traditional methods.",
+    ],
+  },
+  {
+    label: "Cable Winding Machines",
+    href: "https://www.ramatech.ch/en/products/cable-winding-machines/",
+    image: "/media/ramatech/winding.jpg",
+    ctaLabel: "View at Ramatech",
+    fit: "contain",
+    description: [
+      "Rewinding systems for unwinding, rewinding and coiling cable across diverse applications, customisable to combine high quality standards with safety for specific production requirements.",
+    ],
+  },
+  {
+    label: "Mobile Cable Rewinders",
+    href: "https://www.ramatech.ch/en/products/mobile-cable-rewinders/",
+    image: "/media/ramatech/mobile-rewinders.jpg",
+    ctaLabel: "View at Ramatech",
+    fit: "contain",
+    description: [
+      "Mobile winding machines with movable rollers that can be repositioned on site, unwinding cable up to 45 mm diameter, cutting to length and rewinding onto drums or rings.",
+    ],
+  },
+];
+
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
@@ -514,13 +607,14 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   79: { eyebrow: "Mav force testers", boxes: MAV_LINK_BOXES },
   111: { eyebrow: "Mecal crimping equipment", boxes: MECAL_LINK_BOXES },
   102: { eyebrow: "Junquan machines", boxes: JUNQUAN_LINK_BOXES },
+  [RAMATECH_CATEGORY_ID]: { eyebrow: "Ramatech cable handling & processing machines", boxes: RAMATECH_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
 // sourcing box) with NO product grid/filter — mirrors the Zoller & Fröhlich
 // approach. Wezag (110): its catalogue products are outdated / low-volume, so we
 // surface only the trusted-partner brand page.
-const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 79, 111]);
+const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 79, 111, RAMATECH_CATEGORY_ID]);
 
 // Per-page logo overrides for individual brand boxes, keyed by category id then
 // by the brand box's slug (last URL segment). Scoped to one page. Connectors

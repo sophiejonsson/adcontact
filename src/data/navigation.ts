@@ -81,6 +81,9 @@ export const productionEquipmentGroup: NavGroup = {
         { label: "Ulmer", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/ulmer.html" },
         { label: "Tekuwa", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/tekuwa.html" },
         { label: "Junquan", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/junquan.html" },
+        // Ramatech also makes cutting/stripping machines; its primary home is
+        // the Cable Handling Equipment section, but it's dual-listed here too.
+        { label: "Ramatech", href: "/webshop/production-equipment/cable-handling-equipment/ramatech.html" },
       ],
     },
     {
@@ -92,6 +95,17 @@ export const productionEquipmentGroup: NavGroup = {
         // Tekuwa does cutting AND stripping; its combined lean page lives under
         // Cutting Machines but is also surfaced here.
         { label: "Tekuwa", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/tekuwa.html" },
+        // Ramatech also does both; same dual-listing pattern.
+        { label: "Ramatech", href: "/webshop/production-equipment/cable-handling-equipment/ramatech.html" },
+      ],
+    },
+    {
+      // New section (2026-07-12): Ramatech's range (dereeling, coiling, stacking,
+      // reel racks, winding, rewinding) doesn't fit any existing category.
+      label: "Cable Handling Equipment",
+      href: "/webshop/production-equipment/cable-handling-equipment.html",
+      children: [
+        { label: "Ramatech", href: "/webshop/production-equipment/cable-handling-equipment/ramatech.html" },
       ],
     },
     {
