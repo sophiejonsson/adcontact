@@ -11,6 +11,7 @@ import {
   getCategoryAllProducts,
   getCatalogueCategory,
   resolveCatalogueRoute,
+  METZNER_CATEGORY_ID,
   type CatalogueCategory,
   type CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
@@ -282,6 +283,15 @@ const JUNQUAN_SOURCING_CTA = {
   catalogueUrl: "https://www.cuttingstripping-machine.com/products.html",
 } as const;
 
+const METZNER_SOURCING_CTA = {
+  heading: "Can't find the exact machine for your application?",
+  body: "We represent Metzner's complete range of cable cutting, stripping and corrugated tube cutting machines. Tell us about your application and we'll help you find the right machine, or browse Metzner's full range.",
+  mailtoSubject: "Metzner machines: application enquiry",
+  primaryLabel: "Send us your application",
+  catalogueLabel: "View Metzner range",
+  catalogueUrl: "https://www.metzner.com/product-solutions/",
+} as const;
+
 const CATEGORY_SOURCING_CTA: Record<
   number,
   { heading: string; body: string; mailtoSubject: string; primaryLabel: string; catalogueLabel: string; catalogueUrl: string }
@@ -295,6 +305,7 @@ const CATEGORY_SOURCING_CTA: Record<
   79: MAV_SOURCING_CTA, // Mav Prüftechnik leaf page
   111: MECAL_SOURCING_CTA, // Mecal crimping equipment brand page
   102: JUNQUAN_SOURCING_CTA, // Junquan cutting/stripping brand page
+  [METZNER_CATEGORY_ID]: METZNER_SOURCING_CTA, // Metzner cutting/stripping brand page — NOT YET SIGNED
 };
 
 // Presentational "link boxes" shown at the top of a hub — an image + short
@@ -504,6 +515,74 @@ const JUNQUAN_LINK_BOXES: CategoryLinkBox[] = [
   },
 ];
 
+// Metzner — a lean page with six boxes (4 cable cutting/stripping lines + 2
+// corrugated-tube cutting lines), matching the user's own positioning ("cutting
+// and stripping machines for wire handling, plus corrugated tube cutting").
+// Images mirrored to R2; card copy summarised from metzner.com's own product
+// pages (2026-07-12). ⚠️ NOT YET A SIGNED SUPPLIER — see magentoCatalogue.ts.
+const METZNER_LINK_BOXES: CategoryLinkBox[] = [
+  {
+    label: "AM 1000",
+    href: "https://www.metzner.com/product-solutions/cable-wire/cut-strip/am-1000/",
+    image: "/media/metzner/am-1000.webp",
+    ctaLabel: "View at Metzner",
+    fit: "contain",
+    description: [
+      "Metzner's most compact cutting and stripping machine, processing cables from 0.14 to 6 mm² cross-section. Benchtop design with a 12.7 inch touchscreen and tool-free changeover of cable guides and feed rollers.",
+    ],
+  },
+  {
+    label: "AM 2000 Range",
+    href: "https://www.metzner.com/product-solutions/cable-wire/cut-strip/metzner-am-2000-range/",
+    image: "/media/metzner/am-2000-range.webp",
+    ctaLabel: "View at Metzner",
+    fit: "contain",
+    description: [
+      "Versatile mid-size cutting and stripping machines for cables up to 15 mm diameter and 35 mm² cross-section, with double-blade and multi-blade module variants.",
+    ],
+  },
+  {
+    label: "AM 3000 Range",
+    href: "https://www.metzner.com/product-solutions/cable-wire/cut-strip/metzner-am-3000-range/",
+    image: "/media/metzner/am-3000-range.webp",
+    ctaLabel: "View at Metzner",
+    fit: "contain",
+    description: [
+      "High-performance cutting and stripping systems for larger cables up to 70 mm² cross-section, with up to 40% more cutting power and advanced double-blade technology.",
+    ],
+  },
+  {
+    label: "AM 5000 Range",
+    href: "https://www.metzner.com/product-solutions/cable-wire/cut-strip/metzner-am-5000-range/",
+    image: "/media/metzner/am-5000-range.webp",
+    ctaLabel: "View at Metzner",
+    fit: "contain",
+    description: [
+      "Metzner's most powerful cutting and stripping machines, processing cables up to 35 mm diameter or 185 mm² cross-section, with a patented double-blade cutting system and integrated multistage stripping.",
+    ],
+  },
+  {
+    label: "CT 4100 / CT 4200",
+    href: "https://www.metzner.com/product-solutions/corrugated-tubes-slit-and-unslit/metzner-ct-4100-ct-4200/",
+    image: "/media/metzner/ct-4100-4200.webp",
+    ctaLabel: "View at Metzner",
+    fit: "contain",
+    description: [
+      "Corrugated tube cutting machines: the CT 4100 cuts non-slit tubes exactly on the crest, and the CT 4200 cuts and slits non-slit tubes.",
+    ],
+  },
+  {
+    label: "SM 4000",
+    href: "https://www.metzner.com/product-solutions/corrugated-tubes-slit-and-unslit/metzner-sm-4000/",
+    image: "/media/metzner/sm-4000.webp",
+    ctaLabel: "View at Metzner",
+    fit: "contain",
+    description: [
+      "Cuts pre-slit corrugated tubes, with a laser-controlled feed and precise transport system for flexible materials.",
+    ],
+  },
+];
+
 const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   77: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
   115: { eyebrow: "Browse by welding type", boxes: BRANSON_WELDING_TYPES },
@@ -514,13 +593,14 @@ const CATEGORY_LINK_SECTIONS: Record<number, CategoryLinkSection> = {
   79: { eyebrow: "Mav force testers", boxes: MAV_LINK_BOXES },
   111: { eyebrow: "Mecal crimping equipment", boxes: MECAL_LINK_BOXES },
   102: { eyebrow: "Junquan machines", boxes: JUNQUAN_LINK_BOXES },
+  [METZNER_CATEGORY_ID]: { eyebrow: "Metzner cutting & stripping machines", boxes: METZNER_LINK_BOXES },
 };
 
 // Brand pages presented as a lean partner landing (header + link boxes +
 // sourcing box) with NO product grid/filter — mirrors the Zoller & Fröhlich
 // approach. Wezag (110): its catalogue products are outdated / low-volume, so we
 // surface only the trusted-partner brand page.
-const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 79, 111]);
+const HIDE_PRODUCT_GRID_CATEGORY_IDS = new Set([110, 101, 79, 111, METZNER_CATEGORY_ID]);
 
 // Per-page logo overrides for individual brand boxes, keyed by category id then
 // by the brand box's slug (last URL segment). Scoped to one page. Connectors

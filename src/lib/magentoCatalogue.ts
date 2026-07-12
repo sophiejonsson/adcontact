@@ -79,38 +79,75 @@ const routes = routesJson as unknown as Record<string, CatalogueRoute>;
 const products = productsJson as unknown as Record<string, CatalogueProduct>;
 const categories = categoriesJson as unknown as Record<string, CatalogueCategory>;
 
-// ── Synthetic brand landing: JDD Tech ──────────────────────────────────────
-// JDD Tech has no Magento products (like other lean partner landings), so it is
-// not in the imported catalogue data. Inject a product-less category under Heat
-// Shrink Tubing (id 4) so its menu box and breadcrumbs resolve. The page itself
-// is a dedicated component (JDDTechPage.tsx, mirroring ZFerrulesPage.tsx),
-// special-cased by this id in webshop/[...path]/page.tsx.
+// ── Synthetic brand landings ────────────────────────────────────────────────
+// A handful of represented brands have NO Magento products (they're lean
+// partner landings, not catalogue hubs), so they're not in the imported
+// catalogue data. Inject a product-less category under their menu parent so
+// the menu box, page and breadcrumbs all resolve normally.
+function injectSyntheticCategory(opts: {
+  id: number;
+  parentId: number;
+  name: string;
+  route: string;
+  urlPath: string;
+  metaTitle: string;
+  metaDescription: string;
+}): void {
+  const parent = categories[String(opts.parentId)];
+  categories[String(opts.id)] = {
+    id: opts.id,
+    parentId: opts.parentId,
+    path: parent ? `${parent.path}/${opts.id}` : String(opts.id),
+    position: 20,
+    level: parent ? parent.level + 1 : 3,
+    name: opts.name,
+    urlPath: opts.urlPath,
+    route: opts.route,
+    image: null,
+    description: null,
+    metaTitle: opts.metaTitle,
+    metaDescription: opts.metaDescription,
+    isActive: true,
+    includeInMenu: true,
+    productIds: [],
+    children: [],
+  };
+  routes[opts.route] = { type: "category", id: opts.id };
+  if (parent && !parent.children.includes(opts.id)) {
+    parent.children = [...parent.children, opts.id];
+  }
+}
+
+// JDD Tech — under Heat Shrink Tubing (4). Page is a dedicated component
+// (JDDTechPage.tsx, mirroring ZFerrulesPage.tsx), special-cased by this id in
+// webshop/[...path]/page.tsx.
 export const JDD_TECH_CATEGORY_ID = 90001;
-const JDD_TECH_ROUTE = "/webshop/components/heat-shrinkable/jdd-tech.html";
-const jddHeatShrinkParent = categories["4"];
-categories[String(JDD_TECH_CATEGORY_ID)] = {
+injectSyntheticCategory({
   id: JDD_TECH_CATEGORY_ID,
   parentId: 4,
-  path: jddHeatShrinkParent ? `${jddHeatShrinkParent.path}/${JDD_TECH_CATEGORY_ID}` : String(JDD_TECH_CATEGORY_ID),
-  position: 20,
-  level: jddHeatShrinkParent ? jddHeatShrinkParent.level + 1 : 3,
   name: "JDD Tech",
+  route: "/webshop/components/heat-shrinkable/jdd-tech.html",
   urlPath: "components/heat-shrinkable/jdd-tech",
-  route: JDD_TECH_ROUTE,
-  image: null,
-  description: null,
   metaTitle: "JDD Tech | Cable Protection, Sleeving & Conduit",
   metaDescription:
     "JDD Tech braided sleeving, spiral wrap, textile sleeve, conduit and heat-shrink products at Adcontact. Specialist Nordic distributor. Request a quote with expert technical support.",
-  isActive: true,
-  includeInMenu: true,
-  productIds: [],
-  children: [],
-};
-routes[JDD_TECH_ROUTE] = { type: "category", id: JDD_TECH_CATEGORY_ID };
-if (jddHeatShrinkParent && !jddHeatShrinkParent.children.includes(JDD_TECH_CATEGORY_ID)) {
-  jddHeatShrinkParent.children = [...jddHeatShrinkParent.children, JDD_TECH_CATEGORY_ID];
-}
+});
+
+// Metzner — under Cutting Machines (47); also listed under Stripping Machines
+// in navigation.ts (same href, Tekuwa-style dual listing). ⚠️ NOT YET A SIGNED
+// SUPPLIER (2026-07-12) — built ahead of time on a preview branch only, do not
+// merge to main until Stefan confirms the agreement is signed. See playbook.
+export const METZNER_CATEGORY_ID = 90002;
+injectSyntheticCategory({
+  id: METZNER_CATEGORY_ID,
+  parentId: 47,
+  name: "Metzner",
+  route: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/metzner.html",
+  urlPath: "production-equipment/cutting-machines-for-a-variety-of-materials/metzner",
+  metaTitle: "Metzner Maschinenbau | Cable Cutting, Stripping & Corrugated Tube Machines",
+  metaDescription:
+    "Metzner automated cutting and stripping machines for cable, wire and corrugated tubing at Adcontact. Specialist Nordic distributor. Request a quote with expert technical support.",
+});
 
 const LEGACY_ROUTE_ALIASES: Record<string, string> = {
   "/webshop/components/contact-pieces-for-pcb.html":

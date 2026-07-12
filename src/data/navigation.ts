@@ -81,6 +81,8 @@ export const productionEquipmentGroup: NavGroup = {
         { label: "Ulmer", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/ulmer.html" },
         { label: "Tekuwa", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/tekuwa.html" },
         { label: "Junquan", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/junquan.html" },
+        // ⚠️ NOT YET SIGNED (2026-07-12) — preview-branch only, see magentoCatalogue.ts.
+        { label: "Metzner", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/metzner.html" },
       ],
     },
     {
@@ -92,6 +94,8 @@ export const productionEquipmentGroup: NavGroup = {
         // Tekuwa does cutting AND stripping; its combined lean page lives under
         // Cutting Machines but is also surfaced here.
         { label: "Tekuwa", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/tekuwa.html" },
+        // Metzner also does both; same dual-listing pattern. NOT YET SIGNED.
+        { label: "Metzner", href: "/webshop/production-equipment/cutting-machines-for-a-variety-of-materials/metzner.html" },
       ],
     },
     {
