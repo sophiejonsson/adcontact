@@ -21,6 +21,37 @@ async function proxyDownload(request: NextRequest, { params }: Context) {
     });
   }
 
+  const directPath = (amfileLookup as Record<string, string>)[fileId];
+
+  // Primary: Cloudflare R2 (same bucket the /media proxy uses). The bucket IS
+  // the old "media" folder, so the object key drops the leading /media/.
+  // Falls through to Oderland below if R2 isn't configured or the file isn't
+  // there yet — this used to go straight to Oderland with no R2 attempt at
+  // all, which would have broken every drawing/CAD download the moment
+  // Oderland is decommissioned, even though the files are already in R2.
+  const r2Origin = process.env.R2_MEDIA_ORIGIN;
+  if (directPath && r2Origin) {
+    const r2Source = new URL(directPath.replace(/^\/media\//, "/"), r2Origin);
+    r2Source.search = request.nextUrl.search;
+    const r2Upstream = await fetch(r2Source, {
+      headers: { Accept: request.headers.get("accept") ?? "*/*", "User-Agent": "Adcontact catalogue download proxy" },
+      cache: "no-store",
+    });
+    if (r2Upstream.ok) {
+      const headers = new Headers();
+      for (const name of ["cache-control", "content-length", "content-type", "etag", "last-modified"]) {
+        const value = r2Upstream.headers.get(name);
+        if (value) headers.set(name, value);
+      }
+      headers.set("x-adcontact-download-source", r2Source.toString());
+      if (!headers.get("content-disposition") && directPath.endsWith(".pdf")) {
+        const filename = directPath.split("/").pop() ?? `file-${fileId}.pdf`;
+        headers.set("content-disposition", `attachment; filename="${filename}"`);
+      }
+      return new Response(r2Upstream.body, { status: r2Upstream.status, headers });
+    }
+  }
+
   const origin = process.env.ORDERLAND_MEDIA_ORIGIN;
   if (!origin) {
     return new Response("Download origin is not configured.", {
@@ -29,10 +60,9 @@ async function proxyDownload(request: NextRequest, { params }: Context) {
     });
   }
 
-  // Use the direct file path from our local Magento data — the amfilerating
-  // download handler on the origin server requires Magento session auth and
-  // redirects to the homepage without it.
-  const directPath = (amfileLookup as Record<string, string>)[fileId];
+  // Fallback: the amfilerating download handler on the Oderland origin
+  // requires Magento session auth and redirects to the homepage without it,
+  // so fetch the direct file path instead.
   const source = directPath
     ? new URL(directPath, origin)
     : new URL(`/amfilerating/file/download/file_id/${fileId}/`, origin);
