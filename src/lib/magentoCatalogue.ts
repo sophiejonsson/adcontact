@@ -299,6 +299,11 @@ export const CATEGORY_CANONICAL_ROUTES: Record<number, string> = {
   // "Stripping and crimping machines" menu hub has no native category; host its
   // Mecal + Z+F brand boxes on the repurposed "Stripper Crimper Units" cat (48).
   48: "/webshop/production-equipment/stripping-and-crimping-machines.html",
+  // Legacy raw Magento grid pages for Z&F stripping/crimping equipment, no
+  // longer linked from the menu (superseded by the wire-processing landing)
+  // but still resolving by direct URL. Redirect both to that landing.
+  105: "/products/zoller-frohlich/wire-processing", // old Stripping Machines > Z&F grid (6 products)
+  109: "/products/zoller-frohlich/wire-processing", // old Crimping equipment > Z&F grid (27 products)
 };
 
 type ProductOverride = Partial<
