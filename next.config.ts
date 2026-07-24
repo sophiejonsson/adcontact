@@ -5,6 +5,20 @@ const isOfficialSite = new URL(siteUrl).hostname.replace(/^www\./, "") === "adco
 
 const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
+  async redirects() {
+    return [
+      // Legacy Magento on-site search results (e.g. /catalogsearch/result/?q=x)
+      // — still probed by old crawler indexes (Majestic/MJ12bot, 2026-07-21)
+      // years after the migration. There's no 1:1 content match per query, but
+      // /products?q= is the new site's equivalent results page and reuses the
+      // same `q` param, so the visitor's original search term carries over.
+      {
+        source: "/catalogsearch/result/:path*",
+        destination: "/products",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     if (isOfficialSite) return [];
 
