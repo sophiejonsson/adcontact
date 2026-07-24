@@ -14,7 +14,6 @@ import {
   PRODUCT_CANONICAL_ROUTES,
   CATEGORY_CANONICAL_ROUTES,
   JDD_TECH_CATEGORY_ID,
-  type CatalogueSearchParams,
   webshopPathFromSegments,
 } from "@/lib/magentoCatalogue";
 import { deutschProducts } from "@/data/deutschConnectors";
@@ -34,8 +33,20 @@ import {
 
 type Props = {
   params: Promise<{ path: string[] }>;
-  searchParams: Promise<CatalogueSearchParams>;
 };
+
+// Every path here comes from static, build-time-bundled catalogue data (not a
+// live API), so it's safe to cache indefinitely between deploys. An empty
+// generateStaticParams (rather than omitting it) opts every path not built
+// ahead of time into ISR instead of full per-request SSR — see
+// docs/01-app/03-api-reference/04-functions/generate-static-params.md.
+// Fixes a Vercel Function CPU Duration alert (2026-07-23): a traffic surge to
+// one category page cost ~552ms CPU on every single request because nothing
+// here was cacheable.
+export async function generateStaticParams() {
+  return [];
+}
+export const revalidate = 86400;
 
 function canonical(path: string) {
   return absoluteUrl(path);
@@ -93,7 +104,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function WebshopCatalogueRoute({ params, searchParams }: Props) {
+export default async function WebshopCatalogueRoute({ params }: Props) {
   const { path } = await params;
   const routePath = webshopPathFromSegments(path);
   const route = resolveCatalogueRoute(routePath);
@@ -172,5 +183,5 @@ export default async function WebshopCatalogueRoute({ params, searchParams }: Pr
     return <StockoTerminatingTechnologyPage category={category} machineGroup={machineGroup} />;
   }
 
-  return <CatalogueCategoryPage category={category} searchParams={await searchParams} />;
+  return <CatalogueCategoryPage category={category} />;
 }

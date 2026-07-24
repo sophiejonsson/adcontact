@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, X, ArrowRight, Package, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { PartnerSearchContext, PartnerFilterContext } from "@/lib/partnerSearchContext";
 import type {
   CatalogueProduct,
@@ -389,18 +390,7 @@ export type SubcategoryOption = {
   href?: string;
 };
 
-export default function CatalogueProductBrowser({
-  products,
-  route,
-  searchParams,
-  isWebshopRoot,
-  sectionLabel,
-  sectionTitle,
-  deutschImageMap,
-  subcategoryOptions,
-  lockedFilterParams,
-  partnerSlots,
-}: {
+type CatalogueProductBrowserProps = {
   products: CatalogueProduct[];
   route: string | null;
   searchParams: CatalogueSearchParams;
@@ -425,7 +415,57 @@ export default function CatalogueProductBrowser({
     searchNames?: string[];
     facet?: { label: string; options: { value: string; count: number }[] };
   }[];
-}) {
+};
+
+// Reads the URL's query string client-side (useSearchParams) instead of via a
+// server-passed prop, so the surrounding category/product page can be
+// statically generated and ISR-cached instead of fully server-rendering on
+// every request — a real traffic surge to one page (Vercel CPU-duration
+// alert, 2026-07-23) turned into hundreds of full SSR passes/5min because
+// this was the only thing forcing the whole route dynamic. Remounts the
+// inner browser (via `key`) whenever the URL's params change, matching the
+// previous server-driven remount-on-searchParams-change behaviour (used by
+// same-page "Browse by series" links).
+export default function CatalogueProductBrowser(
+  props: Omit<CatalogueProductBrowserProps, "searchParams"> & {
+    /** Server-computed filter values that always apply on this page (e.g. a
+     *  brand leaf's own-brand pre-filter) — merged under the URL's params. */
+    preFilter?: Record<string, string>;
+  },
+) {
+  const { preFilter, ...rest } = props;
+  const rawSearchParams = useSearchParams();
+
+  const searchParams = useMemo<CatalogueSearchParams>(() => {
+    const obj: CatalogueSearchParams = { ...preFilter };
+    for (const key of new Set(rawSearchParams.keys())) {
+      const values = rawSearchParams.getAll(key);
+      obj[key] = values.length > 1 ? values : values[0];
+    }
+    return obj;
+  }, [rawSearchParams, preFilter]);
+
+  return (
+    <CatalogueProductBrowserInner
+      key={rawSearchParams.toString()}
+      {...rest}
+      searchParams={searchParams}
+    />
+  );
+}
+
+function CatalogueProductBrowserInner({
+  products,
+  route,
+  searchParams,
+  isWebshopRoot,
+  sectionLabel,
+  sectionTitle,
+  deutschImageMap,
+  subcategoryOptions,
+  lockedFilterParams,
+  partnerSlots,
+}: CatalogueProductBrowserProps) {
   const initialPageSize = positiveInt(searchParams.per_page, DEFAULT_PAGE_SIZE);
   const [query, setQuery] = useState(firstParamValue(searchParams.q) ?? "");
   const [activeFilters, setActiveFilters] = useState(() => activeFiltersFromSearchParams(searchParams));

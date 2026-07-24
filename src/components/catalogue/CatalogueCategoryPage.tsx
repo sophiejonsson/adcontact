@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { ArrowRight, ArrowLeft, Boxes, Package, ArrowUpRight } from "lucide-react";
 import CatalogueProductBrowser from "@/components/catalogue/CatalogueProductBrowser";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
@@ -13,7 +14,6 @@ import {
   resolveCatalogueRoute,
   RAMATECH_CATEGORY_ID,
   type CatalogueCategory,
-  type CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
 import { normalizeLegacyHtml } from "@/lib/legacyHtml";
 import { categoryIntro } from "@/lib/seo";
@@ -1129,12 +1129,26 @@ function SeriesSection({
   );
 }
 
+// Static placeholder shown while CatalogueProductBrowser (which reads the URL
+// client-side) hydrates — kept minimal since real content swaps in almost
+// immediately after JS loads.
+function ProductBrowserFallback() {
+  return (
+    <div className="animate-pulse space-y-4">
+      <div className="h-10 w-full max-w-md rounded-lg bg-[#e5e7eb]" />
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div key={i} className="h-48 rounded-lg bg-[#e5e7eb]" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function CatalogueCategoryPage({
   category,
-  searchParams = {},
 }: {
   category: CatalogueCategory;
-  searchParams?: CatalogueSearchParams;
 }) {
   const isWebshopRoot = category.id === 3;
   const children = getCategoryChildren(category).filter(
@@ -1858,31 +1872,29 @@ export default function CatalogueCategoryPage({
                 </a>
               </div>
             )}
-            <CatalogueProductBrowser
-              // Re-mount when the URL's filters/query change so a same-page
-              // "Browse by series" link (e.g. TE Connectivity) re-applies the
-              // filter — the browser's filter state is seeded from these params.
-              key={JSON.stringify(isLeafOfFlatHub ? { ...leafPreFilter, ...searchParams } : searchParams)}
-              products={browserProducts}
-              route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
-              searchParams={isLeafOfFlatHub ? { ...leafPreFilter, ...searchParams } : searchParams}
-              isWebshopRoot={isWebshopRoot}
-              sectionLabel={productSectionLabel}
-              sectionTitle={productSectionTitle}
-              deutschImageMap={buildDeutschImageMap(productPool)}
-              subcategoryOptions={subcategoryOptions.length > 0 ? subcategoryOptions : undefined}
-              lockedFilterParams={isLeafOfFlatHub ? Object.keys(leafPreFilter) : undefined}
-              partnerSlots={[
-                {
-                  categoryId: STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
-                  searchNames: stockoConnectorSystems.flatMap((g) =>
-                    g.series.map((s) => s.name),
-                  ),
-                  facet: { label: "Pitch", options: stockoPitchOptions(stockoConnectorSystems) },
-                  content: <StockoSeriesBrowser groups={stockoConnectorSystems} embedded />,
-                },
-              ]}
-            />
+            <Suspense fallback={<ProductBrowserFallback />}>
+              <CatalogueProductBrowser
+                products={browserProducts}
+                route={isLeafOfFlatHub ? (parentCategory?.route ?? category.route) : category.route}
+                preFilter={isLeafOfFlatHub ? leafPreFilter : undefined}
+                isWebshopRoot={isWebshopRoot}
+                sectionLabel={productSectionLabel}
+                sectionTitle={productSectionTitle}
+                deutschImageMap={buildDeutschImageMap(productPool)}
+                subcategoryOptions={subcategoryOptions.length > 0 ? subcategoryOptions : undefined}
+                lockedFilterParams={isLeafOfFlatHub ? Object.keys(leafPreFilter) : undefined}
+                partnerSlots={[
+                  {
+                    categoryId: STOCKO_CONNECTOR_SYSTEMS_CATEGORY_ID,
+                    searchNames: stockoConnectorSystems.flatMap((g) =>
+                      g.series.map((s) => s.name),
+                    ),
+                    facet: { label: "Pitch", options: stockoPitchOptions(stockoConnectorSystems) },
+                    content: <StockoSeriesBrowser groups={stockoConnectorSystems} embedded />,
+                  },
+                ]}
+              />
+            </Suspense>
 
             {/* Sourcing CTA for connector & heat-shrink brands — sits directly
                 under the product grid, not at the very bottom, since some pages

@@ -7,7 +7,6 @@ import {
   getCatalogueProduct,
   normalizeCataloguePath,
   resolveCatalogueRoute,
-  type CatalogueSearchParams,
 } from "@/lib/magentoCatalogue";
 import {
   absoluteUrl,
@@ -19,8 +18,15 @@ import {
 
 type Props = {
   params: Promise<{ legacyPath: string[] }>;
-  searchParams: Promise<CatalogueSearchParams>;
 };
+
+// See webshop/[...path]/page.tsx for why this is needed (2026-07-23 Vercel
+// CPU-duration alert) — an empty generateStaticParams opts every path into
+// ISR instead of full per-request SSR.
+export async function generateStaticParams() {
+  return [];
+}
+export const revalidate = 86400;
 
 function pathFromSegments(segments: string[]) {
   return normalizeCataloguePath(`/${segments.join("/")}`);
@@ -72,7 +78,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function LegacyCatalogueRoute({ params, searchParams }: Props) {
+export default async function LegacyCatalogueRoute({ params }: Props) {
   const { legacyPath } = await params;
   const routePath = pathFromSegments(legacyPath);
   const route = resolveCatalogueRoute(routePath);
@@ -86,5 +92,5 @@ export default async function LegacyCatalogueRoute({ params, searchParams }: Pro
 
   const category = getCatalogueCategory(route.id);
   if (!category) notFound();
-  return <CatalogueCategoryPage category={category} searchParams={await searchParams} />;
+  return <CatalogueCategoryPage category={category} />;
 }
