@@ -169,4 +169,21 @@ Technical follow-up ~24h after launch — all resolved, environment stable:
 
 ---
 
+## Part 8 — Pattern: fixing a missing product photo everywhere it shows (2026-08-12/13)
+
+**Case:** `HDP24-24-18SE-L017` (product id 3465, SKU `244024-0118`) showed the generic `no_photo` placeholder in the homepage's rolling "Featured products" strip, on its own product page, and in the Deutsch connectors category grid. Stefan supplied a real photo.
+
+**Where a user-supplied image actually lands:** pasted/inline chat images are NOT written to disk. Stefan drops uploaded files into his OneDrive-synced folder, `C:\Users\Stefan\OneDrive - ADCONTACT AB\Dokument\Code ADCGAM 2026\` — **not** the git project. Check there (sorted by recency) for the file.
+
+**A single product's photo can be read from up to THREE independent places — fixing one doesn't fix the others:**
+1. **`src/data/featuredProducts.ts`** — only used by the homepage marquee (`ProductConveyor.tsx`). Hand-curated list; just edit the `image` field directly (no override mechanism, it's not generated data).
+2. **`PRODUCT_OVERRIDES` in `src/lib/magentoCatalogue.ts`** — the durable way to set a product's photo everywhere the main catalogue data flows: its own product page, every category grid, and search. Setting `image` alone cascades to `smallImage`/`thumbnail`/`gallery` automatically (see `getCatalogueProduct`). Don't hand-edit the generated `products.json` — it gets overwritten on re-export.
+3. **Deutsch-branded products ONLY — the bypass gotcha:** Deutsch parts also live in a *second*, independent dataset (`src/data/generated/deutsch-products.json`, loaded by `deutschConnectors.ts`) with their own `imageUrl`, which feeds the dedicated `/products/deutsch-connectors/<slug>` page directly — completely bypassing (2). If that product's `imageUrl` is ALSO a placeholder, it's already correctly skipped by `buildDeutschImageMap`'s no_photo guard so (2) alone is enough. But if you need to override it explicitly (or the placeholder guard doesn't apply for some reason), use the `DEUTSCH_IMAGE_OVERRIDES` map in `deutschConnectors.ts` (same durable-override pattern as `PRODUCT_OVERRIDES`, keyed by uppercased `partNumber`) — never hand-edit `deutsch-products.json` directly.
+
+**The photo itself always goes to R2**, never a local `public/images/` file (keeps content changes deploy-free-at-the-storage-layer and consistent with every other catalogue image): `rclone copyto "<OneDrive path>/<file>" "r2:adcontact-media/<sensible-path>/<file>" --s3-no-check-bucket`, then reference it as `/media/<sensible-path>/<file>` (goes through the standard `/media` proxy — see `cloudflare-r2-media` memory). New prefix used here: `featured-products/`.
+
+**Checklist for the next one:** find the file in OneDrive → upload to R2 → set `PRODUCT_OVERRIDES[id].image` → if it's a Deutsch part, also check/set `DEUTSCH_IMAGE_OVERRIDES[partNumber]` → if it's in the featured-products marquee, also update `featuredProducts.ts` → verify all surfaces (product page, category grid, marquee) actually changed, not just one.
+
+---
+
 *Maintainer note:* deep implementation notes and gotchas also live in the agent memory (`webshop-catalogue-patterns`, `cloudflare-r2-media`, `deploy-push-workflow`, `multi-session-coordination`). Keep this file as the human-readable plan; update the checkboxes as items land.

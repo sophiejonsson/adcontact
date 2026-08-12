@@ -310,6 +310,8 @@ type ProductOverride = Partial<
   Pick<CatalogueProduct, "name" | "sku" | "shortDescription" | "description" | "route" | "routes">
 > & { image?: string; attributes?: Record<string, string> };
 export const PRODUCT_OVERRIDES: Record<number, ProductOverride> = {
+  // HDP24-24-18SE-L017 had no real photo (no_photo placeholder); Stefan supplied one.
+  3465: { image: "/media/featured-products/hdp24-24-18se-l017.webp" },
   // The Branson 2032S slot is presented as the current Branson GMX-W1 wire splicer.
   22940: {
     name: "Branson GMX-W1 Wire Splicer",
