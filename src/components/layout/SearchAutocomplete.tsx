@@ -14,7 +14,7 @@ type Product = {
   href: string;
 };
 
-type CategoryResult = { name: string; href: string; slug: string };
+type CategoryResult = { name: string; webshopHref: string; slug: string };
 type BrandResult = { name: string; slug: string };
 
 type Results = {
@@ -94,7 +94,7 @@ export default function SearchAutocomplete({
   const categoryResults = results?.categories.slice(0, 2) ?? [];
   const allItems = [
     ...productResults.map((p) => ({ href: p.href })),
-    ...categoryResults.map((c) => ({ href: c.href })),
+    ...categoryResults.map((c) => ({ href: c.webshopHref })),
   ];
   const hasResults = productResults.length > 0 || categoryResults.length > 0;
 
@@ -245,8 +245,8 @@ export default function SearchAutocomplete({
                   </div>
                   {categoryResults.map((c, i) => (
                     <Link
-                      key={c.href}
-                      href={c.href}
+                      key={c.webshopHref}
+                      href={c.webshopHref}
                       onClick={close}
                       className={`flex items-center justify-between px-4 py-2.5 text-sm font-medium text-[#374151] transition-colors hover:bg-[#f8fafc] hover:text-[#2563eb] ${selected === productResults.length + i ? "bg-[#eff6ff] text-[#2563eb]" : ""}`}
                     >

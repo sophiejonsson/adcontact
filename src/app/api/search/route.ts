@@ -31,7 +31,8 @@ export async function GET(request: NextRequest) {
         c.name.toLowerCase().includes(ql) ||
         c.tags.some((t) => t.includes(ql))
     )
-    .slice(0, 3);
+    .slice(0, 3)
+    .map((c) => ({ name: c.name, webshopHref: c.webshopHref, slug: c.slug }));
 
   const matchedBrands = brands
     .filter((b) => b.name.toLowerCase().includes(ql))
