@@ -39,7 +39,7 @@ export const featuredProducts: FeaturedProduct[] = [
   {
     name: "HDP24-24-18SE-L017",
     href: "/hdp24-24-18se-l017.html",
-    image: "/images/no_photo_37.jpg",
+    image: "/media/featured-products/hdp24-24-18se-l017.webp",
     price: "7.87 EUR",
   },
   {
