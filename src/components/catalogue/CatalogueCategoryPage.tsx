@@ -11,6 +11,7 @@ import {
   getCategoryProducts,
   getCategoryAllProducts,
   getCatalogueCategory,
+  getCatalogueProduct,
   resolveCatalogueRoute,
   RAMATECH_CATEGORY_ID,
   type CatalogueCategory,
@@ -20,6 +21,7 @@ import { categoryIntro } from "@/lib/seo";
 import { brands } from "@/data/brands";
 import { getMenuBrandHub, type BrandBox } from "@/data/navigation";
 import { deutschProducts } from "@/data/deutschConnectors";
+import { featuredProducts } from "@/data/featuredProducts";
 import {
   DEUTSCH_SERIES_CATEGORY_ROUTE,
   DEUTSCH_SERIES_INTRO,
@@ -1208,13 +1210,29 @@ export default function CatalogueCategoryPage({
     }
   }
 
+  // The webshop root's "Featured product selection" shows the SAME curated
+  // set as the homepage marquee (src/data/featuredProducts.ts), not the raw
+  // Magento category-3 product list — those two used to be independent,
+  // silently-diverging lists (Stefan flagged the mismatched counts, 2026-08-13).
+  const webshopRootFeaturedPool: CatalogueProduct[] = isWebshopRoot
+    ? featuredProducts
+        .map((fp) => {
+          const route = resolveCatalogueRoute(fp.href);
+          if (!route || route.type !== "product") return null;
+          return getCatalogueProduct(route.id) ?? null;
+        })
+        .filter((p): p is CatalogueProduct => p !== null)
+    : [];
+
   const rawProductPool = isFlatHub
     ? getCategoryAllProducts(category)
     : isDescendantHub
       ? descendantPool
       : isLeafOfFlatHub
         ? leafParentPool
-        : getCategoryProducts(category, undefined);
+        : isWebshopRoot
+          ? webshopRootFeaturedPool
+          : getCategoryProducts(category, undefined);
 
   const seriesPage = getSeriesPageConfig(category, children);
   const seriesFacets = seriesPage
@@ -1269,7 +1287,12 @@ export default function CatalogueCategoryPage({
   const categorySourcingCta = CATEGORY_SOURCING_CTA[category.id];
   const categoryLinkSection = CATEGORY_LINK_SECTIONS[category.id];
   const description = CATEGORY_DESCRIPTION_OVERRIDES[category.id] ?? category.metaDescription;
-  const productCount = getCategoryProductCount(category);
+  // Keep the hero's "N catalogue items" stat in sync with the curated
+  // featured pool on the webshop root (see webshopRootFeaturedPool above) —
+  // otherwise the count text and the grid below it would disagree again.
+  const productCount = isWebshopRoot
+    ? webshopRootFeaturedPool.length
+    : getCategoryProductCount(category);
   const productSectionLabel = isWebshopRoot ? "Selected products" : "Products";
   const productSectionTitle = isWebshopRoot ? "Featured product selection" : "Catalogue items";
   // Single transparent pass-through: the only child is a leaf with products and

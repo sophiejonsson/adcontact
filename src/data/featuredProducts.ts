@@ -25,15 +25,15 @@ export const featuredProducts: FeaturedProduct[] = [
     price: "Quote",
   },
   {
-    name: "Ulmer Universal cutting machine SM 15 2PLC",
-    href: "/ulmer-universal-cutting-machine-sm-15-2plc.html",
-    image: "/images/sm15_2plc_web.jpg",
+    name: "Ulmer Cutting machine SG400",
+    href: "/ulmer-cutting-machine-sg400.html",
+    image: "/media/catalog/product/c/u/cutting_machine_sg400-1.jpg",
     price: "Quote",
   },
   {
-    name: "Branson Ultraweld L20 Spot Welder",
-    href: "/branson-ultraweld-l20-spot-welder.html",
-    image: "/images/spot_welder.jpg",
+    name: "Branson GMX-W1 Wire Splicer",
+    href: "/webshop/production-equipment/ultrasonic-welding/branson-gmx-w1.html",
+    image: "/media/branson/wire-splicer.webp",
     price: "Quote",
   },
   {
