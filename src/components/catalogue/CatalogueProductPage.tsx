@@ -4,7 +4,7 @@ import { ArrowRight, Archive, Check, Clock, Download, FileImage, FileText, Mail,
 import QuoteForm from "@/components/QuoteForm";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { brands } from "@/data/brands";
-import { normalizeLegacyHtml, stripLegacyHtml } from "@/lib/legacyHtml";
+import { normalizeLegacyHtml, stripLegacyHtml, stripInlineStyles } from "@/lib/legacyHtml";
 import {
   catalogueProductLegacyRoute,
   findCatalogueProductByReference,
@@ -135,6 +135,12 @@ export default function CatalogueProductPage({
   const attributes = getProductAttributeEntries(product);
   const additionalInfo = attributes.filter(([label]) => !RELATIONSHIP_ATTRIBUTES.has(label));
   const highlights = attributes.slice(0, 6);
+  // Many Magento short descriptions are junk-only WYSIWYG leftovers (bare
+  // "&nbsp", empty tags) — strip first, then check for actual content so we
+  // never render an empty/junk paragraph.
+  const cleanShortDescription = product.shortDescription
+    ? stripLegacyHtml(product.shortDescription)
+    : "";
   const breadcrumbs = getProductBreadcrumbs(product);
   // Production-equipment products: no lead-time badge, no "Additional
   // information" table, no attribute highlight boxes.
@@ -224,9 +230,9 @@ export default function CatalogueProductPage({
             <h1 className="text-3xl font-bold leading-tight text-[#0a1628] lg:text-4xl">
               {title}
             </h1>
-            {product.shortDescription && product.shortDescription !== product.name && (
+            {cleanShortDescription && cleanShortDescription !== product.name && (
               <p className="mt-4 max-w-3xl text-sm leading-7 text-[#64748b]">
-                {stripLegacyHtml(product.shortDescription)}
+                {cleanShortDescription}
               </p>
             )}
 
@@ -247,8 +253,12 @@ export default function CatalogueProductPage({
                     <div className="mb-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#9ca3af]">
                       {label}
                     </div>
-                    <div className="break-words text-sm font-semibold text-[#0a1628]">
-                      {value}
+                    <div className="break-words text-sm font-semibold text-[#0a1628] [&_a]:text-[#2563eb] [&_a]:underline [&_a:hover]:text-[#1d4ed8]">
+                      {/<[a-z]/i.test(value) ? (
+                        <span dangerouslySetInnerHTML={{ __html: stripInlineStyles(value) }} />
+                      ) : (
+                        value
+                      )}
                     </div>
                   </div>
                 ))}
@@ -296,7 +306,7 @@ export default function CatalogueProductPage({
                           </td>
                           <td className="px-5 py-3 font-semibold text-[#0a1628] [&_a]:text-[#2563eb] [&_a]:underline [&_a:hover]:text-[#1d4ed8]">
                             {/<[a-z]/i.test(value) ? (
-                              <span dangerouslySetInnerHTML={{ __html: value }} />
+                              <span dangerouslySetInnerHTML={{ __html: stripInlineStyles(value) }} />
                             ) : (
                               value
                             )}
