@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl *)",
+      "Bash(git fetch *)",
+      "Bash(rclone lsf *)",
+      "Bash(npx tsc *)",
+      "Bash(awk *)",
+      "Bash(npx eslint *)",
+      "Bash(rclone listremotes)"
+    ]
+  }
+}
