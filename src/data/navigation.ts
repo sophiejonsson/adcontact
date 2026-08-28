@@ -156,13 +156,6 @@ export const productionEquipmentGroup: NavGroup = {
         { label: "Mav Prüftechnik", href: "/webshop/production-equipment/test-quality/mav.html" },
       ],
     },
-    {
-      // Second-hand machines — placeholder landing until the offering is built.
-      // Now part of the Outlet section (src/app/outlet/) — see [[post-launch-backlog]].
-      label: "Used machines",
-      href: "/outlet/used-machines",
-      children: [],
-    },
   ],
 };
 
@@ -253,6 +246,7 @@ export function getMenuBrandHub(route: string | null | undefined): BrandHub | un
 }
 
 export const topNavItems: NavItem[] = [
+  { label: "Outlet", href: "/outlet" },
   { label: "Trusted Partners", href: "/brands" },
   { label: "Quality Management", href: "/quality" },
   { label: "About us", href: "/about" },

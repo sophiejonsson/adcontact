@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HeroSearch from "@/components/home/HeroSearch";
+import OutletBanner from "@/components/home/OutletBanner";
 import BrandsCarousel from "@/components/home/BrandsCarousel";
 import ApplicationsSection from "@/components/home/ApplicationsSection";
 import CTASection from "@/components/home/CTASection";
@@ -14,6 +15,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSearch />
+      <OutletBanner />
       <BrandsCarousel />
       <ApplicationsSection />
       <CTASection />

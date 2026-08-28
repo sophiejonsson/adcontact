@@ -70,7 +70,7 @@ export const usedMachines: UsedMachine[] = [
     // this unit is filed as "Gamma 450_SN_450-0231.docx", matching the guess.
     serialNumber: "450.0231",
     productionYear: 2023,
-    productionCycles: "Demo machine - never used in production",
+    productionCycles: "Demo machine",
     price: "125,000 EUR",
     deliveryTerms: "Excl. freight, installation and training",
     conditionNotes:
