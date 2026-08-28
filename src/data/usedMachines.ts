@@ -26,6 +26,11 @@ export type UsedMachine = {
   /** R2 paths, e.g. /media/used-machines/<slug>/1.jpg. Empty until Stefan
    *  uploads real photos of the physical unit. */
   photos: string[];
+  /** True when `photos` are the manufacturer's own marketing photos (used as
+   *  a stand-in before real photos of the physical unit exist) rather than
+   *  photos of the actual unit for sale — the detail page shows a caption
+   *  making this explicit so nobody mistakes it for the real unit's condition. */
+  photosAreReference?: boolean;
   /** Manufacturer's own product page, for general capability description. */
   referenceUrl?: string;
 };
@@ -36,13 +41,16 @@ export const usedMachines: UsedMachine[] = [
     slug: "komax-gamma-450-450-0231",
     brand: "Komax",
     model: "Gamma 450",
-    // ⚠️ Best-guess pairing — the source document didn't explicitly label
-    // which configuration list belongs to which serial number, only that
-    // there are 3 Gamma 450 units (450.0231, 450.0259, and a third). This is
-    // the first config list in reading order, paired with the first serial
-    // number mentioned. CONFIRM before this goes live.
+    // Pairing confirmed 2026-08-28 — Stefan's dedicated per-machine doc for
+    // this unit is filed as "Gamma 450_SN_450-0231.docx", matching the guess.
     serialNumber: "450.0231",
-    photos: [],
+    productionYear: 2023,
+    productionCycles: "Only a test run — never used in production",
+    price: "125,000 EUR (excl. freight, installation and training)",
+    conditionNotes:
+      "Only run as a factory test — never put into production use. Configuration change from the original build sheet: part 0045589 (V-blade R=1.00) has been removed and replaced with part 0341028.",
+    photos: ["/media/used-machines/komax-gamma-450/reference.png"],
+    photosAreReference: true,
     referenceUrl:
       "https://www.komaxgroup.com/en/products/wire-processing/higher-automation-platforms/automatic-crimping/gamma-450",
     configuration: [

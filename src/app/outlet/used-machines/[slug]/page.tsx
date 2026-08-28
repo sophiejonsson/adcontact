@@ -59,6 +59,12 @@ export default async function UsedMachineDetailPage({ params }: Props) {
                 </div>
               )}
             </div>
+            {mainPhoto && machine.photosAreReference && (
+              <p className="mt-2 text-xs text-[#94a3b8]">
+                Manufacturer reference photo — not the actual unit for sale. Photos of the physical
+                machine and its exact condition available on request.
+              </p>
+            )}
           </div>
 
           {/* Key facts + CTA */}
