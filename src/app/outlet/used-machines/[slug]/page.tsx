@@ -60,7 +60,7 @@ export default async function UsedMachineDetailPage({ params }: Props) {
         <div
           className={`mb-8 grid gap-8 ${
             modelDescription
-              ? "lg:grid-cols-[minmax(260px,340px)_1fr_minmax(280px,360px)]"
+              ? "lg:grid-cols-[minmax(260px,340px)_1fr_minmax(340px,420px)]"
               : "lg:grid-cols-[minmax(300px,460px)_1fr]"
           }`}
         >
@@ -86,7 +86,7 @@ export default async function UsedMachineDetailPage({ params }: Props) {
             </div>
             {mainPhoto && machine.photosAreReference && (
               <p className="mt-2 text-xs text-[#94a3b8]">
-                Manufacturer reference photo — not the actual unit for sale. Photos of the physical
+                Manufacturer reference photo, not the actual unit for sale. Photos of the physical
                 machine and its exact condition available on request.
               </p>
             )}
@@ -165,7 +165,7 @@ export default async function UsedMachineDetailPage({ params }: Props) {
           <h2 className="text-lg font-bold text-[#0a1628]">As configured</h2>
           <p className="mt-1 text-sm text-[#64748b]">
             The actual configuration of this specific unit, from the supplier&apos;s own equipment
-            record — not a generic spec sheet.
+            record, not a generic spec sheet.
           </p>
           <div className="mt-4 overflow-hidden rounded-xl border border-[#e5e7eb] bg-white">
             <table className="w-full text-sm">
