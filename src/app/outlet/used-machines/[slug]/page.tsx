@@ -46,16 +46,24 @@ export default async function UsedMachineDetailPage({ params }: Props) {
       </div>
 
       <main className="mx-auto max-w-[1440px] px-6 pb-14">
-        <div className="grid gap-10 lg:grid-cols-[1fr_420px]">
-          {/* Photo */}
-          <div className="order-2 lg:order-1">
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-[#e2e8f0] bg-white">
+        <div className="mb-8 grid gap-8 lg:grid-cols-[minmax(300px,460px)_1fr]">
+          {/* Photo — same size/treatment as the main catalogue's product pages */}
+          <div>
+            <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
               {mainPhoto ? (
-                <Image src={mainPhoto} alt={`${machine.brand} ${machine.model}`} fill unoptimized className="object-contain p-6" />
+                <Image
+                  src={mainPhoto}
+                  alt={`${machine.brand} ${machine.model}`}
+                  fill
+                  priority
+                  unoptimized
+                  sizes="(max-width: 1024px) 100vw, 460px"
+                  className="object-contain p-8"
+                />
               ) : (
-                <div className="flex h-full flex-col items-center justify-center gap-2 text-[#94a3b8]">
-                  <Package size={40} />
-                  <span className="text-sm font-medium">No photo available yet</span>
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 bg-[#f8fafc]">
+                  <Package size={52} strokeWidth={1.4} className="text-[#cbd5e1]" />
+                  <span className="text-xs font-medium text-[#94a3b8]">No photo available yet</span>
                 </div>
               )}
             </div>
@@ -68,8 +76,8 @@ export default async function UsedMachineDetailPage({ params }: Props) {
           </div>
 
           {/* Key facts + CTA */}
-          <div className="order-1 lg:order-2">
-            <span className="inline-flex items-center rounded-full bg-[#fef3c7] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#b45309]">
+          <div className="flex min-w-0 flex-col">
+            <span className="inline-flex w-fit items-center rounded-full bg-[#fef3c7] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#b45309]">
               Used machine
             </span>
             <h1 className="mt-3 text-2xl font-bold text-[#0a1628] sm:text-3xl">
@@ -77,18 +85,18 @@ export default async function UsedMachineDetailPage({ params }: Props) {
             </h1>
             <p className="mt-1 font-mono text-sm text-[#64748b]">S/N {machine.serialNumber}</p>
 
-            <dl className="mt-6 space-y-3 rounded-xl border border-[#e2e8f0] bg-white p-5 text-sm">
-              <div className="flex items-center justify-between">
-                <dt className="text-[#64748b]">Production year</dt>
-                <dd className="font-semibold text-[#0a1628]">{machine.productionYear ?? "On request"}</dd>
+            <dl className="mt-6 space-y-2.5 rounded-xl border border-[#e2e8f0] bg-white p-5 text-sm leading-6">
+              <div>
+                <dt className="inline font-medium text-[#64748b]">Production year:</dt>{" "}
+                <dd className="inline font-semibold text-[#0a1628]">{machine.productionYear ?? "On request"}</dd>
               </div>
-              <div className="flex items-center justify-between">
-                <dt className="text-[#64748b]">Production cycles</dt>
-                <dd className="font-semibold text-[#0a1628]">{machine.productionCycles ?? "On request"}</dd>
+              <div>
+                <dt className="inline font-medium text-[#64748b]">Production cycles:</dt>{" "}
+                <dd className="inline font-semibold text-[#0a1628]">{machine.productionCycles ?? "On request"}</dd>
               </div>
-              <div className="flex items-center justify-between border-t border-[#f1f5f9] pt-3">
-                <dt className="text-[#64748b]">Price</dt>
-                <dd className="text-lg font-bold text-[#0a1628]">{machine.price ?? "On request"}</dd>
+              <div className="border-t border-[#f1f5f9] pt-2.5">
+                <dt className="inline font-medium text-[#64748b]">Price:</dt>{" "}
+                <dd className="inline text-lg font-bold text-[#0a1628]">{machine.price ?? "On request"}</dd>
               </div>
             </dl>
 

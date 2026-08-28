@@ -56,7 +56,7 @@ export default function UsedMachinesPage() {
                   href={`/outlet/used-machines/${machine.slug}`}
                   className="group flex flex-col overflow-hidden rounded-xl border border-[#e2e8f0] bg-white transition-all hover:-translate-y-0.5 hover:border-[#f59e0b] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
                 >
-                  <div className="relative aspect-[4/3] w-full bg-[#f8fafc]">
+                  <div className="relative aspect-square w-full bg-[#f8fafc]">
                     {machine.photos[0] ? (
                       <Image
                         src={machine.photos[0]}
