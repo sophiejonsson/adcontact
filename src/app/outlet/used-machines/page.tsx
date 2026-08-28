@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Mail, Package, Recycle } from "lucide-react";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import { usedMachines } from "@/data/usedMachines";
+import { usedMachines, getModelDescription } from "@/data/usedMachines";
 import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -50,7 +50,9 @@ export default function UsedMachinesPage() {
               Template preview — not yet ready for customers
             </p>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {usedMachines.map((machine) => (
+              {usedMachines.map((machine) => {
+                const description = getModelDescription(machine.brand, machine.model);
+                return (
                 <Link
                   key={machine.slug}
                   href={`/outlet/used-machines/${machine.slug}`}
@@ -77,6 +79,9 @@ export default function UsedMachinesPage() {
                       {machine.brand} {machine.model}
                     </h3>
                     <p className="mt-0.5 font-mono text-xs text-[#64748b]">S/N {machine.serialNumber}</p>
+                    {description && (
+                      <p className="mt-2 text-xs leading-5 text-[#64748b]">{description.short}</p>
+                    )}
                     <div className="mt-auto flex items-center justify-between pt-3">
                       <span className="text-sm font-semibold text-[#0a1628]">
                         {machine.price ?? "On request"}
@@ -88,7 +93,8 @@ export default function UsedMachinesPage() {
                     </div>
                   </div>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </section>
         )}

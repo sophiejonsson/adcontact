@@ -3,7 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowRight, Mail, Package, TriangleAlert } from "lucide-react";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import { usedMachines, getUsedMachine } from "@/data/usedMachines";
+import { usedMachines, getUsedMachine, getModelDescription } from "@/data/usedMachines";
 import { absoluteUrl } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -32,6 +32,7 @@ export default async function UsedMachineDetailPage({ params }: Props) {
   if (!machine) notFound();
 
   const mainPhoto = machine.photos[0];
+  const modelDescription = getModelDescription(machine.brand, machine.model);
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
@@ -46,7 +47,23 @@ export default async function UsedMachineDetailPage({ params }: Props) {
       </div>
 
       <main className="mx-auto max-w-[1440px] px-6 pb-14">
-        <div className="mb-8 grid gap-8 lg:grid-cols-[minmax(300px,460px)_1fr]">
+        <div className="mb-8">
+          <span className="inline-flex w-fit items-center rounded-full bg-[#fef3c7] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#b45309]">
+            Used machine
+          </span>
+          <h1 className="mt-3 text-2xl font-bold text-[#0a1628] sm:text-3xl">
+            {machine.brand} {machine.model}
+          </h1>
+          <p className="mt-1 font-mono text-sm text-[#64748b]">S/N {machine.serialNumber}</p>
+        </div>
+
+        <div
+          className={`mb-8 grid gap-8 ${
+            modelDescription
+              ? "lg:grid-cols-[minmax(260px,340px)_1fr_minmax(280px,360px)]"
+              : "lg:grid-cols-[minmax(300px,460px)_1fr]"
+          }`}
+        >
           {/* Photo — same size/treatment as the main catalogue's product pages */}
           <div>
             <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white">
@@ -57,7 +74,7 @@ export default async function UsedMachineDetailPage({ params }: Props) {
                   fill
                   priority
                   unoptimized
-                  sizes="(max-width: 1024px) 100vw, 460px"
+                  sizes="(max-width: 1024px) 100vw, 340px"
                   className="object-contain p-8"
                 />
               ) : (
@@ -75,17 +92,20 @@ export default async function UsedMachineDetailPage({ params }: Props) {
             )}
           </div>
 
+          {/* General description — the manufacturer's own model description,
+              not unit-specific. Shown in full, no read-more/less collapse. */}
+          {modelDescription && (
+            <div className="min-w-0">
+              <h2 className="text-xs font-bold uppercase tracking-wide text-[#64748b]">
+                About the {machine.model}
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-[#374151]">{modelDescription.long}</p>
+            </div>
+          )}
+
           {/* Key facts + CTA */}
           <div className="flex min-w-0 flex-col">
-            <span className="inline-flex w-fit items-center rounded-full bg-[#fef3c7] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#b45309]">
-              Used machine
-            </span>
-            <h1 className="mt-3 text-2xl font-bold text-[#0a1628] sm:text-3xl">
-              {machine.brand} {machine.model}
-            </h1>
-            <p className="mt-1 font-mono text-sm text-[#64748b]">S/N {machine.serialNumber}</p>
-
-            <dl className="mt-6 space-y-2.5 rounded-xl border border-[#e2e8f0] bg-white p-5 text-sm leading-6">
+            <dl className="space-y-2.5 rounded-xl border border-[#e2e8f0] bg-white p-5 text-sm leading-6">
               <div>
                 <dt className="inline font-medium text-[#64748b]">Production year:</dt>{" "}
                 <dd className="inline font-semibold text-[#0a1628]">{machine.productionYear ?? "On request"}</dd>

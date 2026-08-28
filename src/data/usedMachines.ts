@@ -38,6 +38,28 @@ export type UsedMachine = {
   referenceUrl?: string;
 };
 
+/**
+ * General (non-unit-specific) manufacturer description per model — shared by
+ * every individual unit of that model rather than duplicated per entry.
+ * Keyed by "Brand Model". Extracted from the manufacturer's own product page
+ * (Claude does this per model going forward — no need for Stefan to paste it
+ * into the per-machine doc; the short version goes on the grid card, the long
+ * version to the left of the price box on the detail page). Deliberately no
+ * read-more/less collapse — full text always shown (Stefan's call: B2B buyers
+ * want all available info up front).
+ */
+export const MACHINE_MODEL_DESCRIPTIONS: Record<string, { short: string; long: string }> = {
+  "Komax Gamma 450": {
+    short:
+      "Gamma 450 – the compact, fully automatic wire processing machine – processes crimps and seals on both sides with a wire cross section of 0.13–4 mm².",
+    long: "The fully automatic Gamma 450 wire processing machine is a compact device for its performance. Thanks to fully integrated, seamless quality monitoring with CFA/CFA+, ACD and Q1250 and optional modules, it can be adapted to high and future-oriented requirements. By individually configuring the machine at four stations, the processes can be set up to meet the respective needs. This makes the Gamma 450 particularly suitable for the automotive industry and its changing requirements for durable machines. The ergonomic design, logical workflows and simple user guidance increase economic efficiency. Terminal reels and crimp tools can also be replaced during operation thanks to the STC tool and terminal reel quick changer.",
+  },
+};
+
+export function getModelDescription(brand: string, model: string) {
+  return MACHINE_MODEL_DESCRIPTIONS[`${brand} ${model}`];
+}
+
 export const usedMachines: UsedMachine[] = [
   {
     id: "komax-gamma-450-450-0231",
