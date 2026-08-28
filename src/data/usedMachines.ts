@@ -15,6 +15,9 @@ export type UsedMachine = {
   productionYear?: number;
   productionCycles?: string;
   price?: string;
+  deliveryTerms?: string;
+  warranty?: string;
+  paymentTerms?: string;
   conditionNotes?: string;
   /** The real as-built configuration for this specific unit (from the
    *  supplier's own export), not a generic spec sheet. */
@@ -46,7 +49,8 @@ export const usedMachines: UsedMachine[] = [
     serialNumber: "450.0231",
     productionYear: 2023,
     productionCycles: "Only a test run — never used in production",
-    price: "125,000 EUR (excl. freight, installation and training)",
+    price: "125,000 EUR",
+    deliveryTerms: "Excl. freight, installation and training",
     conditionNotes:
       "Only run as a factory test — never put into production use. Configuration change from the original build sheet: part 0045589 (V-blade R=1.00) has been removed and replaced with part 0341028.",
     photos: ["/media/used-machines/komax-gamma-450/reference.png"],

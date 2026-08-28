@@ -96,13 +96,25 @@ export default async function UsedMachineDetailPage({ params }: Props) {
               </div>
               <div className="border-t border-[#f1f5f9] pt-2.5">
                 <dt className="inline font-medium text-[#64748b]">Price:</dt>{" "}
-                <dd className="inline text-lg font-bold text-[#0a1628]">{machine.price ?? "On request"}</dd>
+                <dd className="inline font-semibold text-[#0a1628]">{machine.price ?? "On request"}</dd>
+              </div>
+              <div className="border-t border-[#f1f5f9] pt-2.5">
+                <dt className="inline font-medium text-[#64748b]">Delivery terms:</dt>{" "}
+                <dd className="inline font-semibold text-[#0a1628]">{machine.deliveryTerms ?? "On request"}</dd>
+              </div>
+              <div>
+                <dt className="inline font-medium text-[#64748b]">Warranty:</dt>{" "}
+                <dd className="inline font-semibold text-[#0a1628]">{machine.warranty ?? "On request"}</dd>
+              </div>
+              <div>
+                <dt className="inline font-medium text-[#64748b]">Payment terms:</dt>{" "}
+                <dd className="inline font-semibold text-[#0a1628]">{machine.paymentTerms ?? "On request"}</dd>
               </div>
             </dl>
 
             <a
               href={`mailto:info@adcontact.se?subject=${encodeURIComponent(`Enquiry: ${machine.brand} ${machine.model} S/N ${machine.serialNumber}`)}`}
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#2563eb] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#f59e0b] px-5 py-3 text-sm font-semibold text-[#0a1628] transition-colors hover:bg-[#d97706]"
             >
               <Mail size={15} />
               Enquire about this machine
