@@ -158,8 +158,9 @@ export const productionEquipmentGroup: NavGroup = {
     },
     {
       // Second-hand machines — placeholder landing until the offering is built.
+      // Now part of the Outlet section (src/app/outlet/) — see [[post-launch-backlog]].
       label: "Used machines",
-      href: "/used-machines",
+      href: "/outlet/used-machines",
       children: [],
     },
   ],

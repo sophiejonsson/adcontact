@@ -17,6 +17,12 @@ const nextConfig: NextConfig = {
         destination: "/products",
         permanent: true,
       },
+      // Used machines moved under the new Outlet section (2026-08-27).
+      {
+        source: "/used-machines",
+        destination: "/outlet/used-machines",
+        permanent: true,
+      },
     ];
   },
   async headers() {

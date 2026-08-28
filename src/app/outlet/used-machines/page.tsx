@@ -5,10 +5,10 @@ import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Used Machines | Adcontact",
+  title: "Used Machines | Outlet | Adcontact",
   description:
     "Second-hand cable-processing machines from Adcontact. We are building our used-machine offering for the Nordic market. Tell us what you are looking for and we will help you source it.",
-  alternates: { canonical: absoluteUrl("/used-machines") },
+  alternates: { canonical: absoluteUrl("/outlet/used-machines") },
 };
 
 export default function UsedMachinesPage() {
@@ -20,13 +20,12 @@ export default function UsedMachinesPage() {
           <Breadcrumbs
             light
             crumbs={[
-              { label: "Webshop", href: "/webshop.html" },
-              { label: "Production Equipment", href: "/webshop/production-equipment.html" },
+              { label: "Outlet", href: "/outlet" },
               { label: "Used Machines" },
             ]}
           />
           <div className="mt-5 max-w-3xl">
-            <span className="mb-4 inline-flex items-center gap-2 rounded-lg bg-white/[0.08] px-3.5 py-2 text-sm font-semibold text-blue-200">
+            <span className="mb-4 inline-flex items-center gap-2 rounded-lg bg-white/[0.08] px-3.5 py-2 text-sm font-semibold text-amber-200">
               <Recycle size={16} />
               Coming soon
             </span>
@@ -34,8 +33,9 @@ export default function UsedMachinesPage() {
             <p className="mt-4 text-base leading-7 text-[#94a3b8]">
               We are starting up our second-hand machine offering for the Nordic market. The
               selection will vary a lot, from cutting and stripping machines to crimping presses and
-              complete production lines. If you are looking for a specific used machine, or have a
-              machine to sell, tell us and we will help.
+              complete production lines. Each listing will show condition, equipment and full
+              specifications. If you are looking for a specific used machine, or have a machine to
+              sell, tell us and we will help.
             </p>
           </div>
         </div>
