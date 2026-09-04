@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Mail, Tag } from "lucide-react";
+import { ArrowRight, Mail, Percent, Tag } from "lucide-react";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import { absoluteUrl } from "@/lib/seo";
 import { deutschOutletComponents } from "@/data/deutschOutlet";
@@ -55,6 +55,15 @@ export default function ComponentsOutletPage() {
                 <div className="text-sm font-semibold text-white">Deutsch</div>
               </div>
             </div>
+            <div className="mt-4 flex items-start gap-3 rounded-lg border border-amber-400/20 bg-amber-400/10 px-4 py-3">
+              <Percent size={16} className="mt-0.5 flex-none text-amber-300" />
+              <p className="text-sm leading-6 text-amber-100">
+                <span className="font-semibold text-amber-200">Volume pricing available.</span>{" "}
+                Listed prices apply to orders of 1 to 10 pieces. Buying more, or a large volume on
+                any of these parts? Ask us, where we hold enough stock we can often match or beat
+                other distributors&apos; bulk pricing.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -71,6 +80,14 @@ export default function ComponentsOutletPage() {
             the part number, brand or application, and we will check whether it is available
             elsewhere in our outlet stock.
           </p>
+          <div className="mt-4 max-w-2xl rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
+            <p className="text-sm font-semibold text-amber-900">Best price on request</p>
+            <p className="mt-1 text-sm leading-6 text-amber-800">
+              Our listed prices apply to orders of 1 to 10 pieces. Ordering in volume? Send us a
+              request and, on items where we hold enough stock, we will do our best to match or
+              beat what you would pay elsewhere at that quantity.
+            </p>
+          </div>
           <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
             <a
               href="mailto:info@adcontact.se?subject=Components%20outlet%20enquiry"

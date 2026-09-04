@@ -142,6 +142,10 @@ export default function OutletComponentsClient() {
       )}
 
       <p className="mt-4 text-xs text-[#94a3b8]">
+        Prices shown apply to 1 to 10 pieces. Buying in bulk? Ask about volume pricing, we can
+        often beat standard distributor rates when stock allows.
+      </p>
+      <p className="mt-1.5 text-xs text-[#94a3b8]">
         Prices ex. VAT, while stocks last. Quantities update as orders come in, so confirm
         availability before ordering.
       </p>
