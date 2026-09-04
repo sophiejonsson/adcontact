@@ -158,35 +158,35 @@
     "description": "DT06-2S 1010-009-0206",
     "quantity": 100,
     "priceEur": 0.28,
-    "matchedPartNumber": "DT06-2S"
+    "matchedPartNumber": null
   },
   {
     "sku": "242000-S03",
     "description": "DT06-3S 1010-002-0306",
     "quantity": 100,
     "priceEur": 0.08,
-    "matchedPartNumber": "DT06-3S"
+    "matchedPartNumber": null
   },
   {
     "sku": "242000-S06",
     "description": "DT06-6S 1010-017-0606",
     "quantity": 100,
     "priceEur": 0.24,
-    "matchedPartNumber": "DT06-6S"
+    "matchedPartNumber": null
   },
   {
     "sku": "242000-S08",
     "description": "DT06-08SA 1010-007-0806",
     "quantity": 100,
     "priceEur": 0.25,
-    "matchedPartNumber": "DT06-08SA"
+    "matchedPartNumber": null
   },
   {
     "sku": "242000-S12",
     "description": "DT06-12SA 1010-020-1206",
     "quantity": 100,
     "priceEur": 0.53,
-    "matchedPartNumber": "DT06-12SA"
+    "matchedPartNumber": null
   },
   {
     "sku": "242001-0812",
@@ -277,7 +277,7 @@
     "description": "1028-021-0205 Back Shell 180 DTM042P tie-wrap",
     "quantity": 227,
     "priceEur": 0.95,
-    "matchedPartNumber": "DTM04-2P"
+    "matchedPartNumber": null
   },
   {
     "sku": "242005-0332",
