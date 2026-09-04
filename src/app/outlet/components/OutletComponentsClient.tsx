@@ -146,11 +146,10 @@ export default function OutletComponentsClient() {
         often beat standard distributor rates when stock allows.
       </p>
       <p className="mt-1.5 text-xs text-[#94a3b8]">
-        Prices ex. VAT, while stocks last. Quantities update as orders come in, so confirm
-        availability before ordering.
+        Quantities update as orders come in, so confirm availability before ordering.
       </p>
       <p className="mt-1.5 text-xs text-[#94a3b8]">
-        Prices excl. VAT and given in Euro ExWorks Keila, Estonia.
+        Prices excl. VAT and given in Euro ExWorks Keila, Estonia. While stocks last.
       </p>
     </section>
   );
