@@ -3,14 +3,14 @@
     "sku": "240000-01",
     "description": "1011-047-0605",
     "quantity": 57,
-    "priceEur": 0.19,
+    "priceEur": 0.62,
     "matchedPartNumber": null
   },
   {
     "sku": "240000-03",
     "description": "1011-053-1205",
     "quantity": 754,
-    "priceEur": 0.27,
+    "priceEur": 0.66,
     "matchedPartNumber": null
   },
   {
@@ -24,28 +24,28 @@
     "sku": "240001-1201",
     "description": "4060-002-12141",
     "quantity": 22,
-    "priceEur": 0.29,
+    "priceEur": 1.39,
     "matchedPartNumber": null
   },
   {
     "sku": "240006-01",
     "description": "1060-14-0122",
     "quantity": 12800,
-    "priceEur": 0.13,
+    "priceEur": 0.22,
     "matchedPartNumber": null
   },
   {
     "sku": "240006-09",
     "description": "1060-14-0144",
     "quantity": 4000,
-    "priceEur": 0.23,
+    "priceEur": 0.35,
     "matchedPartNumber": null
   },
   {
     "sku": "240009-09",
     "description": "6862-201-20278",
     "quantity": 138,
-    "priceEur": 0.32,
+    "priceEur": 2,
     "matchedPartNumber": null
   },
   {
@@ -59,35 +59,35 @@
     "sku": "240027-01",
     "description": "0460-256-12233",
     "quantity": 88,
-    "priceEur": 1.69,
+    "priceEur": 3.01,
     "matchedPartNumber": null
   },
   {
     "sku": "240034-09",
     "description": "0462-210-1231",
     "quantity": 847,
-    "priceEur": 0.42,
+    "priceEur": 2.63,
     "matchedPartNumber": null
   },
   {
     "sku": "240035-01",
     "description": "0462-203-04141",
     "quantity": 4,
-    "priceEur": 8.37,
+    "priceEur": 5.7,
     "matchedPartNumber": null
   },
   {
     "sku": "240039-09",
     "description": "0462-221-1631",
     "quantity": 46,
-    "priceEur": 3.11,
+    "priceEur": 4.19,
     "matchedPartNumber": null
   },
   {
     "sku": "240040-09",
     "description": "0460-247-1631 Au",
     "quantity": 48,
-    "priceEur": 2.24,
+    "priceEur": 3.69,
     "matchedPartNumber": null
   },
   {
@@ -106,254 +106,254 @@
   },
   {
     "sku": "240114-006",
-    "description": "Removal tool size 8 green 0411-353-0805",
+    "description": "0411-353-0805 Removal tool size 8 green",
     "quantity": 4,
-    "priceEur": 4.04,
+    "priceEur": 2.63,
     "matchedPartNumber": null
   },
   {
     "sku": "240114-011",
     "description": "0411-204-1605 Removal tool size 16 blue",
     "quantity": 103,
-    "priceEur": 1.24,
-    "matchedPartNumber": null
-  },
-  {
-    "sku": "240114-014",
-    "description": "Removal tool size 12 orange 0411-337-1205",
-    "quantity": 123,
     "priceEur": 1.2,
     "matchedPartNumber": null
   },
   {
+    "sku": "240114-014",
+    "description": "0411-337-1205 Removal tool size 12 orange",
+    "quantity": 123,
+    "priceEur": 1.06,
+    "matchedPartNumber": null
+  },
+  {
     "sku": "240114-019",
-    "description": "Sealing Plug size 4 red 114019-ZZ",
+    "description": "114019-ZZ Sealing Plug size 4 red",
     "quantity": 58,
-    "priceEur": 1,
+    "priceEur": 1.13,
     "matchedPartNumber": null
   },
   {
     "sku": "240114-028",
-    "description": "Keying Pin size 12 yellow 0413-214-1205",
+    "description": "0413-214-1205 Keying Pin size 12 yellow",
     "quantity": 1,
-    "priceEur": 0.37,
+    "priceEur": 0.62,
     "matchedPartNumber": null
   },
   {
     "sku": "240114-032",
-    "description": "Keying Pin size 20 red 0413-216-2005",
+    "description": "0413-216-2005 Keying Pin size 20 red",
     "quantity": 218,
-    "priceEur": 0.34,
+    "priceEur": 0.53,
     "matchedPartNumber": null
   },
   {
     "sku": "240115-041",
-    "description": "Crimp sleeve reducer size 4 0421-203-04141",
+    "description": "0421-203-04141 Crimp sleeve reducer size 4",
     "quantity": 104,
-    "priceEur": 0.4,
+    "priceEur": 0.83,
     "matchedPartNumber": null
   },
   {
     "sku": "242000-S02",
-    "description": "Front Seal DT06-2S 1010-009-0206",
+    "description": "DT06-2S 1010-009-0206",
     "quantity": 100,
-    "priceEur": 0.12,
+    "priceEur": 0.28,
     "matchedPartNumber": "DT06-2S"
   },
   {
     "sku": "242000-S03",
-    "description": "Front Seal DT06-3S 1010-002-0306",
+    "description": "DT06-3S 1010-002-0306",
     "quantity": 100,
-    "priceEur": 0.12,
+    "priceEur": 0.08,
     "matchedPartNumber": "DT06-3S"
   },
   {
     "sku": "242000-S06",
-    "description": "Front Seal DT06-6S 1010-017-0606",
+    "description": "DT06-6S 1010-017-0606",
     "quantity": 100,
-    "priceEur": 0.29,
+    "priceEur": 0.24,
     "matchedPartNumber": "DT06-6S"
   },
   {
     "sku": "242000-S08",
-    "description": "Front Seal DT06-08SA 1010-007-0806",
+    "description": "DT06-08SA 1010-007-0806",
     "quantity": 100,
-    "priceEur": 0.29,
+    "priceEur": 0.25,
     "matchedPartNumber": "DT06-08SA"
   },
   {
     "sku": "242000-S12",
-    "description": "Front Seal DT06-12SA 1010-020-1206",
+    "description": "DT06-12SA 1010-020-1206",
     "quantity": 100,
-    "priceEur": 0.29,
+    "priceEur": 0.53,
     "matchedPartNumber": "DT06-12SA"
   },
   {
     "sku": "242001-0812",
     "description": "DT06-08SA-CE12",
     "quantity": 10,
-    "priceEur": 7.37,
+    "priceEur": 6.6,
     "matchedPartNumber": "DT06-08SA-CE12"
   },
   {
     "sku": "242001-121",
     "description": "DT06-12SB",
     "quantity": 55,
-    "priceEur": 3.93,
+    "priceEur": 4.8,
     "matchedPartNumber": "DT06-12SB"
   },
   {
     "sku": "242001-123",
     "description": "DT06-12SD Brown",
     "quantity": 50,
-    "priceEur": 4.29,
+    "priceEur": 3.81,
     "matchedPartNumber": "DT06-12SD"
   },
   {
     "sku": "242002-121",
     "description": "DT04-12PB Black",
     "quantity": 83,
-    "priceEur": 3.21,
+    "priceEur": 3.71,
     "matchedPartNumber": "DT04-12PB"
   },
   {
     "sku": "242002-122",
     "description": "DT04-12PC",
     "quantity": 18,
-    "priceEur": 3.31,
+    "priceEur": 3.68,
     "matchedPartNumber": "DT04-12PC"
   },
   {
     "sku": "242002-123",
     "description": "DT04-12PD Brown",
     "quantity": 47,
-    "priceEur": 4.31,
+    "priceEur": 4.37,
     "matchedPartNumber": "DT04-12PD"
   },
   {
     "sku": "242002-480",
     "description": "DT04-48P",
     "quantity": 5,
-    "priceEur": 14.14,
+    "priceEur": 39,
     "matchedPartNumber": null
   },
   {
     "sku": "242003-043",
     "description": "W4SB",
     "quantity": 103,
-    "priceEur": 0.14,
+    "priceEur": 0.32,
     "matchedPartNumber": null
   },
   {
     "sku": "242003-044",
     "description": "W4SC",
     "quantity": 45,
-    "priceEur": 0.09,
+    "priceEur": 0.41,
     "matchedPartNumber": null
   },
   {
     "sku": "242003-045",
     "description": "W4SA",
     "quantity": 98,
-    "priceEur": 0.12,
+    "priceEur": 0.41,
     "matchedPartNumber": null
   },
   {
     "sku": "242003-131",
     "description": "W3P-1939",
     "quantity": 165,
-    "priceEur": 0.26,
+    "priceEur": 0.3,
     "matchedPartNumber": null
   },
   {
     "sku": "242004-0310",
-    "description": "Mounting Clip DT/DTM/DTP 1011-310-0205",
+    "description": "1011-310-0205 Mounting Clip DT/DTM/DTP",
     "quantity": 57,
-    "priceEur": 0.92,
+    "priceEur": 0.76,
     "matchedPartNumber": null
   },
   {
     "sku": "242004-82",
-    "description": "Back Shell 180 DTM042P tie-wrap 1028-021-0205",
+    "description": "1028-021-0205 Back Shell 180 DTM042P tie-wrap",
     "quantity": 227,
-    "priceEur": 0.84,
+    "priceEur": 0.95,
     "matchedPartNumber": "DTM04-2P"
   },
   {
     "sku": "242005-0332",
     "description": "DT06-3S-P032",
     "quantity": 9,
-    "priceEur": 0.9,
+    "priceEur": 2.3,
     "matchedPartNumber": "DT06-3S-P032"
   },
   {
     "sku": "242005-040",
     "description": "DT06-4S-P012",
     "quantity": 1092,
-    "priceEur": 0.72,
+    "priceEur": 1.27,
     "matchedPartNumber": "DT06-4S-P012"
   },
   {
     "sku": "242006-004",
     "description": "DTHD06-1-4S",
     "quantity": 64,
-    "priceEur": 1.93,
+    "priceEur": 2.72,
     "matchedPartNumber": "DTHD06-1-4S"
   },
   {
     "sku": "242006-008",
     "description": "DTHD06-1-8S",
     "quantity": 49,
-    "priceEur": 4.12,
+    "priceEur": 2.99,
     "matchedPartNumber": "DTHD06-1-8S"
   },
   {
     "sku": "242006-012",
     "description": "DTHD06-1-12S",
     "quantity": 80,
-    "priceEur": 1.77,
+    "priceEur": 2.03,
     "matchedPartNumber": "DTHD06-1-12S"
   },
   {
     "sku": "242006-0413",
     "description": "DT06-4S-CE13",
     "quantity": 20,
-    "priceEur": 4.77,
+    "priceEur": 2.86,
     "matchedPartNumber": "DT06-4S-CE13"
   },
   {
     "sku": "242006-046",
     "description": "DT06-4S-CE06",
     "quantity": 13,
-    "priceEur": 1.73,
+    "priceEur": 1.42,
     "matchedPartNumber": "DT06-4S-CE06"
   },
   {
     "sku": "242006-127",
     "description": "DT06-2S-SDT-CE27",
     "quantity": 1,
-    "priceEur": 1.2,
+    "priceEur": 3.23,
     "matchedPartNumber": "DT06-2S-SDT-CE27"
   },
   {
     "sku": "242007-004",
     "description": "DTHD04-1-4P",
     "quantity": 66,
-    "priceEur": 2.01,
+    "priceEur": 3.75,
     "matchedPartNumber": "DTHD04-1-4P"
   },
   {
     "sku": "242007-008",
     "description": "DTHD04-1-8P",
     "quantity": 5,
-    "priceEur": 3.26,
+    "priceEur": 2.77,
     "matchedPartNumber": "DTHD04-1-8P"
   },
   {
     "sku": "242009-001",
     "description": "HDFB-16-06S",
     "quantity": 1,
-    "priceEur": 35.19,
+    "priceEur": 35.85,
     "matchedPartNumber": null
   },
   {
@@ -367,322 +367,322 @@
     "sku": "242009-316",
     "description": "JS-16-00",
     "quantity": 164,
-    "priceEur": 0.37,
+    "priceEur": 2.75,
     "matchedPartNumber": "JS-16-00"
   },
   {
     "sku": "242011-0202",
     "description": "DT06-2S-E004",
     "quantity": 4,
-    "priceEur": 0.87,
+    "priceEur": 0.62,
     "matchedPartNumber": "DT06-2S-E004"
   },
   {
     "sku": "242011-0207",
     "description": "DT06-2S-EP06",
     "quantity": 74,
-    "priceEur": 1.56,
+    "priceEur": 1.13,
     "matchedPartNumber": "DT06-2S-EP06"
   },
   {
     "sku": "242011-0309",
     "description": "DT06-3S-EP11",
     "quantity": 62,
-    "priceEur": 0.54,
+    "priceEur": 1.22,
     "matchedPartNumber": "DT06-3S-EP11"
   },
   {
     "sku": "242011-060",
     "description": "DT06-6S-EP04",
     "quantity": 31,
-    "priceEur": 2.38,
+    "priceEur": 2.33,
     "matchedPartNumber": null
   },
   {
     "sku": "242011-0607",
     "description": "DT06-6S-EP06",
     "quantity": 29,
-    "priceEur": 1.47,
+    "priceEur": 2.18,
     "matchedPartNumber": "DT06-6S-EP06"
   },
   {
     "sku": "242011-0613",
     "description": "DT06-6S-CE13",
     "quantity": 27,
-    "priceEur": 6.57,
+    "priceEur": 5.55,
     "matchedPartNumber": "DT06-6S-CE13"
   },
   {
     "sku": "242011-280",
     "description": "DT06-08SA-E008",
     "quantity": 1,
-    "priceEur": 4.47,
+    "priceEur": 4.38,
     "matchedPartNumber": "DT06-08SA-E008"
   },
   {
     "sku": "242012-040",
     "description": "DT06-4S-LC01",
     "quantity": 20,
-    "priceEur": 1.03,
+    "priceEur": 6.53,
     "matchedPartNumber": "DT06-4S-LC01"
   },
   {
     "sku": "242013-002",
     "description": "DT13-2P",
     "quantity": 67,
-    "priceEur": 1.57,
+    "priceEur": 6.45,
     "matchedPartNumber": "DT13-2P"
   },
   {
     "sku": "242013-006",
     "description": "DT13-6P",
     "quantity": 167,
-    "priceEur": 2.58,
+    "priceEur": 7.28,
     "matchedPartNumber": "DT13-6P"
   },
   {
     "sku": "242013-024",
     "description": "W2SA-P012",
     "quantity": 158,
-    "priceEur": 0.32,
+    "priceEur": 0.56,
     "matchedPartNumber": null
   },
   {
     "sku": "242015-002",
     "description": "DT15-2P",
     "quantity": 40,
-    "priceEur": 1.63,
+    "priceEur": 5.7,
     "matchedPartNumber": "DT15-2P"
   },
   {
     "sku": "242015-008",
     "description": "DT15-08PA",
     "quantity": 9,
-    "priceEur": 3.13,
+    "priceEur": 4.43,
     "matchedPartNumber": "DT15-08PA"
   },
   {
     "sku": "242016-012",
     "description": "DTCE 04-1-12 P E003",
     "quantity": 58,
-    "priceEur": 2.36,
+    "priceEur": 7.02,
     "matchedPartNumber": null
   },
   {
     "sku": "242016-460",
     "description": "DT 16-6SB KP01",
     "quantity": 200,
-    "priceEur": 2.14,
+    "priceEur": 4.2,
     "matchedPartNumber": null
   },
   {
     "sku": "242016-518",
     "description": "DT16-18SB-K004",
     "quantity": 100,
-    "priceEur": 5.13,
+    "priceEur": 12.98,
     "matchedPartNumber": "DT16-18SB-K004"
   },
   {
     "sku": "242017-012",
     "description": "DTCE 06-1-12 S E003",
     "quantity": 78,
-    "priceEur": 2.3,
+    "priceEur": 2.78,
     "matchedPartNumber": null
   },
   {
     "sku": "242022-0302",
     "description": "DT04-3P-E004",
     "quantity": 1,
-    "priceEur": 0.54,
+    "priceEur": 0.95,
     "matchedPartNumber": "DT04-3P-E004"
   },
   {
     "sku": "242022-031",
     "description": "DT04-3P-CE01",
     "quantity": 77,
-    "priceEur": 1.6,
+    "priceEur": 1.12,
     "matchedPartNumber": "DT04-3P-CE01"
   },
   {
     "sku": "242022-0321",
     "description": "DT04-3P-EE01",
     "quantity": 10,
-    "priceEur": 0.94,
+    "priceEur": 1.37,
     "matchedPartNumber": "DT04-3P-EE01"
   },
   {
     "sku": "242022-034",
     "description": "DT04-3P-CE02",
     "quantity": 30,
-    "priceEur": 1.02,
+    "priceEur": 0.7,
     "matchedPartNumber": "DT04-3P-CE02"
   },
   {
     "sku": "242022-039",
     "description": "DT04-3P-CE09",
     "quantity": 96,
-    "priceEur": 1.77,
+    "priceEur": 1.32,
     "matchedPartNumber": "DT04-3P-CE09"
   },
   {
     "sku": "242022-060",
     "description": "DT04-6P-EP04",
     "quantity": 29,
-    "priceEur": 1.61,
+    "priceEur": 4.41,
     "matchedPartNumber": null
   },
   {
     "sku": "242022-120",
     "description": "DT04-12PA-EP04",
     "quantity": 1,
-    "priceEur": 3.24,
+    "priceEur": 3.85,
     "matchedPartNumber": null
   },
   {
     "sku": "242023-0806",
     "description": "DT04-08PA-P026",
     "quantity": 59,
-    "priceEur": 6.9,
+    "priceEur": 10.73,
     "matchedPartNumber": "DT04-08PA-P026"
   },
   {
     "sku": "242024-080",
     "description": "DT04-08PB",
     "quantity": 54,
-    "priceEur": 2.04,
+    "priceEur": 3.6,
     "matchedPartNumber": "DT04-08PB"
   },
   {
     "sku": "242026-080",
     "description": "DT04-08PB-P026",
     "quantity": 64,
-    "priceEur": 11.49,
+    "priceEur": 9.68,
     "matchedPartNumber": "DT04-08PB-P026"
   },
   {
     "sku": "242032-120",
     "description": "DT04-12PA-LE01",
     "quantity": 19,
-    "priceEur": 10.78,
+    "priceEur": 13.28,
     "matchedPartNumber": "DT04-12PA-LE01"
   },
   {
     "sku": "242042-020",
     "description": "DT04-2P-L012",
     "quantity": 23,
-    "priceEur": 2.79,
+    "priceEur": 3.05,
     "matchedPartNumber": "DT04-2P-L012"
   },
   {
     "sku": "242042-1201",
     "description": "DT04-12PB-L012",
     "quantity": 15,
-    "priceEur": 7.52,
+    "priceEur": 5.9,
     "matchedPartNumber": "DT04-12PB-L012"
   },
   {
     "sku": "242048-120",
     "description": "DT04-12PC-C015",
     "quantity": 50,
-    "priceEur": 3.14,
+    "priceEur": 3.29,
     "matchedPartNumber": "DT04-12PC-C015"
   },
   {
     "sku": "242100-20",
-    "description": "Hand tool DTT-16-00",
+    "description": "DTT-16-00",
     "quantity": 4,
-    "priceEur": 156.82,
+    "priceEur": 345,
     "matchedPartNumber": null
   },
   {
     "sku": "242101-028",
     "description": "DT06-2S-C017",
     "quantity": 1869,
-    "priceEur": 1.2,
+    "priceEur": 1.82,
     "matchedPartNumber": "DT06-2S-C017"
   },
   {
     "sku": "242102-038",
     "description": "DT04-3P-C017",
     "quantity": 33,
-    "priceEur": 0.61,
+    "priceEur": 3.45,
     "matchedPartNumber": "DT04-3P-C017"
   },
   {
     "sku": "242102-0823",
     "description": "DT04-08PA-CL03",
     "quantity": 40,
-    "priceEur": 7.98,
+    "priceEur": 5.25,
     "matchedPartNumber": "DT04-08PA-CL03"
   },
   {
     "sku": "242112-122",
     "description": "DTM04-12PC",
     "quantity": 3,
-    "priceEur": 5.37,
+    "priceEur": 4.25,
     "matchedPartNumber": "DTM04-12PC"
   },
   {
     "sku": "242112-123",
     "description": "DTM04-12PD",
     "quantity": 8,
-    "priceEur": 5.37,
+    "priceEur": 4.37,
     "matchedPartNumber": "DTM04-12PD"
   },
   {
     "sku": "242113-024",
     "description": "WM-2PB",
     "quantity": 20,
-    "priceEur": 0.45,
+    "priceEur": 0.35,
     "matchedPartNumber": null
   },
   {
     "sku": "242121-060",
     "description": "DTM06-6S-E007",
     "quantity": 36,
-    "priceEur": 2.73,
+    "priceEur": 2.63,
     "matchedPartNumber": "DTM06-6S-E007"
   },
   {
     "sku": "242121-120",
     "description": "DTM06-12SA-E007",
     "quantity": 83,
-    "priceEur": 3.65,
+    "priceEur": 5.58,
     "matchedPartNumber": "DTM06-12SA-E007"
   },
   {
     "sku": "242121-130",
     "description": "DTM06-12SA-EE04",
     "quantity": 12,
-    "priceEur": 4.34,
+    "priceEur": 2.88,
     "matchedPartNumber": "DTM06-12SA-EE04"
   },
   {
     "sku": "242122-020",
     "description": "DTM04-2P-E003",
     "quantity": 151,
-    "priceEur": 0.44,
+    "priceEur": 1.41,
     "matchedPartNumber": "DTM04-2P-E003"
   },
   {
     "sku": "242122-224",
     "description": "DTM04-2P-E007",
     "quantity": 59,
-    "priceEur": 0.99,
+    "priceEur": 2.02,
     "matchedPartNumber": "DTM04-2P-E007"
   },
   {
     "sku": "242136-248",
     "description": "DTM13-12PA-R008",
     "quantity": 79,
-    "priceEur": 17.7,
+    "priceEur": 13.43,
     "matchedPartNumber": "DTM13-12PA-R008"
   },
   {
     "sku": "242157-048",
     "description": "DTMF15-48P",
     "quantity": 11,
-    "priceEur": 20.05,
+    "priceEur": 30,
     "matchedPartNumber": "DTMF15-48P"
   },
   {
@@ -696,518 +696,518 @@
     "sku": "242855-012",
     "description": "DRB12-102PBE-L018",
     "quantity": 3,
-    "priceEur": 35.34,
+    "priceEur": 21.2,
     "matchedPartNumber": null
   },
   {
     "sku": "243000-040",
     "description": "DRC 40-GKT",
     "quantity": 1,
-    "priceEur": 0.17,
+    "priceEur": 1.19,
     "matchedPartNumber": null
   },
   {
     "sku": "243000-070",
     "description": "DRC 70-GKT",
     "quantity": 29,
-    "priceEur": 0.89,
+    "priceEur": 1.73,
     "matchedPartNumber": null
   },
   {
     "sku": "243012-040",
     "description": "DRC12-40PA",
     "quantity": 8,
-    "priceEur": 12.23,
+    "priceEur": 14.7,
     "matchedPartNumber": "DRC12-40PA"
   },
   {
     "sku": "243012-224",
     "description": "DRC12-24PCE",
     "quantity": 120,
-    "priceEur": 10.84,
+    "priceEur": 19.5,
     "matchedPartNumber": "DRC12-24PCE"
   },
   {
     "sku": "243014-040",
     "description": "DRC14-40PA",
     "quantity": 4,
-    "priceEur": 11.8,
+    "priceEur": 32.78,
     "matchedPartNumber": "DRC14-40PA"
   },
   {
     "sku": "243016-024",
     "description": "DRC16-24SA",
     "quantity": 35,
-    "priceEur": 5.95,
+    "priceEur": 15.75,
     "matchedPartNumber": "DRC16-24SA"
   },
   {
     "sku": "243016-0243",
     "description": "DRC16-24SA-P013",
     "quantity": 16,
-    "priceEur": 31.62,
+    "priceEur": 26.25,
     "matchedPartNumber": "DRC16-24SA-P013"
   },
   {
     "sku": "243016-041",
     "description": "DRC 16-40 SE",
     "quantity": 20,
-    "priceEur": 13.78,
+    "priceEur": 21.98,
     "matchedPartNumber": "DRC16-40SE"
   },
   {
     "sku": "243016-124",
     "description": "DRC 16-24 SB",
     "quantity": 17,
-    "priceEur": 10.39,
+    "priceEur": 21.3,
     "matchedPartNumber": "DRC16-24SB"
   },
   {
     "sku": "243016-224",
     "description": "DRC 16-24 SC",
     "quantity": 125,
-    "priceEur": 9.75,
+    "priceEur": 16.5,
     "matchedPartNumber": "DRC16-24SC"
   },
   {
     "sku": "243020-5002",
     "description": "DRC 20-50 P 02",
     "quantity": 18,
-    "priceEur": 11.53,
+    "priceEur": 31.5,
     "matchedPartNumber": "DRC20-50P02"
   },
   {
     "sku": "243020-5005",
     "description": "DRC 20-50 P 05",
     "quantity": 9,
-    "priceEur": 11.02,
+    "priceEur": 30.15,
     "matchedPartNumber": "DRC20-50P05"
   },
   {
     "sku": "243020-5006",
     "description": "DRC 20-50 P 06",
     "quantity": 31,
-    "priceEur": 11.11,
+    "priceEur": 33,
     "matchedPartNumber": "DRC20-50P06"
   },
   {
     "sku": "243020-5009",
     "description": "DRC 20-50 P 09",
     "quantity": 3,
-    "priceEur": 9.45,
+    "priceEur": 31.5,
     "matchedPartNumber": "DRC20-50P09"
   },
   {
     "sku": "243023-24A",
     "description": "DRC23-24PA",
     "quantity": 10,
-    "priceEur": 10.64,
+    "priceEur": 24.45,
     "matchedPartNumber": "DRC23-24PA"
   },
   {
     "sku": "243023-40D",
     "description": "DRC 23-40 PD",
     "quantity": 40,
-    "priceEur": 17.3,
+    "priceEur": 29.48,
     "matchedPartNumber": "DRC23-40PD"
   },
   {
     "sku": "243026-5005",
     "description": "DRC26-50S05",
     "quantity": 14,
-    "priceEur": 14.23,
+    "priceEur": 17.48,
     "matchedPartNumber": "DRC26-50S05"
   },
   {
     "sku": "243026-5006",
     "description": "DRC26-50-S06",
     "quantity": 166,
-    "priceEur": 12.36,
+    "priceEur": 18.75,
     "matchedPartNumber": null
   },
   {
     "sku": "243026-6006",
     "description": "DRC26-60S06",
     "quantity": 3,
-    "priceEur": 12.6,
+    "priceEur": 25.13,
     "matchedPartNumber": "DRC26-60S06"
   },
   {
     "sku": "243026-6007",
     "description": "DRC26-60S07",
     "quantity": 20,
-    "priceEur": 33.35,
+    "priceEur": 26.18,
     "matchedPartNumber": "DRC26-60S07"
   },
   {
     "sku": "243127-6090",
     "description": "0528-002-6005",
     "quantity": 66,
-    "priceEur": 2.44,
+    "priceEur": 2.96,
     "matchedPartNumber": null
   },
   {
     "sku": "243130-7011",
     "description": "0513-011-7006",
     "quantity": 1,
-    "priceEur": 3.44,
+    "priceEur": 3.66,
     "matchedPartNumber": null
   },
   {
     "sku": "243132-4091",
     "description": "0515-015-4005",
     "quantity": 280,
-    "priceEur": 1.37,
+    "priceEur": 4.5,
     "matchedPartNumber": null
   },
   {
     "sku": "244000-005",
     "description": "HD10-5-GKT",
     "quantity": 20,
-    "priceEur": 0.64,
+    "priceEur": 1.6,
     "matchedPartNumber": null
   },
   {
     "sku": "244000-006",
     "description": "HD10-6-GKT",
     "quantity": 5,
-    "priceEur": 0.51,
+    "priceEur": 0.57,
     "matchedPartNumber": null
   },
   {
     "sku": "244005-021",
     "description": "HDP 26-24-21 PN",
     "quantity": 5,
-    "priceEur": 16.02,
+    "priceEur": 14.03,
     "matchedPartNumber": "HDP26-24-21PN"
   },
   {
     "sku": "244005-115",
     "description": "HDP26-24-19SE-L015",
     "quantity": 5,
-    "priceEur": 9.77,
+    "priceEur": 12.98,
     "matchedPartNumber": "HDP26-24-19SE-L015"
   },
   {
     "sku": "244005-118",
     "description": "HDP26-24-18PE-L017",
     "quantity": 185,
-    "priceEur": 10.44,
+    "priceEur": 13.88,
     "matchedPartNumber": "HDP26-24-18PE-L017"
   },
   {
     "sku": "244014-0014",
     "description": "HDP24-18-14 SE",
     "quantity": 176,
-    "priceEur": 5.75,
+    "priceEur": 15.15,
     "matchedPartNumber": "HDP24-18-14SE"
   },
   {
     "sku": "244016-0063",
     "description": "HDP 26-18-6 SN C030",
     "quantity": 1,
-    "priceEur": 9.12,
+    "priceEur": 11.85,
     "matchedPartNumber": "HDP26-18-6SN-C030"
   },
   {
     "sku": "244016-008",
     "description": "HDP26-18-8SN",
     "quantity": 25,
-    "priceEur": 20.42,
+    "priceEur": 12.25,
     "matchedPartNumber": "HDP26-18-8SN"
   },
   {
     "sku": "244016-020",
     "description": "HDP26-18-20PN",
     "quantity": 5,
-    "priceEur": 44.93,
+    "priceEur": 26.96,
     "matchedPartNumber": "HDP26-18-20PN"
   },
   {
     "sku": "244024-0016",
     "description": "HDP24-24-16SE",
     "quantity": 4,
-    "priceEur": 9.22,
+    "priceEur": 11.55,
     "matchedPartNumber": null
   },
   {
     "sku": "244024-0019",
     "description": "HDP24-24-19SE",
     "quantity": 20,
-    "priceEur": 8.72,
+    "priceEur": 12.9,
     "matchedPartNumber": "HDP24-24-19SE"
   },
   {
     "sku": "244024-0082",
     "description": "HDP24-18-8PN",
     "quantity": 34,
-    "priceEur": 7.55,
+    "priceEur": 9.04,
     "matchedPartNumber": "HDP24-18-8PN"
   },
   {
     "sku": "244024-009",
     "description": "HDP24-24-9PN",
     "quantity": 47,
-    "priceEur": 20.83,
+    "priceEur": 14.1,
     "matchedPartNumber": "HDP24-24-9PN"
   },
   {
     "sku": "244024-0118",
     "description": "HDP24-24-18SE-L017",
     "quantity": 428,
-    "priceEur": 7.98,
+    "priceEur": 11.85,
     "matchedPartNumber": "HDP24-24-18SE-L017"
   },
   {
     "sku": "244024-0121",
     "description": "HDP24-24-21PE",
     "quantity": 33,
-    "priceEur": 7.83,
+    "priceEur": 14.18,
     "matchedPartNumber": "HDP24-24-21PE"
   },
   {
     "sku": "244024-016",
     "description": "HDP24-24-16PN",
     "quantity": 22,
-    "priceEur": 20.88,
+    "priceEur": 13.13,
     "matchedPartNumber": "HDP24-24-16PN"
   },
   {
     "sku": "244024-019",
     "description": "HDP24-24-19SN",
     "quantity": 20,
-    "priceEur": 22.07,
+    "priceEur": 13.24,
     "matchedPartNumber": "HDP24-24-19SN"
   },
   {
     "sku": "244024-023",
     "description": "HDP24-24-23PT",
     "quantity": 30,
-    "priceEur": 10.67,
+    "priceEur": 11.7,
     "matchedPartNumber": "HDP24-24-23PT"
   },
   {
     "sku": "244024-047",
     "description": "HDP24-24-47PE",
     "quantity": 7,
-    "priceEur": 1.86,
+    "priceEur": 10.43,
     "matchedPartNumber": "HDP24-24-47PE"
   },
   {
     "sku": "244024-09",
     "description": "HDP24-24-9SN",
     "quantity": 13,
-    "priceEur": 17.52,
+    "priceEur": 13.73,
     "matchedPartNumber": "HDP24-24-9SN"
   },
   {
     "sku": "244024-115",
     "description": "HDP24-24-16PE-L015",
     "quantity": 1,
-    "priceEur": 8.67,
+    "priceEur": 13.58,
     "matchedPartNumber": "HDP24-24-16PE-L015"
   },
   {
     "sku": "244024-1212",
     "description": "HDP 24-24-21 SN",
     "quantity": 12,
-    "priceEur": 6.29,
+    "priceEur": 14.03,
     "matchedPartNumber": "HDP24-24-21SN"
   },
   {
     "sku": "244025-123",
     "description": "HDP24-24-23PE-L017",
     "quantity": 3,
-    "priceEur": 7.53,
+    "priceEur": 14.1,
     "matchedPartNumber": "HDP24-24-23PE-L017"
   },
   {
     "sku": "244026-0031",
     "description": "HDP26-24-31SE",
     "quantity": 1,
-    "priceEur": 22.37,
+    "priceEur": 13.42,
     "matchedPartNumber": "HDP26-24-31SE"
   },
   {
     "sku": "244026-009",
     "description": "HDP 26-24-9 SN",
     "quantity": 9,
-    "priceEur": 10.82,
+    "priceEur": 10.5,
     "matchedPartNumber": "HDP26-24-9SN"
   },
   {
     "sku": "244026-0114",
     "description": "HDP24-24-14PE",
     "quantity": 43,
-    "priceEur": 12.85,
+    "priceEur": 14.63,
     "matchedPartNumber": null
   },
   {
     "sku": "244026-0129",
     "description": "HDP26-24-29PE",
     "quantity": 10,
-    "priceEur": 11.33,
+    "priceEur": 14.18,
     "matchedPartNumber": "HDP26-24-29PE"
   },
   {
     "sku": "244026-0131",
     "description": "HDP26-24-31PT",
     "quantity": 3,
-    "priceEur": 9.59,
+    "priceEur": 13.5,
     "matchedPartNumber": "HDP26-24-31PT"
   },
   {
     "sku": "244026-014",
     "description": "HDP 26-24-14 SN",
     "quantity": 1,
-    "priceEur": 4.27,
+    "priceEur": 13.73,
     "matchedPartNumber": "HDP26-24-14SN"
   },
   {
     "sku": "244026-020",
     "description": "HDP26-24-21SN",
     "quantity": 41,
-    "priceEur": 7.34,
+    "priceEur": 12.9,
     "matchedPartNumber": "HDP26-24-21SN"
   },
   {
     "sku": "244026-021",
     "description": "HDP26-24-21SE",
     "quantity": 4,
-    "priceEur": 7.52,
+    "priceEur": 10.2,
     "matchedPartNumber": "HDP26-24-21SE"
   },
   {
     "sku": "244026-023",
     "description": "HDP26-24-23ST",
     "quantity": 34,
-    "priceEur": 13.7,
+    "priceEur": 20.63,
     "matchedPartNumber": "HDP26-24-23ST"
   },
   {
     "sku": "244026-047",
     "description": "HDP26-24-47SE",
     "quantity": 10,
-    "priceEur": 22.8,
+    "priceEur": 14.07,
     "matchedPartNumber": "HDP26-24-47SE"
   },
   {
     "sku": "244026-09",
     "description": "HDP26-24-9PN",
     "quantity": 2,
-    "priceEur": 7.51,
+    "priceEur": 13.43,
     "matchedPartNumber": "HDP26-24-9PN"
   },
   {
     "sku": "244026-109",
     "description": "HDP26-24-9SE-L015",
     "quantity": 1,
-    "priceEur": 9.77,
+    "priceEur": 14.1,
     "matchedPartNumber": "HDP26-24-9SE-L015"
   },
   {
     "sku": "244026-1210",
     "description": "HDP26-24-21SE-L015",
     "quantity": 1,
-    "priceEur": 13.07,
+    "priceEur": 14.63,
     "matchedPartNumber": "HDP26-24-21SE-L015"
   },
   {
     "sku": "244026-123",
     "description": "HDP26-24-23SN-L015",
     "quantity": 11,
-    "priceEur": 9.6,
+    "priceEur": 14.1,
     "matchedPartNumber": "HDP26-24-23SN-L015"
   },
   {
     "sku": "244026-133",
     "description": "HDP26-24-33SN-L015",
     "quantity": 17,
-    "priceEur": 14.74,
+    "priceEur": 20.93,
     "matchedPartNumber": "HDP26-24-33SN-L015"
   },
   {
     "sku": "244026-147",
     "description": "HDP26-24-47SE-L015",
     "quantity": 8,
-    "priceEur": 10.68,
+    "priceEur": 14.07,
     "matchedPartNumber": "HDP26-24-47SE-L015"
   },
   {
     "sku": "244026-209",
     "description": "HDP26-24-9SN-L017",
     "quantity": 19,
-    "priceEur": 24.25,
+    "priceEur": 14.55,
     "matchedPartNumber": "HDP26-24-9SN-L017"
   },
   {
     "sku": "244026-223",
     "description": "HDP26-24-23SE-L017",
     "quantity": 20,
-    "priceEur": 27.69,
+    "priceEur": 16.62,
     "matchedPartNumber": "HDP26-24-23SE-L017"
   },
   {
     "sku": "244026-2310",
     "description": "HDP26-24-23PE-L017",
     "quantity": 13,
-    "priceEur": 13.32,
+    "priceEur": 13.65,
     "matchedPartNumber": "HDP26-24-23PE-L017"
   },
   {
     "sku": "244026-291",
     "description": "HDP26-24-29SE-L017",
     "quantity": 133,
-    "priceEur": 21.05,
+    "priceEur": 12.63,
     "matchedPartNumber": "HDP26-24-29SE-L017"
   },
   {
     "sku": "244027-1180",
     "description": "HDP26-24-18SN-L015",
     "quantity": 6,
-    "priceEur": 9.43,
+    "priceEur": 13.5,
     "matchedPartNumber": "HDP26-24-18SN-L015"
   },
   {
     "sku": "244027-218",
     "description": "HDP26-24-18SN-L017",
     "quantity": 20,
-    "priceEur": 27.45,
+    "priceEur": 16.47,
     "matchedPartNumber": "HDP26-24-18SN-L017"
   },
   {
     "sku": "244031-01",
     "description": "0409-201-2400",
     "quantity": 12,
-    "priceEur": 4.41,
+    "priceEur": 12.52,
     "matchedPartNumber": null
   },
   {
     "sku": "244034-008",
     "description": "HD34-18-8PN",
     "quantity": 4,
-    "priceEur": 7.88,
+    "priceEur": 14.7,
     "matchedPartNumber": "HD34-18-8PN"
   },
   {
     "sku": "244034-009",
     "description": "HD34-24-9PN",
     "quantity": 5,
-    "priceEur": 10.8,
+    "priceEur": 14.55,
     "matchedPartNumber": "HD34-24-9PN"
   },
   {
     "sku": "244034-016",
     "description": "HD34-24-16PN",
     "quantity": 3,
-    "priceEur": 4.16,
+    "priceEur": 22.5,
     "matchedPartNumber": "HD34-24-16PN"
   },
   {
     "sku": "244034-023",
     "description": "HD34-24-23PN",
     "quantity": 14,
-    "priceEur": 9.05,
+    "priceEur": 17.25,
     "matchedPartNumber": "HD34-24-23PN"
   },
   {
@@ -1221,126 +1221,126 @@
     "sku": "244034-035",
     "description": "HD34-24-35PN",
     "quantity": 5,
-    "priceEur": 8.32,
+    "priceEur": 15.38,
     "matchedPartNumber": "HD34-24-35PN"
   },
   {
     "sku": "244034-047",
     "description": "HD34-24-47PE",
     "quantity": 78,
-    "priceEur": 9.23,
+    "priceEur": 33.3,
     "matchedPartNumber": "HD34-24-47PE"
   },
   {
     "sku": "244034-07",
     "description": "HD34-24-31PT-072",
     "quantity": 11,
-    "priceEur": 16.73,
+    "priceEur": 22.5,
     "matchedPartNumber": null
   },
   {
     "sku": "244034-218",
     "description": "HD34-24-18SN",
     "quantity": 2,
-    "priceEur": 12.32,
+    "priceEur": 21.75,
     "matchedPartNumber": "HD34-24-18SN"
   },
   {
     "sku": "244034-223",
     "description": "HD34-24-23SN",
     "quantity": 13,
-    "priceEur": 7.73,
+    "priceEur": 14.25,
     "matchedPartNumber": "HD34-24-23SN"
   },
   {
     "sku": "244035-009",
     "description": "HD36-24-9PN-059",
     "quantity": 14,
-    "priceEur": 32.4,
+    "priceEur": 24.23,
     "matchedPartNumber": "HD36-24-9PN-059"
   },
   {
     "sku": "244035-0092",
     "description": "HD36-24-9SN-059",
     "quantity": 17,
-    "priceEur": 18.35,
+    "priceEur": 23.7,
     "matchedPartNumber": "HD36-24-9SN-059"
   },
   {
     "sku": "244036-008",
     "description": "HD36-18-8SN",
     "quantity": 3,
-    "priceEur": 17.23,
+    "priceEur": 27,
     "matchedPartNumber": "HD36-18-8SN"
   },
   {
     "sku": "244036-009",
     "description": "HD36-24-9SN",
     "quantity": 5,
-    "priceEur": 13.72,
+    "priceEur": 22.8,
     "matchedPartNumber": "HD36-24-9SN"
   },
   {
     "sku": "244036-019E",
     "description": "HD36-24-19SE",
     "quantity": 7,
-    "priceEur": 15.9,
+    "priceEur": 29.93,
     "matchedPartNumber": "HD36-24-19SE"
   },
   {
     "sku": "244036-021",
     "description": "HD36-24-21SN",
     "quantity": 3,
-    "priceEur": 12.08,
+    "priceEur": 24.38,
     "matchedPartNumber": "HD36-24-21SN"
   },
   {
     "sku": "244036-0231",
     "description": "HD36-24-23ST",
     "quantity": 12,
-    "priceEur": 28.56,
+    "priceEur": 17.14,
     "matchedPartNumber": "HD36-24-23ST"
   },
   {
     "sku": "244036-031",
     "description": "HD36-24-31ST",
     "quantity": 8,
-    "priceEur": 12.6,
+    "priceEur": 19.5,
     "matchedPartNumber": "HD36-24-31ST"
   },
   {
     "sku": "244036-035",
     "description": "HD36-24-35SN",
     "quantity": 3,
-    "priceEur": 10.78,
+    "priceEur": 52.95,
     "matchedPartNumber": "HD36-24-35SN"
   },
   {
     "sku": "244036-047",
     "description": "HD36-24-47SE",
     "quantity": 3,
-    "priceEur": 11.72,
+    "priceEur": 15.68,
     "matchedPartNumber": "HD36-24-47SE"
   },
   {
     "sku": "244036-08",
     "description": "HD36-18-8PN",
     "quantity": 5,
-    "priceEur": 31.52,
+    "priceEur": 18.91,
     "matchedPartNumber": "HD36-18-8PN"
   },
   {
     "sku": "244036-114",
     "description": "HDB36-18-14SN",
     "quantity": 7,
-    "priceEur": 16.3,
+    "priceEur": 16.5,
     "matchedPartNumber": "HDB36-18-14SN"
   },
   {
     "sku": "244036-223",
     "description": "HD36-24-23PN",
     "quantity": 12,
-    "priceEur": 12.85,
+    "priceEur": 22.8,
     "matchedPartNumber": "HD36-24-23PN"
   },
   {
@@ -1389,189 +1389,189 @@
     "sku": "244105-015",
     "description": "HDP24-24-19PE",
     "quantity": 20,
-    "priceEur": 20.95,
+    "priceEur": 22.5,
     "matchedPartNumber": "HDP24-24-19PE"
   },
   {
     "sku": "244126-016",
     "description": "HDP26-24-16PN",
     "quantity": 7,
-    "priceEur": 8.38,
+    "priceEur": 12.08,
     "matchedPartNumber": "HDP26-24-16PN"
   },
   {
     "sku": "244126-1210",
     "description": "HDP26-24-23PE-L015",
     "quantity": 1,
-    "priceEur": 14.92,
+    "priceEur": 13.2,
     "matchedPartNumber": "HDP26-24-23PE-L015"
   },
   {
     "sku": "244130-01",
     "description": "0428-204-1890",
     "quantity": 113,
-    "priceEur": 2.92,
+    "priceEur": 4.31,
     "matchedPartNumber": null
   },
   {
     "sku": "244131-01",
     "description": "0428-204-2490",
     "quantity": 7,
-    "priceEur": 1.6,
+    "priceEur": 6.15,
     "matchedPartNumber": null
   },
   {
     "sku": "244134-014",
     "description": "HD34-18-14SN",
     "quantity": 3,
-    "priceEur": 24.29,
+    "priceEur": 14.7,
     "matchedPartNumber": "HD34-18-14SN"
   },
   {
     "sku": "244134-021",
     "description": "HD34-18-21PN",
     "quantity": 84,
-    "priceEur": 8.82,
+    "priceEur": 15,
     "matchedPartNumber": "HD34-18-21PN"
   },
   {
     "sku": "244135-07",
     "description": "HD34-24-31ST-072",
     "quantity": 12,
-    "priceEur": 15,
+    "priceEur": 24,
     "matchedPartNumber": "HD34-24-31ST-072"
   },
   {
     "sku": "244136-021",
     "description": "HD36-18-21SN",
     "quantity": 121,
-    "priceEur": 11.27,
+    "priceEur": 14.48,
     "matchedPartNumber": "HD36-18-21SN"
   },
   {
     "sku": "244136-14",
     "description": "HD36-18-14SN",
     "quantity": 7,
-    "priceEur": 12.72,
+    "priceEur": 16.5,
     "matchedPartNumber": "HD36-18-14SN"
   },
   {
     "sku": "244226-114",
     "description": "HDP26-24-14SE-L017",
     "quantity": 8,
-    "priceEur": 28.75,
+    "priceEur": 17.25,
     "matchedPartNumber": null
   },
   {
     "sku": "244226-116",
     "description": "HDP26-24-16SE-L017",
     "quantity": 4,
-    "priceEur": 27.44,
+    "priceEur": 16.46,
     "matchedPartNumber": "HDP26-24-16SE-L017"
   },
   {
     "sku": "244226-1160",
     "description": "HDP26-24-16SE-L015",
     "quantity": 6,
-    "priceEur": 10.07,
+    "priceEur": 14.03,
     "matchedPartNumber": "HDP26-24-16SE-L015"
   },
   {
     "sku": "244534-120",
     "description": "8N1534-24-20P",
     "quantity": 16,
-    "priceEur": 80.79,
+    "priceEur": 180.03,
     "matchedPartNumber": null
   },
   {
     "sku": "245010-05",
     "description": "HD10-5-16 P",
     "quantity": 5,
-    "priceEur": 7.32,
+    "priceEur": 5.55,
     "matchedPartNumber": "HD10-5-16P"
   },
   {
     "sku": "245010-26",
     "description": "HD10-6-12P",
     "quantity": 2,
-    "priceEur": 6.4,
+    "priceEur": 7.8,
     "matchedPartNumber": "HD10-6-12P"
   },
   {
     "sku": "245014-05",
     "description": "HD14-5-16 P",
     "quantity": 174,
-    "priceEur": 2.59,
+    "priceEur": 8.25,
     "matchedPartNumber": "HD14-5-16P"
   },
   {
     "sku": "245014-13",
     "description": "HD14-3-96P",
     "quantity": 12,
-    "priceEur": 5.77,
+    "priceEur": 4.52,
     "matchedPartNumber": "HD14-3-96P"
   },
   {
     "sku": "245014-19",
     "description": "HD14-9-96 P",
     "quantity": 1,
-    "priceEur": 1.4,
+    "priceEur": 6.52,
     "matchedPartNumber": "HD14-9-96P"
   },
   {
     "sku": "245016-03",
     "description": "HD16-3-16 S",
     "quantity": 189,
-    "priceEur": 2.52,
+    "priceEur": 5.48,
     "matchedPartNumber": "HD16-3-16S"
   },
   {
     "sku": "245016-030",
     "description": "HDC 16-3",
     "quantity": 15,
-    "priceEur": 0.99,
+    "priceEur": 2.37,
     "matchedPartNumber": null
   },
   {
     "sku": "245016-050",
     "description": "HDC 16-5",
     "quantity": 28,
-    "priceEur": 0.86,
+    "priceEur": 1.75,
     "matchedPartNumber": null
   },
   {
     "sku": "245016-09",
     "description": "HD16-9-16S",
     "quantity": 7,
-    "priceEur": 6.12,
+    "priceEur": 8.03,
     "matchedPartNumber": "HD16-9-16S"
   },
   {
     "sku": "245016-19",
     "description": "HD16-9-96S",
     "quantity": 1,
-    "priceEur": 4.97,
+    "priceEur": 7.8,
     "matchedPartNumber": "HD16-9-96S"
   },
   {
     "sku": "245016-1940",
     "description": "HD16-9-1939S",
     "quantity": 5,
-    "priceEur": 6.8,
+    "priceEur": 11.1,
     "matchedPartNumber": "HD16-9-1939S"
   },
   {
     "sku": "245016-26",
     "description": "HD16-6-12 S",
     "quantity": 39,
-    "priceEur": 3.73,
+    "priceEur": 6.45,
     "matchedPartNumber": "HD16-6-12S"
   },
   {
     "sku": "245018-003",
     "description": "HD 18-003",
     "quantity": 50,
-    "priceEur": 1.14,
+    "priceEur": 2.79,
     "matchedPartNumber": null
   },
   {
@@ -1739,14 +1739,14 @@
     "sku": "247000-2002",
     "description": "IMC 11-2002X",
     "quantity": 246,
-    "priceEur": 2.75,
+    "priceEur": 11.03,
     "matchedPartNumber": null
   },
   {
     "sku": "247000-6052",
     "description": "IMC 21-2005X",
     "quantity": 158,
-    "priceEur": 3.19,
+    "priceEur": 7.05,
     "matchedPartNumber": null
   },
   {
@@ -1760,14 +1760,14 @@
     "sku": "247002-2003",
     "description": "IMC 16-2003X",
     "quantity": 500,
-    "priceEur": 2.38,
+    "priceEur": 12.75,
     "matchedPartNumber": null
   },
   {
     "sku": "247002-6072",
     "description": "IMC 26-2007X",
     "quantity": 173,
-    "priceEur": 2.66,
+    "priceEur": 9.53,
     "matchedPartNumber": null
   },
   {
@@ -1781,14 +1781,14 @@
     "sku": "247008-350",
     "description": "AS 0 08-35 SN",
     "quantity": 2,
-    "priceEur": 29.15,
+    "priceEur": 37.5,
     "matchedPartNumber": null
   },
   {
     "sku": "247110-35",
     "description": "AS610-35 PN",
     "quantity": 3,
-    "priceEur": 49.2,
+    "priceEur": 46.13,
     "matchedPartNumber": null
   },
   {
@@ -1802,12 +1802,12 @@
     "sku": "247490-11",
     "description": "M 22520 1 01",
     "quantity": 1,
-    "priceEur": 582.59,
+    "priceEur": 456,
     "matchedPartNumber": null
   },
   {
     "sku": "247604-029",
-    "description": "Receptacle Pro.Cap",
+    "description": "604029 Deutsch Autosport Dust Cap",
     "quantity": 7,
     "priceEur": 18.84,
     "matchedPartNumber": null
