@@ -109,7 +109,7 @@ export default function Header() {
           <Link
             href="/"
             onClick={closeAll}
-            className="flex flex-shrink-0 items-center pr-8 border-r border-[#edf2f7]"
+            className="flex flex-shrink-0 items-center pr-8"
           >
             <Image
               src="/images/logotopmenu.png"
