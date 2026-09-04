@@ -175,8 +175,6 @@ export default function Header() {
                   </div>
                 ))}
 
-                <span className="mx-2 h-4 w-px bg-[#e2e8f0]" aria-hidden="true" />
-
                 {topNavItems.map((item) =>
                   item.children ? (
                     <div key={item.href} className="relative flex h-full items-center group">
