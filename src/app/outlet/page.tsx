@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Tag, Wrench } from "lucide-react";
 import PageHeader from "@/components/layout/PageHeader";
-import { BrandBoxCard } from "@/components/catalogue/CatalogueCategoryPage";
 import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -11,15 +11,12 @@ export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl("/outlet") },
 };
 
-// Deutsch's brands.ts logo is the shared TE Connectivity mark (a known latent
-// bug flagged wherever brand boxes render) — use the corrected Deutsch mark
-// here too, same override CatalogueCategoryPage applies everywhere else.
-const DEUTSCH_LOGO = "/media/wysiwyg/infortis/ultimo/category_images/Deutsch.jpg";
-
-// Each outlet sub-section shows one box per brand currently being sold off
-// under it. Add a brand here the day it's actually published — e.g. a second
-// used-machine brand alongside Komax, or a second components brand alongside
-// Deutsch — nothing else about this page needs to change.
+// Each outlet sub-section shows one small "Brand" box per brand currently
+// being sold off under it — same pill used in the Components outlet hero's
+// stat row, just made clickable here. Add a brand here the day it's actually
+// published — e.g. a second used-machine brand alongside Komax, or a second
+// components brand alongside Deutsch — nothing else about this page needs to
+// change.
 const sections = [
   {
     label: "Used machines",
@@ -27,11 +24,7 @@ const sections = [
     icon: Wrench,
     description:
       "Secondhand cutting, stripping and crimping machines, sourced through our supplier network. Condition, equipment and specifications listed per machine.",
-    brands: [
-      // No Komax logo asset in the codebase yet — falls back to the generic
-      // box icon until one is sourced, same as any other brand without a logo.
-      { label: "Komax", href: "/outlet/used-machines", logo: undefined },
-    ],
+    brands: [{ label: "Komax", href: "/outlet/used-machines" }],
   },
   {
     label: "Components outlet",
@@ -39,7 +32,7 @@ const sections = [
     icon: Tag,
     description:
       "Surplus stock from our own warehouse, at outlet pricing while quantities last. Sold as-is, no returns.",
-    brands: [{ label: "Deutsch", href: "/outlet/components", logo: DEUTSCH_LOGO }],
+    brands: [{ label: "Deutsch", href: "/outlet/components" }],
   },
 ];
 
@@ -65,15 +58,18 @@ export default function OutletPage() {
               <h2 className="mt-4 text-lg font-bold text-[#0a1628]">{label}</h2>
               <p className="mt-2 text-sm leading-6 text-[#475569]">{description}</p>
 
-              <div className="mt-5 grid gap-3 border-t border-[#f1f5f9] pt-5 sm:grid-cols-2">
+              <div className="mt-5 flex flex-wrap gap-3 border-t border-[#f1f5f9] pt-5">
                 {sectionBrands.map((brand) => (
-                  <BrandBoxCard
+                  <Link
                     key={brand.href}
-                    label={brand.label}
                     href={brand.href}
-                    logo={brand.logo}
-                    meta="View listing"
-                  />
+                    className="rounded-lg border border-white/10 bg-[#0a1628] px-4 py-2.5 transition-colors hover:bg-[#132345]"
+                  >
+                    <div className="text-[10px] font-semibold uppercase tracking-widest text-[#94a3b8]">
+                      Brand
+                    </div>
+                    <div className="text-sm font-semibold text-white">{brand.label}</div>
+                  </Link>
                 ))}
               </div>
             </div>

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Mail, Recycle } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Mail, Package, Recycle } from "lucide-react";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
-import { BrandBoxCard } from "@/components/catalogue/CatalogueCategoryPage";
-import { usedMachines } from "@/data/usedMachines";
+import { usedMachines, getModelDescription } from "@/data/usedMachines";
 import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -49,16 +49,54 @@ export default function UsedMachinesPage() {
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-[#b45309]">
               Template preview — not yet ready for customers
             </p>
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {usedMachines.map((machine) => (
-                <BrandBoxCard
-                  key={machine.slug}
-                  label={`${machine.brand} ${machine.model}`}
-                  href={`/outlet/used-machines/${machine.slug}`}
-                  logo={machine.photos[0]}
-                  meta={machine.price ?? "On request"}
-                />
-              ))}
+            {/* Same template as the Ramatech product-line grid: picture LEFT
+                (w-28 / sm:w-40, fills the card height), text RIGHT. */}
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {usedMachines.map((machine) => {
+                const description = getModelDescription(machine.brand, machine.model);
+                return (
+                  <Link
+                    key={machine.slug}
+                    href={`/outlet/used-machines/${machine.slug}`}
+                    className="group flex min-h-[176px] overflow-hidden rounded-lg border border-[#d8dee7] bg-white transition-all hover:-translate-y-0.5 hover:border-[#93c5fd] hover:shadow-[0_18px_34px_-24px_rgba(15,23,42,0.35)]"
+                  >
+                    <div className="relative w-28 flex-none bg-white sm:w-40">
+                      {machine.photos[0] ? (
+                        <Image
+                          src={machine.photos[0]}
+                          alt={`${machine.brand} ${machine.model}`}
+                          fill
+                          unoptimized
+                          sizes="(max-width: 640px) 112px, 160px"
+                          className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.04]"
+                        />
+                      ) : (
+                        <div className="flex h-full flex-col items-center justify-center gap-1 text-[#94a3b8]">
+                          <Package size={22} />
+                          <span className="text-[10px] font-medium">No photo yet</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex min-w-0 flex-1 flex-col justify-center p-4">
+                      <h3 className="text-sm font-bold text-[#0a1628] group-hover:text-[#2563eb] sm:text-base">
+                        {machine.brand} {machine.model}
+                      </h3>
+                      {description && (
+                        <p className="mt-1.5 text-[13px] leading-5 text-[#475569]">{description.short}</p>
+                      )}
+                      <div className="mt-2.5 flex items-center justify-between gap-3">
+                        <span className="text-sm font-semibold text-[#0a1628]">
+                          {machine.price ?? "On request"}
+                        </span>
+                        <span className="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.1em] text-[#64748b] transition-colors group-hover:text-[#2563eb]">
+                          Details
+                          <ArrowUpRight size={13} />
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </section>
         )}
