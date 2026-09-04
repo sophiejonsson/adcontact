@@ -961,26 +961,34 @@ function CategoryVisualLinkCard({
 
 // A single brand box on a menu-derived hub landing: brand logo on a white
 // panel + label + a footer showing the brand's catalogue-item count + arrow.
-function BrandBoxCard({
+// Exported so other sections (e.g. the outlet hub/used-machines listing) can
+// reuse the exact same box — same dimensions, same visual language — rather
+// than hand-copy the styling and risk it drifting out of sync.
+export function BrandBoxCard({
   label,
   href,
   logo,
   count,
   areas = 0,
+  meta: metaOverride,
 }: {
   label: string;
   href: string;
   logo?: string;
   count?: number | null;
   areas?: number;
+  /** Overrides the computed "N items" footer text — for boxes that aren't
+   *  brand-catalogue counts (e.g. a used machine's price). */
+  meta?: string;
 }) {
   const external = /^https?:\/\//.test(href);
   const meta =
-    count != null
+    metaOverride ??
+    (count != null
       ? `${count.toLocaleString()} item${count === 1 ? "" : "s"}${
           areas > 0 ? ` · ${areas} area${areas === 1 ? "" : "s"}` : ""
         }`
-      : "View brand";
+      : "View brand");
   const inner = (
     <>
       <div className="relative flex min-h-24 items-center justify-center border-b border-[#eef2f7] bg-white">

@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 
 export default function ComponentsOutletPage() {
   const skuCount = deutschOutletComponents.length;
-  const totalUnits = deutschOutletComponents.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="min-h-screen bg-[#f8fafc]">
@@ -51,12 +50,6 @@ export default function ComponentsOutletPage() {
               </div>
               <div className="rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2.5">
                 <div className="text-[10px] font-semibold uppercase tracking-widest text-[#94a3b8]">
-                  Units in stock
-                </div>
-                <div className="text-sm font-semibold text-white">{totalUnits.toLocaleString()}</div>
-              </div>
-              <div className="rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2.5">
-                <div className="text-[10px] font-semibold uppercase tracking-widest text-[#94a3b8]">
                   Brand
                 </div>
                 <div className="text-sm font-semibold text-white">Deutsch</div>
@@ -81,7 +74,7 @@ export default function ComponentsOutletPage() {
           <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
             <a
               href="mailto:info@adcontact.se?subject=Components%20outlet%20enquiry"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-[#2563eb] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#1d4ed8]"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-[#f59e0b] px-4 py-2.5 text-sm font-semibold text-[#0a1628] transition-colors hover:bg-[#d97706]"
             >
               <Mail size={15} />
               Send us your enquiry

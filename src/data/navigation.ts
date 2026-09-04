@@ -246,7 +246,14 @@ export function getMenuBrandHub(route: string | null | undefined): BrandHub | un
 }
 
 export const topNavItems: NavItem[] = [
-  { label: "Outlet", href: "/outlet" },
+  {
+    label: "Outlet",
+    href: "/outlet",
+    children: [
+      { label: "Components outlet", href: "/outlet/components" },
+      { label: "Used machines", href: "/outlet/used-machines" },
+    ],
+  },
   { label: "Trusted Partners", href: "/brands" },
   { label: "Quality Management", href: "/quality" },
   { label: "About us", href: "/about" },

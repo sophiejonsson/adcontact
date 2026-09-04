@@ -180,9 +180,22 @@ export default function Header() {
                 {topNavItems.map((item) =>
                   item.children ? (
                     <div key={item.href} className="relative flex h-full items-center group">
-                      <button className="flex h-full items-center gap-1 px-3 text-[13px] font-medium whitespace-nowrap text-[#475569] transition-colors hover:text-[#0a1628]">
+                      <button
+                        className={cn(
+                          "flex h-full items-center gap-1 px-3 text-[13px] font-medium whitespace-nowrap transition-colors",
+                          item.label === "Outlet"
+                            ? "text-[#b45309] hover:text-[#92400e]"
+                            : "text-[#475569] hover:text-[#0a1628]"
+                        )}
+                      >
                         {item.label}
-                        <ChevronDown size={11} className="text-[#9ca3af] transition-transform duration-200 group-hover:rotate-180" />
+                        <ChevronDown
+                          size={11}
+                          className={cn(
+                            "transition-transform duration-200 group-hover:rotate-180",
+                            item.label === "Outlet" ? "text-[#d97706]" : "text-[#9ca3af]"
+                          )}
+                        />
                       </button>
                       <div className="absolute right-0 top-full z-50 hidden group-hover:block pt-1">
                         <div className="min-w-[220px] rounded-xl border border-[#e8ecf2] bg-white shadow-lg py-1">
@@ -281,7 +294,12 @@ export default function Header() {
               {topNavItems.map((item) =>
                 item.children ? (
                   <div key={item.href}>
-                    <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-[#9ca3af]">
+                    <p
+                      className={cn(
+                        "px-3 py-2 text-xs font-semibold uppercase tracking-wide",
+                        item.label === "Outlet" ? "text-[#b45309]" : "text-[#9ca3af]"
+                      )}
+                    >
                       {item.label}
                     </p>
                     <div className="ml-3 border-l border-[#e8ecf2] pl-3 space-y-0.5">
