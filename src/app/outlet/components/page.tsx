@@ -37,9 +37,9 @@ export default function ComponentsOutletPage() {
               Components outlet
             </h1>
             <p className="mt-4 text-base leading-7 text-[#94a3b8]">
-              Surplus Deutsch connector stock from our own Bromma warehouse, sold at reduced prices
-              while quantities last. Can&apos;t find the part you need below? Tell us what you are
-              looking for and we will check what else we have.
+              Surplus connector and terminal stock from our own Keila warehouse, sold at reduced
+              prices while quantities last. Can&apos;t find the part you need below? Tell us what
+              you are looking for and we will check what else we have.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <div className="rounded-lg border border-white/10 bg-white/[0.06] px-4 py-2.5">
