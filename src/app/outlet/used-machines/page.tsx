@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Mail, Package, Recycle } from "lucide-react";
-import Breadcrumbs from "@/components/layout/Breadcrumbs";
+import { ArrowRight, ArrowUpRight, Mail, Package } from "lucide-react";
+import PageHeader from "@/components/layout/PageHeader";
 import { usedMachines, getModelDescription } from "@/data/usedMachines";
 import { absoluteUrl } from "@/lib/seo";
 
@@ -16,32 +16,11 @@ export const metadata: Metadata = {
 export default function UsedMachinesPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc]">
-      <section className="relative overflow-hidden bg-[#0a1628] text-white">
-        <div className="absolute inset-0 tech-grid opacity-30" />
-        <div className="relative mx-auto max-w-[1440px] px-6 py-6">
-          <Breadcrumbs
-            light
-            crumbs={[
-              { label: "Outlet", href: "/outlet" },
-              { label: "Used Machines" },
-            ]}
-          />
-          <div className="mt-5 max-w-3xl">
-            <span className="mb-4 inline-flex items-center gap-2 rounded-lg bg-white/[0.08] px-3.5 py-2 text-sm font-semibold text-amber-200">
-              <Recycle size={16} />
-              Coming soon
-            </span>
-            <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">Used machines</h1>
-            <p className="mt-4 text-base leading-7 text-[#94a3b8]">
-              We are starting up our second-hand machine offering for the Nordic market. The
-              selection will vary a lot, from cutting and stripping machines to crimping presses and
-              complete production lines. Each listing will show condition, equipment and full
-              specifications. If you are looking for a specific used machine, or have a machine to
-              sell, tell us and we will help.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHeader
+        crumbs={[{ label: "Outlet", href: "/outlet" }, { label: "Used Machines" }]}
+        title="Used machines"
+        intro="Secondhand cutting, stripping and crimping machines, sourced through our supplier network for the Nordic market."
+      />
 
       <main className="mx-auto max-w-[1440px] px-6 py-10">
         {usedMachines.length > 0 && (
