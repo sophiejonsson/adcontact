@@ -1659,7 +1659,10 @@ export default function CatalogueCategoryPage({
                     : brand?.description
                 ) ?? categoryIntro(category)}
               </p>
-              {heroStatText && (
+              {/* On the Webshop landing this moves to the right column instead
+                  (see below) — keeping it here too would push this hero past
+                  the shared 156px height every other menu hub page uses. */}
+              {heroStatText && !isWebshopRoot && (
                 <p className="mt-4 text-sm font-semibold text-blue-200">
                   {heroStatText}
                 </p>
@@ -1702,25 +1705,39 @@ export default function CatalogueCategoryPage({
                   </div>
                 </div>
               </div>
+            ) : videoEmbedSrc || heroImageSrc ? (
+              <div className="w-full lg:w-[420px] lg:flex-shrink-0 xl:w-[480px]">
+                <div
+                  className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]"
+                  style={{ aspectRatio: videoEmbedSrc ? "16/9" : "4/3" }}
+                >
+                  {videoEmbedSrc ? (
+                    <ConsentedVideo src={videoEmbedSrc} title={title} />
+                  ) : (
+                    <Image
+                      src={heroImageSrc!}
+                      alt={title}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 1024px) 100vw, 480px"
+                      className="object-contain p-4"
+                    />
+                  )}
+                </div>
+              </div>
             ) : (
-              (videoEmbedSrc || heroImageSrc) && (
-                <div className="w-full lg:w-[420px] lg:flex-shrink-0 xl:w-[480px]">
-                  <div
-                    className="relative w-full overflow-hidden rounded-2xl border border-[#1e3a6e] bg-[#0f2042]"
-                    style={{ aspectRatio: videoEmbedSrc ? "16/9" : "4/3" }}
-                  >
-                    {videoEmbedSrc ? (
-                      <ConsentedVideo src={videoEmbedSrc} title={title} />
-                    ) : (
-                      <Image
-                        src={heroImageSrc!}
-                        alt={title}
-                        fill
-                        unoptimized
-                        sizes="(max-width: 1024px) 100vw, 480px"
-                        className="object-contain p-4"
-                      />
-                    )}
+              // Webshop landing has no brand image/video — same trick used on
+              // the outlet hub pages: put the stat line in a small card on the
+              // right instead of stacking it under the description on the
+              // left, so the left column stays short enough to fit min-h-[156px].
+              isWebshopRoot &&
+              heroStatText && (
+                <div className="w-full lg:w-auto lg:flex-shrink-0">
+                  <div className="rounded-2xl border border-[#1e3a6e] bg-[#0f2042] p-4 lg:w-[400px]">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#60a5fa]">
+                      Webshop
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-white">{heroStatText}</p>
                   </div>
                 </div>
               )
