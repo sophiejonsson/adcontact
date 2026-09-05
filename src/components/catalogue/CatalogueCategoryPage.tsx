@@ -1629,10 +1629,15 @@ export default function CatalogueCategoryPage({
               catalogue pages keep the default top-aligned hero. */}
           <div
             className={`mt-5 flex flex-col gap-8 lg:flex-row ${
-              isWebshopRoot ? "min-h-[156px] justify-center lg:items-center" : "lg:items-start"
+              isWebshopRoot ? "min-h-[156px] justify-center lg:items-center lg:justify-between" : "lg:items-start"
             }`}
           >
-            {/* Left: title, description, stats, CTA */}
+            {/* Left: title, description, stats, CTA. On the Webshop landing
+                the title/description typography matches PageHeader exactly
+                (text-4xl font-extrabold / text-sm leading-relaxed, no extra
+                mt-2) — the previous fix only removed the stray stat line but
+                left the type scale itself larger than PageHeader's, which was
+                still enough on its own to push this hero past 156px. */}
             <div className="flex-1">
               {brand?.logo && (
                 <span className="mb-4 inline-flex items-center gap-2.5 rounded-lg bg-white px-3.5 py-2 shadow-sm">
@@ -1646,10 +1651,22 @@ export default function CatalogueCategoryPage({
                   />
                 </span>
               )}
-              <h1 className="mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl">
+              <h1
+                className={
+                  isWebshopRoot
+                    ? "text-4xl font-extrabold tracking-[-0.035em]"
+                    : "mt-2 text-3xl font-bold tracking-[-0.03em] lg:text-4xl"
+                }
+              >
                 {title}
               </h1>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-[#94a3b8]">
+              <p
+                className={
+                  isWebshopRoot
+                    ? "mt-3 max-w-2xl text-sm leading-relaxed text-[#94a3b8]"
+                    : "mt-4 max-w-3xl text-base leading-7 text-[#94a3b8]"
+                }
+              >
                 {description ?? (
                   // Only use the brand description when the brand's product type
                   // matches the category tree (e.g. equipment brands describe
@@ -1659,9 +1676,9 @@ export default function CatalogueCategoryPage({
                     : brand?.description
                 ) ?? categoryIntro(category)}
               </p>
-              {/* On the Webshop landing this moves to the right column instead
-                  (see below) — keeping it here too would push this hero past
-                  the shared 156px height every other menu hub page uses. */}
+              {/* Dropped entirely on the Webshop landing (Stefan's call) —
+                  simpler than fitting it in either column, and this hero's
+                  height only needs to match PageHeader's, not carry this stat. */}
               {heroStatText && !isWebshopRoot && (
                 <p className="mt-4 text-sm font-semibold text-blue-200">
                   {heroStatText}
@@ -1725,23 +1742,7 @@ export default function CatalogueCategoryPage({
                   )}
                 </div>
               </div>
-            ) : (
-              // Webshop landing has no brand image/video — same trick used on
-              // the outlet hub pages: put the stat line in a small card on the
-              // right instead of stacking it under the description on the
-              // left, so the left column stays short enough to fit min-h-[156px].
-              isWebshopRoot &&
-              heroStatText && (
-                <div className="w-full lg:w-auto lg:flex-shrink-0">
-                  <div className="rounded-2xl border border-[#1e3a6e] bg-[#0f2042] p-4 lg:w-[400px]">
-                    <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#60a5fa]">
-                      Webshop
-                    </p>
-                    <p className="mt-2 text-sm font-semibold text-white">{heroStatText}</p>
-                  </div>
-                </div>
-              )
-            )}
+            ) : null}
           </div>
         </div>
       </section>

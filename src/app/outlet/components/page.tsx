@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Mail } from "lucide-react";
 import PageHeader from "@/components/layout/PageHeader";
 import { absoluteUrl } from "@/lib/seo";
+import { deutschOutletComponents } from "@/data/deutschOutlet";
 import OutletComponentsClient from "./OutletComponentsClient";
 
 export const metadata: Metadata = {
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default function ComponentsOutletPage() {
+  const skuCount = deutschOutletComponents.length;
+
   return (
     <div className="min-h-screen bg-[#f8fafc]">
       <PageHeader
@@ -34,6 +37,24 @@ export default function ComponentsOutletPage() {
       />
 
       <main className="mx-auto max-w-[1440px] px-6 py-10">
+        {/* Lives outside PageHeader on purpose — these badges caused the hero
+            to grow past the shared 156px height before, so they moved here
+            where they can't affect it again. */}
+        <div className="mb-5 flex flex-wrap gap-3">
+          <div className="rounded-lg border border-[#e2e8f0] bg-white px-4 py-2.5">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-[#94a3b8]">
+              SKUs listed
+            </div>
+            <div className="text-sm font-semibold text-[#0a1628]">{skuCount}</div>
+          </div>
+          <div className="rounded-lg border border-[#e2e8f0] bg-white px-4 py-2.5">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-[#94a3b8]">
+              Brand
+            </div>
+            <div className="text-sm font-semibold text-[#0a1628]">Deutsch</div>
+          </div>
+        </div>
+
         <OutletComponentsClient />
 
         <section className="mt-10 rounded-2xl border border-[#e2e8f0] bg-white px-6 py-7 sm:px-8">
